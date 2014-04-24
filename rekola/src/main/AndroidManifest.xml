@@ -19,6 +19,7 @@
     <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
     <application
+		android:name="cz.rekola.android.core.RekolaApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

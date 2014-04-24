@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cz.rekola.android.R;
-import cz.rekola.android.cz.rekola.android.adapter.SectionsPagerAdapter;
+import cz.rekola.android.adapter.SectionsPagerAdapter;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
 
