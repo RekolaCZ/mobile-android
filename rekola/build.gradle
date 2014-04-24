@@ -27,5 +27,6 @@ dependencies {
     compile 'com.android.support:support-v13:+'
     compile 'com.google.android.gms:play-services:4.+'
     compile 'com.squareup.retrofit:retrofit:1.5.0'
+    compile "com.jakewharton:butterknife:4.0.1"
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
