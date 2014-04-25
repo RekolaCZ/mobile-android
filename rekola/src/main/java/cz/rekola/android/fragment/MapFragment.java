@@ -14,8 +14,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Subscribe;
+
+import java.util.List;
 
 import cz.rekola.android.R;
+import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.core.RekolaApp;
+import cz.rekola.android.core.bus.BikesAvailableEvent;
+import cz.rekola.android.core.bus.BikesFailedEvent;
+import cz.rekola.android.core.bus.LoginAvailableEvent;
 
 public class MapFragment extends Fragment {
 
@@ -31,6 +40,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+		getApp().getBus().unregister(this);
         mapView.onDestroy();
     }
 
@@ -52,6 +62,7 @@ public class MapFragment extends Fragment {
         map = mapView.getMap();
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
+		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
@@ -65,4 +76,38 @@ public class MapFragment extends Fragment {
         return rootView;
     }
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		getApp().getBus().register(this);
+		if (getApp().getDataManager().getBikes() != null) {
+			setupMap();
+		}
+	}
+
+	@Subscribe
+	public void bikesAvailable(BikesAvailableEvent event) {
+		setupMap();
+	}
+
+	@Subscribe
+	public void bikesFailed(BikesFailedEvent event) {
+
+	}
+
+	private void setupMap() {
+		List<Bike> bikes = getApp().getDataManager().getBikes();
+		if (bikes == null)
+			return;
+
+		map.clear();
+		for (Bike bike : bikes) {
+			map.addMarker(new MarkerOptions()
+					.position(new LatLng(bike.location.lat, bike.location.lng))
+					.title(bike.name));
+		}
+	}
+
+	private RekolaApp getApp() {
+		return (RekolaApp) getActivity().getApplication();
+	}
 }
