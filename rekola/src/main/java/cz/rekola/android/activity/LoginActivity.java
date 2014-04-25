@@ -30,6 +30,8 @@ public class LoginActivity extends Activity {
 	@InjectView(R.id.recover_password)
 	Button vRecoverPassword;
 
+	private ViewHelper viewHelper = new ViewHelper();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,20 +40,18 @@ public class LoginActivity extends Activity {
 		getApp().getBus().register(this);
 
 		vUsername.setText(getApp().getPreferencesManager().getUsername());
+		vPassword.setText(getApp().getPreferencesManager().getPassword());
 
 		vLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getApp().getPreferencesManager().setUsername(vUsername.getText().toString());
-				if (vUsername.getText().length() == 0) {
-					Toast.makeText(LoginActivity.this, "Fill in username!", Toast.LENGTH_SHORT).show();
+				viewHelper.saveCredentials();
+				if (!viewHelper.canLogin()) {
+					Toast.makeText(LoginActivity.this, "Fill in the username and password!", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				if (vPassword.getText().length() == 0) {
-					Toast.makeText(LoginActivity.this, "Fill in password!", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				getApp().getDataManager().login(new Credentials(vUsername.getText().toString(), vPassword.getText().toString()));
+
+				getApp().getDataManager().login(viewHelper.getCredentials());
 			}
 		});
 
@@ -61,11 +61,16 @@ public class LoginActivity extends Activity {
 				Toast.makeText(LoginActivity.this, "Go to the web!", Toast.LENGTH_SHORT).show();
 			}
 		});
+
+		if (viewHelper.canLogin()) {
+			getApp().getDataManager().login(viewHelper.getCredentials());
+		}
 	}
 
 	@Override
 	public void onDestroy() {
 		getApp().getBus().unregister(this);
+		super.onDestroy();
 	}
 
 	@Override
@@ -102,5 +107,21 @@ public class LoginActivity extends Activity {
 
 	private RekolaApp getApp() {
 		return (RekolaApp) getApplication();
+	}
+
+	private class ViewHelper {
+
+		private boolean canLogin() {
+			return (vUsername.getText().length() > 0 && vPassword.getText().length() > 0);
+		}
+
+		private Credentials getCredentials() {
+			return new Credentials(vUsername.getText().toString(), vPassword.getText().toString());
+		}
+
+		private void saveCredentials() {
+			getApp().getPreferencesManager().setUsername(vUsername.getText().toString());
+			getApp().getPreferencesManager().setPassword(vPassword.getText().toString());
+		}
 	}
 }

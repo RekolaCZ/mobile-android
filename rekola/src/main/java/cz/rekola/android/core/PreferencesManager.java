@@ -9,6 +9,7 @@ public class PreferencesManager {
 
 	public static final String PREFS_NAME = "MyPreferences";
 	public static final String PREF_USERNAME = "Username";
+	public static final String PREF_PASSWORD = "Password"; // TODO: Encrypt or do not save!!!
 
 	private SharedPreferences settings;
 
@@ -22,6 +23,14 @@ public class PreferencesManager {
 
 	public void setUsername(String username) {
 		setStringPref(PREF_USERNAME, username);
+	}
+
+	public String getPassword() {
+		return settings.getString(PREF_PASSWORD, null);
+	}
+
+	public void setPassword(String password) {
+		setStringPref(PREF_PASSWORD, password);
 	}
 
 	public Token getToken() {
