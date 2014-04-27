@@ -1,6 +1,5 @@
 package cz.rekola.android.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 import cz.rekola.android.R;
-import cz.rekola.android.activity.MainActivity;
 import cz.rekola.android.api.model.Bike;
-import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
 
-public class MapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener {
+public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWindowClickListener {
 
     MapView vMap;
     GoogleMap map;
@@ -44,7 +41,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnInfoWindowClick
     @Override
     public void onDestroy() {
         super.onDestroy();
-		getApp().getBus().unregister(this);
         vMap.onDestroy();
     }
 
@@ -82,7 +78,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnInfoWindowClick
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		getApp().getBus().register(this);
+		super.onViewCreated(view, savedInstanceState);
 		if (getApp().getDataManager().getBikes() != null) {
 			setupMap();
 		}
@@ -120,13 +116,5 @@ public class MapFragment extends Fragment implements GoogleMap.OnInfoWindowClick
 					.snippet(bike.location.address));
 			markerMap.put(marker, bike);
 		}
-	}
-
-	private MainActivity getAct() {
-		return (MainActivity) getActivity();
-	}
-
-	private RekolaApp getApp() {
-		return (RekolaApp) getActivity().getApplication();
 	}
 }

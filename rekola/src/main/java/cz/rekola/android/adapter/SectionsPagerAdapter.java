@@ -14,6 +14,7 @@ import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.fragment.BorrowFragment;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
+import cz.rekola.android.fragment.ReturnFragment;
 
 /**
  * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
@@ -39,6 +40,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 				return new BorrowFragment();
             case 1:
                 return new MapFragment();
+			case 2:
+				return new ReturnFragment();
             default:
                 return PlaceholderFragment.newInstance(position + 1);
         }

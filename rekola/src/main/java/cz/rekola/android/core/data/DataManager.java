@@ -73,6 +73,10 @@ public class DataManager {
 		return null;
 	}
 
+	public BorrowedBike getBorrowedBike() {
+		return borrowedBike;
+	}
+
 	public void borrowBike(int bikeCode) {
 		ApiService apiService = app.getApiService();
 		apiService.borrowBike(token.apiKey, bikeCode, FAKE_LAT, FAKE_LNG, new Callback<BorrowedBike>() {
