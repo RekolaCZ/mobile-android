@@ -2,7 +2,7 @@ package cz.rekola.android.api.model;
 
 import android.content.SharedPreferences;
 
-import cz.rekola.android.core.PreferencePersistenty;
+import cz.rekola.android.core.data.PreferencePersistenty;
 
 public class Token implements PreferencePersistenty {
 

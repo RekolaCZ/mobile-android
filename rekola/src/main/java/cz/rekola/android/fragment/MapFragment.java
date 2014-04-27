@@ -7,33 +7,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cz.rekola.android.R;
+import cz.rekola.android.activity.MainActivity;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
-import cz.rekola.android.core.bus.LoginAvailableEvent;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener {
 
-    MapView mapView;
+    MapView vMap;
     GoogleMap map;
+
+	private Map<Marker, Bike> markerMap = new HashMap<>();
 
     @Override
     public void onResume() {
-        mapView.onResume();
+        vMap.onResume();
         super.onResume();
     }
 
@@ -41,28 +45,28 @@ public class MapFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 		getApp().getBus().unregister(this);
-        mapView.onDestroy();
+        vMap.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+        vMap.onLowMemory();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-
         // Gets the MapView from the XML layout and creates it
-        mapView = (MapView) rootView.findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
+        vMap = (MapView) rootView.findViewById(R.id.mapView);
+        vMap.onCreate(savedInstanceState);
 
         // Gets to GoogleMap from the MapView and does initialization stuff
-        map = mapView.getMap();
+        map = vMap.getMap();
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		map.setOnInfoWindowClickListener(this);
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
@@ -94,17 +98,32 @@ public class MapFragment extends Fragment {
 
 	}
 
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		Bike bike = markerMap.get(marker);
+		if (bike == null)
+			return;
+		getAct().startBikeDetail(bike);
+	}
+
 	private void setupMap() {
 		List<Bike> bikes = getApp().getDataManager().getBikes();
 		if (bikes == null)
 			return;
 
 		map.clear();
+		markerMap.clear();
 		for (Bike bike : bikes) {
-			map.addMarker(new MarkerOptions()
+			Marker marker = map.addMarker(new MarkerOptions()
 					.position(new LatLng(bike.location.lat, bike.location.lng))
-					.title(bike.name));
+					.title(bike.name)
+					.snippet(bike.location.address));
+			markerMap.put(marker, bike);
 		}
+	}
+
+	private MainActivity getAct() {
+		return (MainActivity) getActivity();
 	}
 
 	private RekolaApp getApp() {

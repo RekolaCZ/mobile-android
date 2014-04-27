@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import cz.rekola.android.R;
 import cz.rekola.android.adapter.SectionsPagerAdapter;
+import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
 
@@ -97,7 +98,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-
+	public void startBikeDetail(Bike bike) {
+		mViewPager.setCurrentItem(1);
+		mSectionsPagerAdapter.startBikeDetail(bike);
+	}
 
 
 

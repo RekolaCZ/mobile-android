@@ -1,13 +1,12 @@
-package cz.rekola.android.core;
+package cz.rekola.android.core.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.rekola.android.api.ApiService;
 import cz.rekola.android.api.model.Bike;
-import cz.rekola.android.api.model.Location;
 import cz.rekola.android.api.model.Token;
 import cz.rekola.android.api.requestmodel.Credentials;
+import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;

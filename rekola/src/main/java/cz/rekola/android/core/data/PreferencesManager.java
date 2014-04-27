@@ -1,9 +1,10 @@
-package cz.rekola.android.core;
+package cz.rekola.android.core.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import cz.rekola.android.api.model.Token;
+import cz.rekola.android.core.data.PreferencePersistenty;
 
 public class PreferencesManager {
 

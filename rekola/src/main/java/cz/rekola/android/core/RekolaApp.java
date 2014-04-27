@@ -5,6 +5,8 @@ import android.app.Application;
 import com.squareup.otto.Bus;
 
 import cz.rekola.android.api.ApiService;
+import cz.rekola.android.core.data.DataManager;
+import cz.rekola.android.core.data.PreferencesManager;
 import retrofit.RestAdapter;
 
 public class RekolaApp extends Application {

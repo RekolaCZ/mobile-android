@@ -4,10 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 
 import java.util.Locale;
 
 import cz.rekola.android.R;
+import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
 
@@ -38,6 +41,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+	/*@Override
+	public int getItemPosition(Object object){
+		return PagerAdapter.POSITION_NONE;
+	}*/
+
     @Override
     public int getCount() {
         // Show 3 total pages.
@@ -57,4 +65,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
+
+	public void startBikeDetail(Bike bike) {
+		notifyDataSetChanged();
+	}
 }
