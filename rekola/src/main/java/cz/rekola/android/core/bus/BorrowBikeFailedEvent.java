@@ -3,13 +3,13 @@ package cz.rekola.android.core.bus;
 import cz.rekola.android.api.model.error.BaseError;
 
 /**
- * Created by palo on 27/04/14.
+ * Failed to borrow a bike.
  */
-public class BikeBorrowFailedEvent extends BaseErrorEvent {
+public class BorrowBikeFailedEvent extends BaseErrorEvent {
 
 	public EState state;
 
-	public BikeBorrowFailedEvent(EState state, BaseError error) {
+	public BorrowBikeFailedEvent(EState state, BaseError error) {
 		super(error);
 		this.state = state;
 	}

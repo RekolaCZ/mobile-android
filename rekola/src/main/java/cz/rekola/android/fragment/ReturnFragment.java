@@ -5,19 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.BorrowedBike;
-import cz.rekola.android.api.model.error.MessageError;
-import cz.rekola.android.core.bus.BikeBorrowFailedEvent;
-import cz.rekola.android.core.bus.BikeBorrowedEvent;
 
 public class ReturnFragment extends BaseMainFragment {
 

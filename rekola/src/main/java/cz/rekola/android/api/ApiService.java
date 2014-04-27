@@ -26,6 +26,9 @@ public interface ApiService {
 	@GET("/bikes")
 	public void getBikes(@Header("X-Api-Key") String token, @Query("lat") String lat, @Query("lng") String lng,/*@Path("lat") double lat, @Path("lng") double lng,*/ Callback<List<Bike>> callback);
 
+	@GET("/bikes/mine")
+	public void getBorrowedBike(@Header("X-Api-Key") String token, Callback<BorrowedBike> callback);
+
 	@GET("/bikes/lock-code")
 	public void borrowBike(@Header("X-Api-Key") String token, @Query("bikeCode") int bikeCode, @Query("lat") String lat, @Query("lng") String lng, Callback<BorrowedBike> callback);
 }

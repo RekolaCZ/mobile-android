@@ -16,6 +16,8 @@ import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.requestmodel.Credentials;
 import cz.rekola.android.core.RekolaApp;
+import cz.rekola.android.core.bus.IsBorrowedBikeAvailableEvent;
+import cz.rekola.android.core.bus.IsBorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
 
@@ -81,8 +83,9 @@ public class LoginActivity extends Activity {
 	@Subscribe
 	public void loginAvailable(LoginAvailableEvent event) {
 		Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-		startActivity(intent);
+		if (getApp().getDataManager().isBorrowedBike() != null) {
+			startMainActivity();
+		}
 	}
 
 	@Subscribe
@@ -90,20 +93,21 @@ public class LoginActivity extends Activity {
 		Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
 	}
 
-	/*private void login() {
-		ApiService apiService = getApp().getApiService();
-		apiService.login(new Credentials("demo@vitekjezek.com", "heslo"), new Callback<Token>() {
-			@Override
-			public void success(Token resp, Response response) {
-				Toast.makeText(LoginActivity.this, "Success: " + response.getStatus(), Toast.LENGTH_SHORT).show();
-			}
+	@Subscribe
+	public void isBorrowedBikeAvailable(IsBorrowedBikeAvailableEvent event) {
+		Toast.makeText(LoginActivity.this, "Is bike borrowed known", Toast.LENGTH_SHORT).show();
+		startMainActivity();
+	}
 
-			@Override
-			public void failure(RetrofitError error) {
-				Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-			}
-		});
-	}*/
+	@Subscribe
+	public void isBorrowedBikeFailed(IsBorrowedBikeFailedEvent event) {
+		Toast.makeText(LoginActivity.this, "Bike borrowed error", Toast.LENGTH_SHORT).show();
+	}
+
+	private void startMainActivity() {
+		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+		startActivity(intent);
+	}
 
 	private RekolaApp getApp() {
 		return (RekolaApp) getApplication();

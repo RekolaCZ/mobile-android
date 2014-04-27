@@ -11,10 +11,12 @@ import cz.rekola.android.api.model.error.BikeConflictError;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.Credentials;
 import cz.rekola.android.core.RekolaApp;
-import cz.rekola.android.core.bus.BikeBorrowFailedEvent;
-import cz.rekola.android.core.bus.BikeBorrowedEvent;
+import cz.rekola.android.core.bus.BorrowBikeEvent;
+import cz.rekola.android.core.bus.BorrowBikeFailedEvent;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
+import cz.rekola.android.core.bus.IsBorrowedBikeAvailableEvent;
+import cz.rekola.android.core.bus.IsBorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
 import retrofit.Callback;
@@ -30,7 +32,8 @@ public class DataManager {
 
 	private Token token;
 	private List<Bike> bikes;
-	private BorrowedBike borrowedBike;
+	private BorrowedBike borrowedBike; // Can be null even after successful request.
+	private Boolean isBorrowedBike; // NULL if the state is not known yet.
 
 	public DataManager(RekolaApp app) {
 		this.app = app;
@@ -73,6 +76,41 @@ public class DataManager {
 		return null;
 	}
 
+	/**
+	 * Whether a bike is borrowed.
+	 * @return Whether a bike is borrowed or NULL if not known.
+	 */
+	public Boolean isBorrowedBike() {
+		if (isBorrowedBike != null) {
+			return isBorrowedBike;
+		}
+
+		ApiService apiService = app.getApiService();
+		apiService.getBorrowedBike(token.apiKey, new Callback<BorrowedBike>() {
+			@Override
+			public void success(BorrowedBike borrowedBike, Response response) {
+				DataManager.this.borrowedBike = borrowedBike;
+				isBorrowedBike = true;
+				app.getBus().post(new IsBorrowedBikeAvailableEvent());
+			}
+			@Override
+			public void failure(RetrofitError error) {
+				if (error.getResponse().getStatus() == 404) {
+					isBorrowedBike = false;
+					app.getBus().post(new IsBorrowedBikeAvailableEvent());
+				} else {
+					app.getBus().post(new IsBorrowedBikeFailedEvent());
+				}
+			}
+		});
+
+		return null;
+	}
+
+	/**
+	 * Returns borrowed bike.
+	 * @return Borrowed bike if known, NULL if no bike borrowed, NULL if not known whether a bike is borrowed.
+	 */
 	public BorrowedBike getBorrowedBike() {
 		return borrowedBike;
 	}
@@ -83,31 +121,32 @@ public class DataManager {
 			@Override
 			public void success(BorrowedBike borrowedBike, Response response) {
 				DataManager.this.borrowedBike = borrowedBike;
-				app.getBus().post(new BikeBorrowedEvent());
+				isBorrowedBike = true;
+				app.getBus().post(new BorrowBikeEvent());
 			}
 
 			@Override
 			public void failure(RetrofitError error) {
 				BaseError err;
-				BikeBorrowFailedEvent.EState state;
+				BorrowBikeFailedEvent.EState state;
 				switch(error.getResponse().getStatus()) {
 					case 400:
-						state = BikeBorrowFailedEvent.EState.WRONG_CODE;
+						state = BorrowBikeFailedEvent.EState.WRONG_CODE;
 						err = (MessageError) error.getBodyAs(MessageError.class);
 						break;
 					case 403:
-						state = BikeBorrowFailedEvent.EState.FORBIDDEN;
+						state = BorrowBikeFailedEvent.EState.FORBIDDEN;
 						err = (MessageError) error.getBodyAs(MessageError.class);
 						break;
 					case 409:
-						state = BikeBorrowFailedEvent.EState.CONFLICT;
+						state = BorrowBikeFailedEvent.EState.CONFLICT;
 						err = (BikeConflictError) error.getBodyAs(BikeConflictError.class);
 						break;
 					default:
-						state = BikeBorrowFailedEvent.EState.UNKNOWN;
+						state = BorrowBikeFailedEvent.EState.UNKNOWN;
 						err = null;
 				}
-				app.getBus().post(new BikeBorrowFailedEvent(state, err));
+				app.getBus().post(new BorrowBikeFailedEvent(state, err));
 			}
 		});
 	}

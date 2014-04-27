@@ -14,8 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.error.MessageError;
-import cz.rekola.android.core.bus.BikeBorrowFailedEvent;
-import cz.rekola.android.core.bus.BikeBorrowedEvent;
+import cz.rekola.android.core.bus.BorrowBikeEvent;
+import cz.rekola.android.core.bus.BorrowBikeFailedEvent;
 
 public class BorrowFragment extends BaseMainFragment {
 
@@ -47,12 +47,12 @@ public class BorrowFragment extends BaseMainFragment {
 	}
 
 	@Subscribe
-	public void bikeBorrowed(BikeBorrowedEvent event) {
+	public void bikeBorrowed(BorrowBikeEvent event) {
 		Toast.makeText(getActivity(), "Bike borrowed!", Toast.LENGTH_SHORT).show();
 	}
 
 	@Subscribe
-	public void bikeBorrowFailed(BikeBorrowFailedEvent event) {
+	public void bikeBorrowFailed(BorrowBikeFailedEvent event) {
 		if (event.error != null && event.error instanceof MessageError) {
 			Toast.makeText(getActivity(), ((MessageError)event.error).message, Toast.LENGTH_SHORT).show();
 		} else {
