@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.fragment.BorrowFragment;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
 
@@ -34,6 +35,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch(position) {
+			case 0:
+				return new BorrowFragment();
             case 1:
                 return new MapFragment();
             default:
