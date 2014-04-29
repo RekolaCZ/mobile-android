@@ -24,6 +24,8 @@ import cz.rekola.android.R;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
+import cz.rekola.android.core.loc.MyLocation;
+import cz.rekola.android.core.loc.MyLocationListener;
 
 public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWindowClickListener {
 
@@ -37,6 +39,12 @@ public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWin
         vMap.onResume();
         super.onResume();
     }
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		vMap.onPause();
+	}
 
     @Override
     public void onDestroy() {
@@ -68,11 +76,9 @@ public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWin
         MapsInitializer.initialize(this.getActivity());
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(50.085, 14.426), 12);
-        map.animateCamera(cameraUpdate);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownLatLng(), 12);
+        map.moveCamera(cameraUpdate);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText("Mapa");
         return rootView;
     }
 

@@ -19,14 +19,12 @@ import cz.rekola.android.core.bus.IsBorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.IsBorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
+import cz.rekola.android.core.loc.MyLocation;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class DataManager {
-
-	private static final String FAKE_LAT = "50.071667";
-	private static final String FAKE_LNG = "14.433804";
 
 	private RekolaApp app;
 
@@ -61,7 +59,8 @@ public class DataManager {
 		}
 
 		ApiService apiService = app.getApiService();
-		apiService.getBikes(token.apiKey, FAKE_LAT, FAKE_LNG, new Callback<List<Bike>>() {
+		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
+		apiService.getBikes(token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
 			@Override
 			public void success(List<Bike> bikes, Response response) {
 				DataManager.this.bikes = bikes;
@@ -117,7 +116,8 @@ public class DataManager {
 
 	public void borrowBike(int bikeCode) {
 		ApiService apiService = app.getApiService();
-		apiService.borrowBike(token.apiKey, bikeCode, FAKE_LAT, FAKE_LNG, new Callback<BorrowedBike>() {
+		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
+		apiService.borrowBike(token.apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<BorrowedBike>() {
 			@Override
 			public void success(BorrowedBike borrowedBike, Response response) {
 				DataManager.this.borrowedBike = borrowedBike;

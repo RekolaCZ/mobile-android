@@ -15,6 +15,7 @@ import cz.rekola.android.fragment.BorrowFragment;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
 import cz.rekola.android.fragment.ReturnFragment;
+import cz.rekola.android.fragment.ReturnMapFragment;
 
 /**
  * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
@@ -22,7 +23,7 @@ import cz.rekola.android.fragment.ReturnFragment;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int TAB_NUM = 3;
+    private static final int TAB_NUM = 4;
 
     private Context context; // TODO: Is this ok to keep?
 
@@ -42,6 +43,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new MapFragment();
 			case 2:
 				return new ReturnFragment();
+			case 3:
+				return new ReturnMapFragment();
             default:
                 return PlaceholderFragment.newInstance(position + 1);
         }
@@ -68,8 +71,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return context.getString(R.string.title_section2).toUpperCase(l);
             case 2:
                 return context.getString(R.string.title_section3).toUpperCase(l);
+			default:
+				return "section " + (position + 1);
         }
-        return null;
     }
 
 	public void startBikeDetail(Bike bike) {

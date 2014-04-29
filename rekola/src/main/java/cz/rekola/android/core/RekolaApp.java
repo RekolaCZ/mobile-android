@@ -7,6 +7,7 @@ import com.squareup.otto.Bus;
 import cz.rekola.android.api.ApiService;
 import cz.rekola.android.core.data.DataManager;
 import cz.rekola.android.core.data.PreferencesManager;
+import cz.rekola.android.core.loc.MyLocationManager;
 import retrofit.RestAdapter;
 
 public class RekolaApp extends Application {
@@ -15,6 +16,7 @@ public class RekolaApp extends Application {
 	private Bus bus;
 	private DataManager dataManager;
 	private PreferencesManager preferencesManager;
+	private MyLocationManager myLocationManager;
 
 	@Override
 	public void onCreate() {
@@ -28,6 +30,13 @@ public class RekolaApp extends Application {
 		bus = new Bus();
 		dataManager = new DataManager(this);
 		preferencesManager = new PreferencesManager(this);
+		myLocationManager = new MyLocationManager(this);
+	}
+
+
+	@Override
+	public void onTerminate() {
+		myLocationManager.terminate(); // TODO: Is this necessary?
 	}
 
 	public ApiService getApiService() {
@@ -43,4 +52,6 @@ public class RekolaApp extends Application {
 	public PreferencesManager getPreferencesManager() {
 		return preferencesManager;
 	}
+
+	public MyLocationManager getMyLocationManager() { return myLocationManager; }
 }
