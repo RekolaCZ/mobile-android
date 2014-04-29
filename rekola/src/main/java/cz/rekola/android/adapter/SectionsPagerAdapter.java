@@ -14,6 +14,7 @@ import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.fragment.BorrowFragment;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
+import cz.rekola.android.fragment.ProfileFragment;
 import cz.rekola.android.fragment.ReturnFragment;
 import cz.rekola.android.fragment.ReturnMapFragment;
 
@@ -23,7 +24,7 @@ import cz.rekola.android.fragment.ReturnMapFragment;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int TAB_NUM = 4;
+    private static final int TAB_NUM = 5;
 
     private Context context; // TODO: Is this ok to keep?
 
@@ -39,12 +40,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch(position) {
 			case 0:
 				return new BorrowFragment();
-            case 1:
-                return new MapFragment();
-			case 2:
+			case 1:
 				return new ReturnFragment();
+            case 2:
+                return new MapFragment();
 			case 3:
 				return new ReturnMapFragment();
+			case 4:
+				return new ProfileFragment();
             default:
                 return PlaceholderFragment.newInstance(position + 1);
         }
@@ -66,11 +69,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Locale l = Locale.getDefault();
         switch (position) {
             case 0:
-                return context.getString(R.string.title_section1).toUpperCase(l);
+                return "Borrow";
             case 1:
-                return context.getString(R.string.title_section2).toUpperCase(l);
+                return "Return";
             case 2:
-                return context.getString(R.string.title_section3).toUpperCase(l);
+                return "Map";
+			case 3:
+				return "Return Map";
+			case 4:
+				return "Profile";
 			default:
 				return "section " + (position + 1);
         }

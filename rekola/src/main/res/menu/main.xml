@@ -3,7 +3,7 @@
     tools:context="cz.rekola.android.activity.MainActivity" >
     
     <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:title="Settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>

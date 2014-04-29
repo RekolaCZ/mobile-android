@@ -23,8 +23,8 @@ public interface ApiService {
 	@POST("/accounts/mine/login")
 	public void login(@Body Credentials body, Callback<Token> callback);
 
-	@GET("/bikes")
-	public void getBikes(@Header("X-Api-Key") String token, @Query("lat") String lat, @Query("lng") String lng,/*@Path("lat") double lat, @Path("lng") double lng,*/ Callback<List<Bike>> callback);
+	@GET("/bikes/all")
+	public void getBikes(@Header("X-Api-Key") String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
 
 	@GET("/bikes/mine")
 	public void getBorrowedBike(@Header("X-Api-Key") String token, Callback<BorrowedBike> callback);

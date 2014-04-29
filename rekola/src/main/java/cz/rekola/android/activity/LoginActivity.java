@@ -41,9 +41,6 @@ public class LoginActivity extends Activity {
 		ButterKnife.inject(this);
 		getApp().getBus().register(this);
 
-		vUsername.setText(getApp().getPreferencesManager().getUsername());
-		vPassword.setText(getApp().getPreferencesManager().getPassword());
-
 		vLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -67,6 +64,13 @@ public class LoginActivity extends Activity {
 		if (viewHelper.canLogin()) {
 			getApp().getDataManager().login(viewHelper.getCredentials());
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		vUsername.setText(getApp().getPreferencesManager().getUsername());
+		vPassword.setText(getApp().getPreferencesManager().getPassword());
 	}
 
 	@Override
