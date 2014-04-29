@@ -4,16 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.webkit.WebView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.core.Constants;
+import cz.rekola.android.view.ApiWebView;
 
 public class ProfileFragment extends BaseMainFragment {
 
-	@InjectView(R.id.logout)
-	Button vLogout;
+	@InjectView(R.id.profile_web)
+	ApiWebView vWeb;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,13 +27,7 @@ public class ProfileFragment extends BaseMainFragment {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
-		vLogout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				getApp().getPreferencesManager().setPassword("");
-				getActivity().finish();
-			}
-		});
+		vWeb.setData(Constants.WEBAPI_PROFILE_URL);
 	}
 
 }

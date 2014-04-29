@@ -6,10 +6,11 @@
 	android:gravity="center"
 	android:layout_gravity="top|center_horizontal">
 
-	<cz.rekola.android.view.ApiWebView
-		android:id="@+id/profile_web"
+	<WebView
+		android:id="@+id/bike_web"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:layout_weight="1"
 		android:layout_gravity="center" />
 
 </LinearLayout>

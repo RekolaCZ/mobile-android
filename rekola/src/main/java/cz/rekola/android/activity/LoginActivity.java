@@ -60,10 +60,6 @@ public class LoginActivity extends Activity {
 				Toast.makeText(LoginActivity.this, "Go to the web!", Toast.LENGTH_SHORT).show();
 			}
 		});
-
-		if (viewHelper.canLogin()) {
-			getApp().getDataManager().login(viewHelper.getCredentials());
-		}
 	}
 
 	@Override
@@ -71,6 +67,10 @@ public class LoginActivity extends Activity {
 		super.onResume();
 		vUsername.setText(getApp().getPreferencesManager().getUsername());
 		vPassword.setText(getApp().getPreferencesManager().getPassword());
+
+		if (viewHelper.canLogin()) {
+			getApp().getDataManager().login(viewHelper.getCredentials());
+		}
 	}
 
 	@Override

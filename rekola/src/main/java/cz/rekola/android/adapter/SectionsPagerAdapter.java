@@ -6,11 +6,13 @@ import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.webkit.WebViewFragment;
 
 import java.util.Locale;
 
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.fragment.BikeFragment;
 import cz.rekola.android.fragment.BorrowFragment;
 import cz.rekola.android.fragment.MapFragment;
 import cz.rekola.android.fragment.PlaceholderFragment;
@@ -24,7 +26,7 @@ import cz.rekola.android.fragment.ReturnMapFragment;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int TAB_NUM = 5;
+    private static final int TAB_NUM = 6;
 
     private Context context; // TODO: Is this ok to keep?
 
@@ -42,11 +44,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 				return new BorrowFragment();
 			case 1:
 				return new ReturnFragment();
-            case 2:
-                return new MapFragment();
+			case 2:
+				return new MapFragment();
 			case 3:
 				return new ReturnMapFragment();
 			case 4:
+				return new BikeFragment();
+			case 5:
 				return new ProfileFragment();
             default:
                 return PlaceholderFragment.newInstance(position + 1);
@@ -60,7 +64,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
         return TAB_NUM;
     }
 
@@ -77,6 +80,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 			case 3:
 				return "Return Map";
 			case 4:
+				return "Bike";
+			case 5:
 				return "Profile";
 			default:
 				return "section " + (position + 1);
