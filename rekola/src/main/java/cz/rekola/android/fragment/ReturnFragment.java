@@ -41,13 +41,13 @@ public class ReturnFragment extends BaseMainFragment {
 	}
 
 	private void populateData() {
-		BorrowedBike borrowedBike= getApp().getDataManager().getBorrowedBike();
+		BorrowedBike borrowedBike = getApp().getDataManager().getBorrowedBike();
 		if (borrowedBike == null) {
 			vBikeName.setText("No bike borrowed.");
 			return;
 		}
 
-		vBikeName.setText(borrowedBike.bike.name);
+		vBikeName.setText(borrowedBike.name);
 		vLockCode.setText(borrowedBike.lockCode);
 	}
 }
