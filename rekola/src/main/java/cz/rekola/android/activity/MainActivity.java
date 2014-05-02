@@ -1,98 +1,87 @@
 package cz.rekola.android.activity;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import cz.rekola.android.R;
-import cz.rekola.android.adapter.SectionsPagerAdapter;
 import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.core.RekolaApp;
+import cz.rekola.android.core.page.PageManager;
 
-public class MainActivity extends Activity implements ActionBar.TabListener {
+public class MainActivity extends Activity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+	@InjectView(R.id.fragment_container)
+	FrameLayout vFragmentContainer;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
+	private PageManager pageManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+		ButterKnife.inject(this);
 
-        // Set up the action bar.
         final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
+		actionBar.setTitle("");
+		actionBar.setHomeButtonEnabled(false); // TODO: How to add up button?
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(this, getFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
-
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
-        }
+		Boolean isBorrowedBike = getApp().getDataManager().isBorrowedBike();
+		pageManager = new PageManager(R.id.fragment_container);
+		pageManager.setIsBorrowedBike(isBorrowedBike);
+		if (isBorrowedBike != null)
+			pageManager.setState(isBorrowedBike ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_actions, menu);
+		pageManager.setupOptionsMenu(menu);
+		return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-	public void startBikeDetail(Bike bike) {
-		mViewPager.setCurrentItem(1);
-		mSectionsPagerAdapter.startBikeDetail(bike);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_borrow:
+				pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager());
+				break;
+			case R.id.action_return:
+				pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager());
+				break;
+			case R.id.action_map:
+				pageManager.setState(PageManager.EPageState.MAP, getFragmentManager());
+				break;
+			case R.id.action_profile:
+				pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager());
+				break;
+			case R.id.action_about:
+				pageManager.setState(PageManager.EPageState.ABOUT, getFragmentManager());
+				break;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		invalidateOptionsMenu();
+		return true;
 	}
 
+	/*@Override
+	public boolean onNavigateUp() {
+		return false;
+	}*/
 
+	public void startBikeDetail(Bike bike) {
+	}
 
+	private RekolaApp getApp() {
+		return (RekolaApp) getApplication();
+	}
 }
