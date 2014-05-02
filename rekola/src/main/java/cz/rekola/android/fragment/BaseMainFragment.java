@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import cz.rekola.android.activity.MainActivity;
+import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
 
 public abstract class BaseMainFragment extends Fragment {
@@ -21,7 +22,7 @@ public abstract class BaseMainFragment extends Fragment {
 		getApp().getBus().unregister(this);
 	}
 
-	MainActivity getAct() {
+	PageController getPageController() {
 		return (MainActivity) getActivity();
 	}
 

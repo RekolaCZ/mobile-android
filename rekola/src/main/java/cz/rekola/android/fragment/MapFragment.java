@@ -105,7 +105,7 @@ public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWin
 		Bike bike = markerMap.get(marker);
 		if (bike == null)
 			return;
-		getAct().startBikeDetail(bike);
+		//getAct().startBikeDetail(bike);
 	}
 
 	private void setupMap() {

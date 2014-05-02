@@ -11,11 +11,11 @@ import android.widget.FrameLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
-import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.page.PageManager;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements PageController {
 
 	@InjectView(R.id.fragment_container)
 	FrameLayout vFragmentContainer;
@@ -30,14 +30,14 @@ public class MainActivity extends Activity {
 
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
-		actionBar.setTitle("");
+		//actionBar.setTitle("");
 		actionBar.setHomeButtonEnabled(false); // TODO: How to add up button?
 
 		Boolean isBorrowedBike = getApp().getDataManager().isBorrowedBike();
 		pageManager = new PageManager(R.id.fragment_container);
 		pageManager.setIsBorrowedBike(isBorrowedBike);
 		if (isBorrowedBike != null)
-			pageManager.setState(isBorrowedBike ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager());
+			pageManager.setState(isBorrowedBike ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
     }
 
     @Override
@@ -52,19 +52,22 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.action_borrow:
-				pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager());
+				pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
 				break;
 			case R.id.action_return:
-				pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager());
+				pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar());
 				break;
 			case R.id.action_map:
-				pageManager.setState(PageManager.EPageState.MAP, getFragmentManager());
+				pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar());
 				break;
 			case R.id.action_profile:
-				pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager());
+				pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager(), getActionBar());
 				break;
 			case R.id.action_about:
-				pageManager.setState(PageManager.EPageState.ABOUT, getFragmentManager());
+				pageManager.setState(PageManager.EPageState.ABOUT, getFragmentManager(), getActionBar());
+				break;
+			case android.R.id.home:
+				pageManager.setUpState(getFragmentManager(), getActionBar());
 				break;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -78,7 +81,10 @@ public class MainActivity extends Activity {
 		return false;
 	}*/
 
-	public void startBikeDetail(Bike bike) {
+	@Override
+	public void requestReturnMap() {
+		pageManager.setState(PageManager.EPageState.RET_MAP, getFragmentManager(), getActionBar());
+		invalidateOptionsMenu();
 	}
 
 	private RekolaApp getApp() {

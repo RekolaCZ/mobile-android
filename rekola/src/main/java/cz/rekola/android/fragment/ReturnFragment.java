@@ -36,6 +36,7 @@ public class ReturnFragment extends BaseMainFragment {
 		vReturn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				getPageController().requestReturnMap();
 			}
 		});
 	}

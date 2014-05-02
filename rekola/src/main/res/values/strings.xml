@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">Rekola</string>
+	<string name="page_return_map_title">Return bike</string>
 
 </resources>
