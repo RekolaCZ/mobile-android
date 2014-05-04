@@ -1,10 +1,9 @@
-package cz.rekola.android.fragment;
+package cz.rekola.android.fragment.natural;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,8 +23,7 @@ import cz.rekola.android.R;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
-import cz.rekola.android.core.loc.MyLocation;
-import cz.rekola.android.core.loc.MyLocationListener;
+import cz.rekola.android.fragment.base.BaseMainFragment;
 
 public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWindowClickListener {
 

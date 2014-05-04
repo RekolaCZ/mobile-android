@@ -1,4 +1,4 @@
-package cz.rekola.android.fragment;
+package cz.rekola.android.fragment.natural;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
-import cz.rekola.android.api.model.BorrowedBike;
 import cz.rekola.android.core.data.MyBikeWrapper;
+import cz.rekola.android.fragment.base.BaseMainFragment;
 
 public class ReturnFragment extends BaseMainFragment {
 

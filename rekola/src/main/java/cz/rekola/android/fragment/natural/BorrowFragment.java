@@ -1,4 +1,4 @@
-package cz.rekola.android.fragment;
+package cz.rekola.android.fragment.natural;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import cz.rekola.android.R;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.core.bus.LockCodeEvent;
 import cz.rekola.android.core.bus.LockCodeFailedEvent;
+import cz.rekola.android.fragment.base.BaseMainFragment;
 
 public class BorrowFragment extends BaseMainFragment {
 

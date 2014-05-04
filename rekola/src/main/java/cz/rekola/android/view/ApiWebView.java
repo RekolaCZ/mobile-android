@@ -1,6 +1,5 @@
 package cz.rekola.android.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -9,9 +8,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import java.net.URL;
+import java.util.Map;
 
-import cz.rekola.android.core.RekolaApp;
+import cz.rekola.android.webapi.WebApiHandler;
 
 public class ApiWebView extends WebView {
 
@@ -31,7 +30,8 @@ public class ApiWebView extends WebView {
 		super(context, attrs, defStyle, privateBrowsing);
 	}
 
-	public void setData(String url) {
+	public void init(WebApiHandler handler, String startUrl, Map<String, String> additionalHttpHeaders) {
+		final WebApiHandler apiHandler = handler;
 		getSettings().setJavaScriptEnabled(true);
 		setWebChromeClient(new WebChromeClient() {
 			public void onProgressChanged(WebView view, int progress) {
@@ -41,17 +41,16 @@ public class ApiWebView extends WebView {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 				Toast.makeText(getContext(), "Oh no! " + description, Toast.LENGTH_SHORT).show();
+				// TODO: Handle api key expiration!
 			}
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				boolean shouldOverride = false;
 				Uri uri = Uri.parse(url);
-
-				return shouldOverride;
+				return apiHandler.onWebApiEvent(url);
 			}
 		});
 
-		loadUrl(url);
+		loadUrl(startUrl, additionalHttpHeaders);
 	}
 }

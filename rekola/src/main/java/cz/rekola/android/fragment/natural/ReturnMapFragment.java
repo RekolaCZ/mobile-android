@@ -1,8 +1,7 @@
-package cz.rekola.android.fragment;
+package cz.rekola.android.fragment.natural;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,14 +13,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
-import cz.rekola.android.api.model.BorrowedBike;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.ReturningBike;
 import cz.rekola.android.api.requestmodel.ReturningLocation;
@@ -30,6 +27,7 @@ import cz.rekola.android.core.bus.ReturnBikeFailedEvent;
 import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.core.loc.MyLocation;
 import cz.rekola.android.core.loc.MyLocationListener;
+import cz.rekola.android.fragment.base.BaseMainFragment;
 
 public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.OnMyLocationButtonClickListener,*/ MyLocationListener {
 
@@ -116,7 +114,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	@Subscribe
 	public void bikeReturned(ReturnBikeEvent event) {
 		Toast.makeText(getActivity(), "Bike returned!", Toast.LENGTH_SHORT).show();
-		getPageController().requestMap();
+		getPageController().requestWebBikeReturned();
 	}
 
 	@Subscribe

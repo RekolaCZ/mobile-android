@@ -3,5 +3,7 @@
 
     <string name="app_name">Rekola</string>
 	<string name="page_return_map_title">Return bike</string>
+	<string name="page_web_bike_detail_title">Bike detail</string>
+	<string name="page_web_return_title">Bike returned</string>
 
 </resources>

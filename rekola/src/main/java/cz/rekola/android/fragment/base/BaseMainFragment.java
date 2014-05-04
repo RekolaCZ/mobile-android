@@ -1,4 +1,4 @@
-package cz.rekola.android.fragment;
+package cz.rekola.android.fragment.base;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -22,11 +22,11 @@ public abstract class BaseMainFragment extends Fragment {
 		getApp().getBus().unregister(this);
 	}
 
-	PageController getPageController() {
+	public PageController getPageController() {
 		return (MainActivity) getActivity();
 	}
 
-	RekolaApp getApp() {
+	public RekolaApp getApp() {
 		return (RekolaApp) getActivity().getApplication();
 	}
 

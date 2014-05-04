@@ -95,7 +95,13 @@ public class MainActivity extends Activity implements PageController {
 
 	@Override
 	public void requestReturnMap() {
-		pageManager.setState(PageManager.EPageState.RET_MAP, getFragmentManager(), getActionBar());
+		pageManager.setState(PageManager.EPageState.RETURN_MAP, getFragmentManager(), getActionBar());
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	public void requestWebBikeReturned() {
+		pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getActionBar());
 		invalidateOptionsMenu();
 	}
 

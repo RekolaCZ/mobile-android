@@ -1,4 +1,4 @@
-package cz.rekola.android.fragment;
+package cz.rekola.android.fragment.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +12,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.core.Constants;
+import cz.rekola.android.fragment.base.BaseMainFragment;
 import cz.rekola.android.view.ApiWebView;
+import cz.rekola.android.webapi.WebApiHandler;
 
-public class ProfileFragment extends BaseMainFragment {
+public abstract class BaseWebFragment extends BaseMainFragment implements WebApiHandler {
 
 	@InjectView(R.id.profile_web)
 	ApiWebView vWeb;
@@ -33,8 +35,13 @@ public class ProfileFragment extends BaseMainFragment {
 		Map extraHeaderMap = new HashMap<String, String>();
 		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
 
-		//vWeb.setData(Constants.WEBAPI_PROFILE_URL);
-		vWeb.loadUrl(Constants.WEBAPI_PROFILE_URL, extraHeaderMap);
+		vWeb.init(this, getStartUrl(), extraHeaderMap);
 	}
 
+	@Override
+	public boolean onWebApiEvent(String paramUrl) {
+		return false;
+	}
+
+	public abstract String getStartUrl();
 }
