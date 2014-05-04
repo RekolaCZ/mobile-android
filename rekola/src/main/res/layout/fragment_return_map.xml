@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+	android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-		android:layout_weight="1"/>
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="1">
+
+		<com.google.android.gms.maps.MapView
+			android:id="@+id/mapView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1"/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:clickable="false"
+			android:src="@drawable/ic_action_bar_icon"/>
+
+	</FrameLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0">
 
 	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:padding="@dimen/grid_8"
 		android:layout_gravity="top|center_horizontal"
@@ -22,6 +42,7 @@
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_weight="0"
 			android:text="Note:"
 			android:layout_gravity="center" />
 
@@ -29,16 +50,19 @@
 			android:id="@+id/note"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_weight="0"
 			android:text=""
 			android:layout_gravity="center" />
 
 		<Button
-			android:id="@+id/return_bike"
+			android:id="@+id/bike_returned"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="0"
-			android:text="Return the bike"/>
+			android:text="Bike returned"/>
 
 	</LinearLayout>
+
+	</FrameLayout>
 
 </LinearLayout>

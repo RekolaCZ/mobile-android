@@ -1,11 +1,12 @@
 package cz.rekola.android.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,24 +14,31 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.api.model.BorrowedBike;
+import cz.rekola.android.api.model.error.MessageError;
+import cz.rekola.android.api.requestmodel.ReturningBike;
+import cz.rekola.android.api.requestmodel.ReturningLocation;
+import cz.rekola.android.core.bus.ReturnBikeEvent;
+import cz.rekola.android.core.bus.ReturnBikeFailedEvent;
 import cz.rekola.android.core.loc.MyLocation;
 import cz.rekola.android.core.loc.MyLocationListener;
 
-public class ReturnMapFragment extends BaseMainFragment implements GoogleMap.OnMyLocationButtonClickListener, MyLocationListener {
+public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.OnMyLocationButtonClickListener,*/ MyLocationListener {
 
 	MapView vMap;
 	GoogleMap map;
 
-	@InjectView(R.id.return_bike)
-	Button vReturn;
+	@InjectView(R.id.note)
+	EditText vNote;
+	@InjectView(R.id.bike_returned)
+	Button vReturned;
 
-	private Marker bikeMarker;
+	//private Marker bikeMarker;
 
 	@Override
 	public void onResume() {
@@ -70,7 +78,7 @@ public class ReturnMapFragment extends BaseMainFragment implements GoogleMap.OnM
 		map.getUiSettings().setMyLocationButtonEnabled(true);
 		map.setMyLocationEnabled(true);
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		map.setOnMyLocationButtonClickListener(this);
+		//map.setOnMyLocationButtonClickListener(this);
 
 		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
 		MapsInitializer.initialize(this.getActivity());
@@ -86,29 +94,59 @@ public class ReturnMapFragment extends BaseMainFragment implements GoogleMap.OnM
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
-		setupMap();
+
+		vReturned.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				LatLng center = map.getCameraPosition().target;
+				BorrowedBike borrowedBike = getApp().getDataManager().getBorrowedBike();
+				if (borrowedBike == null || borrowedBike.bikeCode == null || borrowedBike.bikeCode.length() == 0) {
+					Toast.makeText(getActivity(), "Unknown borrowed bike code!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				// TODO: May throw NumberFormatException!
+				getApp().getDataManager().returnBike(Integer.parseInt(borrowedBike.bikeCode),
+						new ReturningBike(new ReturningLocation(center.latitude, center.longitude, vNote.getText().toString())));
+			}
+		});
 	}
 
-	@Override
+	@Subscribe
+	public void bikeReturned(ReturnBikeEvent event) {
+		Toast.makeText(getActivity(), "Bike returned!", Toast.LENGTH_SHORT).show();
+	}
+
+	@Subscribe
+	public void bikeReturnFailed(ReturnBikeFailedEvent event) {
+		if (event.error != null && event.error instanceof MessageError) {
+			Toast.makeText(getActivity(), ((MessageError)event.error).message, Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(getActivity(), "Failed to return the bike!", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	/*@Override
 	public boolean onMyLocationButtonClick() {
 		if (bikeMarker != null) {
 			setupMap();
 		}
 
 		return false;
-	}
+	}*/
 
-	private void setupMap() {
+	/*private void setupMap() {
 		map.clear();
 		bikeMarker = map.addMarker(new MarkerOptions()
 				.position(getApp().getMyLocationManager().getLastKnownLatLng())
 				.title("TODO: Bike name")
 				.draggable(true));
-	}
+	}*/
 
 	@Override
 	public void onMyLocationChanged(MyLocation myLocation) {
-		setupMap();
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownLatLng(), 17);
+		map.animateCamera(cameraUpdate);
+		//setupMap();
 	}
 
 	@Override
