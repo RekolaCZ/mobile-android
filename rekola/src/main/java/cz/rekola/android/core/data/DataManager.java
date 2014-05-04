@@ -42,7 +42,7 @@ public class DataManager {
 
 	public void login(Credentials credentials) {
 		ApiService apiService = app.getApiService();
-		apiService.login(credentials, new Callback<Token>() {
+		apiService.login(app.getVersionManager().getUserAgent(), credentials, new Callback<Token>() {
 			@Override
 			public void success(Token resp, Response response) {
 				token = resp;
@@ -57,6 +57,10 @@ public class DataManager {
 		});
 	}
 
+	public Token getToken() {
+		return token;
+	}
+
 	public List<Bike> getBikes() {
 		if (bikes != null) {
 			return bikes;
@@ -64,7 +68,7 @@ public class DataManager {
 
 		ApiService apiService = app.getApiService();
 		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-		apiService.getBikes(token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
+		apiService.getBikes(app.getVersionManager().getUserAgent(), token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
 			@Override
 			public void success(List<Bike> bikes, Response response) {
 				DataManager.this.bikes = bikes;
@@ -91,7 +95,7 @@ public class DataManager {
 
 	private void updateBorrowedBike() {
 		ApiService apiService = app.getApiService();
-		apiService.getBorrowedBike(token.apiKey, new Callback<BorrowedBike>() {
+		apiService.getBorrowedBike(app.getVersionManager().getUserAgent(), token.apiKey, new Callback<BorrowedBike>() {
 			@Override
 			public void success(BorrowedBike borrowedBike, Response response) {
 				myBike = new MyBikeWrapper(borrowedBike);
@@ -113,7 +117,7 @@ public class DataManager {
 	public void borrowBike(int bikeCode) {
 		ApiService apiService = app.getApiService();
 		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-		apiService.borrowBike(token.apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<LockCode>() {
+		apiService.borrowBike(app.getVersionManager().getUserAgent(), token.apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<LockCode>() {
 			@Override
 			public void success(LockCode lockCode, Response response) {
 				myBike = new MyBikeWrapper(lockCode);
@@ -149,7 +153,7 @@ public class DataManager {
 
 	public void returnBike(int bikeCode, ReturningBike returningBike) {
 		ApiService apiService = app.getApiService();
-		apiService.returnBike(token.apiKey, bikeCode, returningBike, new Callback<Object>() {
+		apiService.returnBike(app.getVersionManager().getUserAgent(), token.apiKey, bikeCode, returningBike, new Callback<Object>() {
 
 			@Override
 			public void success(Object empty, Response response) {

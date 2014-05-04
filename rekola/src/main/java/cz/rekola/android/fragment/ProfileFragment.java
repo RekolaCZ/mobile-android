@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -27,7 +29,12 @@ public class ProfileFragment extends BaseMainFragment {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
-		vWeb.setData(Constants.WEBAPI_PROFILE_URL);
+		// TODO: Handle api key expiration!
+		Map extraHeaderMap = new HashMap<String, String>();
+		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
+
+		//vWeb.setData(Constants.WEBAPI_PROFILE_URL);
+		vWeb.loadUrl(Constants.WEBAPI_PROFILE_URL, extraHeaderMap);
 	}
 
 }

@@ -147,6 +147,8 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
 	@Override
 	public void onMyLocationChanged(MyLocation myLocation) {
+		// TODO: This may cause location update just before a user clicks on the return button!
+		// => Bike will be returned to a different position.
 		mapLocUpdater.updateMapPosition(myLocation);
 	}
 
