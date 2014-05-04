@@ -82,10 +82,6 @@ public class MyLocationManager implements com.google.android.gms.location.Locati
 		return myLocation;
 	}
 
-	public LatLng getLastKnownLatLng() {
-		return new LatLng(myLocation.lat, myLocation.lng);
-	}
-
 	@Override
 	public void onConnected(Bundle bundle) {
 		locationRequest = LocationRequest.create();

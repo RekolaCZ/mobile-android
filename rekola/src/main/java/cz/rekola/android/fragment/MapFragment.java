@@ -76,7 +76,7 @@ public class MapFragment extends BaseMainFragment implements GoogleMap.OnInfoWin
         MapsInitializer.initialize(this.getActivity());
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownLatLng(), 12);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 12);
         map.moveCamera(cameraUpdate);
 
         return rootView;

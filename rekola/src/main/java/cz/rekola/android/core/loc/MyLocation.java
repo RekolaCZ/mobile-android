@@ -1,5 +1,7 @@
 package cz.rekola.android.core.loc;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class MyLocation {
 
 	public final Float acc;
@@ -10,6 +12,10 @@ public class MyLocation {
 		this.acc = acc;
 		this.lat = lat;
 		this.lng = lng;
+	}
+
+	public LatLng getLatLng() {
+		return new LatLng(lat, lng);
 	}
 
 }

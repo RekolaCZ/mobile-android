@@ -2,6 +2,7 @@ package cz.rekola.android.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.otto.Subscribe;
 
@@ -34,12 +36,12 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	MapView vMap;
 	GoogleMap map;
 
+	private MapLocationUpdater mapLocUpdater = new MapLocationUpdater();
+
 	@InjectView(R.id.note)
 	EditText vNote;
 	@InjectView(R.id.bike_returned)
 	Button vReturned;
-
-	//private Marker bikeMarker;
 
 	@Override
 	public void onResume() {
@@ -79,13 +81,12 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 		map.getUiSettings().setMyLocationButtonEnabled(true);
 		map.setMyLocationEnabled(true);
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		//map.setOnMyLocationButtonClickListener(this);
 
 		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
 		MapsInitializer.initialize(this.getActivity());
 
 		// Updates the location and zoom of the MapView
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownLatLng(), 17);
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 15);
 		map.moveCamera(cameraUpdate);
 
 		return rootView;
@@ -146,13 +147,37 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
 	@Override
 	public void onMyLocationChanged(MyLocation myLocation) {
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownLatLng(), 17);
-		map.animateCamera(cameraUpdate);
-		//setupMap();
+		mapLocUpdater.updateMapPosition(myLocation);
 	}
 
 	@Override
 	public void onMyLocationError() {
 
+	}
+
+	private class MapLocationUpdater {
+		private int posUpdatesCount = 2;
+		private float bestAcc = 1000;
+
+		void updateMapPosition(MyLocation myLocation) {
+			if (posUpdatesCount <= 0)
+				return;
+
+			float acc = myLocation.acc == null ? bestAcc : myLocation.acc;
+			if (acc > bestAcc)
+				return;
+
+			int zoomLevel = 15;
+			if (acc <= 100)
+				zoomLevel = 16;
+			if (acc <= 40)
+				zoomLevel = 17;
+
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLocation.getLatLng(), zoomLevel);
+			map.animateCamera(cameraUpdate);
+
+			bestAcc = acc;
+			posUpdatesCount--;
+		}
 	}
 }
