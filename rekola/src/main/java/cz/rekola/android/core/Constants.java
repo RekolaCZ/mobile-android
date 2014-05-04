@@ -17,4 +17,7 @@ public class Constants {
 	public static final String WEBAPI_PROFILE_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";
 	public static final String WEBAPI_ABOUT_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1"; // TODO: Replace with native
 
+	public static final String BROWSER_RECOVER_PASSWORD_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";
+	public static final String BROWSER_REGISTRATION_URL = "http://www.rekola.cz/register/credentials";
+
 }

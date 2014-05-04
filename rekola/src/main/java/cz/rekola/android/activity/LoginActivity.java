@@ -2,6 +2,7 @@ package cz.rekola.android.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -15,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.requestmodel.Credentials;
+import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
@@ -31,6 +33,8 @@ public class LoginActivity extends Activity {
 	Button vLogin;
 	@InjectView(R.id.recover_password)
 	Button vRecoverPassword;
+	@InjectView(R.id.registration)
+	Button vRegistration;
 
 	private ViewHelper viewHelper = new ViewHelper();
 
@@ -56,7 +60,18 @@ public class LoginActivity extends Activity {
 		vRecoverPassword.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(LoginActivity.this, "Go to the web!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, "Recover password!", Toast.LENGTH_SHORT).show();
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_RECOVER_PASSWORD_URL));
+				startActivity(browserIntent);
+			}
+		});
+
+		vRegistration.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Toast.makeText(LoginActivity.this, "Registration!", Toast.LENGTH_SHORT).show();
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
+				startActivity(browserIntent);
 			}
 		});
 	}

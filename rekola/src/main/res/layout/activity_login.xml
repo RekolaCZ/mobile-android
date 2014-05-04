@@ -42,6 +42,12 @@
         android:id="@+id/recover_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgotten Password"/>
+        android:text="Forgot password?"/>
+
+	<Button
+		android:id="@+id/registration"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Registration"/>
 
 </LinearLayout>
