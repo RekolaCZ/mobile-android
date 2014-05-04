@@ -26,7 +26,7 @@
 		android:id="@+id/borrow"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Borrow the bike"/>
+		android:text="Borrow a bike"/>
 
 	<TextView
 		android:layout_width="match_parent"

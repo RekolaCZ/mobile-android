@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.BorrowedBike;
+import cz.rekola.android.core.data.MyBikeWrapper;
 
 public class ReturnFragment extends BaseMainFragment {
 
@@ -42,13 +43,25 @@ public class ReturnFragment extends BaseMainFragment {
 	}
 
 	private void populateData() {
-		BorrowedBike borrowedBike = getApp().getDataManager().getBorrowedBike();
-		if (borrowedBike == null) {
-			vBikeName.setText("No bike borrowed.");
+		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
+		if (myBike == null || !myBike.isBorrowed()) {
+			setData("No bike borrowed.", "");
 			return;
 		}
 
-		vBikeName.setText(borrowedBike.name);
-		vLockCode.setText(borrowedBike.lockCode);
+		if (myBike.bike != null) {
+			setData(myBike.bike.name, myBike.bike.lockCode);
+			return;
+		}
+
+		if (myBike.lockCode != null) {
+			setData(myBike.lockCode.bike.name, myBike.lockCode.lockCode);
+			return;
+		}
+	}
+
+	private void setData(String name, String lockCode) {
+		vBikeName.setText(name);
+		vLockCode.setText(lockCode);
 	}
 }

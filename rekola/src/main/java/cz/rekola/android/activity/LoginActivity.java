@@ -16,8 +16,8 @@ import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.requestmodel.Credentials;
 import cz.rekola.android.core.RekolaApp;
-import cz.rekola.android.core.bus.IsBorrowedBikeAvailableEvent;
-import cz.rekola.android.core.bus.IsBorrowedBikeFailedEvent;
+import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
+import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
 
@@ -39,7 +39,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		ButterKnife.inject(this);
-		getApp().getBus().register(this);
 
 		vLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -65,6 +64,7 @@ public class LoginActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		getApp().getBus().register(this);
 		vUsername.setText(getApp().getPreferencesManager().getUsername());
 		vPassword.setText(getApp().getPreferencesManager().getPassword());
 
@@ -74,8 +74,13 @@ public class LoginActivity extends Activity {
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onPause() {
+		super.onPause();
 		getApp().getBus().unregister(this);
+	}
+
+	@Override
+	public void onDestroy() {
 		super.onDestroy();
 	}
 
@@ -87,7 +92,7 @@ public class LoginActivity extends Activity {
 	@Subscribe
 	public void loginAvailable(LoginAvailableEvent event) {
 		Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-		if (getApp().getDataManager().isBorrowedBike() != null) {
+		if (getApp().getDataManager().getBorrowedBike() != null) {
 			startMainActivity();
 		}
 	}
@@ -98,13 +103,13 @@ public class LoginActivity extends Activity {
 	}
 
 	@Subscribe
-	public void isBorrowedBikeAvailable(IsBorrowedBikeAvailableEvent event) {
+	public void isBorrowedBikeAvailable(BorrowedBikeAvailableEvent event) {
 		Toast.makeText(LoginActivity.this, "Is bike borrowed known", Toast.LENGTH_SHORT).show();
 		startMainActivity();
 	}
 
 	@Subscribe
-	public void isBorrowedBikeFailed(IsBorrowedBikeFailedEvent event) {
+	public void isBorrowedBikeFailed(BorrowedBikeFailedEvent event) {
 		Toast.makeText(LoginActivity.this, "Bike borrowed error", Toast.LENGTH_SHORT).show();
 	}
 

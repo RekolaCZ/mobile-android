@@ -5,11 +5,11 @@ import cz.rekola.android.api.model.error.BaseError;
 /**
  * Failed to borrow a bike.
  */
-public class BorrowBikeFailedEvent extends BaseErrorEvent {
+public class LockCodeFailedEvent extends BaseErrorEvent {
 
 	public EState state;
 
-	public BorrowBikeFailedEvent(EState state, BaseError error) {
+	public LockCodeFailedEvent(EState state, BaseError error) {
 		super(error);
 		this.state = state;
 	}

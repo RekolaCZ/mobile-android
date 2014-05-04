@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.view.Menu;
 
 import cz.rekola.android.R;
+import cz.rekola.android.core.data.DataManager;
+import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.fragment.BaseMainFragment;
 import cz.rekola.android.fragment.BorrowFragment;
 import cz.rekola.android.fragment.MapFragment;
@@ -18,7 +20,6 @@ public class PageManager {
 	private final int containerId;
 
 	private EPageState state = EPageState.MAP;
-	private Boolean isBorrowedBike;
 
 	public enum EPageState {
 		//						{BORROW, RETURN, MAP, OVERFLOW, PROFILE, ABOUT}, Up State, TitleId, actionResourceId, BaseMainFragment
@@ -48,10 +49,6 @@ public class PageManager {
 
 	public PageManager(int fragmentContainerId) {
 		this.containerId = fragmentContainerId;
-	}
-
-	public void setIsBorrowedBike(Boolean isBorrowedBike) {
-		this.isBorrowedBike = isBorrowedBike;
 	}
 
 	public void setState(EPageState newState, FragmentManager fragmentManager, ActionBar actionBar) {
@@ -86,12 +83,12 @@ public class PageManager {
 		setState(state.upState, fragmentManager, actionBar);
 	}
 
-	public void setupOptionsMenu(Menu menu) {
+	public void setupOptionsMenu(Menu menu, MyBikeWrapper myBike) {
 		OptionsMenuConfig menuConfig = new OptionsMenuConfig();
 		menuConfig.setupMenu(menu);
 
-		if (isBorrowedBike != null) {
-			if (isBorrowedBike) {
+		if (myBike != null) {
+			if (myBike.isBorrowed()) {
 				menu.findItem(EPageState.BORROW.actionResourceId).setVisible(false);
 			} else {
 				menu.findItem(EPageState.RETURN.actionResourceId).setVisible(false);

@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.page.PageManager;
@@ -30,21 +31,20 @@ public class MainActivity extends Activity implements PageController {
 
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
-		//actionBar.setTitle("");
 		actionBar.setHomeButtonEnabled(false); // TODO: How to add up button?
 
-		Boolean isBorrowedBike = getApp().getDataManager().isBorrowedBike();
 		pageManager = new PageManager(R.id.fragment_container);
-		pageManager.setIsBorrowedBike(isBorrowedBike);
-		if (isBorrowedBike != null)
-			pageManager.setState(isBorrowedBike ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
+
+		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
+		if (myBike != null)
+			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_actions, menu);
-		pageManager.setupOptionsMenu(menu);
+		pageManager.setupOptionsMenu(menu, getApp().getDataManager().getBorrowedBike());
 		return super.onCreateOptionsMenu(menu);
     }
 
@@ -80,6 +80,18 @@ public class MainActivity extends Activity implements PageController {
 	public boolean onNavigateUp() {
 		return false;
 	}*/
+
+	@Override
+	public void requestMap() {
+		pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar());
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	public void requestReturnBike() {
+		pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar());
+		invalidateOptionsMenu();
+	}
 
 	@Override
 	public void requestReturnMap() {
