@@ -2,11 +2,93 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light">
-        <!-- Customize your theme here. -->
+		<!-- ActionBar Styles -->
+		<item name="android:actionBarStyle">@style/ActionBar</item>
+		<item name="android:actionOverflowButtonStyle">@style/ActionBar.Overflow</item>
+		<item name="android:actionDropDownStyle">@style/ActionBar.DropDown</item>
+		<item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
+		<item name="android:actionBarItemBackground">@drawable/selector</item>
+		<item name="android:dropDownListViewStyle">@style/ActionBar.DropDownListView</item>
+
+		<!-- widget styles: -->
+		<item name="android:editTextStyle">@style/EditText</item>
+
+		<!-- other global styles: -->
+		<item name="android:windowBackground">@color/background_window</item>
+
+		<!--
+		<item name="android:homeAsUpIndicator">@drawable/actionbar_ic_up</item>
+		-->
     </style>
 
 	<style name="LoginTheme" parent="android:Theme.Holo.Light.NoActionBar">
-		<!-- Customize your theme here. -->
+	</style>
+
+	<style name="Layout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:orientation">vertical</item>
+	</style>
+
+	<!-- ActionBar styles -->
+	<style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+		<item name="android:background">@drawable/actionbar_bg_solid</item>
+		<item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
+		<item name="android:titleTextStyle">@style/ActionBar.Title</item>
+	</style>
+
+
+	<style name="ActionBar.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+		<item name="android:textColor">@color/UNRESOLVED</item>
+		<item name="android:textSize">@dimen/text_medium</item>
+	</style>
+
+	<style name="ActionBar.Overflow">
+		<item name="android:src">@drawable/actionbar_ic_overflow</item>
+	</style>
+
+	<style name="ActionBar.DropDown" parent="@android:style/Widget.Holo.Light.ActionBar">
+		<item name="android:dropDownSelector">@drawable/selector</item>
+		<item name="android:background">@drawable/actionbar_spinner</item>
+		<!--<item name="android:popupBackground">@color/white</item>-->
+	</style>
+
+	<style name="ActionBar.DropDownListView" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
+		<item name="android:listSelector">@drawable/selector</item>
+		<item name="android:divider">@color/gray_1</item>
+		<item name="android:dividerHeight">2px</item>
+		<item name="android:background">@color/white</item>
+	</style>
+
+	<!-- global styles for views: -->
+	<style name="TextView" parent="@android:style/Widget.TextView">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:textSize">@dimen/text_medium</item>
+		<item name="android:textColor">@color/text_primary</item>
+	</style>
+
+	<style name="Button" parent="@android:style/Widget.Button">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<!--<item name="android:background">@drawable/content_btn_basic</item>-->
+		<item name="android:textSize">@dimen/text_medium</item>
+		<item name="android:textColor">@color/text_inverse</item>
+		<item name="android:padding">@dimen/grid_3</item>
+	</style>
+
+	<style name="EditText" parent="@android:style/Widget.EditText">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:background">@drawable/edittext</item>
+		<item name="android:textColor">@color/text_primary</item>
+		<item name="android:textSize">@dimen/text_medium</item>
+		<item name="android:singleLine">true</item>
+	</style>
+
+	<style name="ImageView">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
 	</style>
 
 </resources>

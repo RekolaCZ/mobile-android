@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<color name="pink_overlay">#AAFF1199</color>
+	<color name="transparent">#00000000</color>
+
+	<color name="white">#FFFFFF</color>
+	<color name="pink_1">#FF3399</color>
+	<color name="pink_2">#FFC2E1</color>
+	<color name="gray_1">#AAAAAA</color>
+	<color name="gray_2">#999999</color>
+	<color name="brown">#828E27</color>
+
+	<color name="text_primary">@color/white</color>
+	<color name="text_inverse">@color/gray_2</color>
+
+	<color name="background_window">@color/white</color>
+
+	<color name="UNRESOLVED">#00FFFF</color>
 
 </resources>

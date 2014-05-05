@@ -3,26 +3,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<item android:id="@+id/action_borrow"
-		android:icon="@drawable/ic_action_bar_borrow"
+		android:icon="@drawable/actionbar_ic_borrow"
 		android:title="borrow"
 		android:visible="true"
 		android:showAsAction="always"/>
 
 	<item android:id="@+id/action_return"
-		  android:icon="@drawable/ic_action_bar_return"
+		  android:icon="@drawable/actionbar_ic_return"
 		  android:title="return"
 		  android:visible="true"
 		  android:showAsAction="always"/>
 
 	<item android:id="@+id/action_map"
-		  android:icon="@drawable/ic_action_bar_map"
+		  android:icon="@drawable/actionbar_ic_map"
 		  android:title="map"
 		  android:visible="true"
 		  android:showAsAction="always"/>
 
 	<item
 		android:id="@+id/menu_overflow"
-		android:icon="@drawable/ic_action_bar_overflow"
+		android:icon="@drawable/actionbar_ic_overflow"
 		android:orderInCategory="12345"
 		android:title="overflow"
 		android:showAsAction="always">

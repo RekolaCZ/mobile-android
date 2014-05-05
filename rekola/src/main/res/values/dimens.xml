@@ -3,6 +3,16 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+	<!-- font sizes -->
+
+	<dimen name="text_xxlarge">22sp</dimen>
+	<dimen name="text_xlarge">20sp</dimen>
+	<dimen name="text_large">18sp</dimen>
+	<dimen name="text_medium">16sp</dimen>
+	<dimen name="text_small">14sp</dimen>
+	<dimen name="text_xsmall">12sp</dimen>
+	<dimen name="text_xxsmall">10sp</dimen>
+
     <!--  grid 4x4 dp -->
 
     <dimen name="grid_half">2dp</dimen>

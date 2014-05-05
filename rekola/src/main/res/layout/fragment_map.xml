@@ -22,13 +22,13 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:paddingLeft="@dimen/grid_8"
-			android:src="@drawable/ic_map_overlay_close"/>
+			android:src="@drawable/btn_close"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			android:background="@color/pink_overlay">
+			android:background="@color/pink_1">
 
 			<TextView
 				android:id="@+id/map_overlay_name_and_street"
