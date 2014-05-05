@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -32,9 +33,9 @@ public class LoginActivity extends Activity {
 	@InjectView(R.id.login)
 	Button vLogin;
 	@InjectView(R.id.recover_password)
-	Button vRecoverPassword;
+	TextView vRecoverPassword;
 	@InjectView(R.id.registration)
-	Button vRegistration;
+	TextView vRegistration;
 
 	private ViewHelper viewHelper = new ViewHelper();
 

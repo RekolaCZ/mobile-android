@@ -7,47 +7,39 @@
     android:layout_margin="@dimen/grid_8"
     android:layout_gravity="top|center_horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Username:"
-        android:layout_gravity="center" />
+	<TextView
+		style="@style/TextView"
+		android:textColor="@color/gray_2"
+		android:textSize="32dp"
+		android:layout_gravity="center"
+		android:layout_marginBottom="@dimen/margin_large"
+		android:text="Log in"/>
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_gravity="center" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Password:"
-        android:layout_gravity="center" />
+		style="@style/EditText"
+		android:hint="username" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_gravity="center" />
+		style="@style/EditText"
+        android:hint="password" />
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+		style="@style/Button"
         android:text="Login"/>
 
-    <Button
+    <TextView
         android:id="@+id/recover_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+		style="@style/TextView"
+		android:textColor="@color/clickable_text"
         android:text="Forgot password?"/>
 
-	<Button
+	<TextView
 		android:id="@+id/registration"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		style="@style/TextView"
+		android:textColor="@color/clickable_text"
 		android:text="Registration"/>
 
 </LinearLayout>
