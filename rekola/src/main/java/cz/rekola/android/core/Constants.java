@@ -14,7 +14,7 @@ public class Constants {
 	public static final String WEBAPI_BIKE_DETAIL_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";
 	public static final String WEBAPI_BIKE_ISSUES_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";
 	public static final String WEBAPI_BIKE_RETURNED_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";
-	public static final String WEBAPI_PROFILE_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";
+	public static final String WEBAPI_PROFILE_URL = "http://dl.dropboxusercontent.com/u/43851739/logout.html";
 	public static final String WEBAPI_ABOUT_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1"; // TODO: Replace with native
 
 	public static final String BROWSER_RECOVER_PASSWORD_URL = "http://www.rekola.cz/ucet/sign/password-recovery?mobile=1";

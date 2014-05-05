@@ -12,7 +12,7 @@ public class ProfileWebFragment extends BaseWebFragment {
 
 	@Override
 	public boolean onWebApiEvent(String paramUrl) {
-		if (paramUrl.contains("moje")) {
+		if (paramUrl.contains("log_out")) {
 			getApp().getPreferencesManager().setPassword(null);
 			getActivity().finish();
 			return true;
