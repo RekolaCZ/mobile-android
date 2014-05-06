@@ -25,13 +25,18 @@ import com.squareup.otto.Subscribe;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
+import cz.rekola.android.core.map.DirectionManager;
+import cz.rekola.android.core.map.DirectionParams;
 import cz.rekola.android.fragment.base.BaseMainFragment;
 
 public class MapFragment extends BaseMainFragment {
@@ -56,16 +61,26 @@ public class MapFragment extends BaseMainFragment {
 
 	private MarkerManager markers = new MarkerManager();
 	private OverlayManager overlay = new OverlayManager();
+	private DirectionManager directionManager;
+	private Timer timer;
 
     @Override
     public void onResume() {
         vMap.onResume();
         super.onResume();
-		getApp().getDataManager().getBikes(true); // Force update bikes.
+
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				getApp().getDataManager().getBikes(true); // Force update bikes.
+			}
+		}, 0, Constants.MAP_PERIODIC_UPDATE_MS); // First update right now
     }
 
 	@Override
 	public void onPause() {
+		timer.cancel();
 		super.onPause();
 		vMap.onPause();
 	}
@@ -98,9 +113,10 @@ public class MapFragment extends BaseMainFragment {
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
+		directionManager = new DirectionManager(map);
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 12);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 13);
         map.moveCamera(cameraUpdate);
 
         return rootView;
@@ -137,6 +153,21 @@ public class MapFragment extends BaseMainFragment {
 		markers.updateMap(bikes);
 	}
 
+	private void setDirections(Bike bike) {
+		DirectionParams params = new DirectionParams(
+				getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
+				new LatLng(bike.location.lat, bike.location.lng),
+				DirectionParams.MODE_WALKING,
+				getResources().getColor(R.color.pink_1),
+				getResources().getDimension(R.dimen.map_direction_path_size));
+
+		directionManager.loadDirections(params);
+	}
+
+	private void clearDirections() {
+		directionManager.clearDirections();
+	}
+
 	private class MarkerManager implements GoogleMap.OnMarkerClickListener {
 
 		private Map<Marker, Bike> markerMap = new HashMap<>();
@@ -165,7 +196,7 @@ public class MapFragment extends BaseMainFragment {
 			for (Bike bike : bikes) {
 				Marker marker = map.addMarker(new MarkerOptions()
 						.position(new LatLng(bike.location.lat, bike.location.lng))
-						.alpha(0.7f)
+						//.alpha(0.7f)
 						.title(bike.name)
 						.icon(markerNormalBitmap));
 				markerMap.put(marker, bike);
@@ -230,9 +261,11 @@ public class MapFragment extends BaseMainFragment {
 			vNote.setText(bike.location.note);
 			vDescription.setText(bike.description);
 			vOverlay.setVisibility(View.VISIBLE);
+			setDirections(bike);
 		}
 
 		public void hide() {
+			clearDirections();
 			vOverlay.setVisibility(View.GONE);
 		}
 	}
