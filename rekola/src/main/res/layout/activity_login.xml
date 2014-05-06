@@ -1,45 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_margin="@dimen/grid_8"
-    android:layout_gravity="top|center_horizontal">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/Layout">
 
-	<TextView
-		style="@style/TextView"
-		android:textColor="@color/gray_2"
-		android:textSize="32dp"
-		android:layout_gravity="center"
-		android:layout_marginBottom="@dimen/margin_large"
-		android:text="Log in"/>
+	<ScrollView
+		style="@style/Layout">
 
-    <EditText
-        android:id="@+id/username"
-		style="@style/EditText"
-		android:hint="username" />
+		<LinearLayout
+			style="@style/Layout"
+			android:layout_gravity="center_vertical"
+			android:layout_margin="@dimen/grid_8"
+			android:gravity="center">
 
-    <EditText
-        android:id="@+id/password"
-		style="@style/EditText"
-        android:hint="password" />
+			<TextView
+				style="@style/TextView"
+				android:textColor="@color/gray_2"
+				android:textSize="32dp"
+				android:layout_marginBottom="@dimen/margin_large"
+				android:text="Log in"/>
 
-    <Button
-        android:id="@+id/login"
-		style="@style/Button"
-        android:text="Login"/>
+			<EditText
+				android:id="@+id/username"
+				style="@style/EditText"
+				android:hint="username" />
 
-    <TextView
-        android:id="@+id/recover_password"
-		style="@style/TextView"
-		android:textColor="@color/clickable_text"
-        android:text="Forgot password?"/>
+			<EditText
+				android:id="@+id/password"
+				android:layout_centerInParent="true"
+				style="@style/EditText"
+				android:hint="password" />
+
+			<Button
+				android:id="@+id/login"
+				android:layout_below="@id/password"
+				android:layout_marginBottom="@dimen/grid_20"
+				style="@style/Button"
+				android:text="Login"/>
+
+		</LinearLayout>
+
+	</ScrollView>
 
 	<TextView
 		android:id="@+id/registration"
 		style="@style/TextView"
+		android:layout_gravity="bottom"
+		android:layout_margin="@dimen/grid_4"
 		android:textColor="@color/clickable_text"
 		android:text="Registration"/>
 
-</LinearLayout>
+	<TextView
+		android:id="@+id/recover_password"
+		style="@style/TextView"
+		android:layout_gravity="bottom|right"
+		android:layout_margin="@dimen/grid_4"
+		android:textColor="@color/clickable_text"
+		android:text="Forgot password?"/>
+
+	<FrameLayout
+		android:id="@+id/loading_overlay"
+		style="@style/Layout"
+		android:visibility="gone"
+		android:clickable="true"
+		android:background="@color/white">
+
+		<ImageView
+			style="@style/ImageView"
+			android:layout_gravity="center"
+			android:src="@drawable/logo"/>
+
+		<TextView
+			style="@style/TextView"
+			android:textColor="@color/brown"
+			android:layout_gravity="center|bottom"
+			android:text="Connecting..."/>
+
+	</FrameLayout>
+
+</FrameLayout>

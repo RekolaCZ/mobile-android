@@ -1,13 +1,16 @@
 package cz.rekola.android.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,8 @@ public class LoginActivity extends Activity {
 	TextView vRecoverPassword;
 	@InjectView(R.id.registration)
 	TextView vRegistration;
+	@InjectView(R.id.loading_overlay)
+	FrameLayout vLoading;
 
 	private ViewHelper viewHelper = new ViewHelper();
 
@@ -54,7 +59,7 @@ public class LoginActivity extends Activity {
 					return;
 				}
 
-				getApp().getDataManager().login(viewHelper.getCredentials());
+				login();
 			}
 		});
 
@@ -85,7 +90,9 @@ public class LoginActivity extends Activity {
 		vPassword.setText(getApp().getPreferencesManager().getPassword());
 
 		if (viewHelper.canLogin()) {
-			getApp().getDataManager().login(viewHelper.getCredentials());
+			login();
+		} else {
+			vLoading.setVisibility(View.GONE);
 		}
 	}
 
@@ -116,6 +123,7 @@ public class LoginActivity extends Activity {
 	@Subscribe
 	public void loginFailed(LoginFailedEvent event) {
 		Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
+		vLoading.setVisibility(View.GONE);
 	}
 
 	@Subscribe
@@ -127,6 +135,12 @@ public class LoginActivity extends Activity {
 	@Subscribe
 	public void isBorrowedBikeFailed(BorrowedBikeFailedEvent event) {
 		Toast.makeText(LoginActivity.this, "Bike borrowed error", Toast.LENGTH_SHORT).show();
+		vLoading.setVisibility(View.GONE);
+	}
+
+	private void login() {
+		vLoading.setVisibility(View.VISIBLE);
+		getApp().getDataManager().login(viewHelper.getCredentials());
 	}
 
 	private void startMainActivity() {
