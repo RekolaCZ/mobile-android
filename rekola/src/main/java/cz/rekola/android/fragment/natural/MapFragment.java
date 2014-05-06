@@ -2,6 +2,7 @@ package cz.rekola.android.fragment.natural;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
+import cz.rekola.android.core.loc.MyLocation;
 import cz.rekola.android.core.map.DirectionManager;
 import cz.rekola.android.core.map.DirectionParams;
 import cz.rekola.android.fragment.base.BaseMainFragment;
@@ -50,14 +52,23 @@ public class MapFragment extends BaseMainFragment {
 	@InjectView(R.id.map_overlay_close)
 	ImageView vClose;
 
-	@InjectView(R.id.map_overlay_name_and_street)
-	TextView vNameAndStreet;
+	@InjectView(R.id.map_overlay_name)
+	TextView vName;
+
+	@InjectView(R.id.map_overlay_street)
+	TextView vStreet;
 
 	@InjectView(R.id.map_overlay_note)
 	TextView vNote;
 
 	@InjectView(R.id.map_overlay_description)
 	TextView vDescription;
+
+	@InjectView(R.id.map_overlay_route)
+	ImageView vRoute;
+
+	@InjectView(R.id.map_overlay_bike_detail)
+	ImageView vBikeDetail;
 
 	private MarkerManager markers = new MarkerManager();
 	private OverlayManager overlay = new OverlayManager();
@@ -153,7 +164,7 @@ public class MapFragment extends BaseMainFragment {
 		markers.updateMap(bikes);
 	}
 
-	private void setDirections(Bike bike) {
+	/*private void setDirections(Bike bike) {
 		DirectionParams params = new DirectionParams(
 				bike.id, // Path to this bike
 				getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
@@ -167,7 +178,7 @@ public class MapFragment extends BaseMainFragment {
 
 	private void clearDirections() {
 		directionManager.clearDirections();
-	}
+	}*/
 
 	private class MarkerManager implements GoogleMap.OnMarkerClickListener {
 
@@ -186,8 +197,9 @@ public class MapFragment extends BaseMainFragment {
 		}
 
 		void updateMap(List<Bike> bikes) {
-			deselect();
-			overlay.hide();
+			if (lastMarker != null) {
+				lastMarker.setIcon(markerNormalBitmap);
+			}
 
 			map.clear();
 			markerMap.clear();
@@ -207,41 +219,70 @@ public class MapFragment extends BaseMainFragment {
 				}
 			}
 
-			if (newMarker != null) // Bike not found in the new bike list
-				onMarkerClick(newMarker);
-		}
-
-		void deselect() {
-			lastBike = null;
-			if (lastMarker != null) {
-				lastMarker.setIcon(markerNormalBitmap);
+			if (newMarker == null) {
+				lastBike = null;
+				overlay.hide();
+				directionManager.hideDirections();
+			} else {
+				lastMarker = newMarker;
+				overlay.show(lastBike);
+				lastMarker.setIcon(markerFocusedBitmap);
+				directionManager.addDirectionsIfAvailable(lastBike.id);
 			}
 		}
 
-		void notifyOverlayClosed() {
-			deselect();
+		void notifyOverlayClose() {
+			lastBike = null;
+			if (lastMarker != null) {
+				lastMarker.setIcon(markerNormalBitmap);
+				lastMarker = null;
+			}
 			overlay.hide();
+			directionManager.hideDirections();
+		}
+
+		void notifyRoutePressed() {
+			if (lastBike == null)
+				return;
+
+			DirectionParams params = new DirectionParams(
+					getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
+					new LatLng(lastBike.location.lat, lastBike.location.lng),
+					DirectionParams.MODE_WALKING,
+					getResources().getColor(R.color.pink_1),
+					getResources().getDimension(R.dimen.map_direction_path_size));
+
+			directionManager.loadDirections(lastBike.id, params);
+		}
+
+		void notifyBikeDetailPressed() {
+
 		}
 
 		@Override
 		public boolean onMarkerClick(Marker marker) {
-			deselect();
-			overlay.hide();
+			if (lastMarker != null) {
+				lastMarker.setIcon(markerNormalBitmap);
+				directionManager.hideDirections();
+			}
 
 			if (marker.equals(lastMarker)) {
 				lastMarker = null;
+				lastBike = null;
+				overlay.hide();
+				directionManager.hideDirections();
 				return true;
 			}
 
 			marker.setIcon(markerFocusedBitmap);
 
-			Bike bike = markerMap.get(marker);
-			if (bike != null) {
-				overlay.show(bike);
-			}
-
+			lastBike = markerMap.get(marker);
 			lastMarker = marker;
-			lastBike = bike;
+
+			if (lastBike != null) {
+				overlay.show(lastBike);
+				directionManager.addDirectionsIfAvailable(lastBike.id);
+			}
 
 			return false;
 		}
@@ -253,21 +294,34 @@ public class MapFragment extends BaseMainFragment {
 			vClose.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					markers.notifyOverlayClosed();
+					markers.notifyOverlayClose();
+				}
+			});
+
+			vRoute.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					markers.notifyRoutePressed();
+				}
+			});
+
+			vBikeDetail.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					markers.notifyBikeDetailPressed();
 				}
 			});
 		}
 
 		public void show(Bike bike) {
-			vNameAndStreet.setText(bike.name + ", " + bike.location.address);
+			vName.setText(bike.name + ", " + bike.location.distance);
+			vStreet.setText(bike.location.address);
 			vNote.setText(bike.location.note);
 			vDescription.setText(bike.description);
 			vOverlay.setVisibility(View.VISIBLE);
-			setDirections(bike);
 		}
 
 		public void hide() {
-			clearDirections();
 			vOverlay.setVisibility(View.GONE);
 		}
 	}

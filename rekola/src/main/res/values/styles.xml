@@ -42,8 +42,6 @@
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:textSize">@dimen/text_medium</item>
 		<item name="android:textColor">@color/text_primary</item>
-		<item name="android:layout_marginTop">@dimen/margin_small</item>
-		<item name="android:layout_marginBottom">@dimen/margin_small</item>
 	</style>
 
 	<style name="Button" parent="@android:style/Widget.Holo.Light.Button">
@@ -73,6 +71,12 @@
 	<style name="ImageView">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
+	</style>
+
+	<!-- custom styles for views -->
+	<style name="TextViewOverlay" parent="TextView">
+		<item name="android:textSize">@dimen/text_large</item>
+		<item name="android:textColor">@color/text_inverse</item>
 	</style>
 
 </resources>

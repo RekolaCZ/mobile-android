@@ -24,22 +24,28 @@ public class DirectionManager {
 		loadedPathId = Integer.MIN_VALUE;
 	}
 
-	public void loadDirections(DirectionParams params) {
-		if (loadedPathId == params.id && rectLine != null) {
-			if (directionPath != null)
-				directionPath.remove();
-			directionPath = map.addPolyline(rectLine);
-		}
+	public void loadDirections(int id, DirectionParams params) {
+		if (id == loadedPathId)
+			return;
 
-		if (loadedPathId != params.id) {
-			loadedPathId = params.id;
-			directionTask = new DownloadDirectionsTask();
-			directionTask.execute(params);
-		}
+		loadedPathId = id;
+		cancelTasks();
+
+		directionTask = new DownloadDirectionsTask();
+		directionTask.execute(params);
 	}
 
-	public void clearDirections() {
-		cancelTasks();
+	public void addDirectionsIfAvailable(int id) {
+		if (loadedPathId != id)
+			return;
+
+		if (rectLine == null)
+			return;
+
+		directionPath = map.addPolyline(rectLine);
+	}
+
+	public void hideDirections() {
 		if (directionPath != null) {
 			directionPath.remove();
 			directionPath = null;
@@ -75,10 +81,14 @@ public class DirectionManager {
 
 		@Override
 		protected void onPostExecute(PolylineOptions result) {
-			clearDirections();
-			directionPath = map.addPolyline(result);
+			if (result == null) {
+				loadedPathId = Integer.MIN_VALUE;
+				directionPath = null;
+				rectLine = null;
+				return;
+			}
 			rectLine = result;
-			//loadedPathId = dirPar.id;
+			addDirectionsIfAvailable(loadedPathId);
 		}
 	}
 
