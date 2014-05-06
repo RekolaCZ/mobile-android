@@ -1,5 +1,7 @@
 package cz.rekola.android.fragment.natural;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -50,8 +54,7 @@ public class MapFragment extends BaseMainFragment {
 	@InjectView(R.id.map_overlay_description)
 	TextView vDescription;
 
-	private Map<Marker, Bike> markerMap = new HashMap<>();
-
+	private MarkerManager markers = new MarkerManager();
 	private OverlayManager overlay = new OverlayManager();
 
     @Override
@@ -90,6 +93,7 @@ public class MapFragment extends BaseMainFragment {
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		map.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
@@ -106,6 +110,7 @@ public class MapFragment extends BaseMainFragment {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		markers.init();
 		overlay.init();
 
 		if (getApp().getDataManager().getBikes() != null) {
@@ -128,32 +133,78 @@ public class MapFragment extends BaseMainFragment {
 		if (bikes == null)
 			return;
 
-		map.clear();
-		markerMap.clear();
-		for (Bike bike : bikes) {
-			Marker marker = map.addMarker(new MarkerOptions()
-					.position(new LatLng(bike.location.lat, bike.location.lng))
-					.title(bike.name)
-					.snippet(bike.location.address));
-			markerMap.put(marker, bike);
-		}
+		markers.updateMap(bikes);
 	}
 
-	private class OverlayManager implements GoogleMap.OnMarkerClickListener {
+	private class MarkerManager implements GoogleMap.OnMarkerClickListener {
+
+		private Map<Marker, Bike> markerMap = new HashMap<>();
+
+		private BitmapDescriptor markerNormalBitmap;
+		private BitmapDescriptor markerFocusedBitmap;
 
 		private Marker lastMarker = null;
 
 		void init() {
 			map.setOnMarkerClickListener(this);
+			markerNormalBitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_normal);
+			markerFocusedBitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_focused_pressed);
+		}
+
+		void updateMap(List<Bike> bikes) {
+			map.clear();
+			markerMap.clear();
+			for (Bike bike : bikes) {
+				Marker marker = map.addMarker(new MarkerOptions()
+						.position(new LatLng(bike.location.lat, bike.location.lng))
+						.alpha(0.7f)
+						.title(bike.name)
+						.icon(markerNormalBitmap));
+				markerMap.put(marker, bike);
+			}
+		}
+
+		void deselect() {
+			if (lastMarker != null) {
+				lastMarker.setIcon(markerNormalBitmap);
+				overlay.hide();
+			}
+		}
+
+		@Override
+		public boolean onMarkerClick(Marker marker) {
+			deselect();
+
+			if (marker.equals(lastMarker)) {
+				lastMarker = null;
+				return true;
+			}
+
+			marker.setIcon(markerFocusedBitmap);
+
+			Bike bike = markerMap.get(marker);
+			if (bike != null) {
+				overlay.show(bike);
+			}
+
+			lastMarker = marker;
+
+			return false;
+		}
+	}
+
+	private class OverlayManager {
+
+		void init() {
 			vClose.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					hide();
+					markers.deselect();
 				}
 			});
 		}
 
-		void show(Bike bike, Marker marker) {
+		void show(Bike bike) {
 			vNameAndStreet.setText(bike.name + ", " + bike.location.address);
 			vNote.setText(bike.location.note);
 			vDescription.setText(bike.description);
@@ -161,27 +212,31 @@ public class MapFragment extends BaseMainFragment {
 		}
 
 		void hide() {
-			if (lastMarker != null) {
-				lastMarker.setRotation(0);
-				lastMarker = null;
-			}
-
 			vOverlay.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * Hack to move the selected marker to the front.
+	 * Info window must be displayed to move to front, so we crate an empty info window.
+	 */
+	public class MapWindowAdapter implements GoogleMap.InfoWindowAdapter {
+		private Context context = null;
+
+		public MapWindowAdapter(Context context) {
+			this.context = context;
+		}
+
+		// Hack to prevent info window from displaying: use a 0dp/0dp frame
+		@Override
+		public View getInfoWindow(Marker marker) {
+			View v = ((Activity) context).getLayoutInflater().inflate(R.layout.map_invisible_info, null);
+			return v;
 		}
 
 		@Override
-		public boolean onMarkerClick(Marker marker) {
-			if (lastMarker != null) {
-				lastMarker.setRotation(0);
-			}
-			lastMarker = marker;
-
-			marker.setRotation(-30);
-			Bike bike = markerMap.get(marker);
-			if (bike == null)
-				return true;
-			show(bike, marker);
-			return true;
+		public View getInfoContents(Marker marker) {
+			return null;
 		}
 	}
 }
