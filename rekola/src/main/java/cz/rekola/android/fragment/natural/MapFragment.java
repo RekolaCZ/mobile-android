@@ -61,6 +61,7 @@ public class MapFragment extends BaseMainFragment {
     public void onResume() {
         vMap.onResume();
         super.onResume();
+		getApp().getDataManager().getBikes(true); // Force update bikes.
     }
 
 	@Override
@@ -113,7 +114,7 @@ public class MapFragment extends BaseMainFragment {
 		markers.init();
 		overlay.init();
 
-		if (getApp().getDataManager().getBikes() != null) {
+		if (getApp().getDataManager().getBikes(false) != null) {
 			setupMap();
 		}
 	}
@@ -129,7 +130,7 @@ public class MapFragment extends BaseMainFragment {
 	}
 
 	private void setupMap() {
-		List<Bike> bikes = getApp().getDataManager().getBikes();
+		List<Bike> bikes = getApp().getDataManager().getBikes(false);
 		if (bikes == null)
 			return;
 
@@ -144,6 +145,7 @@ public class MapFragment extends BaseMainFragment {
 		private BitmapDescriptor markerFocusedBitmap;
 
 		private Marker lastMarker = null;
+		private Bike lastBike = null;
 
 		void init() {
 			map.setOnMarkerClickListener(this);
@@ -152,8 +154,14 @@ public class MapFragment extends BaseMainFragment {
 		}
 
 		void updateMap(List<Bike> bikes) {
+			deselect();
+			overlay.hide();
+
 			map.clear();
 			markerMap.clear();
+			lastMarker = null;
+
+			Marker newMarker = null;
 			for (Bike bike : bikes) {
 				Marker marker = map.addMarker(new MarkerOptions()
 						.position(new LatLng(bike.location.lat, bike.location.lng))
@@ -161,19 +169,31 @@ public class MapFragment extends BaseMainFragment {
 						.title(bike.name)
 						.icon(markerNormalBitmap));
 				markerMap.put(marker, bike);
+
+				if (lastBike != null && lastBike.id == bike.id) {
+					newMarker = marker; // new marker after update
+				}
 			}
+
+			if (newMarker != null) // Bike not found in the new bike list
+				onMarkerClick(newMarker);
 		}
 
 		void deselect() {
 			if (lastMarker != null) {
 				lastMarker.setIcon(markerNormalBitmap);
-				overlay.hide();
 			}
+		}
+
+		void notifyOverlayClosed() {
+			deselect();
+			overlay.hide();
 		}
 
 		@Override
 		public boolean onMarkerClick(Marker marker) {
 			deselect();
+			overlay.hide();
 
 			if (marker.equals(lastMarker)) {
 				lastMarker = null;
@@ -188,6 +208,7 @@ public class MapFragment extends BaseMainFragment {
 			}
 
 			lastMarker = marker;
+			lastBike = bike;
 
 			return false;
 		}
@@ -199,19 +220,19 @@ public class MapFragment extends BaseMainFragment {
 			vClose.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					markers.deselect();
+					markers.notifyOverlayClosed();
 				}
 			});
 		}
 
-		void show(Bike bike) {
+		public void show(Bike bike) {
 			vNameAndStreet.setText(bike.name + ", " + bike.location.address);
 			vNote.setText(bike.location.note);
 			vDescription.setText(bike.description);
 			vOverlay.setVisibility(View.VISIBLE);
 		}
 
-		void hide() {
+		public void hide() {
 			vOverlay.setVisibility(View.GONE);
 		}
 	}

@@ -36,6 +36,8 @@ public class DataManager {
 	private List<Bike> bikes;
 	private MyBikeWrapper myBike;
 
+	private boolean bikesLoading = false;
+
 	public DataManager(RekolaApp app) {
 		this.app = app;
 	}
@@ -61,22 +63,26 @@ public class DataManager {
 		return token;
 	}
 
-	public List<Bike> getBikes() {
-		if (bikes != null) {
+	public List<Bike> getBikes(boolean forceUpdate) {
+		if ((bikes != null && !forceUpdate) || bikesLoading) {
 			return bikes;
 		}
+
+		bikesLoading = true;
 
 		ApiService apiService = app.getApiService();
 		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
 		apiService.getBikes(app.getVersionManager().getUserAgent(), token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
 			@Override
 			public void success(List<Bike> bikes, Response response) {
+				bikesLoading = false;
 				DataManager.this.bikes = bikes;
 				app.getBus().post(new BikesAvailableEvent());
 			}
 
 			@Override
 			public void failure(RetrofitError error) {
+				bikesLoading = false;
 				app.getBus().post(new BikesFailedEvent());
 			}
 		});
