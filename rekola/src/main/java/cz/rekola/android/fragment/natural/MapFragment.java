@@ -212,6 +212,7 @@ public class MapFragment extends BaseMainFragment {
 		}
 
 		void deselect() {
+			lastBike = null;
 			if (lastMarker != null) {
 				lastMarker.setIcon(markerNormalBitmap);
 			}

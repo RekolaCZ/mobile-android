@@ -32,12 +32,14 @@ public class DirectionManager {
 		}
 
 		if (loadedPathId != params.id) {
+			loadedPathId = params.id;
 			directionTask = new DownloadDirectionsTask();
 			directionTask.execute(params);
 		}
 	}
 
 	public void clearDirections() {
+		cancelTasks();
 		if (directionPath != null) {
 			directionPath.remove();
 			directionPath = null;
@@ -76,7 +78,7 @@ public class DirectionManager {
 			clearDirections();
 			directionPath = map.addPolyline(result);
 			rectLine = result;
-			loadedPathId = dirPar.id;
+			//loadedPathId = dirPar.id;
 		}
 	}
 
