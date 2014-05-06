@@ -155,6 +155,7 @@ public class MapFragment extends BaseMainFragment {
 
 	private void setDirections(Bike bike) {
 		DirectionParams params = new DirectionParams(
+				bike.id, // Path to this bike
 				getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
 				new LatLng(bike.location.lat, bike.location.lng),
 				DirectionParams.MODE_WALKING,

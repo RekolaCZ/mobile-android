@@ -4,7 +4,7 @@ public class Constants {
 
 	public static final String API_VERSION = "0.0.1";
 
-	public static final long MAP_PERIODIC_UPDATE_MS = 2 * 60 * 1000L;
+	public static final long MAP_PERIODIC_UPDATE_MS = 1 * 30 * 1000L; // TODO: 2 * 30 * 1000L;
 
 	public static final String HEADER_KEY_TOKEN = "X-Api-Key";
 	public static final String HEADER_KEY_USER_AGENT = "user-agent";
