@@ -138,7 +138,13 @@ public class LoginActivity extends Activity {
 		vLoading.setVisibility(View.GONE);
 	}
 
+	public void hideKeyboard() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+	}
+
 	private void login() {
+		hideKeyboard();
 		vLoading.setVisibility(View.VISIBLE);
 		getApp().getDataManager().login(viewHelper.getCredentials());
 	}

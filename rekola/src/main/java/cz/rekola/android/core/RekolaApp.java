@@ -36,7 +36,6 @@ public class RekolaApp extends Application {
 		versionManager = new VersionManager(this);
 	}
 
-
 	@Override
 	public void onTerminate() {
 		myLocationManager.terminate(); // TODO: Is this necessary?
