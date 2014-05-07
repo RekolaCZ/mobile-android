@@ -2,6 +2,7 @@ package cz.rekola.android.activity;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +16,7 @@ import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.page.PageManager;
+import cz.rekola.android.fragment.web.BikeDetailWebFragment;
 
 public class MainActivity extends Activity implements PageController {
 
@@ -100,8 +102,10 @@ public class MainActivity extends Activity implements PageController {
 	}
 
 	@Override
-	public void requestWebBikeDetail() {
-		pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar());
+	public void requestWebBikeDetail(int id) {
+		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar());
+		if (fragment != null && fragment instanceof BikeDetailWebFragment)
+			((BikeDetailWebFragment)fragment).init(id);
 		invalidateOptionsMenu();
 	}
 

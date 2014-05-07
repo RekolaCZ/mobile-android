@@ -5,9 +5,15 @@ import cz.rekola.android.fragment.base.BaseWebFragment;
 
 public class BikeDetailWebFragment extends BaseWebFragment {
 
+	private int id;
+
+	public void init(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String getStartUrl() {
-		return Constants.WEBAPI_BIKE_DETAIL_URL;
+		return String.format(Constants.WEBAPI_BIKE_DETAIL_URL, id);
 	}
 
 }

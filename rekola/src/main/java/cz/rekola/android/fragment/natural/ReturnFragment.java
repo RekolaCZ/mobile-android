@@ -35,6 +35,8 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 	@InjectView(R.id.return_bike_issue)
 	Button vIssue;
 
+	private int bikeId = -1; // Invalid bike id
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_return, container, false);
@@ -57,21 +59,22 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 		vDetail.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getPageController().requestWebBikeDetail();
+				getPageController().requestWebBikeDetail(bikeId);
 			}
 		});
 
 		vIssue.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getPageController().requestWebBikeDetail();
+				getPageController().requestWebBikeDetail(bikeId);
 			}
 		});
 
 		// TODO: Handle api key expiration!
 		Map extraHeaderMap = new HashMap<String, String>();
 		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
-		vWeb.init(this, Constants.WEBAPI_BIKE_RETURN_URL, extraHeaderMap);
+
+		vWeb.init(this, String.format(Constants.WEBAPI_BIKE_RETURN_URL, bikeId), extraHeaderMap);
 	}
 
 	@Override
@@ -87,11 +90,13 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 		}
 
 		if (myBike.bike != null) {
+			bikeId = myBike.bike.id;
 			setData(String.format(getResources().getString(R.string.return_bike_name), myBike.bike.name), myBike.bike.lockCode);
 			return;
 		}
 
 		if (myBike.lockCode != null) {
+			bikeId = myBike.lockCode.bike.id;
 			setData(String.format(getResources().getString(R.string.return_bike_name), myBike.lockCode.bike.name), myBike.lockCode.lockCode);
 			return;
 		}

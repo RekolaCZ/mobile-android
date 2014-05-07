@@ -1,6 +1,7 @@
 package cz.rekola.android.core.page;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.view.Menu;
 
@@ -48,9 +49,16 @@ public class PageManager {
 		final Class<BaseMainFragment> fragment;
 	}
 
-	public void setState(EPageState newState, FragmentManager fragmentManager, ActionBar actionBar) {
+	/**
+	 * Returns newly created or cached fragment for further configuration.
+	 * @param newState
+	 * @param fragmentManager
+	 * @param actionBar
+	 * @return Newly created fragment
+	 */
+	public Fragment setState(EPageState newState, FragmentManager fragmentManager, ActionBar actionBar) {
 		if (this.state == newState)
-			return;
+			return null;
 
 		BaseMainFragment fragment = null;
 		try {
@@ -60,7 +68,7 @@ public class PageManager {
 		}
 
 		if (fragment == null)
-			return;
+			return null;
 
 		actionBar.setHomeButtonEnabled(newState.upState != null);
 		actionBar.setDisplayHomeAsUpEnabled(newState.upState != null);
@@ -71,6 +79,8 @@ public class PageManager {
 
 		fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
 		this.state = newState;
+
+		return fragment;
 	}
 
 	public void setUpState(FragmentManager fragmentManager, ActionBar actionBar, MyBikeWrapper myBike) {
