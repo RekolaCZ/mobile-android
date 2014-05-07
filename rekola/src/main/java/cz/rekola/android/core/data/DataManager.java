@@ -48,10 +48,15 @@ public class DataManager {
 	}
 
 	public void login(Credentials credentials) {
+		if (!loadingManager.addLoading(DataLoad.LOGIN)) {
+			return;
+		}
+
 		ApiService apiService = app.getApiService();
 		apiService.login(app.getVersionManager().getUserAgent(), credentials, new Callback<Token>() {
 			@Override
 			public void success(Token resp, Response response) {
+				loadingManager.removeLoading(DataLoad.LOGIN);
 				token = resp;
 				app.getPreferencesManager().setPersistentObject(resp); // TODO: Do we save it?
 				app.getBus().post(new LoginAvailableEvent());
@@ -59,6 +64,7 @@ public class DataManager {
 
 			@Override
 			public void failure(RetrofitError error) {
+				loadingManager.removeLoading(DataLoad.LOGIN);
 				app.getBus().post(new LoginFailedEvent());
 			}
 		});
@@ -103,16 +109,21 @@ public class DataManager {
 	}
 
 	private void updateBorrowedBike() {
+		if (!loadingManager.addLoading(DataLoad.BORROWED_BIKE))
+			return;
+
 		ApiService apiService = app.getApiService();
 		apiService.getBorrowedBike(app.getVersionManager().getUserAgent(), token.apiKey, new Callback<BorrowedBike>() {
 			@Override
 			public void success(BorrowedBike borrowedBike, Response response) {
+				loadingManager.removeLoading(DataLoad.BORROWED_BIKE);
 				myBike = new MyBikeWrapper(borrowedBike);
 				app.getBus().post(new BorrowedBikeAvailableEvent());
 			}
 
 			@Override
 			public void failure(RetrofitError error) {
+				loadingManager.removeLoading(DataLoad.BORROWED_BIKE);
 				if (error.getResponse().getStatus() == 404) {
 					myBike = new MyBikeWrapper();
 					app.getBus().post(new BorrowedBikeAvailableEvent());
@@ -202,6 +213,8 @@ public class DataManager {
 	}
 
 	private enum DataLoad {
+		LOGIN,
+		BORROWED_BIKE,
 		BIKES,
 		BORROW_BIKE,
 		RETURN_BIKE
