@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-	android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/Layout">
 
 	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		style="@style/Layout"
 		android:layout_weight="1">
 
 		<com.google.android.gms.maps.MapView
@@ -17,8 +14,7 @@
 			android:layout_weight="1"/>
 
 		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			style="@style/ImageView"
 			android:layout_gravity="center"
 			android:clickable="false"
 			android:src="@drawable/ic_pin_return"/>
@@ -26,39 +22,33 @@
 	</FrameLayout>
 
 	<FrameLayout
-		android:layout_width="match_parent"
+		style="@style/Layout"
 		android:layout_height="wrap_content"
 		android:layout_weight="0">
 
 	<LinearLayout
-		android:orientation="vertical"
-		android:layout_width="match_parent"
+		style="@style/Layout"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:padding="@dimen/grid_8"
-		android:layout_gravity="top|center_horizontal"
+		android:padding="@dimen/grid_4"
+		android:layout_gravity="center"
 		android:layout_weight="1">
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="0"
-			android:text="Note:"
-			android:layout_gravity="center" />
 
 		<EditText
 			android:id="@+id/note"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="0"
-			android:text=""
+			style="@style/EditText"
+			android:hint="Describe the exact bike location. (e.g. 3rd. lamp from the bus stop.)"
+			android:singleLine="false"
+			android:textColor="@color/text_primary"
+			android:gravity="top|left"
+			android:minLines="3"
+			android:maxLines="3"
 			android:layout_gravity="center" />
 
 		<Button
 			android:id="@+id/bike_returned"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="0"
+			style="@style/Button"
+			android:layout_marginBottom="0dp"
 			android:text="Bike returned"/>
 
 	</LinearLayout>

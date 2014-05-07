@@ -13,7 +13,7 @@
 		style="@style/Layout"
 		android:layout_height="wrap_content"
 		android:layout_weight="0"
-		android:padding="@dimen/grid_8">
+		android:padding="@dimen/grid_4">
 
 		<TextView
 			android:id="@+id/lock_code_text"
@@ -25,6 +25,7 @@
 			style="@style/EditText"
 			android:editable="false"
 			android:textSize="@dimen/text_header"
+			android:textColor="@color/text_primary"
 			android:textStyle="bold"
 			android:layout_below="@id/lock_code_text"/>
 
