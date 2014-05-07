@@ -7,11 +7,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.FrameLayout;
+
+import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.core.bus.DataLoadingFinished;
+import cz.rekola.android.core.bus.DataLoadingStarted;
 import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
@@ -28,12 +33,13 @@ public class MainActivity extends Activity implements PageController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
 		ButterKnife.inject(this);
 
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
-		actionBar.setHomeButtonEnabled(false); // TODO: How to add up button?
+		actionBar.setHomeButtonEnabled(false);
 
 		pageManager = new PageManager();
 
@@ -41,6 +47,18 @@ public class MainActivity extends Activity implements PageController {
 		if (myBike != null)
 			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
     }
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getApp().getBus().register(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		getApp().getBus().unregister(this);
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,6 +100,16 @@ public class MainActivity extends Activity implements PageController {
 	public boolean onNavigateUp() {
 		return false;
 	}*/
+
+	@Subscribe
+	public void dataLoadingStarted(DataLoadingStarted event) {
+		setProgressBarIndeterminateVisibility(true);
+	}
+
+	@Subscribe
+	public void dataLoadingFinished(DataLoadingFinished event) {
+		setProgressBarIndeterminateVisibility(false);
+	}
 
 	@Override
 	public void requestMap() {

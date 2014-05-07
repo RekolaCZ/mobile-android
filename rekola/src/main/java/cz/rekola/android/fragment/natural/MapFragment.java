@@ -90,7 +90,12 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 		timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				getApp().getDataManager().getBikes(true); // Force update bikes.
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						getApp().getDataManager().getBikes(true); // Force update bikes.
+					}
+				});
 			}
 		}, 0, Constants.MAP_PERIODIC_UPDATE_MS); // First update right now
     }
