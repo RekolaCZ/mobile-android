@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements PageController {
 				pageManager.setState(PageManager.EPageState.ABOUT, getFragmentManager(), getActionBar());
 				break;
 			case android.R.id.home:
-				pageManager.setUpState(getFragmentManager(), getActionBar());
+				pageManager.setUpState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike());
 				break;
 			default:
 				return super.onOptionsItemSelected(item);

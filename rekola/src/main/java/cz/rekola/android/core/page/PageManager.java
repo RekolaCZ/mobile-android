@@ -31,7 +31,7 @@ public class PageManager {
 		// Other states without actionbar access.
 		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, R.string.page_return_map_title, null, ReturnMapFragment.class ),
 		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, R.string.page_web_return_title, null, ReturnWebFragment.class),
-		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
+		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP/*or RETURN*/, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
 
 		EPageState(boolean[] actionAllowed, EPageState upState, Integer titleId, Integer actionResourceId, Class fragment) {
 			this.actionAllowed = actionAllowed;
@@ -73,9 +73,15 @@ public class PageManager {
 		this.state = newState;
 	}
 
-	public void setUpState(FragmentManager fragmentManager, ActionBar actionBar) {
+	public void setUpState(FragmentManager fragmentManager, ActionBar actionBar, MyBikeWrapper myBike) {
 		if (state.upState == null)
 			return;
+
+		// Special handling of bike detail up state
+		if (state == EPageState.WEB_BIKE_DETAIL && myBike != null && myBike.isBorrowed()) {
+			setState(EPageState.RETURN, fragmentManager, actionBar);
+			return;
+		}
 
 		setState(state.upState, fragmentManager, actionBar);
 	}
@@ -84,6 +90,7 @@ public class PageManager {
 		OptionsMenuConfig menuConfig = new OptionsMenuConfig();
 		menuConfig.setupMenu(menu);
 
+		// Special handling of borrow/return menu items
 		if (myBike != null) {
 			if (myBike.isBorrowed()) {
 				menu.findItem(EPageState.BORROW.actionResourceId).setVisible(false);

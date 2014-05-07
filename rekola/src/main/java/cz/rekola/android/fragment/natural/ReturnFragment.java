@@ -7,13 +7,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.fragment.base.BaseMainFragment;
+import cz.rekola.android.view.ApiWebView;
+import cz.rekola.android.webapi.WebApiHandler;
 
-public class ReturnFragment extends BaseMainFragment {
+public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
+
+	@InjectView(R.id.return_bike_web)
+	ApiWebView vWeb;
 
 	@InjectView(R.id.bike_name)
 	TextView vBikeName;
@@ -44,6 +53,30 @@ public class ReturnFragment extends BaseMainFragment {
 				getPageController().requestReturnMap();
 			}
 		});
+
+		vDetail.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				getPageController().requestWebBikeDetail();
+			}
+		});
+
+		vIssue.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				getPageController().requestWebBikeDetail();
+			}
+		});
+
+		// TODO: Handle api key expiration!
+		Map extraHeaderMap = new HashMap<String, String>();
+		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
+		vWeb.init(this, Constants.WEBAPI_BIKE_RETURN_URL, extraHeaderMap);
+	}
+
+	@Override
+	public boolean onWebApiEvent(String paramUrl) {
+		return false;
 	}
 
 	private void populateData() {
@@ -68,4 +101,5 @@ public class ReturnFragment extends BaseMainFragment {
 		vBikeName.setText(name);
 		vLockCode.setText(lockCode);
 	}
+
 }

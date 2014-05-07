@@ -25,6 +25,7 @@
 			style="@style/EditText"
 			android:editable="false"
 			android:textSize="@dimen/text_header"
+			android:textStyle="bold"
 			android:layout_below="@id/lock_code_text"/>
 
 		<TextView
