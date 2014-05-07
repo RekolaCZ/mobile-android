@@ -27,6 +27,7 @@
 			android:textSize="@dimen/text_header"
 			android:textColor="@color/text_primary"
 			android:textStyle="bold"
+			android:focusable="false"
 			android:layout_below="@id/lock_code_text"/>
 
 		<TextView

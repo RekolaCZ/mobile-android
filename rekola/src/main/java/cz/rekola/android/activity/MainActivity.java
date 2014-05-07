@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.squareup.otto.Subscribe;
 
@@ -16,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.core.bus.DataLoadingFinished;
+import cz.rekola.android.core.bus.ProgressDataLoading;
 import cz.rekola.android.core.bus.DataLoadingStarted;
 import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.core.page.PageController;
@@ -28,11 +31,15 @@ public class MainActivity extends Activity implements PageController {
 	@InjectView(R.id.fragment_container)
 	FrameLayout vFragmentContainer;
 
+	@InjectView(R.id.progress)
+	ProgressBar progressBar;
+
 	private PageManager pageManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		//requestWindowFeature(Window.FEATURE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
 		ButterKnife.inject(this);
@@ -109,6 +116,19 @@ public class MainActivity extends Activity implements PageController {
 	@Subscribe
 	public void dataLoadingFinished(DataLoadingFinished event) {
 		setProgressBarIndeterminateVisibility(false);
+	}
+
+	@Subscribe
+	public void dataLoadingProgress(ProgressDataLoading event) {
+		if (event.progress == 100) {
+			progressBar.setVisibility(View.GONE);
+			return;
+		}
+		if (event.progress == 0) {
+			progressBar.setVisibility(View.VISIBLE);
+			return;
+		}
+		progressBar.setProgress(event.progress);
 	}
 
 	@Override

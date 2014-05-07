@@ -74,7 +74,7 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 		Map extraHeaderMap = new HashMap<String, String>();
 		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
 
-		vWeb.init(this, String.format(Constants.WEBAPI_BIKE_RETURN_URL, bikeId), extraHeaderMap);
+		vWeb.init(getApp().getBus(), this, String.format(Constants.WEBAPI_BIKE_RETURN_URL, bikeId), extraHeaderMap);
 	}
 
 	@Override

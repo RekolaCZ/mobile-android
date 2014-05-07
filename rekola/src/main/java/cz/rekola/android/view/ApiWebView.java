@@ -8,8 +8,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
+
 import java.util.Map;
 
+import cz.rekola.android.core.bus.ProgressDataLoading;
 import cz.rekola.android.webapi.WebApiHandler;
 
 public class ApiWebView extends WebView {
@@ -30,16 +33,20 @@ public class ApiWebView extends WebView {
 		super(context, attrs, defStyle, privateBrowsing);
 	}
 
-	public void init(WebApiHandler handler, String startUrl, Map<String, String> additionalHttpHeaders) {
+	public void init(final Bus bus, WebApiHandler handler, String startUrl, Map<String, String> additionalHttpHeaders) {
+		bus.post(new ProgressDataLoading(0)); // Show progress
 		final WebApiHandler apiHandler = handler;
 		getSettings().setJavaScriptEnabled(true);
 		setWebChromeClient(new WebChromeClient() {
 			public void onProgressChanged(WebView view, int progress) {
+				if (progress > 0 && progress < 100)
+					bus.post(new ProgressDataLoading(progress));
 			}
 		});
 		setWebViewClient(new WebViewClient() {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				bus.post(new ProgressDataLoading(100)); // Hide progress
 				Toast.makeText(getContext(), "Oh no! " + description, Toast.LENGTH_SHORT).show();
 				// TODO: Handle api key expiration!
 			}
@@ -48,6 +55,11 @@ public class ApiWebView extends WebView {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				Uri uri = Uri.parse(url);
 				return apiHandler.onWebApiEvent(url);
+			}
+
+			@Override
+			public void onPageFinished(WebView view, java.lang.String url) {
+				bus.post(new ProgressDataLoading(100)); // Hide progress
 			}
 		});
 
