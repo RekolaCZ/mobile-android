@@ -13,6 +13,8 @@
 
 	<!-- font sizes -->
 
+	<dimen name="text_header">32dp</dimen>
+
 	<dimen name="text_xxlarge">22sp</dimen>
 	<dimen name="text_xlarge">20sp</dimen>
 	<dimen name="text_large">18sp</dimen>

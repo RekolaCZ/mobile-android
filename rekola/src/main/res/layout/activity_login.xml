@@ -8,7 +8,7 @@
 		<LinearLayout
 			style="@style/Layout"
 			android:layout_gravity="center_vertical"
-			android:layout_margin="@dimen/grid_8"
+			android:layout_margin="@dimen/text_header"
 			android:gravity="center">
 
 			<TextView

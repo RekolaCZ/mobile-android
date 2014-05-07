@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:gravity="center"
-	android:padding="@dimen/grid_8"
-	android:layout_gravity="top|center_horizontal">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/Layout">
 
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="6-digit bike code"
-		android:layout_gravity="center" />
+	<ScrollView
+		style="@style/Layout">
 
-	<EditText
-		android:id="@+id/bike_code"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text=""
-		android:maxLength="@integer/bike_code_length"
-		android:inputType="number"
-		android:layout_gravity="center" />
+		<LinearLayout
+			style="@style/Layout"
+			android:layout_gravity="center_vertical"
+			android:layout_margin="@dimen/grid_8"
+			android:gravity="center">
 
-	<Button
-		android:id="@+id/borrow"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="Borrow a bike"/>
+			<TextView
+				style="@style/TextView"
+				android:textColor="@color/gray_2"
+				android:textSize="@dimen/text_header"
+				android:layout_marginBottom="@dimen/margin_large"
+				android:text="Borrow Bike"/>
 
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="The bike code in on a side.. We will send you a code after sending the bike code."
-		android:layout_gravity="center" />
+			<TextView
+				style="@style/TextView"
+				android:textColor="@color/gray_2"
+				android:layout_marginBottom="@dimen/margin_large"
+				android:gravity="center"
+				android:text="Code can be found on the side of the wheel on bike."/>
 
-</LinearLayout>
+			<EditText
+				android:id="@+id/bike_code"
+				style="@style/EditText"
+				android:textSize="@dimen/text_xxlarge"
+				android:hint="6-digit code"
+				android:maxLength="@integer/bike_code_length"
+				android:inputType="number"
+				android:layout_gravity="center" />
+
+			<Button
+				android:id="@+id/borrow"
+				style="@style/Button"
+				android:text="Borrow a bike"/>
+
+			<TextView
+				style="@style/TextView"
+				android:textColor="@color/gray_2"
+				android:layout_marginTop="@dimen/margin_large"
+				android:gravity="center"
+				android:text="After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time."/>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</FrameLayout>
