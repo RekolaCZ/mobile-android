@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements PageController {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
 		actionBar.setHomeButtonEnabled(false); // TODO: How to add up button?
 
-		pageManager = new PageManager(R.id.fragment_container);
+		pageManager = new PageManager();
 
 		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
 		if (myBike != null)
@@ -96,6 +96,12 @@ public class MainActivity extends Activity implements PageController {
 	@Override
 	public void requestReturnMap() {
 		pageManager.setState(PageManager.EPageState.RETURN_MAP, getFragmentManager(), getActionBar());
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	public void requestWebBikeDetail() {
+		pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar());
 		invalidateOptionsMenu();
 	}
 

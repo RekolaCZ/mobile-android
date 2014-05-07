@@ -37,11 +37,12 @@ import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
 import cz.rekola.android.core.loc.MyLocation;
+import cz.rekola.android.core.loc.MyLocationListener;
 import cz.rekola.android.core.map.DirectionManager;
 import cz.rekola.android.core.map.DirectionParams;
 import cz.rekola.android.fragment.base.BaseMainFragment;
 
-public class MapFragment extends BaseMainFragment {
+public class MapFragment extends BaseMainFragment implements MyLocationListener {
 
     MapView vMap;
     GoogleMap map;
@@ -79,6 +80,7 @@ public class MapFragment extends BaseMainFragment {
     public void onResume() {
         vMap.onResume();
         super.onResume();
+		getApp().getMyLocationManager().register(this);
 
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
@@ -92,6 +94,7 @@ public class MapFragment extends BaseMainFragment {
 	@Override
 	public void onPause() {
 		timer.cancel();
+		getApp().getMyLocationManager().unregister(this);
 		super.onPause();
 		vMap.onPause();
 	}
@@ -154,6 +157,14 @@ public class MapFragment extends BaseMainFragment {
 	@Subscribe
 	public void bikesFailed(BikesFailedEvent event) {
 
+	}
+
+	@Override
+	public void onMyLocationChanged(MyLocation myLocation) {
+	}
+
+	@Override
+	public void onMyLocationError() {
 	}
 
 	private void setupMap() {
@@ -256,7 +267,7 @@ public class MapFragment extends BaseMainFragment {
 		}
 
 		void notifyBikeDetailPressed() {
-
+			getPageController().requestWebBikeDetail();
 		}
 
 		@Override

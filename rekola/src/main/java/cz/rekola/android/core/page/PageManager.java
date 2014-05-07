@@ -18,8 +18,6 @@ import cz.rekola.android.fragment.web.ReturnWebFragment;
 
 public class PageManager {
 
-	private final int containerId;
-
 	private EPageState state = EPageState.MAP;
 
 	public enum EPageState {
@@ -33,7 +31,7 @@ public class PageManager {
 		// Other states without actionbar access.
 		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, R.string.page_return_map_title, null, ReturnMapFragment.class ),
 		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, R.string.page_web_return_title, null, ReturnWebFragment.class),
-		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, null, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
+		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
 
 		EPageState(boolean[] actionAllowed, EPageState upState, Integer titleId, Integer actionResourceId, Class fragment) {
 			this.actionAllowed = actionAllowed;
@@ -48,10 +46,6 @@ public class PageManager {
 		final EPageState upState;
 		final Integer titleId;
 		final Class<BaseMainFragment> fragment;
-	}
-
-	public PageManager(int fragmentContainerId) {
-		this.containerId = fragmentContainerId;
 	}
 
 	public void setState(EPageState newState, FragmentManager fragmentManager, ActionBar actionBar) {
