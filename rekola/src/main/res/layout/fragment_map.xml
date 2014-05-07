@@ -19,10 +19,11 @@
 			android:id="@+id/map_overlay_close"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:paddingLeft="@dimen/grid_8"
+			android:paddingLeft="@dimen/grid_4"
 			android:src="@drawable/btn_close"/>
 
 		<LinearLayout
+			android:id="@+id/map_overlay_area"
 			style="@style/Layout"
 			android:orientation="horizontal"
 

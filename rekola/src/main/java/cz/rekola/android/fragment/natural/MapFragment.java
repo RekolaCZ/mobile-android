@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 
 	@InjectView(R.id.map_overlay)
 	LinearLayout vOverlay;
+
+	@InjectView(R.id.map_overlay_area)
+	LinearLayout vOverlayArea;
 
 	@InjectView(R.id.map_overlay_close)
 	ImageView vClose;
@@ -238,6 +242,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 				lastMarker = newMarker;
 				overlay.show(lastBike);
 				lastMarker.setIcon(markerFocusedBitmap);
+				lastMarker.showInfoWindow(); // Force to top
 				directionManager.addDirectionsIfAvailable(lastBike.id);
 			}
 		}
@@ -330,10 +335,27 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 			vNote.setText(bike.location.note);
 			vDescription.setText(bike.description);
 			vOverlay.setVisibility(View.VISIBLE);
+
+			// Hack-adjust the map controls
+			int height = vOverlayArea.getHeight();
+			if (height == 0) {
+				final Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						int height = vOverlayArea.getHeight();
+						if (height != 0)
+							map.setPadding(0, 0, 0, height);
+					}
+				}, 100);
+			} else {
+				map.setPadding(0, 0, 0, height);
+			}
 		}
 
 		public void hide() {
 			vOverlay.setVisibility(View.GONE);
+			map.setPadding(0, 0, 0, 0);
 		}
 	}
 
