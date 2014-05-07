@@ -6,4 +6,6 @@
 	<string name="page_web_bike_detail_title">Bike detail</string>
 	<string name="page_web_return_title">Bike returned</string>
 
+	<string name="return_bike_name">Bike %s at your service.</string>
+
 </resources>

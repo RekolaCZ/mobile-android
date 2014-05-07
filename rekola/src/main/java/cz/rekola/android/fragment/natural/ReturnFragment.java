@@ -21,6 +21,10 @@ public class ReturnFragment extends BaseMainFragment {
 	TextView vLockCode;
 	@InjectView(R.id.return_bike)
 	Button vReturn;
+	@InjectView(R.id.return_bike_detail)
+	Button vDetail;
+	@InjectView(R.id.return_bike_issue)
+	Button vIssue;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,12 +54,12 @@ public class ReturnFragment extends BaseMainFragment {
 		}
 
 		if (myBike.bike != null) {
-			setData(myBike.bike.name, myBike.bike.lockCode);
+			setData(String.format(getResources().getString(R.string.return_bike_name), myBike.bike.name), myBike.bike.lockCode);
 			return;
 		}
 
 		if (myBike.lockCode != null) {
-			setData(myBike.lockCode.bike.name, myBike.lockCode.lockCode);
+			setData(String.format(getResources().getString(R.string.return_bike_name), myBike.lockCode.bike.name), myBike.lockCode.lockCode);
 			return;
 		}
 	}
