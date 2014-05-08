@@ -111,6 +111,14 @@ public class MainActivity extends Activity implements PageController {
 		return true;
 	}
 
+	@Override
+	public void onBackPressed() {
+		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike())) {
+			super.onBackPressed();
+		}
+		invalidateOptionsMenu();
+	}
+
 	/*@Override
 	public boolean onNavigateUp() {
 		return false;

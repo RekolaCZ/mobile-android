@@ -21,23 +21,30 @@ public class PageManager {
 
 	private EPageState state = EPageState.MAP;
 
+	/**
+	 * Last used root state for back (up) calls.
+	 * This is the only contextual info here.
+ 	 */
+	private EPageState rootState = EPageState.MAP;
+
 	public enum EPageState {
-		//								{BORROW, RETURN, MAP, OVERFLOW, PROFILE, ABOUT}, Up State, TitleId, actionResourceId, BaseMainFragment
-		BORROW			(new boolean[]	{false, false, true, true, true, true}, null, null, R.id.action_borrow, BorrowFragment.class ),
-		RETURN			(new boolean[]	{false, false, true, true, true, true}, null, null, R.id.action_return, ReturnFragment.class),
-		MAP				(new boolean[]	{true, true, false, true, true, true}, null, null, R.id.action_map, MapFragment.class),
-		PROFILE			(new boolean[]	{true, true, true, true, false, true}, null, null, R.id.action_profile, ProfileWebFragment.class),
-		ABOUT			(new boolean[]	{true, true, true, true, true, false}, null, null, R.id.action_about, AboutWebFragment.class ),
+		//								{BORROW, RETURN, MAP, OVERFLOW, PROFILE, ABOUT}, Up State, Back State, TitleId, actionResourceId, BaseMainFragment
+		BORROW			(new boolean[]	{false, false, true, true, true, true}, null, null, null, R.id.action_borrow, BorrowFragment.class ),
+		RETURN			(new boolean[]	{false, false, true, true, true, true}, null, null, null, R.id.action_return, ReturnFragment.class),
+		MAP				(new boolean[]	{true, true, false, true, true, true}, null, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
+		PROFILE			(new boolean[]	{true, true, true, true, false, true}, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
+		ABOUT			(new boolean[]	{true, true, true, true, true, false}, null, BORROW/*or RETURN*/, null, R.id.action_about, AboutWebFragment.class ),
 
 		// Other states without actionbar access.
-		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, R.string.page_return_map_title, null, ReturnMapFragment.class ),
-		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, R.string.page_web_return_title, null, ReturnWebFragment.class),
-		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP/*or RETURN*/, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
+		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, RETURN, R.string.page_return_map_title, null, ReturnMapFragment.class ),
+		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, BORROW, R.string.page_web_return_title, null, ReturnWebFragment.class),
+		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP/*or RETURN*/, MAP/*or RETURN*/, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
 
-		EPageState(boolean[] actionAllowed, EPageState upState, Integer titleId, Integer actionResourceId, Class fragment) {
+		EPageState(boolean[] actionAllowed, EPageState upState, EPageState backState, Integer titleId, Integer actionResourceId, Class fragment) {
 			this.actionAllowed = actionAllowed;
 			this.actionResourceId = actionResourceId;
 			this.upState = upState;
+			this.backState = backState;
 			this.titleId = titleId;
 			this.fragment = fragment;
 		}
@@ -45,6 +52,7 @@ public class PageManager {
 		final boolean[] actionAllowed;
 		final Integer actionResourceId;
 		final EPageState upState;
+		final EPageState backState;
 		final Integer titleId;
 		final Class<BaseMainFragment> fragment;
 	}
@@ -59,6 +67,10 @@ public class PageManager {
 	public Fragment setState(EPageState newState, FragmentManager fragmentManager, ActionBar actionBar) {
 		if (this.state == newState)
 			return null;
+
+		if (newState == EPageState.MAP || newState == EPageState.BORROW || newState == EPageState.RETURN) {
+			rootState = newState;
+		}
 
 		BaseMainFragment fragment = null;
 		try {
@@ -94,6 +106,26 @@ public class PageManager {
 		}
 
 		setState(state.upState, fragmentManager, actionBar);
+	}
+
+	public boolean setBackState(FragmentManager fragmentManager, ActionBar actionBar, MyBikeWrapper myBike) {
+		if (state.backState == null)
+			return false;
+
+		// Special handling for return state instead of borrow state
+		if (myBike != null && myBike.isBorrowed() && state.backState == EPageState.BORROW) {
+			setState(EPageState.RETURN, fragmentManager, actionBar);
+			return true;
+		}
+
+		// Special handling of Bike detail when opened from RETURN state
+		if (state == EPageState.WEB_BIKE_DETAIL && rootState == EPageState.RETURN) {
+			setState(EPageState.RETURN, fragmentManager, actionBar);
+			return true;
+		}
+
+		setState(state.backState, fragmentManager, actionBar);
+		return true;
 	}
 
 	public void setupOptionsMenu(Menu menu, MyBikeWrapper myBike) {
