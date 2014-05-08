@@ -46,6 +46,7 @@
 		android:layout_gravity="bottom"
 		android:layout_margin="@dimen/grid_4"
 		android:textColor="@color/clickable_text"
+		android:textSize="@dimen/text_medium"
 		android:text="Registration"/>
 
 	<TextView
@@ -54,7 +55,10 @@
 		android:layout_gravity="bottom|right"
 		android:layout_margin="@dimen/grid_4"
 		android:textColor="@color/clickable_text"
+		android:textSize="@dimen/text_medium"
 		android:text="Forgot password?"/>
+
+	<include layout="@layout/error_bar"/>
 
 	<FrameLayout
 		android:id="@+id/loading_overlay"
@@ -72,6 +76,7 @@
 			style="@style/TextView"
 			android:textColor="@color/brown"
 			android:layout_gravity="center|bottom"
+			android:layout_marginBottom="@dimen/grid_4"
 			android:text="Connecting..."/>
 
 	</FrameLayout>

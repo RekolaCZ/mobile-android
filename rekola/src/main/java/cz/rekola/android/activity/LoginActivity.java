@@ -1,7 +1,6 @@
 package cz.rekola.android.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
+import cz.rekola.android.view.ErrorBarView;
 
 public class LoginActivity extends Activity {
 
@@ -41,6 +41,9 @@ public class LoginActivity extends Activity {
 	TextView vRegistration;
 	@InjectView(R.id.loading_overlay)
 	FrameLayout vLoading;
+
+	@InjectView(R.id.error_bar)
+	ErrorBarView errorBar;
 
 	private ViewHelper viewHelper = new ViewHelper();
 
@@ -86,6 +89,7 @@ public class LoginActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		getApp().getBus().register(this);
+		getApp().getBus().register(errorBar);
 		vUsername.setText(getApp().getPreferencesManager().getUsername());
 		vPassword.setText(getApp().getPreferencesManager().getPassword());
 
@@ -100,6 +104,7 @@ public class LoginActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		getApp().getBus().unregister(this);
+		getApp().getBus().unregister(errorBar);
 	}
 
 	@Override
@@ -114,7 +119,6 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void loginAvailable(LoginAvailableEvent event) {
-		Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 		if (getApp().getDataManager().getBorrowedBike() != null) {
 			startMainActivity();
 		}
@@ -122,19 +126,16 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void loginFailed(LoginFailedEvent event) {
-		Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
 		vLoading.setVisibility(View.GONE);
 	}
 
 	@Subscribe
 	public void isBorrowedBikeAvailable(BorrowedBikeAvailableEvent event) {
-		Toast.makeText(LoginActivity.this, "Is bike borrowed known", Toast.LENGTH_SHORT).show();
 		startMainActivity();
 	}
 
 	@Subscribe
 	public void isBorrowedBikeFailed(BorrowedBikeFailedEvent event) {
-		Toast.makeText(LoginActivity.this, "Bike borrowed error", Toast.LENGTH_SHORT).show();
 		vLoading.setVisibility(View.GONE);
 	}
 
@@ -145,6 +146,7 @@ public class LoginActivity extends Activity {
 
 	private void login() {
 		hideKeyboard();
+		errorBar.hide();
 		vLoading.setVisibility(View.VISIBLE);
 		getApp().getDataManager().login(viewHelper.getCredentials());
 	}

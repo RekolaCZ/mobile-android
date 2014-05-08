@@ -14,4 +14,6 @@
 		style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
 	</ProgressBar>
 
+	<include layout="@layout/error_bar"/>
+
 </FrameLayout>

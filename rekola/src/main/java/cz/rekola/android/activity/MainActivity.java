@@ -25,6 +25,7 @@ import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.page.PageManager;
 import cz.rekola.android.fragment.web.BikeDetailWebFragment;
+import cz.rekola.android.view.ErrorBarView;
 
 public class MainActivity extends Activity implements PageController {
 
@@ -33,6 +34,9 @@ public class MainActivity extends Activity implements PageController {
 
 	@InjectView(R.id.progress)
 	ProgressBar progressBar;
+
+	@InjectView(R.id.error_bar)
+	ErrorBarView errorBar;
 
 	private PageManager pageManager;
 
@@ -59,12 +63,14 @@ public class MainActivity extends Activity implements PageController {
 	public void onResume() {
 		super.onResume();
 		getApp().getBus().register(this);
+		getApp().getBus().register(errorBar);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		getApp().getBus().unregister(this);
+		getApp().getBus().unregister(errorBar);
 	}
 
     @Override

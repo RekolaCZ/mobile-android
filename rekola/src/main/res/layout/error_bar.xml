@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cz.rekola.android.view.ErrorBarView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/error_bar"
+	style="@style/Layout"
+	android:visibility="gone"
+	android:layout_height="wrap_content"
+	android:background="@color/red">
+
+	<TextView
+		android:id="@+id/error_text"
+		style="@style/TextView"
+		android:layout_margin="@dimen/grid_4"
+		android:textColor="@color/text_inverse"/>
+
+</cz.rekola.android.view.ErrorBarView>

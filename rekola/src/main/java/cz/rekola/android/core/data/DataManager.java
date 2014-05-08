@@ -19,6 +19,7 @@ import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.DataLoadingFinished;
 import cz.rekola.android.core.bus.DataLoadingStarted;
+import cz.rekola.android.core.bus.ErrorMessageEvent;
 import cz.rekola.android.core.bus.LockCodeEvent;
 import cz.rekola.android.core.bus.LockCodeFailedEvent;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
@@ -66,6 +67,8 @@ public class DataManager {
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.LOGIN);
 				app.getBus().post(new LoginFailedEvent());
+				//MessageError msgErr = (MessageError) error.getBodyAs(MessageError.class); // Retrofit fails on missing authentication challenges, although www-authenticate none is present.
+				app.getBus().post(new ErrorMessageEvent("Login failed."));
 			}
 		});
 	}
@@ -210,6 +213,10 @@ public class DataManager {
 				app.getBus().post(new ReturnBikeFailedEvent(state, err));
 			}
 		});
+	}
+
+	private void handleGenericError(RetrofitError error, String title) {
+		//error.getResponse().getStatus()
 	}
 
 	private enum DataLoad {
