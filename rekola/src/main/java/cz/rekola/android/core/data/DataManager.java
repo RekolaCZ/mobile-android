@@ -129,13 +129,15 @@ public class DataManager {
 			@Override
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.BORROWED_BIKE);
-				if (error.getResponse().getStatus() == 404) {
-					myBike = new MyBikeWrapper();
-					app.getBus().post(new BorrowedBikeAvailableEvent());
-				} else {
-					app.getBus().post(new BorrowedBikeFailedEvent());
-					handleGlobalError(error, "Failed to download borrowed bike");
+				if (error.getResponse() != null) {
+					if (error.getResponse().getStatus() == 404) {
+						myBike = new MyBikeWrapper();
+						app.getBus().post(new BorrowedBikeAvailableEvent());
+						return;
+					}
 				}
+				app.getBus().post(new BorrowedBikeFailedEvent());
+				handleGlobalError(error, "Failed to download borrowed bike");
 			}
 		});
 	}
@@ -159,19 +161,21 @@ public class DataManager {
 			@Override
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.BORROW_BIKE);
-				switch (error.getResponse().getStatus()) {
-					case 400:
-						app.getBus().post(new LockCodeFailedEvent(LockCodeFailedEvent.EState.WRONG_CODE, null));
-						break;
-					case 403:
-						app.getBus().post(new LockCodeFailedEvent(LockCodeFailedEvent.EState.FORBIDDEN, null));
-						break;
-					case 409:
-						app.getBus().post(new LockCodeFailedEvent(LockCodeFailedEvent.EState.FORBIDDEN, (BikeConflictError) error.getBodyAs(BikeConflictError.class)));
-						break;
-					default:
-						app.getBus().post(new LockCodeFailedEvent(LockCodeFailedEvent.EState.UNKNOWN, null));
+				LockCodeFailedEvent event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.UNKNOWN, null);
+				if (error.getResponse() != null) {
+					switch (error.getResponse().getStatus()) {
+						case 400:
+							event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.WRONG_CODE, null);
+							break;
+						case 403:
+							event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.FORBIDDEN, null);
+							break;
+						case 409:
+							event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.FORBIDDEN, (BikeConflictError) error.getBodyAs(BikeConflictError.class));
+							break;
+					}
 				}
+				app.getBus().post(event);
 				handleGlobalError(error, "Failed to borrow bike");
 			}
 		});
@@ -196,15 +200,15 @@ public class DataManager {
 			@Override
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.RETURN_BIKE);
-				BaseError err;
-				ReturnBikeFailedEvent.EState state;
-				switch (error.getResponse().getStatus()) {
-					case 409:
-						app.getBus().post(new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.CONFLICT, (BikeConflictError) error.getBodyAs(BikeConflictError.class)));
-						break;
-					default:
-						app.getBus().post(new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.UNKNOWN, null));
+				ReturnBikeFailedEvent event = new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.UNKNOWN, null);
+				if (error.getResponse() != null) {
+					switch (error.getResponse().getStatus()) {
+						case 409:
+							event = new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.CONFLICT, (BikeConflictError) error.getBodyAs(BikeConflictError.class));
+							break;
+					}
 				}
+				app.getBus().post(event);
 				handleGlobalError(error, "Failed to return bike");
 			}
 		});
@@ -213,6 +217,9 @@ public class DataManager {
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
 			app.getBus().post(new ErrorMessageEvent(title));
+			if (error.getCause().getMessage().contains("No authentication challenges found")) { // 401
+				app.getBus().post(new AuthorizationRequiredEvent());
+			}
 			return;
 		}
 
