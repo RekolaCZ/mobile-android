@@ -1,4 +1,7 @@
 package cz.rekola.android.api.model.error;
 
-public class BikeConflictError extends MessageError {
+public class BikeConflictError extends BaseError {
+
+	String borrowTime;
+
 }

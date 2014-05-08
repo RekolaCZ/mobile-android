@@ -17,7 +17,9 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.android.core.bus.DataLoadingFinished;
+import cz.rekola.android.core.bus.IncompatibleApiEvent;
 import cz.rekola.android.core.bus.ProgressDataLoading;
 import cz.rekola.android.core.bus.DataLoadingStarted;
 import cz.rekola.android.core.data.MyBikeWrapper;
@@ -135,6 +137,16 @@ public class MainActivity extends Activity implements PageController {
 			return;
 		}
 		progressBar.setProgress(event.progress);
+	}
+
+	@Subscribe
+	public void onAuthorizationRequired(AuthorizationRequiredEvent event) {
+		finish();
+	}
+
+	@Subscribe
+	public void onIncompatibleApi(IncompatibleApiEvent event) {
+		finish();
 	}
 
 	@Override
