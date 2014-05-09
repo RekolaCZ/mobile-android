@@ -42,5 +42,6 @@
 	<string name="error_no_bike_borrowed">No bike borrowed.</string>
 	<string name="error_unknown_borrowed_bike_code">Unknown borrowed bike code.</string>
 	<string name="error_bike_details_failed">Failed to load bike details.</string>
+	<string name="error_get_pois_failed">Failed to download info about places of interest.</string>
 
 </resources>

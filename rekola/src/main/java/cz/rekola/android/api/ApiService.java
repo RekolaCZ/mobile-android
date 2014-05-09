@@ -5,6 +5,7 @@ import java.util.List;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.api.model.BorrowedBike;
 import cz.rekola.android.api.model.LockCode;
+import cz.rekola.android.api.model.Poi;
 import cz.rekola.android.api.model.ReturnedBike;
 import cz.rekola.android.api.model.Token;
 import cz.rekola.android.api.requestmodel.Credentials;
@@ -34,4 +35,7 @@ public interface ApiService {
 
 	@PUT("/bikes/{id}/return")
 	public void returnBike(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
+
+	@GET("/location/pois")
+	public void getPois(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
 }

@@ -9,6 +9,7 @@ import cz.rekola.android.api.ApiService;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.api.model.BorrowedBike;
 import cz.rekola.android.api.model.LockCode;
+import cz.rekola.android.api.model.Poi;
 import cz.rekola.android.api.model.ReturnedBike;
 import cz.rekola.android.api.model.Token;
 import cz.rekola.android.api.model.error.BaseError;
@@ -30,6 +31,8 @@ import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
+import cz.rekola.android.core.bus.PoisAvailableEvent;
+import cz.rekola.android.core.bus.PoisFailedEvent;
 import cz.rekola.android.core.bus.ReturnBikeEvent;
 import cz.rekola.android.core.bus.ReturnBikeFailedEvent;
 import cz.rekola.android.core.loc.MyLocation;
@@ -44,6 +47,7 @@ public class DataManager {
 	private Token token;
 	private List<Bike> bikes;
 	private MyBikeWrapper myBike;
+	private List<Poi> pois;
 
 	private LoadingManager loadingManager;
 
@@ -216,6 +220,32 @@ public class DataManager {
 		});
 	}
 
+	public List<Poi> getPois(boolean forceUpdate) {
+		if ((pois != null && !forceUpdate) || !loadingManager.addLoading(DataLoad.POIS)) {
+			return pois;
+		}
+
+		ApiService apiService = app.getApiService();
+		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
+		apiService.getPois(app.getVersionManager().getUserAgent(), token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Poi>>() {
+			@Override
+			public void success(List<Poi> pois, Response response) {
+				loadingManager.removeLoading(DataLoad.POIS);
+				DataManager.this.pois = pois;
+				app.getBus().post(new PoisAvailableEvent());
+			}
+
+			@Override
+			public void failure(RetrofitError error) {
+				loadingManager.removeLoading(DataLoad.POIS);
+				app.getBus().post(new PoisFailedEvent());
+				handleGlobalError(error, app.getResources().getString(R.string.error_get_pois_failed));
+			}
+		});
+
+		return null;
+	}
+
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
 			app.getBus().post(new ErrorMessageEvent(title));
@@ -248,7 +278,8 @@ public class DataManager {
 		BORROWED_BIKE,
 		BIKES,
 		BORROW_BIKE,
-		RETURN_BIKE
+		RETURN_BIKE,
+		POIS
 	}
 
 	private class LoadingManager {

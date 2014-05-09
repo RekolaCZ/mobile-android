@@ -13,16 +13,25 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.api.model.Poi;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.ReturningBike;
 import cz.rekola.android.api.requestmodel.ReturningLocation;
 import cz.rekola.android.core.bus.ErrorMessageEvent;
+import cz.rekola.android.core.bus.PoisAvailableEvent;
+import cz.rekola.android.core.bus.PoisFailedEvent;
 import cz.rekola.android.core.bus.ReturnBikeEvent;
 import cz.rekola.android.core.bus.ReturnBikeFailedEvent;
 import cz.rekola.android.core.data.MyBikeWrapper;
@@ -41,6 +50,8 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	EditText vNote;
 	@InjectView(R.id.bike_returned)
 	Button vReturned;
+
+	private PoiManager pois = new PoiManager();
 
 	@Override
 	public void onResume() {
@@ -110,6 +121,12 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 						new ReturningBike(new ReturningLocation(center.latitude, center.longitude, vNote.getText().toString())));
 			}
 		});
+
+		pois.init();
+
+		if (getApp().getDataManager().getPois(true) != null) {
+			setupMap();
+		}
 	}
 
 	@Subscribe
@@ -124,6 +141,16 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 		} else {
 			getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_return_bike_failed)));
 		}
+	}
+
+	@Subscribe
+	public void poisAvailableEvent(PoisAvailableEvent event) {
+		setupMap();
+
+	}
+
+	@Subscribe
+	public void poisFailedEvent(PoisFailedEvent event) {
 	}
 
 	/*@Override
@@ -152,7 +179,71 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
 	@Override
 	public void onMyLocationError() {
+	}
 
+	private void setupMap() {
+		List<Poi> poisList = getApp().getDataManager().getPois(false);
+		if (pois == null)
+			return;
+
+		pois.updateMap(poisList);
+	}
+
+	private class PoiManager implements GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+
+		void init() {
+			map.setOnMarkerClickListener(this);
+			map.setOnInfoWindowClickListener(this);
+		}
+
+		void updateMap(List<Poi> pois) {
+			map.clear();
+
+			for (Poi poi : pois) {
+				BitmapDescriptor bmp = POIS.getBmpFromType(poi.type);
+				if (bmp == null)
+					continue;
+				map.addMarker(new MarkerOptions()
+						.position(new LatLng(poi.lat, poi.lng))
+						.title(poi.description)
+						.icon(bmp));
+			}
+		}
+
+		@Override
+		public boolean onMarkerClick(Marker marker) {
+			marker.showInfoWindow();
+			return true;
+		}
+
+		@Override
+		public void onInfoWindowClick(Marker marker) {
+			// TODO: Do not move to graves positions!
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(marker.getPosition());
+			map.animateCamera(cameraUpdate);
+		}
+	}
+
+	private enum POIS {
+		BAY("bay", R.drawable.ic_pin_normal),
+		GRAVE("grave", R.drawable.ic_pin_focused_pressed);
+
+		static BitmapDescriptor getBmpFromType(String type) {
+			for (POIS p : POIS.values()) {
+				if (p.type.equals(type)) {
+					return p.bmp;
+				}
+			}
+			return null;
+		}
+
+		private POIS(String type, int resourceId) {
+			this.type = type;
+			bmp = BitmapDescriptorFactory.fromResource(resourceId);
+		}
+
+		BitmapDescriptor bmp;
+		String type;
 	}
 
 	private class MapLocationUpdater {
