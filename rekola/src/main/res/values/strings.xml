@@ -7,12 +7,12 @@
 	<string name="login_username_hint">email</string>
 	<string name="login_password_hint">password</string>
 	<string name="login_log_in">Log in</string>
-	<string name="login_registration">Not a mamber?</string>
+	<string name="login_registration">Not a member?</string>
 	<string name="login_connecting">Connecting…</string>
 	<string name="login_forgot_password">Forgot password?</string>
 
 	<string name="borrow_title">Borrow Bike</string>
-	<string name="borrow_info_1">Code can be found on the side of the wheel on bike.</string>
+	<string name="borrow_info_1">Code can be found on a side of the wheel on the bike.</string>
 	<string name="borrow_info_2">After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time.</string>
 	<string name="borrow_borrow">Borrow a bike</string>
 
@@ -41,7 +41,6 @@
 	<string name="error_incorrect_bike_code">Incorrect bike code.</string>
 	<string name="error_no_bike_borrowed">No bike borrowed.</string>
 	<string name="error_unknown_borrowed_bike_code">Unknown borrowed bike code.</string>
-	<string name="error_bike_details_failed">Failed to load bike details</string>
-	<string name="error_"></string>
+	<string name="error_bike_details_failed">Failed to load bike details.</string>
 
 </resources>
