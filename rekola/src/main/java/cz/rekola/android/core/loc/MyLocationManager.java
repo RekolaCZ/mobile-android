@@ -9,7 +9,6 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashSet;
 import java.util.Set;

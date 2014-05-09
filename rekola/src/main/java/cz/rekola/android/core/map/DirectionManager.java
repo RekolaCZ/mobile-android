@@ -25,8 +25,8 @@ public class DirectionManager {
 	}
 
 	public void loadDirections(int id, DirectionParams params) {
-		if (id == loadedPathId)
-			return;
+		//if (id == loadedPathId) // On demand loading => Refresh the position if requested
+		//	return;
 
 		loadedPathId = id;
 		cancelTasks();

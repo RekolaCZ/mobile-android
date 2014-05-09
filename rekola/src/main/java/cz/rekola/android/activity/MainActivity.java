@@ -67,6 +67,7 @@ public class MainActivity extends Activity implements PageController {
 		super.onResume();
 		getApp().getBus().register(this);
 		getApp().getBus().register(errorBar);
+		setProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
