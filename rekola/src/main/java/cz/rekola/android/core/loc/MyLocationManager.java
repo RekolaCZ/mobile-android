@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class MyLocationManager implements com.google.android.gms.location.LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, MyLocationListener {
 
-	private static final MyLocation DEFAULT_MY_LOCATION = new MyLocation(Float.MAX_VALUE, 50.085, 14.426); // Location used when there is no location update available.
+	private static final MyLocation DEFAULT_MY_LOCATION = new MyLocation(Float.MAX_VALUE, 50.079167, 14.428414); // Location used when there is no location update available.
 
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;

@@ -49,7 +49,7 @@
 			android:id="@+id/bike_returned"
 			style="@style/Button"
 			android:layout_marginBottom="0dp"
-			android:text="Bike returned"/>
+			android:text="Bike Returned"/>
 
 	</LinearLayout>
 

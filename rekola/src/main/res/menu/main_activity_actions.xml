@@ -29,11 +29,11 @@
 		<menu>
 
 		<item android:id="@+id/action_profile"
-			  android:title="profile"
+			  android:title="Profile"
 			  android:showAsAction="never"/>
 
 		<item android:id="@+id/action_about"
-			  android:title="about"
+			  android:title="About"
 			  android:showAsAction="never"/>
 		</menu>
 	</item>

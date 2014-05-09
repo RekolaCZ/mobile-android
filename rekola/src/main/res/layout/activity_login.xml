@@ -21,7 +21,7 @@
 			<EditText
 				android:id="@+id/username"
 				style="@style/EditText"
-				android:hint="username" />
+				android:hint="email" />
 
 			<EditText
 				android:id="@+id/password"
@@ -34,7 +34,7 @@
 				android:layout_below="@id/password"
 				android:layout_marginBottom="@dimen/grid_20"
 				style="@style/Button"
-				android:text="Login"/>
+				android:text="Log In"/>
 
 		</LinearLayout>
 
@@ -47,7 +47,7 @@
 		android:layout_margin="@dimen/grid_4"
 		android:textColor="@color/clickable_text"
 		android:textSize="@dimen/text_medium"
-		android:text="Registration"/>
+		android:text="Not a member?"/>
 
 	<TextView
 		android:id="@+id/recover_password"
