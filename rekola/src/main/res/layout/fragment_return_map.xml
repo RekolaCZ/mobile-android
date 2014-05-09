@@ -37,7 +37,7 @@
 		<EditText
 			android:id="@+id/note"
 			style="@style/EditText"
-			android:hint="Describe the exact bike location. (e.g. 3rd. lamp from the bus stop.)"
+			android:hint="@string/returnmap_note_hint"
 			android:singleLine="false"
 			android:textColor="@color/text_primary"
 			android:gravity="top|left"
@@ -49,7 +49,7 @@
 			android:id="@+id/bike_returned"
 			style="@style/Button"
 			android:layout_marginBottom="0dp"
-			android:text="Bike Returned"/>
+			android:text="@string/returnmap_bike_returned"/>
 
 	</LinearLayout>
 

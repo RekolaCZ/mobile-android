@@ -47,7 +47,6 @@ public class MainActivity extends Activity implements PageController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
 		ButterKnife.inject(this);
@@ -117,7 +116,6 @@ public class MainActivity extends Activity implements PageController {
 	@Override
 	public void onBackPressed() {
 		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike())) {
-			//super.onBackPressed();
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

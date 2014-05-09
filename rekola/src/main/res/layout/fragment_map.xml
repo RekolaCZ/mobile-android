@@ -42,8 +42,7 @@
 						android:id="@+id/map_overlay_name"
 						style="@style/TextViewOverlay"
 						android:textSize="@dimen/text_xlarge"
-						android:textStyle="bold"
-						android:text="qwer"/>
+						android:textStyle="bold"/>
 
 					<TextView
 						android:id="@+id/map_overlay_street"

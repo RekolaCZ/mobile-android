@@ -22,6 +22,7 @@ import cz.rekola.android.R;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.ReturningBike;
 import cz.rekola.android.api.requestmodel.ReturningLocation;
+import cz.rekola.android.core.bus.ErrorMessageEvent;
 import cz.rekola.android.core.bus.ReturnBikeEvent;
 import cz.rekola.android.core.bus.ReturnBikeFailedEvent;
 import cz.rekola.android.core.data.MyBikeWrapper;
@@ -101,7 +102,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 				LatLng center = map.getCameraPosition().target;
 				MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
 				if (myBike == null || myBike.bike == null || myBike.bike.bikeCode == null ||  myBike.bike.bikeCode.length() == 0) {
-					Toast.makeText(getActivity(), "Unknown borrowed bike code!", Toast.LENGTH_SHORT).show();
+					getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
 					return;
 				}
 				// TODO: May throw NumberFormatException!
@@ -113,16 +114,15 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
 	@Subscribe
 	public void bikeReturned(ReturnBikeEvent event) {
-		Toast.makeText(getActivity(), "Bike returned!", Toast.LENGTH_SHORT).show();
 		getPageController().requestWebBikeReturned(event.successUrl);
 	}
 
 	@Subscribe
 	public void bikeReturnFailed(ReturnBikeFailedEvent event) {
 		if (event.error != null && event.error instanceof MessageError) {
-			Toast.makeText(getActivity(), ((MessageError)event.error).message, Toast.LENGTH_SHORT).show();
+			getApp().getBus().post(new ErrorMessageEvent(((MessageError)event.error).message));
 		} else {
-			Toast.makeText(getActivity(), "Failed to return the bike!", Toast.LENGTH_SHORT).show();
+			getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_return_bike_failed)));
 		}
 	}
 

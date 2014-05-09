@@ -18,7 +18,7 @@
 		<TextView
 			android:id="@+id/lock_code_text"
 			style="@style/TextView"
-			android:text="Lock code:"/>
+			android:text="@string/return_info_lock_code"/>
 
 		<EditText
 			android:id="@+id/lock_code"
@@ -45,7 +45,7 @@
 			style="@style/Button"
 			android:layout_marginTop="@dimen/grid_2"
 			android:layout_below="@id/bike_name"
-			android:text="Return"/>
+			android:text="@string/return_return"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -59,7 +59,7 @@
 				android:layout_weight="1"
 				android:layout_marginRight="@dimen/grid_2"
 				android:layout_marginBottom="0dp"
-				android:text="Bike Detail"/>
+				android:text="@string/return_bike_detail"/>
 
 			<Button
 				android:id="@+id/return_bike_issue"
@@ -67,7 +67,7 @@
 				android:layout_weight="1"
 				android:layout_marginLeft="@dimen/grid_2"
 				android:layout_marginBottom="0dp"
-				android:text="Report Issue"/>
+				android:text="@string/return_bike_issue"/>
 
 		</LinearLayout>
 

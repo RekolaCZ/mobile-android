@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cz.rekola.android.R;
 import cz.rekola.android.api.ApiService;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.api.model.BorrowedBike;
@@ -70,7 +71,7 @@ public class DataManager {
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.LOGIN);
 				app.getBus().post(new LoginFailedEvent());
-				handleGlobalError(error, "Login failed");
+				handleGlobalError(error, app.getResources().getString(R.string.error_title_login_failed));
 			}
 		});
 	}
@@ -98,7 +99,7 @@ public class DataManager {
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.BIKES);
 				app.getBus().post(new BikesFailedEvent());
-				handleGlobalError(error, "Failed to download bikes");
+				handleGlobalError(error, app.getResources().getString(R.string.error_get_bikes_failed));
 			}
 		});
 
@@ -138,7 +139,7 @@ public class DataManager {
 					}
 				}
 				app.getBus().post(new BorrowedBikeFailedEvent());
-				handleGlobalError(error, "Failed to download borrowed bike");
+				handleGlobalError(error, app.getResources().getString(R.string.error_get_borrowed_bike_failed));
 			}
 		});
 	}
@@ -177,7 +178,7 @@ public class DataManager {
 					}
 				}
 				app.getBus().post(event);
-				handleGlobalError(error, "Failed to borrow bike");
+				handleGlobalError(error, app.getResources().getString(R.string.error_borrow_bike_failed));
 			}
 		});
 	}
@@ -210,7 +211,7 @@ public class DataManager {
 					}
 				}
 				app.getBus().post(event);
-				handleGlobalError(error, "Failed to return bike");
+				handleGlobalError(error, app.getResources().getString(R.string.error_return_bike_failed));
 			}
 		});
 	}
@@ -226,9 +227,9 @@ public class DataManager {
 
 		MessageError msgErr = (MessageError) error.getBodyAs(MessageError.class);
 		if (msgErr.message == null || msgErr.message.isEmpty()) {
-			app.getBus().post(new ErrorMessageEvent(title + "."));
+			app.getBus().post(new ErrorMessageEvent(title));
 		} else {
-			app.getBus().post(new ErrorMessageEvent(title + ": " + msgErr.message));
+			app.getBus().post(new ErrorMessageEvent(title + " " + msgErr.message));
 		}
 
 		switch (error.getResponse().getStatus()) {

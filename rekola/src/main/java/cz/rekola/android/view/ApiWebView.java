@@ -13,6 +13,7 @@ import com.squareup.otto.Bus;
 
 import java.util.Map;
 
+import cz.rekola.android.R;
 import cz.rekola.android.core.bus.ErrorMessageEvent;
 import cz.rekola.android.core.bus.ProgressDataLoading;
 import cz.rekola.android.webapi.WebApiHandler;
@@ -48,7 +49,7 @@ public class ApiWebView extends WebView {
 		setWebViewClient(new WebViewClient() {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-				bus.post(new ErrorMessageEvent("Failed to load bike details"));
+				bus.post(new ErrorMessageEvent(getResources().getString(R.string.error_bike_details_failed)));
 				loadData("<html></head>", "text/html", "UTF-8");
 			}
 

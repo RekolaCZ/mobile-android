@@ -36,9 +36,9 @@ public class PageManager {
 		ABOUT			(new boolean[]	{true, true, true, true, true, false}, null, BORROW/*or RETURN*/, null, R.id.action_about, AboutWebFragment.class ),
 
 		// Other states without actionbar access.
-		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, RETURN, R.string.page_return_map_title, null, ReturnMapFragment.class ),
-		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, BORROW, R.string.page_web_return_title, null, ReturnWebFragment.class),
-		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP/*or RETURN*/, MAP/*or RETURN*/, R.string.page_web_bike_detail_title, null, BikeDetailWebFragment.class);
+		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),
+		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, BORROW, R.string.webreturn_title, null, ReturnWebFragment.class),
+		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP/*or RETURN*/, MAP/*or RETURN*/, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
 
 		EPageState(boolean[] actionAllowed, EPageState upState, EPageState backState, Integer titleId, Integer actionResourceId, Class fragment) {
 			this.actionAllowed = actionAllowed;

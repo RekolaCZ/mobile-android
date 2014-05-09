@@ -16,14 +16,14 @@
 				android:textColor="@color/gray_2"
 				android:textSize="@dimen/text_header"
 				android:layout_marginBottom="@dimen/margin_large"
-				android:text="Borrow Bike"/>
+				android:text="@string/borrow_title"/>
 
 			<TextView
 				style="@style/TextView"
 				android:textColor="@color/gray_2"
 				android:layout_marginBottom="@dimen/margin_large"
 				android:gravity="center"
-				android:text="Code can be found on the side of the wheel on bike."/>
+				android:text="@string/borrow_info_1"/>
 
 			<EditText
 				android:id="@+id/bike_code"
@@ -37,14 +37,14 @@
 			<Button
 				android:id="@+id/borrow"
 				style="@style/Button"
-				android:text="Borrow a bike"/>
+				android:text="@string/borrow_borrow"/>
 
 			<TextView
 				style="@style/TextView"
 				android:textColor="@color/gray_2"
 				android:layout_marginTop="@dimen/margin_large"
 				android:gravity="center"
-				android:text="After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time."/>
+				android:text="@string/borrow_info_1"/>
 
 		</LinearLayout>
 

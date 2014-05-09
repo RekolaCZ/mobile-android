@@ -85,7 +85,7 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 	private void populateData() {
 		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
 		if (myBike == null || !myBike.isBorrowed()) {
-			setData("No bike borrowed.", "");
+			setData(getResources().getString(R.string.error_no_bike_borrowed), "");
 			return;
 		}
 

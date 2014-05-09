@@ -34,10 +34,6 @@ public class PreferencesManager {
 		setStringPref(PREF_PASSWORD, password);
 	}
 
-	public Token getToken() {
-		return Token.restoreState(settings);
-	}
-
 	public void setPersistentObject(PreferencePersistenty persistentObject) {
 		SharedPreferences.Editor editor = settings.edit();
 		persistentObject.saveState(editor);

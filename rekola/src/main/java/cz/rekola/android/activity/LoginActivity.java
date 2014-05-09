@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -24,6 +23,7 @@ import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
+import cz.rekola.android.core.bus.ErrorMessageEvent;
 import cz.rekola.android.core.bus.IncompatibleApiEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
@@ -60,7 +60,7 @@ public class LoginActivity extends Activity {
 			public void onClick(View view) {
 				viewHelper.saveCredentials();
 				if (!viewHelper.canLogin()) {
-					Toast.makeText(LoginActivity.this, "Fill in the username and password!", Toast.LENGTH_SHORT).show();
+					getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_missing_credentials)));
 					return;
 				}
 
@@ -71,7 +71,6 @@ public class LoginActivity extends Activity {
 		vRecoverPassword.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(LoginActivity.this, "Recover password!", Toast.LENGTH_SHORT).show();
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_RECOVER_PASSWORD_URL));
 				startActivity(browserIntent);
 			}
@@ -80,7 +79,6 @@ public class LoginActivity extends Activity {
 		vRegistration.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(LoginActivity.this, "Registration!", Toast.LENGTH_SHORT).show();
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
 				startActivity(browserIntent);
 			}
