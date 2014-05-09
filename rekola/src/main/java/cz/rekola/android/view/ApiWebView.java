@@ -3,18 +3,16 @@ package cz.rekola.android.view;
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
 import java.util.Map;
 
 import cz.rekola.android.R;
-import cz.rekola.android.core.bus.ErrorMessageEvent;
+import cz.rekola.android.core.bus.MessageEvent;
 import cz.rekola.android.core.bus.ProgressDataLoading;
 import cz.rekola.android.webapi.WebApiHandler;
 
@@ -49,7 +47,7 @@ public class ApiWebView extends WebView {
 		setWebViewClient(new WebViewClient() {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-				bus.post(new ErrorMessageEvent(getResources().getString(R.string.error_bike_details_failed)));
+				bus.post(new MessageEvent(getResources().getString(R.string.error_bike_details_failed)));
 				loadData("<html></head>", "text/html", "UTF-8");
 			}
 

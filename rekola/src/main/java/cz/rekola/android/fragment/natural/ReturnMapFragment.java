@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,7 +28,7 @@ import cz.rekola.android.api.model.Poi;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.ReturningBike;
 import cz.rekola.android.api.requestmodel.ReturningLocation;
-import cz.rekola.android.core.bus.ErrorMessageEvent;
+import cz.rekola.android.core.bus.MessageEvent;
 import cz.rekola.android.core.bus.PoisAvailableEvent;
 import cz.rekola.android.core.bus.PoisFailedEvent;
 import cz.rekola.android.core.bus.ReturnBikeEvent;
@@ -113,7 +112,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 				LatLng center = map.getCameraPosition().target;
 				MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
 				if (myBike == null || myBike.bike == null || myBike.bike.bikeCode == null ||  myBike.bike.bikeCode.length() == 0) {
-					getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
+					getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
 					return;
 				}
 				// TODO: May throw NumberFormatException!
@@ -137,9 +136,9 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	@Subscribe
 	public void bikeReturnFailed(ReturnBikeFailedEvent event) {
 		if (event.error != null && event.error instanceof MessageError) {
-			getApp().getBus().post(new ErrorMessageEvent(((MessageError)event.error).message));
+			getApp().getBus().post(new MessageEvent(((MessageError)event.error).message));
 		} else {
-			getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_return_bike_failed)));
+			getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_return_bike_failed)));
 		}
 	}
 

@@ -24,13 +24,13 @@ import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
-import cz.rekola.android.core.bus.ErrorMessageEvent;
+import cz.rekola.android.core.bus.MessageEvent;
 import cz.rekola.android.core.bus.IncompatibleApiEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
 import cz.rekola.android.core.bus.PasswordRecoveryEvent;
 import cz.rekola.android.core.bus.PasswordRecoveryFailed;
-import cz.rekola.android.view.ErrorBarView;
+import cz.rekola.android.view.MessageBarView;
 
 public class LoginActivity extends Activity {
 
@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
 	TextView vRecall;
 
 	@InjectView(R.id.error_bar)
-	ErrorBarView errorBar;
+	MessageBarView errorBar;
 
 	private ViewHelper viewHelper = new ViewHelper();
 
@@ -72,7 +72,7 @@ public class LoginActivity extends Activity {
 			public void onClick(View view) {
 				viewHelper.saveCredentials();
 				if (!viewHelper.canLogin()) {
-					getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_missing_credentials)));
+					getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_credentials)));
 					return;
 				}
 
@@ -110,7 +110,7 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				if (!viewHelper.canReset()) {
-					getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_missing_username)));
+					getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_username)));
 					return;
 				}
 
@@ -165,6 +165,7 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void passwordRecoveryEvent(PasswordRecoveryEvent event) {
+		getApp().getBus().post(new MessageEvent(MessageEvent.MessageType.SUCCESS, getResources().getString(R.string.success_password_recovery)));
 		vResetOverlay.setVisibility(View.GONE);
 	}
 

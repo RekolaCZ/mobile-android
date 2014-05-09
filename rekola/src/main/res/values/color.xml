@@ -11,6 +11,7 @@
 	<color name="gray_2">#999999</color>
 	<color name="brown">#828E27</color>
 	<color name="red">#FF0000</color>
+	<color name="green">#00AA00</color>
 
 	<color name="text_primary">@color/black</color>
 	<color name="text_edit">@color/pink_1</color>

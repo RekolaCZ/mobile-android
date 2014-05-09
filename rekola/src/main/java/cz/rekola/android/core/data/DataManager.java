@@ -12,7 +12,6 @@ import cz.rekola.android.api.model.LockCode;
 import cz.rekola.android.api.model.Poi;
 import cz.rekola.android.api.model.ReturnedBike;
 import cz.rekola.android.api.model.Token;
-import cz.rekola.android.api.model.error.BaseError;
 import cz.rekola.android.api.model.error.BikeConflictError;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.Credentials;
@@ -25,7 +24,7 @@ import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
 import cz.rekola.android.core.bus.DataLoadingFinished;
 import cz.rekola.android.core.bus.DataLoadingStarted;
 import cz.rekola.android.core.bus.IncompatibleApiEvent;
-import cz.rekola.android.core.bus.ErrorMessageEvent;
+import cz.rekola.android.core.bus.MessageEvent;
 import cz.rekola.android.core.bus.LockCodeEvent;
 import cz.rekola.android.core.bus.LockCodeFailedEvent;
 import cz.rekola.android.core.bus.BikesAvailableEvent;
@@ -273,7 +272,7 @@ public class DataManager {
 
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
-			app.getBus().post(new ErrorMessageEvent(title));
+			app.getBus().post(new MessageEvent(title));
 			if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
 				app.getBus().post(new AuthorizationRequiredEvent());
 			}
@@ -282,9 +281,9 @@ public class DataManager {
 
 		MessageError msgErr = (MessageError) error.getBodyAs(MessageError.class);
 		if (msgErr.message == null || msgErr.message.isEmpty()) {
-			app.getBus().post(new ErrorMessageEvent(title));
+			app.getBus().post(new MessageEvent(title));
 		} else {
-			app.getBus().post(new ErrorMessageEvent(title + " " + msgErr.message));
+			app.getBus().post(new MessageEvent(title + " " + msgErr.message));
 		}
 
 		switch (error.getResponse().getStatus()) {

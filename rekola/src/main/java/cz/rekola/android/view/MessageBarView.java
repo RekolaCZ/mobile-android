@@ -12,9 +12,9 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
-import cz.rekola.android.core.bus.ErrorMessageEvent;
+import cz.rekola.android.core.bus.MessageEvent;
 
-public class ErrorBarView extends LinearLayout {
+public class MessageBarView extends LinearLayout {
 
 	private static final int MESSAGE_TIMEOUT = 5000;
 
@@ -29,15 +29,15 @@ public class ErrorBarView extends LinearLayout {
 		}
 	};
 
-	public ErrorBarView(Context context) {
+	public MessageBarView(Context context) {
 		super(context);
 	}
 
-	public ErrorBarView(Context context, AttributeSet attrs) {
+	public MessageBarView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public ErrorBarView(Context context, AttributeSet attrs, int defStyle) {
+	public MessageBarView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -61,8 +61,16 @@ public class ErrorBarView extends LinearLayout {
 	}
 
 	@Subscribe
-	public void onErrorMessage(ErrorMessageEvent event) {
+	public void onMessage(MessageEvent event) {
 		message.setText(event.message);
+		switch (event.type) {
+			case SUCCESS:
+				setBackgroundColor(getResources().getColor(R.color.green));
+				break;
+			case ERROR:
+				setBackgroundColor(getResources().getColor(R.color.red));
+			default:
+		}
 		setVisibility(VISIBLE);
 		handler.removeCallbacks(runnable);
 		handler.postDelayed(runnable, MESSAGE_TIMEOUT);

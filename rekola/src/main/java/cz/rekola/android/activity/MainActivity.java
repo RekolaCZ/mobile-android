@@ -29,7 +29,7 @@ import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.page.PageManager;
 import cz.rekola.android.fragment.web.BikeDetailWebFragment;
 import cz.rekola.android.fragment.web.ReturnWebFragment;
-import cz.rekola.android.view.ErrorBarView;
+import cz.rekola.android.view.MessageBarView;
 
 public class MainActivity extends Activity implements PageController {
 
@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements PageController {
 	ProgressBar progressBar;
 
 	@InjectView(R.id.error_bar)
-	ErrorBarView errorBar;
+	MessageBarView errorBar;
 
 	private PageManager pageManager;
 
