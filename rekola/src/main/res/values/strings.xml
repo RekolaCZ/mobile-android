@@ -12,7 +12,7 @@
 	<string name="login_forgot_password">Forgot password?</string>
 
 	<string name="borrow_title">Borrow Bike</string>
-	<string name="borrow_info_1">Code can be found on a side of the wheel on the bike.</string>
+	<string name="borrow_info_1">Code can be found on the rear fender or on a rear stick.</string>
 	<string name="borrow_info_2">After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time.</string>
 	<string name="borrow_borrow">Borrow a bike</string>
 
