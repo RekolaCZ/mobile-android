@@ -8,7 +8,6 @@ import android.view.Menu;
 import cz.rekola.android.R;
 import cz.rekola.android.core.data.MyBikeWrapper;
 import cz.rekola.android.fragment.web.ProfileWebFragment;
-import cz.rekola.android.fragment.web.AboutWebFragment;
 import cz.rekola.android.fragment.base.BaseMainFragment;
 import cz.rekola.android.fragment.web.BikeDetailWebFragment;
 import cz.rekola.android.fragment.natural.BorrowFragment;
@@ -33,7 +32,6 @@ public class PageManager {
 		RETURN			(new boolean[]	{false, false, true, true, true, true}, null, null, null, R.id.action_return, ReturnFragment.class),
 		MAP				(new boolean[]	{true, true, false, true, true, true}, null, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
 		PROFILE			(new boolean[]	{true, true, true, true, false, true}, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
-		ABOUT			(new boolean[]	{true, true, true, true, true, false}, null, BORROW/*or RETURN*/, null, R.id.action_about, AboutWebFragment.class ),
 
 		// Other states without actionbar access.
 		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),

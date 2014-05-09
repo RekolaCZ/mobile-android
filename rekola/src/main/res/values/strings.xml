@@ -36,6 +36,12 @@
 	<!-- Bike name parameter -->
 	<string name="return_bike_name">Bike %s at your service.</string>
 
+	<string name="menu_borrow">Borrow</string>
+	<string name="menu_return">Return</string>
+	<string name="menu_map">Map</string>
+	<string name="menu_profile">Profile</string>
+	<string name="menu_logout">Log out</string>
+
 	<!-- Error messages -->
 	<string name="error_missing_credentials">Fill in your email and password.</string>
 	<string name="error_missing_username">Fill in your email.</string>

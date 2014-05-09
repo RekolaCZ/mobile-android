@@ -278,7 +278,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 
 		void notifyBikeDetailPressed() {
 			if (lastBike != null)
-				getPageController().requestWebBikeDetail(lastBike.id);
+				getPageController().requestWebBikeDetail(lastBike.id, false);
 		}
 
 		@Override

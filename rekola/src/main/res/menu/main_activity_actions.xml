@@ -4,19 +4,19 @@
 
 	<item android:id="@+id/action_borrow"
 		android:icon="@drawable/actionbar_ic_borrow"
-		android:title="borrow"
+		android:title="@string/menu_borrow"
 		android:visible="true"
 		android:showAsAction="always"/>
 
 	<item android:id="@+id/action_return"
 		  android:icon="@drawable/actionbar_ic_return"
-		  android:title="return"
+		  android:title="@string/menu_return"
 		  android:visible="true"
 		  android:showAsAction="always"/>
 
 	<item android:id="@+id/action_map"
 		  android:icon="@drawable/actionbar_ic_map"
-		  android:title="map"
+		  android:title="@string/menu_map"
 		  android:visible="true"
 		  android:showAsAction="always"/>
 
@@ -29,11 +29,11 @@
 		<menu>
 
 		<item android:id="@+id/action_profile"
-			  android:title="Profile"
+			  android:title="@string/menu_profile"
 			  android:showAsAction="never"/>
 
-		<item android:id="@+id/action_about"
-			  android:title="About"
+		<item android:id="@+id/action_logout"
+			  android:title="@string/menu_logout"
 			  android:showAsAction="never"/>
 		</menu>
 	</item>

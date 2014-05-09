@@ -59,14 +59,14 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 		vDetail.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getPageController().requestWebBikeDetail(bikeId);
+				getPageController().requestWebBikeDetail(bikeId, false);
 			}
 		});
 
 		vIssue.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getPageController().requestWebBikeDetail(bikeId);
+				getPageController().requestWebBikeDetail(bikeId, true);
 			}
 		});
 
@@ -74,7 +74,7 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 		Map extraHeaderMap = new HashMap<String, String>();
 		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
 
-		vWeb.init(getApp().getBus(), this, String.format(Constants.WEBAPI_BIKE_RETURN_URL, bikeId), extraHeaderMap);
+		vWeb.init(getApp().getBus(), this, String.format(Constants.WEBAPI_BIKE_RETURNED_URL, bikeId), extraHeaderMap);
 	}
 
 	@Override

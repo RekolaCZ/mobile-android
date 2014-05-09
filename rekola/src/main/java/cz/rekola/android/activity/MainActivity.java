@@ -100,8 +100,10 @@ public class MainActivity extends Activity implements PageController {
 			case R.id.action_profile:
 				pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager(), getActionBar());
 				break;
-			case R.id.action_about:
-				pageManager.setState(PageManager.EPageState.ABOUT, getFragmentManager(), getActionBar());
+			case R.id.action_logout:
+				// TODO: Add yes/no dialog
+				getApp().getPreferencesManager().setPassword(null);
+				finish();
 				break;
 			case android.R.id.home:
 				pageManager.setUpState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike());
@@ -181,10 +183,10 @@ public class MainActivity extends Activity implements PageController {
 	}
 
 	@Override
-	public void requestWebBikeDetail(int id) {
+	public void requestWebBikeDetail(int id, boolean issues) {
 		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar());
 		if (fragment != null && fragment instanceof BikeDetailWebFragment)
-			((BikeDetailWebFragment)fragment).init(id);
+			((BikeDetailWebFragment)fragment).init(id, issues);
 		invalidateOptionsMenu();
 	}
 
