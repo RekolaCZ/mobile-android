@@ -58,6 +58,61 @@
 		android:textSize="@dimen/text_medium"
 		android:text="@string/login_forgot_password"/>
 
+	<FrameLayout
+		style="@style/Layout"
+		android:id="@+id/reset_overlay"
+		android:visibility="gone"
+		android:background="@color/background_window">
+
+		<ScrollView
+			style="@style/Layout">
+
+			<LinearLayout
+				style="@style/Layout"
+				android:layout_gravity="center_vertical"
+				android:layout_margin="@dimen/text_header"
+				android:gravity="center">
+
+				<TextView
+					style="@style/TextView"
+					android:textColor="@color/gray_2"
+					android:textSize="32dp"
+					android:layout_marginBottom="@dimen/margin_large"
+					android:text="@string/reset_title"/>
+
+				<TextView
+					style="@style/TextView"
+					android:textColor="@color/gray_2"
+					android:layout_marginBottom="@dimen/margin_large"
+					android:gravity="center"
+					android:text="@string/reset_info"/>
+
+				<EditText
+					android:id="@+id/reset_username"
+					style="@style/EditText"
+					android:hint="@string/login_username_hint" />
+
+				<Button
+					android:id="@+id/reset"
+					android:layout_below="@id/password"
+					android:layout_marginBottom="@dimen/grid_20"
+					style="@style/Button"
+					android:text="@string/reset_reset"/>
+
+			</LinearLayout>
+		</ScrollView>>
+
+		<TextView
+			android:id="@+id/reset_recall"
+			style="@style/TextView"
+			android:layout_gravity="bottom|right"
+			android:layout_margin="@dimen/grid_4"
+			android:textColor="@color/clickable_text"
+			android:textSize="@dimen/text_medium"
+			android:text="@string/reset_recall"/>
+
+	</FrameLayout>
+
 	<include layout="@layout/error_bar"/>
 
 	<FrameLayout

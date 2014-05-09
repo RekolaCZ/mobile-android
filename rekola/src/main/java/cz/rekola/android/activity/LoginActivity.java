@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.requestmodel.Credentials;
+import cz.rekola.android.api.requestmodel.RecoverPassword;
 import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
@@ -27,6 +28,8 @@ import cz.rekola.android.core.bus.ErrorMessageEvent;
 import cz.rekola.android.core.bus.IncompatibleApiEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
+import cz.rekola.android.core.bus.PasswordRecoveryEvent;
+import cz.rekola.android.core.bus.PasswordRecoveryFailed;
 import cz.rekola.android.view.ErrorBarView;
 
 public class LoginActivity extends Activity {
@@ -43,6 +46,15 @@ public class LoginActivity extends Activity {
 	TextView vRegistration;
 	@InjectView(R.id.loading_overlay)
 	FrameLayout vLoading;
+
+	@InjectView(R.id.reset_overlay)
+	FrameLayout vResetOverlay;
+	@InjectView(R.id.reset_username)
+	EditText vResetUsername;
+	@InjectView(R.id.reset)
+	Button vReset;
+	@InjectView(R.id.reset_recall)
+	TextView vRecall;
 
 	@InjectView(R.id.error_bar)
 	ErrorBarView errorBar;
@@ -68,19 +80,41 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		vRecoverPassword.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_RECOVER_PASSWORD_URL));
-				startActivity(browserIntent);
-			}
-		});
-
 		vRegistration.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
 				startActivity(browserIntent);
+			}
+		});
+
+		vRecoverPassword.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (vResetUsername.getText().length() == 0) {
+					vResetUsername.setText(vUsername.getText());
+				}
+				vResetOverlay.setVisibility(View.VISIBLE);
+			}
+		});
+
+		vRecall.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				hideKeyboard();
+				vResetOverlay.setVisibility(View.GONE);
+			}
+		});
+
+		vReset.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (!viewHelper.canReset()) {
+					getApp().getBus().post(new ErrorMessageEvent(getResources().getString(R.string.error_missing_username)));
+					return;
+				}
+
+				reset();
 			}
 		});
 	}
@@ -130,6 +164,15 @@ public class LoginActivity extends Activity {
 	}
 
 	@Subscribe
+	public void passwordRecoveryEvent(PasswordRecoveryEvent event) {
+		vResetOverlay.setVisibility(View.GONE);
+	}
+
+	@Subscribe
+	public void passwordRecoveryFailed(PasswordRecoveryFailed event) {
+	}
+
+	@Subscribe
 	public void isBorrowedBikeAvailable(BorrowedBikeAvailableEvent event) {
 		startMainActivity();
 	}
@@ -161,6 +204,11 @@ public class LoginActivity extends Activity {
 		getApp().getDataManager().login(viewHelper.getCredentials());
 	}
 
+	private void reset() {
+		hideKeyboard();
+		getApp().getDataManager().recoverPassword(new RecoverPassword(vResetUsername.getText().toString()));
+	}
+
 	private void startMainActivity() {
 		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 		startActivity(intent);
@@ -174,6 +222,10 @@ public class LoginActivity extends Activity {
 
 		private boolean canLogin() {
 			return (vUsername.getText().length() > 0 && vPassword.getText().length() > 0);
+		}
+
+		private boolean canReset() {
+			return (vResetUsername.getText().length() > 0 && vResetUsername.getText().toString().contains("@"));
 		}
 
 		private Credentials getCredentials() {

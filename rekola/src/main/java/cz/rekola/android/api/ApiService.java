@@ -9,6 +9,7 @@ import cz.rekola.android.api.model.Poi;
 import cz.rekola.android.api.model.ReturnedBike;
 import cz.rekola.android.api.model.Token;
 import cz.rekola.android.api.requestmodel.Credentials;
+import cz.rekola.android.api.requestmodel.RecoverPassword;
 import cz.rekola.android.api.requestmodel.ReturningBike;
 import cz.rekola.android.core.Constants;
 import retrofit.Callback;
@@ -23,6 +24,9 @@ import retrofit.http.Query;
 public interface ApiService {
 	@POST("/accounts/mine/login")
 	public void login(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Body Credentials body, Callback<Token> callback);
+
+	@PUT("/password-recovery")
+	public void recoverPassword(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Body RecoverPassword body, Callback<Object> callback);
 
 	@GET("/bikes/all")
 	public void getBikes(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);

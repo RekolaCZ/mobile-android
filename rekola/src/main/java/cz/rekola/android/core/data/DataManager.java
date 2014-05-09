@@ -16,6 +16,7 @@ import cz.rekola.android.api.model.error.BaseError;
 import cz.rekola.android.api.model.error.BikeConflictError;
 import cz.rekola.android.api.model.error.MessageError;
 import cz.rekola.android.api.requestmodel.Credentials;
+import cz.rekola.android.api.requestmodel.RecoverPassword;
 import cz.rekola.android.api.requestmodel.ReturningBike;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
@@ -31,6 +32,8 @@ import cz.rekola.android.core.bus.BikesAvailableEvent;
 import cz.rekola.android.core.bus.BikesFailedEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
+import cz.rekola.android.core.bus.PasswordRecoveryEvent;
+import cz.rekola.android.core.bus.PasswordRecoveryFailed;
 import cz.rekola.android.core.bus.PoisAvailableEvent;
 import cz.rekola.android.core.bus.PoisFailedEvent;
 import cz.rekola.android.core.bus.ReturnBikeEvent;
@@ -82,6 +85,28 @@ public class DataManager {
 
 	public Token getToken() {
 		return token;
+	}
+
+	public void recoverPassword(RecoverPassword email) {
+		if (!loadingManager.addLoading(DataLoad.PASSWORD_RECOVERY)) {
+			return;
+		}
+
+		ApiService apiService = app.getApiService();
+		apiService.recoverPassword(app.getVersionManager().getUserAgent(), email, new Callback<Object>() {
+			@Override
+			public void success(Object unused, Response response) {
+				loadingManager.removeLoading(DataLoad.PASSWORD_RECOVERY);
+				app.getBus().post(new PasswordRecoveryEvent());
+			}
+
+			@Override
+			public void failure(RetrofitError error) {
+				loadingManager.removeLoading(DataLoad.PASSWORD_RECOVERY);
+				app.getBus().post(new PasswordRecoveryFailed());
+				handleGlobalError(error, app.getResources().getString(R.string.error_title_login_failed));
+			}
+		});
 	}
 
 	public List<Bike> getBikes(boolean forceUpdate) {
@@ -275,6 +300,7 @@ public class DataManager {
 
 	private enum DataLoad {
 		LOGIN,
+		PASSWORD_RECOVERY,
 		BORROWED_BIKE,
 		BIKES,
 		BORROW_BIKE,

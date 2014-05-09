@@ -11,6 +11,11 @@
 	<string name="login_connecting">Connecting…</string>
 	<string name="login_forgot_password">Forgot password?</string>
 
+	<string name="reset_title">Reset Password</string>
+	<string name="reset_reset">Reset</string>
+	<string name="reset_info">Enter your email to get instructions on how to reset your password.</string>
+	<string name="reset_recall">I remembered, recall</string>
+
 	<string name="borrow_title">Borrow Bike</string>
 	<string name="borrow_info_1">Code can be found on the rear fender or on a rear stick.</string>
 	<string name="borrow_info_2">After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time.</string>
@@ -33,6 +38,7 @@
 
 	<!-- Error messages -->
 	<string name="error_missing_credentials">Fill in your email and password.</string>
+	<string name="error_missing_username">Fill in your email.</string>
 	<string name="error_title_login_failed">Login failed.</string>
 	<string name="error_get_bikes_failed">Failed to download bikes info.</string>
 	<string name="error_get_borrowed_bike_failed">Failed to download borrowed bike info.</string>
