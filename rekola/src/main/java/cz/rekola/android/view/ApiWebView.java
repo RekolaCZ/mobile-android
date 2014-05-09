@@ -3,6 +3,7 @@ package cz.rekola.android.view;
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,6 +13,7 @@ import com.squareup.otto.Bus;
 
 import java.util.Map;
 
+import cz.rekola.android.core.bus.ErrorMessageEvent;
 import cz.rekola.android.core.bus.ProgressDataLoading;
 import cz.rekola.android.webapi.WebApiHandler;
 
@@ -46,9 +48,8 @@ public class ApiWebView extends WebView {
 		setWebViewClient(new WebViewClient() {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-				bus.post(new ProgressDataLoading(100)); // Hide progress
-				Toast.makeText(getContext(), "Oh no! " + description, Toast.LENGTH_SHORT).show();
-				// TODO: Handle api key expiration!
+				bus.post(new ErrorMessageEvent("Failed to load bike details"));
+				loadData("<html></head>", "text/html", "UTF-8");
 			}
 
 			@Override

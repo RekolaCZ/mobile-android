@@ -64,6 +64,7 @@ public class ErrorBarView extends LinearLayout {
 	public void onErrorMessage(ErrorMessageEvent event) {
 		message.setText(event.message);
 		setVisibility(VISIBLE);
+		handler.removeCallbacks(runnable);
 		handler.postDelayed(runnable, MESSAGE_TIMEOUT);
 	}
 }

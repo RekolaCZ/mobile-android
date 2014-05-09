@@ -21,8 +21,10 @@ import cz.rekola.android.R;
 import cz.rekola.android.api.requestmodel.Credentials;
 import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.RekolaApp;
+import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
+import cz.rekola.android.core.bus.IncompatibleApiEvent;
 import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
 import cz.rekola.android.view.ErrorBarView;
@@ -137,6 +139,16 @@ public class LoginActivity extends Activity {
 	@Subscribe
 	public void isBorrowedBikeFailed(BorrowedBikeFailedEvent event) {
 		vLoading.setVisibility(View.GONE);
+	}
+
+	@Subscribe
+	public void onAuthorizationRequired(AuthorizationRequiredEvent event) {
+		// TODO:
+	}
+
+	@Subscribe
+	public void onIncompatibleApi(IncompatibleApiEvent event) {
+		// TODO:
 	}
 
 	public void hideKeyboard() {

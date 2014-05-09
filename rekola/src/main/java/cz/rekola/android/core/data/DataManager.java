@@ -217,7 +217,7 @@ public class DataManager {
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
 			app.getBus().post(new ErrorMessageEvent(title));
-			if (error.getCause().getMessage().contains("No authentication challenges found")) { // 401
+			if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
 				app.getBus().post(new AuthorizationRequiredEvent());
 			}
 			return;
