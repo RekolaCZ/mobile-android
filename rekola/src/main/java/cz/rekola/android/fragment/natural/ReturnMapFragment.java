@@ -114,7 +114,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	@Subscribe
 	public void bikeReturned(ReturnBikeEvent event) {
 		Toast.makeText(getActivity(), "Bike returned!", Toast.LENGTH_SHORT).show();
-		getPageController().requestWebBikeReturned();
+		getPageController().requestWebBikeReturned(event.successUrl);
 	}
 
 	@Subscribe

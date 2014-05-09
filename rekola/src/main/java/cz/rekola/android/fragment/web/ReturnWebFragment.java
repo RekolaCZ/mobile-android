@@ -1,13 +1,18 @@
 package cz.rekola.android.fragment.web;
 
-import cz.rekola.android.core.Constants;
 import cz.rekola.android.fragment.base.BaseWebFragment;
 
 public class ReturnWebFragment extends BaseWebFragment {
 
+	private String successUrl;
+
+	public void init(String successUrl) {
+		this.successUrl = successUrl;
+	}
+
 	@Override
 	public String getStartUrl() {
-		return Constants.WEBAPI_BIKE_RETURNED_URL;
+		return successUrl;
 	}
 
 	@Override

@@ -6,6 +6,6 @@ public interface PageController {
 	public void requestReturnBike();
 	public void requestReturnMap();
 	public void requestWebBikeDetail(int id);
-	public void requestWebBikeReturned();
+	public void requestWebBikeReturned(String successUrl);
 
 }

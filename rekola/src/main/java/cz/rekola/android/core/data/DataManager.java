@@ -8,6 +8,7 @@ import cz.rekola.android.api.ApiService;
 import cz.rekola.android.api.model.Bike;
 import cz.rekola.android.api.model.BorrowedBike;
 import cz.rekola.android.api.model.LockCode;
+import cz.rekola.android.api.model.ReturnedBike;
 import cz.rekola.android.api.model.Token;
 import cz.rekola.android.api.model.error.BaseError;
 import cz.rekola.android.api.model.error.BikeConflictError;
@@ -187,14 +188,14 @@ public class DataManager {
 		}
 
 		ApiService apiService = app.getApiService();
-		apiService.returnBike(app.getVersionManager().getUserAgent(), token.apiKey, bikeCode, returningBike, new Callback<Object>() {
+		apiService.returnBike(app.getVersionManager().getUserAgent(), token.apiKey, bikeCode, returningBike, new Callback<ReturnedBike>() {
 
 			@Override
-			public void success(Object empty, Response response) {
+			public void success(ReturnedBike returnedBike, Response response) {
 				loadingManager.removeLoading(DataLoad.RETURN_BIKE);
 				myBike = new MyBikeWrapper();
 				updateBorrowedBike();
-				app.getBus().post(new ReturnBikeEvent());
+				app.getBus().post(new ReturnBikeEvent(returnedBike.successUrl));
 			}
 
 			@Override

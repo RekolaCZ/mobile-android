@@ -28,6 +28,7 @@ import cz.rekola.android.core.page.PageController;
 import cz.rekola.android.core.RekolaApp;
 import cz.rekola.android.core.page.PageManager;
 import cz.rekola.android.fragment.web.BikeDetailWebFragment;
+import cz.rekola.android.fragment.web.ReturnWebFragment;
 import cz.rekola.android.view.ErrorBarView;
 
 public class MainActivity extends Activity implements PageController {
@@ -190,8 +191,10 @@ public class MainActivity extends Activity implements PageController {
 	}
 
 	@Override
-	public void requestWebBikeReturned() {
-		pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getActionBar());
+	public void requestWebBikeReturned(String successUrl) {
+		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getActionBar());
+		if (fragment != null && fragment instanceof ReturnWebFragment)
+			((ReturnWebFragment)fragment).init(successUrl);
 		invalidateOptionsMenu();
 	}
 

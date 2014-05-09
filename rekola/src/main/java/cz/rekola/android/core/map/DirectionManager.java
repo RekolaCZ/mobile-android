@@ -18,6 +18,7 @@ public class DirectionManager {
 	private Polyline directionPath;
 	private PolylineOptions rectLine;
 	private int loadedPathId;
+	private boolean visibleDirections;
 
 	public DirectionManager(GoogleMap map) {
 		this.map = map;
@@ -27,7 +28,7 @@ public class DirectionManager {
 	public void loadDirections(int id, DirectionParams params) {
 		//if (id == loadedPathId) // On demand loading => Refresh the position if requested
 		//	return;
-
+		visibleDirections = true;
 		loadedPathId = id;
 		cancelTasks();
 
@@ -46,6 +47,7 @@ public class DirectionManager {
 	}
 
 	public void hideDirections() {
+		visibleDirections = false;
 		if (directionPath != null) {
 			directionPath.remove();
 			directionPath = null;
@@ -88,7 +90,9 @@ public class DirectionManager {
 				return;
 			}
 			rectLine = result;
-			addDirectionsIfAvailable(loadedPathId);
+			if (visibleDirections) {
+				addDirectionsIfAvailable(loadedPathId);
+			}
 		}
 	}
 

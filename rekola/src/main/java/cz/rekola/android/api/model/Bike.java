@@ -10,5 +10,6 @@ public class Bike {
 	public boolean operational;
 	public String lastSeen;
 	public Location location;
+	public String backgroundColor;
 
 }

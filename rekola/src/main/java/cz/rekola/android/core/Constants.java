@@ -9,7 +9,7 @@ public class Constants {
 	public static final String HEADER_KEY_TOKEN = "X-Api-Key";
 	public static final String HEADER_KEY_USER_AGENT = "client-agent";
 
-	public static final String HEADER_VALUE_USER_AGENT = "rekola/%s (%s; Android %s; Resolution %sx%s; Dpi %s)";
+	public static final String HEADER_VALUE_USER_AGENT = "rekola/%s (Model %s; Android %s; Locale %s; Resolution %sx%s; Dpi %s)";
 
 	public static final String REKOLA_API_URL = "http://vps.clevis.org/rekola-demo/www/api";
 
