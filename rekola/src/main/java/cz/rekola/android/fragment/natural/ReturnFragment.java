@@ -104,7 +104,7 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 
 	private void setData(String name, String lockCode) {
 		vBikeName.setText(name);
-		vLockCode.setText(lockCode);
+		vLockCode.setText(lockCode == null ? null : lockCode.replace("", " ").trim());
 	}
 
 }

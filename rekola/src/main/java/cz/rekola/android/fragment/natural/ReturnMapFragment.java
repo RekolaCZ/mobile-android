@@ -219,6 +219,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 		@Override
 		public void onInfoWindowClick(Marker marker) {
 			// TODO: Do not move to graves positions!
+			// TODO: Put bay name into the note field if not present
 			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(marker.getPosition());
 			map.animateCamera(cameraUpdate);
 		}
