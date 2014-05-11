@@ -1,6 +1,7 @@
 package cz.rekola.android.fragment.web;
 
 import cz.rekola.android.fragment.base.BaseWebFragment;
+import cz.rekola.android.webapi.WebApiConstants;
 
 public class ReturnWebFragment extends BaseWebFragment {
 
@@ -17,7 +18,7 @@ public class ReturnWebFragment extends BaseWebFragment {
 
 	@Override
 	public boolean onWebApiEvent(String paramUrl) {
-		if (paramUrl.contains("moje")) {
+		if (paramUrl != null && paramUrl.contains(WebApiConstants.PARAM_DISMISS)) {
 			getPageController().requestMap();
 			return true;
 		}

@@ -2,7 +2,11 @@ package cz.rekola.android.webapi;
 
 public interface WebApiHandler {
 
-	// TODO: This will be refactored!
+	/**
+	 *
+	 * @param paramUrl
+	 * @return Whether the event was processed.
+	 */
 	public boolean onWebApiEvent(String paramUrl);
 
 }
