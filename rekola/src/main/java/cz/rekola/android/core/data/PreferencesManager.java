@@ -38,10 +38,13 @@ public class PreferencesManager {
 	}
 
 	public void setPassword(String password) {
+		if (password == null) {
+			setStringPref(PREF_PASSWORD, password);
+			return;
+		}
 		try {
 			setStringPref(PREF_PASSWORD, Base64.encodeToString(password.getBytes("UTF-8"), Base64.DEFAULT));
 		} catch (UnsupportedEncodingException e) {
-			setStringPref(PREF_PASSWORD, password);
 		}
 	}
 

@@ -21,12 +21,16 @@
 			<EditText
 				android:id="@+id/username"
 				style="@style/EditText"
+				android:inputType="textEmailAddress"
+				android:imeOptions="actionNext"
 				android:hint="@string/login_username_hint" />
 
 			<EditText
 				android:id="@+id/password"
 				android:layout_centerInParent="true"
 				style="@style/EditText"
+				android:inputType="textPassword"
+				android:imeOptions="actionDone"
 				android:hint="@string/login_password_hint" />
 
 			<Button
@@ -90,6 +94,8 @@
 				<EditText
 					android:id="@+id/reset_username"
 					style="@style/EditText"
+					android:inputType="textEmailAddress"
+					android:imeOptions="actionDone"
 					android:hint="@string/login_username_hint" />
 
 				<Button

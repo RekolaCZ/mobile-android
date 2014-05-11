@@ -288,7 +288,7 @@ public class DataManager {
 		if (msgErr.message == null || msgErr.message.isEmpty()) {
 			app.getBus().post(new MessageEvent(title));
 		} else {
-			app.getBus().post(new MessageEvent(title + " " + msgErr.message));
+			app.getBus().post(new MessageEvent(msgErr.message));
 		}
 
 		switch (error.getResponse().getStatus()) {

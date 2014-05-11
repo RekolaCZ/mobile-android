@@ -34,15 +34,18 @@
 		android:layout_gravity="center"
 		android:layout_weight="1">
 
+		<!-- inputType ... imeOptions is set from code, from xml it is not working. -->
 		<EditText
 			android:id="@+id/note"
 			style="@style/EditText"
 			android:hint="@string/returnmap_note_hint"
-			android:singleLine="false"
+			android:inputType="text|textCapSentences"
+			android:singleLine="true"
+			android:lines="3"
+			android:scrollHorizontally="false"
+			android:imeOptions="actionDone"
 			android:textColor="@color/text_primary"
 			android:gravity="top|left"
-			android:minLines="3"
-			android:maxLines="3"
 			android:layout_gravity="center" />
 
 		<Button

@@ -1,9 +1,11 @@
 package cz.rekola.android.fragment.natural;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -126,6 +128,13 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 		if (getApp().getDataManager().getPois(true) != null) {
 			setupMap();
 		}
+
+		vNote.setInputType(
+				InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+		vNote.setSingleLine(true);
+		vNote.setLines(3);
+		vNote.setHorizontallyScrolling(false);
+		vNote.setImeOptions(EditorInfo.IME_ACTION_DONE);
 	}
 
 	@Subscribe

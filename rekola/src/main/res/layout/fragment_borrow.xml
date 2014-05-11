@@ -30,6 +30,7 @@
 				android:hint="6-digit code"
 				android:maxLength="@integer/bike_code_length"
 				android:inputType="number"
+				android:imeOptions="actionDone"
 				android:layout_gravity="center" />
 
 			<Button
