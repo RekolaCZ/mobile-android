@@ -5,8 +5,7 @@
 
 	<cz.rekola.android.view.ApiWebView
 		android:id="@+id/return_bike_web"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		style="@style/Layout"
 		android:layout_weight="1"/>
 
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
