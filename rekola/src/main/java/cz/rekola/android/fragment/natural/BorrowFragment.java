@@ -42,6 +42,7 @@ public class BorrowFragment extends BaseMainFragment {
 					getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_incorrect_bike_code)));
 					return;
 				}
+				getAct().hideKeyboard();
 				getApp().getDataManager().borrowBike(Integer.parseInt(vBikeCode.getText().toString()));
 			}
 		});

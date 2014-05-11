@@ -118,6 +118,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 					return;
 				}
 				// TODO: May throw NumberFormatException!
+				getAct().hideKeyboard();
 				getApp().getDataManager().returnBike(Integer.parseInt(myBike.bike.bikeCode),
 						new ReturningBike(new ReturningLocation(center.latitude, center.longitude, vNote.getText().toString())));
 			}

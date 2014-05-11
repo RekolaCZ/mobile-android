@@ -26,6 +26,10 @@ public abstract class BaseMainFragment extends Fragment {
 		return (MainActivity) getActivity();
 	}
 
+	public MainActivity getAct() {
+		return (MainActivity) getActivity();
+	}
+
 	public RekolaApp getApp() {
 		return (RekolaApp) getActivity().getApplication();
 	}

@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -196,6 +197,11 @@ public class MainActivity extends Activity implements PageController {
 		if (fragment != null && fragment instanceof ReturnWebFragment)
 			((ReturnWebFragment)fragment).init(successUrl);
 		invalidateOptionsMenu();
+	}
+
+	public void hideKeyboard() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
 	}
 
 	private RekolaApp getApp() {
