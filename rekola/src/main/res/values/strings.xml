@@ -42,7 +42,7 @@
 	<string name="menu_logout">Log out</string>
 
 	<!-- Error messages -->
-	<string name="error_network">Network problem.</string>
+	<string name="error_network">Connection problem.</string>
 	<string name="error_missing_credentials">Fill in your email and password.</string>
 	<string name="error_missing_username">Fill in your email.</string>
 	<string name="error_title_login_failed">Login failed.</string>
