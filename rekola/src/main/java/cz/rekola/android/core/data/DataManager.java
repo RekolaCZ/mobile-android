@@ -69,7 +69,6 @@ public class DataManager {
 			public void success(Token resp, Response response) {
 				loadingManager.removeLoading(DataLoad.LOGIN);
 				token = resp;
-				app.getPreferencesManager().setPersistentObject(resp); // TODO: Do we save it?
 				app.getBus().post(new LoginAvailableEvent());
 			}
 
@@ -272,13 +271,15 @@ public class DataManager {
 
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
+			if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
+				app.getBus().post(new MessageEvent(title));
+				app.getBus().post(new AuthorizationRequiredEvent());
+				return;
+			}
 			if (error.isNetworkError()) {
 				app.getBus().post(new MessageEvent(title + " " + app.getResources().getString(R.string.error_network)));
 			} else {
 				app.getBus().post(new MessageEvent(title));
-			}
-			if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
-				app.getBus().post(new AuthorizationRequiredEvent());
 			}
 			return;
 		}

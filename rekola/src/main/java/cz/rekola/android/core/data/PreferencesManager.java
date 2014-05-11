@@ -3,9 +3,6 @@ package cz.rekola.android.core.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import cz.rekola.android.api.model.Token;
-import cz.rekola.android.core.data.PreferencePersistenty;
-
 public class PreferencesManager {
 
 	public static final String PREFS_NAME = "MyPreferences";
@@ -32,12 +29,6 @@ public class PreferencesManager {
 
 	public void setPassword(String password) {
 		setStringPref(PREF_PASSWORD, password);
-	}
-
-	public void setPersistentObject(PreferencePersistenty persistentObject) {
-		SharedPreferences.Editor editor = settings.edit();
-		persistentObject.saveState(editor);
-		editor.commit();
 	}
 
 	private void setStringPref(String pref, String data) {
