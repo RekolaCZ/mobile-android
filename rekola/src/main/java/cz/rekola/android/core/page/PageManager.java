@@ -3,8 +3,11 @@ package cz.rekola.android.core.page;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Resources;
 import android.view.Menu;
+
+import java.util.HashMap;
 
 import cz.rekola.android.R;
 import cz.rekola.android.core.data.MyBikeWrapper;
@@ -27,21 +30,27 @@ public class PageManager {
  	 */
 	private EPageState rootState = EPageState.MAP;
 
+	/**
+	 * Fragment cache.
+	 */
+	private HashMap<EPageState, Fragment> cache = new HashMap<>();
+
 	public enum EPageState {
 		//								Uses menu item order.
-		//								{BORROW, RETURN, MAP, PROFILE, OVERFLOW, LOGOUT}, Up to Root State, Root state drawable, Back State, TitleId, menu item id, BaseMainFragment
-		BORROW			(new boolean[]	{false, false, true, true, false, false}, false, R.drawable.actionbar_ic_borrow, null, null, R.id.action_borrow, BorrowFragment.class ),
-		RETURN			(new boolean[]	{false, false, true, true, false, false}, false, R.drawable.actionbar_ic_return, null, null, R.id.action_return, ReturnFragment.class),
-		MAP				(new boolean[]	{true, true, false, true, false, false}, false, R.drawable.actionbar_ic_map, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
-		PROFILE			(new boolean[]	{true, true, true, false, true, true}, false, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
+		//				action bar link {BORROW, RETURN, MAP, PROFILE, OVERFLOW, LOGOUT}, Use cache, Up to Root State, Root state drawable, Back State, TitleId, menu item id, BaseMainFragment
+		BORROW			(new boolean[]	{false, false, true, true, false, false}, false, false, R.drawable.actionbar_ic_borrow, null, null, R.id.action_borrow, BorrowFragment.class ),
+		RETURN			(new boolean[]	{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_return, null, null, R.id.action_return, ReturnFragment.class),
+		MAP				(new boolean[]	{true, true, false, true, false, false}, true, false, R.drawable.actionbar_ic_map, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
+		PROFILE			(new boolean[]	{true, true, true, false, true, true}, false, false, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
 
 		// Other states without actionbar access.
-		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, true, null, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),
-		WEB_RETURN		(new boolean[]	{true, true, true, true, false, false}, false, null, BORROW, null, null, ReturnWebFragment.class),
-		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, false, false}, true, null, MAP/*or RETURN*/, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
+		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, false, true, null, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),
+		WEB_RETURN		(new boolean[]	{true, true, true, true, false, false}, false, false, null, BORROW, null, null, ReturnWebFragment.class),
+		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, false, false}, false, true, null, MAP/*or RETURN*/, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
 
-		EPageState(boolean[] actionAllowed, boolean upState, Integer rootStateDrawable, EPageState backState, Integer titleId, Integer actionResourceId, Class fragment) {
+		EPageState(boolean[] actionAllowed, boolean useCache, boolean upState, Integer rootStateDrawable, EPageState backState, Integer titleId, Integer actionResourceId, Class fragment) {
 			this.actionAllowed = actionAllowed;
+			this.useCache = useCache;
 			this.upState = upState;
 			this.rootStateDrawable = rootStateDrawable;
 			this.backState = backState;
@@ -51,6 +60,7 @@ public class PageManager {
 		}
 
 		final boolean[] actionAllowed;
+		final boolean useCache;
 		final boolean upState;
 		final Integer rootStateDrawable;
 		final EPageState backState;
@@ -93,17 +103,22 @@ public class PageManager {
 		else
 			actionBar.setTitle(newState.titleId);
 
-		BaseMainFragment fragment = null;
-		try {
-			fragment = newState.fragment.newInstance();
-		} catch (InstantiationException e) {
-		} catch (IllegalAccessException e) {
+		Fragment fragment = cache.get(newState);
+		if (fragment == null) {
+			try {
+				fragment = newState.fragment.newInstance();
+				if (newState.useCache) {
+					cache.put(newState, fragment);
+				}
+			} catch (InstantiationException e) {
+			} catch (IllegalAccessException e) {
+			}
 		}
 
 		if (fragment == null)
 			return null;
 
-		fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+		fragmentManager.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.fragment_container, fragment).commit();
 		this.state = newState;
 
 		return fragment;
