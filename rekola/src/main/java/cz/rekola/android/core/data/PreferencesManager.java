@@ -2,12 +2,15 @@ package cz.rekola.android.core.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
+
+import java.io.UnsupportedEncodingException;
 
 public class PreferencesManager {
 
 	public static final String PREFS_NAME = "MyPreferences";
 	public static final String PREF_USERNAME = "Username";
-	public static final String PREF_PASSWORD = "Password"; // TODO: Encrypt or do not save!!!
+	public static final String PREF_PASSWORD = "Password";
 
 	private SharedPreferences settings;
 
@@ -24,11 +27,22 @@ public class PreferencesManager {
 	}
 
 	public String getPassword() {
-		return settings.getString(PREF_PASSWORD, null);
+		String base64 = settings.getString(PREF_PASSWORD, null);
+		if (base64 == null)
+			return null;
+		try {
+			return new String(Base64.decode(base64, Base64.DEFAULT));
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
 	public void setPassword(String password) {
-		setStringPref(PREF_PASSWORD, password);
+		try {
+			setStringPref(PREF_PASSWORD, Base64.encodeToString(password.getBytes("UTF-8"), Base64.DEFAULT));
+		} catch (UnsupportedEncodingException e) {
+			setStringPref(PREF_PASSWORD, password);
+		}
 	}
 
 	private void setStringPref(String pref, String data) {
