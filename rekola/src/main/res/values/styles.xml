@@ -15,8 +15,8 @@
 
 
 	<style name="ActionBar.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-		<item name="android:textColor">@color/UNRESOLVED</item>
-		<item name="android:textSize">@dimen/text_medium</item>
+		<item name="android:textColor">@color/brown</item>
+		<item name="android:textSize">@dimen/text_large</item>
 	</style>
 
 	<style name="ActionBar.Overflow">

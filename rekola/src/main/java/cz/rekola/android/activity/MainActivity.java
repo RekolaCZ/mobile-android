@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements PageController {
 
 		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
 		if (myBike != null)
-			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
+			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
     }
 
 	@Override
@@ -89,16 +89,16 @@ public class MainActivity extends Activity implements PageController {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.action_borrow:
-				pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager(), getActionBar());
+				pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
 				break;
 			case R.id.action_return:
-				pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar());
+				pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar(), getResources());
 				break;
 			case R.id.action_map:
-				pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar());
+				pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar(), getResources());
 				break;
 			case R.id.action_profile:
-				pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager(), getActionBar());
+				pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager(), getActionBar(), getResources());
 				break;
 			case R.id.action_logout:
 				// TODO: Add yes/no dialog
@@ -106,7 +106,7 @@ public class MainActivity extends Activity implements PageController {
 				finish();
 				break;
 			case android.R.id.home:
-				pageManager.setUpState(getFragmentManager(), getActionBar());
+				pageManager.setUpState(getFragmentManager(), getActionBar(), getResources());
 				break;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -117,7 +117,7 @@ public class MainActivity extends Activity implements PageController {
 
 	@Override
 	public void onBackPressed() {
-		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike())) {
+		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike(), getResources())) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -166,25 +166,25 @@ public class MainActivity extends Activity implements PageController {
 
 	@Override
 	public void requestMap() {
-		pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar());
+		pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar(), getResources());
 		invalidateOptionsMenu();
 	}
 
 	@Override
 	public void requestReturnBike() {
-		pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar());
+		pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar(), getResources());
 		invalidateOptionsMenu();
 	}
 
 	@Override
 	public void requestReturnMap() {
-		pageManager.setState(PageManager.EPageState.RETURN_MAP, getFragmentManager(), getActionBar());
+		pageManager.setState(PageManager.EPageState.RETURN_MAP, getFragmentManager(), getActionBar(), getResources());
 		invalidateOptionsMenu();
 	}
 
 	@Override
 	public void requestWebBikeDetail(int id, boolean issues) {
-		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar());
+		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar(), getResources());
 		if (fragment != null && fragment instanceof BikeDetailWebFragment)
 			((BikeDetailWebFragment)fragment).init(id, issues);
 		invalidateOptionsMenu();
@@ -192,7 +192,7 @@ public class MainActivity extends Activity implements PageController {
 
 	@Override
 	public void requestWebBikeReturned(String successUrl) {
-		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getActionBar());
+		Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getActionBar(), getResources());
 		if (fragment != null && fragment instanceof ReturnWebFragment)
 			((ReturnWebFragment)fragment).init(successUrl);
 		invalidateOptionsMenu();

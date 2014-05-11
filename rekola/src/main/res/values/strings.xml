@@ -26,12 +26,11 @@
 	<string name="return_bike_detail">Bike Detail</string>
 	<string name="return_bike_issue">Report Issue</string>
 
-	<string name="returnmap_title">Return bike</string>
+	<string name="returnmap_title">Edit Location</string>
 	<string name="returnmap_note_hint">Describe the exact bike location. (e.g. 3rd. lamp from the bus stop.)</string>
 	<string name="returnmap_bike_returned">Bike Returned</string>
 
-	<string name="webbikedetail_title">Bike detail</string>
-	<string name="webreturn_title">Bike returned</string>
+	<string name="webbikedetail_title">Bike Detail</string>
 
 	<!-- Bike name parameter -->
 	<string name="return_bike_name">Bike %s at your service.</string>
