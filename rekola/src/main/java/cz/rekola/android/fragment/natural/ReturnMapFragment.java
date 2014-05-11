@@ -235,8 +235,8 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	}
 
 	private enum POIS {
-		BAY("bay", R.drawable.ic_pin_normal),
-		GRAVE("grave", R.drawable.ic_pin_focused_pressed);
+		BAY("bay", R.drawable.ic_pin_bay),
+		GRAVE("grave", R.drawable.ic_pin_grave);
 
 		static BitmapDescriptor getBmpFromType(String type) {
 			for (POIS p : POIS.values()) {
