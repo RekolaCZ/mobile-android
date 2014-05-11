@@ -27,16 +27,17 @@ public class PageManager {
 	private EPageState rootState = EPageState.MAP;
 
 	public enum EPageState {
-		//								{BORROW, RETURN, MAP, OVERFLOW, PROFILE, ABOUT}, Up State, Back State, TitleId, actionResourceId, BaseMainFragment
-		BORROW			(new boolean[]	{false, false, true, true, true, true}, null, null, null, R.id.action_borrow, BorrowFragment.class ),
-		RETURN			(new boolean[]	{false, false, true, true, true, true}, null, null, null, R.id.action_return, ReturnFragment.class),
-		MAP				(new boolean[]	{true, true, false, true, true, true}, null, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
-		PROFILE			(new boolean[]	{true, true, true, true, false, true}, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
+		//								Uses menu item order.
+		//								{BORROW, RETURN, MAP, PROFILE, OVERFLOW, LOGOUT}, Up State, Back State, TitleId, actionResourceId, BaseMainFragment
+		BORROW			(new boolean[]	{false, false, true, true, false, false}, null, null, null, R.id.action_borrow, BorrowFragment.class ),
+		RETURN			(new boolean[]	{false, false, true, true, false, false}, null, null, null, R.id.action_return, ReturnFragment.class),
+		MAP				(new boolean[]	{true, true, false, true, false, false}, null, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
+		PROFILE			(new boolean[]	{true, true, true, false, true, true}, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
 
 		// Other states without actionbar access.
 		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, RETURN, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),
-		WEB_RETURN		(new boolean[]	{true, true, true, true, true, true}, null, BORROW, R.string.webreturn_title, null, ReturnWebFragment.class),
-		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, true, true}, MAP/*or RETURN*/, MAP/*or RETURN*/, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
+		WEB_RETURN		(new boolean[]	{true, true, true, true, false, false}, null, BORROW, R.string.webreturn_title, null, ReturnWebFragment.class),
+		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, false, false}, MAP/*or RETURN*/, MAP/*or RETURN*/, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
 
 		EPageState(boolean[] actionAllowed, EPageState upState, EPageState backState, Integer titleId, Integer actionResourceId, Class fragment) {
 			this.actionAllowed = actionAllowed;

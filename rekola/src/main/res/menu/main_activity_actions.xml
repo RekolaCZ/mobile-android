@@ -20,6 +20,12 @@
 		  android:visible="true"
 		  android:showAsAction="always"/>
 
+	<item android:id="@+id/action_profile"
+		  android:icon="@drawable/actionbar_ic_profile"
+		  android:title="@string/menu_profile"
+		  android:visible="true"
+		  android:showAsAction="ifRoom"/>
+
 	<item
 		android:id="@+id/menu_overflow"
 		android:icon="@drawable/actionbar_ic_overflow"
@@ -27,10 +33,6 @@
 		android:title="overflow"
 		android:showAsAction="always">
 		<menu>
-
-		<item android:id="@+id/action_profile"
-			  android:title="@string/menu_profile"
-			  android:showAsAction="never"/>
 
 		<item android:id="@+id/action_logout"
 			  android:title="@string/menu_logout"
