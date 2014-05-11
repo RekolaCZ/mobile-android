@@ -55,7 +55,9 @@
 	<string name="error_no_bike_borrowed">No bike borrowed.</string>
 	<string name="error_unknown_borrowed_bike_code">Unknown borrowed bike code.</string>
 	<string name="error_bike_details_failed">Failed to load bike details.</string>
+	<string name="error_web_load_failed">Failed to load details.</string>
 	<string name="error_get_pois_failed">Failed to download info about places of interest.</string>
+	<string name="error_old_app_version">Sorry, but your application is outdated.\n\nPlese upgrade to latest version.</string>
 	<string name="success_password_recovery">Please, check your email for further password recovery instructions.</string>
 
 </resources>

@@ -185,12 +185,11 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void onAuthorizationRequired(AuthorizationRequiredEvent event) {
-		// TODO:
 	}
 
 	@Subscribe
 	public void onIncompatibleApi(IncompatibleApiEvent event) {
-		// TODO:
+		getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_old_app_version)));
 	}
 
 	public void hideKeyboard() {

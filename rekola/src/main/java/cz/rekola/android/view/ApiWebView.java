@@ -47,8 +47,8 @@ public class ApiWebView extends WebView {
 		setWebViewClient(new WebViewClient() {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-				bus.post(new MessageEvent(getResources().getString(R.string.error_bike_details_failed)));
-				loadData("<html></head>", "text/html", "UTF-8");
+				bus.post(new MessageEvent(getResources().getString(R.string.error_web_load_failed)));
+				loadData("<html>" + getResources().getString(R.string.error_web_load_failed) +"</head>", "text/html", "UTF-8");
 			}
 
 			@Override
