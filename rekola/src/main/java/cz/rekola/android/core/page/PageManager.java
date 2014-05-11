@@ -93,12 +93,12 @@ public class PageManager {
 		return fragment;
 	}
 
-	public void setUpState(FragmentManager fragmentManager, ActionBar actionBar, MyBikeWrapper myBike) {
+	public void setUpState(FragmentManager fragmentManager, ActionBar actionBar) {
 		if (state.upState == null)
 			return;
 
 		// Special handling of bike detail up state
-		if (state == EPageState.WEB_BIKE_DETAIL && myBike != null && myBike.isBorrowed()) {
+		if (state == EPageState.WEB_BIKE_DETAIL && rootState == EPageState.RETURN) {
 			setState(EPageState.RETURN, fragmentManager, actionBar);
 			return;
 		}
@@ -129,6 +129,16 @@ public class PageManager {
 	public void setupOptionsMenu(Menu menu, MyBikeWrapper myBike) {
 		OptionsMenuConfig menuConfig = new OptionsMenuConfig();
 		menuConfig.setupMenu(menu);
+
+		// Special handling for bike detail
+		if (state == EPageState.WEB_BIKE_DETAIL) {
+			if (rootState == EPageState.RETURN) {
+				menu.findItem(EPageState.RETURN.actionResourceId).setVisible(false);
+			}
+			if (rootState == EPageState.MAP) {
+				menu.findItem(EPageState.MAP.actionResourceId).setVisible(false);
+			}
+		}
 
 		// Special handling of borrow/return menu items
 		if (myBike != null) {
