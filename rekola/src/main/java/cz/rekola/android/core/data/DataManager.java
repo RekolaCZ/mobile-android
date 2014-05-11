@@ -103,7 +103,7 @@ public class DataManager {
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.PASSWORD_RECOVERY);
 				app.getBus().post(new PasswordRecoveryFailed());
-				handleGlobalError(error, app.getResources().getString(R.string.error_title_login_failed));
+				handleGlobalError(error, app.getResources().getString(R.string.error_title_password_recovery_failed));
 			}
 		});
 	}
@@ -272,7 +272,11 @@ public class DataManager {
 
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
-			app.getBus().post(new MessageEvent(title));
+			if (error.isNetworkError()) {
+				app.getBus().post(new MessageEvent(title + " " + app.getResources().getString(R.string.error_network)));
+			} else {
+				app.getBus().post(new MessageEvent(title));
+			}
 			if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
 				app.getBus().post(new AuthorizationRequiredEvent());
 			}

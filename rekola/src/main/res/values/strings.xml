@@ -42,9 +42,11 @@
 	<string name="menu_logout">Log out</string>
 
 	<!-- Error messages -->
+	<string name="error_network">Network problem.</string>
 	<string name="error_missing_credentials">Fill in your email and password.</string>
 	<string name="error_missing_username">Fill in your email.</string>
 	<string name="error_title_login_failed">Login failed.</string>
+	<string name="error_title_password_recovery_failed">Password recovery failed.</string>
 	<string name="error_get_bikes_failed">Failed to download bikes info.</string>
 	<string name="error_get_borrowed_bike_failed">Failed to download borrowed bike info.</string>
 	<string name="error_borrow_bike_failed">Failed to borrow a bike.</string>

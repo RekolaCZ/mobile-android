@@ -113,7 +113,7 @@
 
 	</FrameLayout>
 
-	<include layout="@layout/error_bar"/>
+	<include layout="@layout/message_bar"/>
 
 	<FrameLayout
 		android:id="@+id/loading_overlay"
