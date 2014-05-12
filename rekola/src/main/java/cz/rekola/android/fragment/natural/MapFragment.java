@@ -44,41 +44,18 @@ import cz.rekola.android.core.loc.MyLocationListener;
 import cz.rekola.android.core.map.DirectionManager;
 import cz.rekola.android.core.map.DirectionParams;
 import cz.rekola.android.fragment.base.BaseMainFragment;
+import cz.rekola.android.view.BikeOverlayView;
 
-public class MapFragment extends BaseMainFragment implements MyLocationListener {
+public class MapFragment extends BaseMainFragment implements MyLocationListener, BikeOverlayView.BikeOverlayListener {
 
     MapView vMap;
     GoogleMap map;
 
 	@InjectView(R.id.map_overlay)
-	LinearLayout vOverlay;
-
-	@InjectView(R.id.map_overlay_area)
-	LinearLayout vOverlayArea;
-
-	@InjectView(R.id.map_overlay_close)
-	ImageView vClose;
-
-	@InjectView(R.id.map_overlay_name)
-	TextView vName;
-
-	@InjectView(R.id.map_overlay_street)
-	TextView vStreet;
-
-	@InjectView(R.id.map_overlay_note)
-	TextView vNote;
-
-	@InjectView(R.id.map_overlay_description)
-	TextView vDescription;
-
-	@InjectView(R.id.map_overlay_route)
-	ImageView vRoute;
-
-	@InjectView(R.id.map_overlay_bike_detail)
-	LinearLayout vBikeDetail;
+	BikeOverlayView vOverlay;
 
 	private MarkerManager markers = new MarkerManager();
-	private OverlayManager overlay = new OverlayManager();
+	//private OverlayManager overlay = new OverlayManager();
 	private DirectionManager directionManager;
 	private Timer timer;
 
@@ -152,8 +129,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		vOverlay.init(this);
 		markers.init();
-		overlay.init();
 
 		if (getApp().getDataManager().getBikes(false) != null) {
 			setupMap();
@@ -186,21 +163,33 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 		markers.updateMap(bikes);
 	}
 
-	/*private void setDirections(Bike bike) {
-		DirectionParams params = new DirectionParams(
-				bike.id, // Path to this bike
-				getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
-				new LatLng(bike.location.lat, bike.location.lng),
-				DirectionParams.MODE_WALKING,
-				getResources().getColor(R.color.pink_1),
-				getResources().getDimension(R.dimen.map_direction_path_size));
-
-		directionManager.loadDirections(params);
+	// Overlay callbacks
+	@Override
+	public void onClose() {
+		markers.notifyOverlayClose();
 	}
 
-	private void clearDirections() {
-		directionManager.clearDirections();
-	}*/
+	@Override
+	public void onRoutePressed() {
+		markers.notifyRoutePressed();
+	}
+
+	@Override
+	public void onBikeDetailPressed() {
+		markers.notifyBikeDetailPressed();
+	}
+
+	@Override
+	public void onHeightChanged(final int height) {
+		// Map padding is not correctly updated when attached to overlay size changed event.. This is a hack-fix.
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				map.setPadding(0, 0, 0, height);
+			}
+		}, 100);
+	}
 
 	private class MarkerManager implements GoogleMap.OnMarkerClickListener {
 
@@ -243,11 +232,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 
 			if (newMarker == null) {
 				lastBike = null;
-				overlay.hide();
+				vOverlay.hide();
 				directionManager.hideDirections();
 			} else {
 				lastMarker = newMarker;
-				overlay.show(lastBike);
+				vOverlay.show(lastBike);
 				lastMarker.setIcon(markerFocusedBitmap);
 				lastMarker.showInfoWindow(); // Force to top
 				directionManager.addDirectionsIfAvailable(lastBike.id);
@@ -260,7 +249,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 				lastMarker.setIcon(markerNormalBitmap);
 				lastMarker = null;
 			}
-			overlay.hide();
+			vOverlay.hide();
 			directionManager.hideDirections();
 		}
 
@@ -293,7 +282,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 			if (marker.equals(lastMarker)) {
 				lastMarker = null;
 				lastBike = null;
-				overlay.hide();
+				vOverlay.hide();
 				directionManager.hideDirections();
 				return true;
 			}
@@ -304,66 +293,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 			lastMarker = marker;
 
 			if (lastBike != null) {
-				overlay.show(lastBike);
+				vOverlay.show(lastBike);
 				directionManager.addDirectionsIfAvailable(lastBike.id);
 			}
 
 			return false;
-		}
-	}
-
-	private class OverlayManager {
-
-		void init() {
-			vClose.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					markers.notifyOverlayClose();
-				}
-			});
-
-			vRoute.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					markers.notifyRoutePressed();
-				}
-			});
-
-			vBikeDetail.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					markers.notifyBikeDetailPressed();
-				}
-			});
-		}
-
-		public void show(Bike bike) {
-			vName.setText(bike.name + ", " + bike.location.distance);
-			vStreet.setText(bike.location.address);
-			vNote.setText(bike.location.note);
-			vDescription.setText(bike.description);
-			vOverlay.setVisibility(View.VISIBLE);
-
-			// Hack-adjust the map controls
-			int height = vOverlayArea.getHeight();
-			if (height == 0) {
-				final Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						int height = vOverlayArea.getHeight();
-						if (height != 0)
-							map.setPadding(0, 0, 0, height);
-					}
-				}, 100);
-			} else {
-				map.setPadding(0, 0, 0, height);
-			}
-		}
-
-		public void hide() {
-			vOverlay.setVisibility(View.GONE);
-			map.setPadding(0, 0, 0, 0);
 		}
 	}
 

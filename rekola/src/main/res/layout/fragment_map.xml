@@ -7,6 +7,6 @@
         android:id="@+id/mapView"
 		style="@style/Layout"/>
 
-	<include layout="@layout/map_info_overlay"/>
+	<include layout="@layout/map_bike_overlay"/>
 
 </FrameLayout>
