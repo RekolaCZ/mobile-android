@@ -55,8 +55,6 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 	BikeOverlayView vOverlay;
 
 	private MarkerManager markers = new MarkerManager();
-	//private OverlayManager overlay = new OverlayManager();
-	private DirectionManager directionManager;
 	private Timer timer;
 
     @Override
@@ -115,7 +113,6 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
-		directionManager = new DirectionManager(map);
 
         // Updates the location and zoom of the MapView
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 13);
@@ -191,7 +188,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 		}, 100);
 	}
 
-	private class MarkerManager implements GoogleMap.OnMarkerClickListener {
+	private class MarkerManager implements GoogleMap.OnMarkerClickListener, DirectionManager.DirectionsLoadedListener {
 
 		private Map<Marker, Bike> markerMap = new HashMap<>();
 
@@ -200,6 +197,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
 		private Marker lastMarker = null;
 		private Bike lastBike = null;
+
+		private DirectionManager directionManager = new DirectionManager(this);
 
 		void init() {
 			map.setOnMarkerClickListener(this);
@@ -239,7 +238,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 				vOverlay.show(lastBike);
 				lastMarker.setIcon(markerFocusedBitmap);
 				lastMarker.showInfoWindow(); // Force to top
-				directionManager.addDirectionsIfAvailable(lastBike.id);
+				directionManager.addDirections(map);
 			}
 		}
 
@@ -268,8 +267,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 		}
 
 		void notifyBikeDetailPressed() {
-			if (lastBike != null)
+			if (lastBike != null) {
 				getPageController().requestWebBikeDetail(lastBike.id, false);
+			}
 		}
 
 		@Override
@@ -294,10 +294,19 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
 			if (lastBike != null) {
 				vOverlay.show(lastBike);
-				directionManager.addDirectionsIfAvailable(lastBike.id);
 			}
 
 			return false;
+		}
+
+		@Override
+		public void onDirectionsLoaded() {
+			directionManager.addDirections(map);
+		}
+
+		@Override
+		public void onDirectionsError() {
+
 		}
 	}
 

@@ -112,7 +112,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 			@Override
 			public void onClick(View view) {
 				LatLng center = map.getCameraPosition().target;
-				MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
+				MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
 				if (myBike == null || myBike.bike == null || myBike.bike.bikeCode == null ||  myBike.bike.bikeCode.length() == 0) {
 					getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
 					return;

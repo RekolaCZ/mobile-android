@@ -155,7 +155,7 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void loginAvailable(LoginAvailableEvent event) {
-		getApp().getDataManager().getBorrowedBike();
+		getApp().getDataManager().getBorrowedBike(true);
 		vLoading.setProgress();
 	}
 

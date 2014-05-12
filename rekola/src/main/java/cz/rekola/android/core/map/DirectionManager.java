@@ -14,40 +14,35 @@ import java.util.ArrayList;
 public class DirectionManager {
 
 	private DownloadDirectionsTask directionTask;
-	private GoogleMap map;
 	private Polyline directionPath;
 	private PolylineOptions rectLine;
-	private int loadedPathId;
-	private boolean visibleDirections;
+	private DirectionsLoadedListener callback;
 
-	public DirectionManager(GoogleMap map) {
-		this.map = map;
-		loadedPathId = Integer.MIN_VALUE;
+	public DirectionManager(DirectionsLoadedListener callback) {
+		this.callback = callback;
 	}
 
 	public void loadDirections(int id, DirectionParams params) {
-		//if (id == loadedPathId) // On demand loading => Refresh the position if requested
-		//	return;
-		visibleDirections = true;
-		loadedPathId = id;
 		cancelTasks();
 
 		directionTask = new DownloadDirectionsTask();
 		directionTask.execute(params);
 	}
 
-	public void addDirectionsIfAvailable(int id) {
-		if (loadedPathId != id)
-			return;
-
+	public void addDirections(GoogleMap map) {
 		if (rectLine == null)
 			return;
+
+		if (directionPath != null) {
+			directionPath.remove();
+		}
 
 		directionPath = map.addPolyline(rectLine);
 	}
 
 	public void hideDirections() {
-		visibleDirections = false;
+		cancelTasks();
+		rectLine = null;
 		if (directionPath != null) {
 			directionPath.remove();
 			directionPath = null;
@@ -57,6 +52,7 @@ public class DirectionManager {
 	private void cancelTasks() {
 		if (directionTask != null) {
 			directionTask.cancel(true);
+			callback.onDirectionsError();
 			directionTask = null;
 		}
 	}
@@ -84,16 +80,21 @@ public class DirectionManager {
 		@Override
 		protected void onPostExecute(PolylineOptions result) {
 			if (result == null) {
-				loadedPathId = Integer.MIN_VALUE;
+				if (directionPath != null) {
+					directionPath.remove();
+				}
 				directionPath = null;
 				rectLine = null;
+				callback.onDirectionsError();
 				return;
 			}
 			rectLine = result;
-			if (visibleDirections) {
-				addDirectionsIfAvailable(loadedPathId);
-			}
+			callback.onDirectionsLoaded();
 		}
 	}
 
+	public interface DirectionsLoadedListener {
+		public void onDirectionsLoaded();
+		public void onDirectionsError();
+	}
 }

@@ -58,7 +58,7 @@ public class MainActivity extends Activity implements PageController {
 
 		pageManager = new PageManager();
 
-		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike();
+		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
 		if (myBike != null)
 			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
     }
@@ -82,7 +82,7 @@ public class MainActivity extends Activity implements PageController {
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_actions, menu);
-		pageManager.setupOptionsMenu(menu, getApp().getDataManager().getBorrowedBike());
+		pageManager.setupOptionsMenu(menu, getApp().getDataManager().getBorrowedBike(false));
 		return super.onCreateOptionsMenu(menu);
     }
 
@@ -118,7 +118,7 @@ public class MainActivity extends Activity implements PageController {
 
 	@Override
 	public void onBackPressed() {
-		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike(), getResources())) {
+		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike(false), getResources())) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

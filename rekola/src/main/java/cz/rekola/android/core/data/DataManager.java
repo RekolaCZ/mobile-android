@@ -133,8 +133,8 @@ public class DataManager {
 		return null;
 	}
 
-	public MyBikeWrapper getBorrowedBike() {
-		if (myBike != null) {
+	public MyBikeWrapper getBorrowedBike(boolean forceUpdate) {
+		if (myBike != null && !forceUpdate) {
 			return myBike;
 		}
 
