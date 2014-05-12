@@ -5,11 +5,13 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -73,7 +75,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener 
 	ImageView vRoute;
 
 	@InjectView(R.id.map_overlay_bike_detail)
-	ImageView vBikeDetail;
+	LinearLayout vBikeDetail;
 
 	private MarkerManager markers = new MarkerManager();
 	private OverlayManager overlay = new OverlayManager();
