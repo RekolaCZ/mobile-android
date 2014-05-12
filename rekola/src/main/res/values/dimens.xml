@@ -10,6 +10,7 @@
 	<dimen name="margin_small">@dimen/grid_2</dimen>
 	<dimen name="margin_medium">@dimen/grid_3</dimen>
 	<dimen name="margin_large">@dimen/grid_5</dimen>
+	<dimen name="margin_xlarge">@dimen/grid_7</dimen>
 
 	<!-- font sizes -->
 

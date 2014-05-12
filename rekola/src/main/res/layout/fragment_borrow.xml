@@ -41,6 +41,7 @@
 			<TextView
 				style="@style/TextView"
 				android:layout_marginTop="@dimen/margin_large"
+				android:layout_marginBottom="@dimen/margin_xlarge"
 				android:gravity="center"
 				android:text="@string/borrow_info_2"/>
 
