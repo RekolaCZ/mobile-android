@@ -29,22 +29,27 @@
 			<TextView
 				android:id="@+id/map_overlay_name"
 				style="@style/TextViewOverlay"
+				android:singleLine="true"
 				android:textSize="@dimen/text_xlarge"
 				android:textStyle="bold"/>
 
 			<TextView
 				android:id="@+id/map_overlay_street"
 				style="@style/TextViewOverlay"
+				android:singleLine="true"
 				android:textSize="@dimen/text_large"/>
 
 			<TextView
 				android:id="@+id/map_overlay_note"
 				style="@style/TextViewOverlay"
+				android:singleLine="true"
 				android:textSize="@dimen/text_small"/>
 
 			<TextView
 				android:id="@+id/map_overlay_description"
 				style="@style/TextViewOverlay"
+				android:minLines="1"
+				android:maxLines="2"
 				android:textSize="@dimen/text_small" />
 
 		</LinearLayout>

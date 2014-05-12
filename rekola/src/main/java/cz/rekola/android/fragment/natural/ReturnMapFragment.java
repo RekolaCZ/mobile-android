@@ -133,7 +133,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 		vNote.setInputType(
 				InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 		vNote.setSingleLine(true);
-		vNote.setLines(3);
+		vNote.setLines(2);
 		vNote.setHorizontallyScrolling(false);
 		vNote.setImeOptions(EditorInfo.IME_ACTION_DONE);
 	}

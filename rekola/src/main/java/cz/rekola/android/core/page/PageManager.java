@@ -84,10 +84,6 @@ public class PageManager {
 			rootState = newState;
 		}
 
-		/*if (newState == EPageState.MAP || newState == EPageState.BORROW || newState == EPageState.RETURN) {
-			rootState = newState;
-		}*/
-
 		actionBar.setHomeButtonEnabled(newState.upState);
 		actionBar.setDisplayHomeAsUpEnabled(newState.upState);
 		if (newState.upState) {
