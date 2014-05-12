@@ -14,6 +14,7 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
+import cz.rekola.android.core.anim.MyAnimator;
 import cz.rekola.android.core.bus.MessageEvent;
 
 public class MessageBarView extends LinearLayout {
@@ -44,12 +45,7 @@ public class MessageBarView extends LinearLayout {
 	}
 
 	public void hide() {
-		if (getVisibility() == View.VISIBLE) {
-			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_top_up);
-			startAnimation(animation);
-		}
-
-		setVisibility(GONE);
+		MyAnimator.hideSlideUp(this);
 		handler.removeCallbacks(runnable);
 	}
 
@@ -78,12 +74,7 @@ public class MessageBarView extends LinearLayout {
 			default:
 		}
 
-		if (getVisibility() != View.VISIBLE) {
-			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_top_down);
-			startAnimation(animation);
-		}
-
-		setVisibility(VISIBLE);
+		MyAnimator.showSlideDown(this);
 		handler.removeCallbacks(runnable);
 		handler.postDelayed(runnable, MESSAGE_TIMEOUT);
 	}

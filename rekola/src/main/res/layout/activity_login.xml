@@ -119,8 +119,8 @@
 
 	</FrameLayout>
 
-	<include layout="@layout/message_bar"/>
-
 	<include layout="@layout/loading_overlay"/>
+
+	<include layout="@layout/message_bar"/>
 
 </FrameLayout>

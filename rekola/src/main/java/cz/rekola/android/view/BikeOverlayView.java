@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.android.R;
 import cz.rekola.android.api.model.Bike;
+import cz.rekola.android.core.anim.MyAnimator;
 
 public class BikeOverlayView extends LinearLayout {
 
@@ -98,22 +99,12 @@ public class BikeOverlayView extends LinearLayout {
 		vNote.setText(bike.location.note);
 		vDescription.setText(bike.description);
 
-		if (getVisibility() != View.VISIBLE) {
-			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_bottom_up);
-			startAnimation(animation);
-		}
-
-		setVisibility(View.VISIBLE);
+		MyAnimator.showSlideUp(this);
 		callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
 	}
 
 	public void hide() {
-		if (getVisibility() == View.VISIBLE) {
-			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_bottom_down);
-			startAnimation(animation);
-		}
-
-		setVisibility(View.GONE);
+		MyAnimator.hideSlideDown(this);
 		callbacks.onHeightChanged(0);
 	}
 

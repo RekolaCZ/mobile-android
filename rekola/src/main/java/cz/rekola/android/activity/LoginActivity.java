@@ -21,6 +21,7 @@ import cz.rekola.android.api.requestmodel.Credentials;
 import cz.rekola.android.api.requestmodel.RecoverPassword;
 import cz.rekola.android.core.Constants;
 import cz.rekola.android.core.RekolaApp;
+import cz.rekola.android.core.anim.MyAnimator;
 import cz.rekola.android.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.android.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.android.core.bus.BorrowedBikeFailedEvent;
@@ -96,7 +97,7 @@ public class LoginActivity extends Activity {
 				if (vResetUsername.getText().length() == 0) {
 					vResetUsername.setText(vUsername.getText());
 				}
-				vResetOverlay.setVisibility(View.VISIBLE);
+				MyAnimator.showSlideUp(vResetOverlay);
 			}
 		});
 
@@ -104,7 +105,7 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				hideKeyboard();
-				vResetOverlay.setVisibility(View.GONE);
+				MyAnimator.hideSlideDown(vResetOverlay);
 			}
 		});
 
@@ -167,7 +168,7 @@ public class LoginActivity extends Activity {
 	@Subscribe
 	public void passwordRecoveryEvent(PasswordRecoveryEvent event) {
 		getApp().getBus().post(new MessageEvent(MessageEvent.MessageType.SUCCESS, getResources().getString(R.string.success_password_recovery)));
-		vResetOverlay.setVisibility(View.GONE);
+		MyAnimator.hideSlideDown(vResetOverlay);
 	}
 
 	@Subscribe
