@@ -42,7 +42,7 @@
 				style="@style/TextView"
 				android:layout_marginTop="@dimen/margin_large"
 				android:gravity="center"
-				android:text="@string/borrow_info_1"/>
+				android:text="@string/borrow_info_2"/>
 
 		</LinearLayout>
 

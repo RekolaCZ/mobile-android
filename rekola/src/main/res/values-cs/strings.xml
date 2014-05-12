@@ -24,10 +24,10 @@
 	<string name="return_info_lock_code">Kód zámku:</string>
 	<string name="return_return">Vrátit</string>
 	<string name="return_bike_detail">Detail kola</string>
-	<string name="return_bike_issue">Nahlásit problém</string>
+	<string name="return_bike_issue">Problém?</string>
 
 	<string name="returnmap_title">Upřesnit lokaci</string>
-	<string name="returnmap_note_hint">Describe the exact bike location. (Upřesnětě prosím, kde se kolo nachází (např. 3. lampa od zastávky)</string>
+	<string name="returnmap_note_hint">(Upřesnětě prosím, kde se kolo nachází (např. 3. lampa od zastávky)</string>
 	<string name="returnmap_bike_returned">Kolo vráceno</string>
 
 	<string name="webbikedetail_title">Detail kola</string>
