@@ -269,6 +269,14 @@ public class DataManager {
 		return null;
 	}
 
+	public boolean customLoadDirections() {
+		return (loadingManager.addLoading(DataLoad.CUSTOM_LOAD_DIRECTIONS));
+	}
+
+	public void customLoadDirectionsFinished() {
+		loadingManager.removeLoading(DataLoad.CUSTOM_LOAD_DIRECTIONS);
+	}
+
 	private void handleGlobalError(RetrofitError error, String title) {
 		if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
 			if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
@@ -309,7 +317,9 @@ public class DataManager {
 		BIKES,
 		BORROW_BIKE,
 		RETURN_BIKE,
-		POIS
+		POIS,
+
+		CUSTOM_LOAD_DIRECTIONS
 	}
 
 	private class LoadingManager {

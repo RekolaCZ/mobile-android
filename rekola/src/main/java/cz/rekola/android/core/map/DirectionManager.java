@@ -79,6 +79,7 @@ public class DirectionManager {
 
 		@Override
 		protected void onPostExecute(PolylineOptions result) {
+			directionTask = null;
 			if (result == null) {
 				if (directionPath != null) {
 					directionPath.remove();

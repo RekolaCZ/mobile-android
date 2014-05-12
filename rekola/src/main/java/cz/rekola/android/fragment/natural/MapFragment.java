@@ -2,17 +2,11 @@ package cz.rekola.android.fragment.natural;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,7 +48,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 	@InjectView(R.id.map_overlay)
 	BikeOverlayView vOverlay;
 
-	private MarkerManager markers = new MarkerManager();
+	private MapManager mapManager = new MapManager();
 	private Timer timer;
 
     @Override
@@ -127,7 +121,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 		ButterKnife.inject(this, view);
 
 		vOverlay.init(this);
-		markers.init();
+		mapManager.init();
 
 		if (getApp().getDataManager().getBikes(false) != null) {
 			setupMap();
@@ -157,23 +151,23 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 		if (bikes == null)
 			return;
 
-		markers.updateMap(bikes);
+		mapManager.updateMap(bikes);
 	}
 
 	// Overlay callbacks
 	@Override
 	public void onClose() {
-		markers.notifyOverlayClose();
+		mapManager.notifyOverlayClose();
 	}
 
 	@Override
 	public void onRoutePressed() {
-		markers.notifyRoutePressed();
+		mapManager.notifyRoutePressed();
 	}
 
 	@Override
 	public void onBikeDetailPressed() {
-		markers.notifyBikeDetailPressed();
+		mapManager.notifyBikeDetailPressed();
 	}
 
 	@Override
@@ -188,7 +182,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 		}, 100);
 	}
 
-	private class MarkerManager implements GoogleMap.OnMarkerClickListener, DirectionManager.DirectionsLoadedListener {
+	private class MapManager implements GoogleMap.OnMarkerClickListener, DirectionManager.DirectionsLoadedListener {
 
 		private Map<Marker, Bike> markerMap = new HashMap<>();
 
@@ -263,7 +257,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 					getResources().getColor(R.color.pink_1),
 					getResources().getDimension(R.dimen.map_direction_path_size));
 
-			directionManager.loadDirections(lastBike.id, params);
+			if (getApp().getDataManager().customLoadDirections()) { // If we are not loading directions
+				directionManager.loadDirections(lastBike.id, params);
+			}
 		}
 
 		void notifyBikeDetailPressed() {
@@ -301,12 +297,13 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
 		@Override
 		public void onDirectionsLoaded() {
+			getApp().getDataManager().customLoadDirectionsFinished();
 			directionManager.addDirections(map);
 		}
 
 		@Override
 		public void onDirectionsError() {
-
+			getApp().getDataManager().customLoadDirectionsFinished();
 		}
 	}
 
