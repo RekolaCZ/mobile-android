@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +27,7 @@ public class MessageBarView extends LinearLayout {
 	private Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
-			setVisibility(GONE);
+			hide();
 		}
 	};
 
@@ -42,6 +44,11 @@ public class MessageBarView extends LinearLayout {
 	}
 
 	public void hide() {
+		if (getVisibility() == View.VISIBLE) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_top_up);
+			startAnimation(animation);
+		}
+
 		setVisibility(GONE);
 		handler.removeCallbacks(runnable);
 	}
@@ -54,8 +61,7 @@ public class MessageBarView extends LinearLayout {
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				setVisibility(GONE);
-				handler.removeCallbacks(runnable);
+				hide();
 			}
 		});
 	}
@@ -71,6 +77,12 @@ public class MessageBarView extends LinearLayout {
 				setBackgroundColor(getResources().getColor(R.color.red));
 			default:
 		}
+
+		if (getVisibility() != View.VISIBLE) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_top_down);
+			startAnimation(animation);
+		}
+
 		setVisibility(VISIBLE);
 		handler.removeCallbacks(runnable);
 		handler.postDelayed(runnable, MESSAGE_TIMEOUT);

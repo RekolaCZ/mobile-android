@@ -3,11 +3,11 @@ package cz.rekola.android.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.logging.Handler;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -97,11 +97,22 @@ public class BikeOverlayView extends LinearLayout {
 		vStreet.setText(bike.location.address);
 		vNote.setText(bike.location.note);
 		vDescription.setText(bike.description);
+
+		if (getVisibility() != View.VISIBLE) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_bottom_up);
+			startAnimation(animation);
+		}
+
 		setVisibility(View.VISIBLE);
 		callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
 	}
 
 	public void hide() {
+		if (getVisibility() == View.VISIBLE) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_bottom_down);
+			startAnimation(animation);
+		}
+
 		setVisibility(View.GONE);
 		callbacks.onHeightChanged(0);
 	}
