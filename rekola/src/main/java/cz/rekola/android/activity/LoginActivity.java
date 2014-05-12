@@ -30,6 +30,7 @@ import cz.rekola.android.core.bus.LoginAvailableEvent;
 import cz.rekola.android.core.bus.LoginFailedEvent;
 import cz.rekola.android.core.bus.PasswordRecoveryEvent;
 import cz.rekola.android.core.bus.PasswordRecoveryFailed;
+import cz.rekola.android.view.LoadingOverlay;
 import cz.rekola.android.view.MessageBarView;
 
 public class LoginActivity extends Activity {
@@ -44,8 +45,6 @@ public class LoginActivity extends Activity {
 	TextView vRecoverPassword;
 	@InjectView(R.id.registration)
 	TextView vRegistration;
-	@InjectView(R.id.loading_overlay)
-	FrameLayout vLoading;
 
 	@InjectView(R.id.reset_overlay)
 	FrameLayout vResetOverlay;
@@ -55,6 +54,9 @@ public class LoginActivity extends Activity {
 	Button vReset;
 	@InjectView(R.id.reset_recall)
 	TextView vRecall;
+
+	@InjectView(R.id.loading_overlay)
+	LoadingOverlay vLoading;
 
 	@InjectView(R.id.error_bar)
 	MessageBarView errorBar;
@@ -130,7 +132,7 @@ public class LoginActivity extends Activity {
 		if (viewHelper.canLogin()) {
 			login();
 		} else {
-			vLoading.setVisibility(View.GONE);
+			vLoading.hide();
 		}
 	}
 
@@ -153,14 +155,13 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void loginAvailable(LoginAvailableEvent event) {
-		if (getApp().getDataManager().getBorrowedBike() != null) {
-			startMainActivity();
-		}
+		getApp().getDataManager().getBorrowedBike();
+		vLoading.setProgress();
 	}
 
 	@Subscribe
 	public void loginFailed(LoginFailedEvent event) {
-		vLoading.setVisibility(View.GONE);
+		vLoading.hide();
 	}
 
 	@Subscribe
@@ -180,7 +181,7 @@ public class LoginActivity extends Activity {
 
 	@Subscribe
 	public void isBorrowedBikeFailed(BorrowedBikeFailedEvent event) {
-		vLoading.setVisibility(View.GONE);
+		vLoading.hide();
 	}
 
 	@Subscribe
@@ -200,7 +201,7 @@ public class LoginActivity extends Activity {
 	private void login() {
 		hideKeyboard();
 		errorBar.hide();
-		vLoading.setVisibility(View.VISIBLE);
+		vLoading.show();
 		getApp().getDataManager().login(viewHelper.getCredentials());
 	}
 

@@ -9,6 +9,7 @@
 	<string name="login_log_in">Přihlásit se</string>
 	<string name="login_registration">Nejste členem?</string>
 	<string name="login_connecting">Přihlašuji…</string>
+	<string name="login_connecting_progress">Skoro tam…</string>
 	<string name="login_forgot_password">Zapoměli jste heslo?</string>
 
 	<string name="reset_title">Reset hesla</string>

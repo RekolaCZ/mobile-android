@@ -121,25 +121,6 @@
 
 	<include layout="@layout/message_bar"/>
 
-	<FrameLayout
-		android:id="@+id/loading_overlay"
-		style="@style/Layout"
-		android:visibility="gone"
-		android:clickable="true"
-		android:background="@color/white">
-
-		<ImageView
-			style="@style/ImageView"
-			android:layout_gravity="center"
-			android:src="@drawable/logo"/>
-
-		<TextView
-			style="@style/TextView"
-			android:textColor="@color/brown"
-			android:layout_gravity="center|bottom"
-			android:layout_marginBottom="@dimen/grid_4"
-			android:text="@string/login_connecting"/>
-
-	</FrameLayout>
+	<include layout="@layout/loading_overlay"/>
 
 </FrameLayout>

@@ -9,6 +9,7 @@
 	<string name="login_log_in">Log in</string>
 	<string name="login_registration">Not a member?</string>
 	<string name="login_connecting">Connecting…</string>
+	<string name="login_connecting_progress">Almost there…</string>
 	<string name="login_forgot_password">Forgot password?</string>
 
 	<string name="reset_title">Reset Password</string>
