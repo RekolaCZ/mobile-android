@@ -64,7 +64,7 @@ public class DataManager {
 		}
 
 		ApiService apiService = app.getApiService();
-		apiService.login(app.getVersionManager().getUserAgent(), credentials, new Callback<Token>() {
+		apiService.login(credentials, new Callback<Token>() {
 			@Override
 			public void success(Token resp, Response response) {
 				loadingManager.removeLoading(DataLoad.LOGIN);
@@ -91,7 +91,7 @@ public class DataManager {
 		}
 
 		ApiService apiService = app.getApiService();
-		apiService.recoverPassword(app.getVersionManager().getUserAgent(), email, new Callback<Object>() {
+		apiService.recoverPassword(email, new Callback<Object>() {
 			@Override
 			public void success(Object unused, Response response) {
 				loadingManager.removeLoading(DataLoad.PASSWORD_RECOVERY);
@@ -114,7 +114,7 @@ public class DataManager {
 
 		ApiService apiService = app.getApiService();
 		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-		apiService.getBikes(app.getVersionManager().getUserAgent(), token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
+		apiService.getBikes(token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
 			@Override
 			public void success(List<Bike> bikes, Response response) {
 				loadingManager.removeLoading(DataLoad.BIKES);
@@ -147,7 +147,7 @@ public class DataManager {
 			return;
 
 		ApiService apiService = app.getApiService();
-		apiService.getBorrowedBike(app.getVersionManager().getUserAgent(), token.apiKey, new Callback<BorrowedBike>() {
+		apiService.getBorrowedBike(token.apiKey, new Callback<BorrowedBike>() {
 			@Override
 			public void success(BorrowedBike borrowedBike, Response response) {
 				loadingManager.removeLoading(DataLoad.BORROWED_BIKE);
@@ -178,7 +178,7 @@ public class DataManager {
 
 		ApiService apiService = app.getApiService();
 		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-		apiService.borrowBike(app.getVersionManager().getUserAgent(), token.apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<LockCode>() {
+		apiService.borrowBike(token.apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<LockCode>() {
 			@Override
 			public void success(LockCode lockCode, Response response) {
 				loadingManager.removeLoading(DataLoad.BORROW_BIKE);
@@ -216,7 +216,7 @@ public class DataManager {
 		}
 
 		ApiService apiService = app.getApiService();
-		apiService.returnBike(app.getVersionManager().getUserAgent(), token.apiKey, bikeCode, returningBike, new Callback<ReturnedBike>() {
+		apiService.returnBike(token.apiKey, bikeCode, returningBike, new Callback<ReturnedBike>() {
 
 			@Override
 			public void success(ReturnedBike returnedBike, Response response) {
@@ -250,7 +250,7 @@ public class DataManager {
 
 		ApiService apiService = app.getApiService();
 		MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-		apiService.getPois(app.getVersionManager().getUserAgent(), token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Poi>>() {
+		apiService.getPois(token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Poi>>() {
 			@Override
 			public void success(List<Poi> pois, Response response) {
 				loadingManager.removeLoading(DataLoad.POIS);

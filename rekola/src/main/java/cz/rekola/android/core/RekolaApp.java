@@ -9,6 +9,7 @@ import cz.rekola.android.core.data.DataManager;
 import cz.rekola.android.core.data.PreferencesManager;
 import cz.rekola.android.core.loc.MyLocationManager;
 import cz.rekola.android.core.version.VersionManager;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
 public class RekolaApp extends Application {
@@ -26,6 +27,17 @@ public class RekolaApp extends Application {
 
 		RestAdapter restAdapter = new RestAdapter.Builder()
 				.setEndpoint(Constants.REKOLA_API_URL)
+				.setRequestInterceptor(new RequestInterceptor() {
+					@Override
+					public void intercept(RequestFacade request) {
+						/*String apiKey = dataManager == null | dataManager.getToken() == null ? null : dataManager.getToken().apiKey;
+						if (apiKey != null) {
+							request.addHeader(Constants.HEADER_KEY_TOKEN, apiKey);
+						}*/
+						request.addHeader(Constants.HEADER_KEY_API_VERSION, versionManager.getApiVersion());
+						request.addHeader(Constants.HEADER_KEY_ACCEPT_LANGUAGE, versionManager.getAcceptLanguage());
+					}
+				})
 				.build();
 
 		apiService = restAdapter.create(ApiService.class);

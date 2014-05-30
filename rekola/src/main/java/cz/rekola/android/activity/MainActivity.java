@@ -56,11 +56,17 @@ public class MainActivity extends Activity implements PageController {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
 		actionBar.setHomeButtonEnabled(false);
 
-		pageManager = new PageManager();
+		// App was restarted and lost all data manager context. (Save instance state is not used yet, if ever..)
+		if (getApp().getDataManager().getToken() == null) {
+			finish(); // Relogin to update the context
+			return;
+		}
 
+		pageManager = new PageManager();
 		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
-		if (myBike != null)
+		if (myBike != null) {
 			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
+		}
     }
 
 	@Override

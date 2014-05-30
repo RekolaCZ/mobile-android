@@ -10,8 +10,9 @@ import cz.rekola.android.core.Constants;
 
 public class VersionManager {
 
-	private String userAgent; // Using client-agent header, see Constants.
-	private String webUserAgent;
+	private final String userAgent; // Using client-agent header, see Constants.
+	private final String webUserAgent;
+	private final String acceptVersion;
 
 	public VersionManager(Application app) {
 		String brand = Build.BRAND;
@@ -19,6 +20,7 @@ public class VersionManager {
 		int sdkVersion = Build.VERSION.SDK_INT;
 
 		Locale locale = app.getResources().getConfiguration().locale;
+		acceptVersion = locale.toString();
 
 		DisplayMetrics metrics = app.getResources().getDisplayMetrics();
 		int dpi = metrics.densityDpi;
@@ -31,12 +33,19 @@ public class VersionManager {
 		webUserAgent = userAgent + "; " + httpAgent;
 	}
 
-	public String getUserAgent() {
+	/*public String getUserAgent() {
 		return userAgent;
 	}
 
 	public String getWebUserAgent() {
 		return webUserAgent;
+	}*/
+
+	public String getApiVersion() {
+		return Constants.API_VERSION;
 	}
 
+	public String getAcceptLanguage() {
+		return acceptVersion;
+	}
 }

@@ -23,23 +23,23 @@ import retrofit.http.Query;
 
 public interface ApiService {
 	@POST("/accounts/mine/login")
-	public void login(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Body Credentials body, Callback<Token> callback);
+	public void login(@Body Credentials body, Callback<Token> callback);
 
 	@PUT("/password-recovery")
-	public void recoverPassword(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Body RecoverPassword body, Callback<Object> callback);
+	public void recoverPassword(@Body RecoverPassword body, Callback<Object> callback);
 
 	@GET("/bikes/all")
-	public void getBikes(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
+	public void getBikes(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
 
 	@GET("/bikes/mine")
-	public void getBorrowedBike(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, Callback<BorrowedBike> callback);
+	public void getBorrowedBike(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<BorrowedBike> callback);
 
 	@GET("/bikes/lock-code")
-	public void borrowBike(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Query("bikeCode") int bikeCode, @Query("lat") String lat, @Query("lng") String lng, Callback<LockCode> callback);
+	public void borrowBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("bikeCode") int bikeCode, @Query("lat") String lat, @Query("lng") String lng, Callback<LockCode> callback);
 
 	@PUT("/bikes/{id}/return")
-	public void returnBike(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
+	public void returnBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
 
 	@GET("/location/pois")
-	public void getPois(@Header(Constants.HEADER_KEY_USER_AGENT) String userAgent, @Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
+	public void getPois(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
 }

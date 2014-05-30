@@ -257,15 +257,17 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 	}
 
 	private class MapLocationUpdater {
-		private int posUpdatesCount = 2;
-		private float bestAcc = 1000;
+		private int posUpdatesCount = 1;
+		private float bestAcc = 100000;
 
 		void updateMapPosition(MyLocation myLocation) {
 			if (posUpdatesCount <= 0)
 				return;
 
+			posUpdatesCount--;
+
 			float acc = myLocation.acc == null ? bestAcc : myLocation.acc;
-			if (acc > bestAcc)
+			if (acc >= bestAcc)
 				return;
 
 			int zoomLevel = 15;
@@ -278,7 +280,6 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 			map.animateCamera(cameraUpdate);
 
 			bestAcc = acc;
-			posUpdatesCount--;
 		}
 	}
 }
