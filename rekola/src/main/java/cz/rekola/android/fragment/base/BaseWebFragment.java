@@ -31,6 +31,9 @@ public abstract class BaseWebFragment extends BaseMainFragment implements WebApi
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		if (!getApp().getDataManager().isOperational())
+			return;
+
 		// TODO: Handle api key expiration!
 		Map extraHeaderMap = new HashMap<String, String>();
 		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);

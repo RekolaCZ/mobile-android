@@ -85,6 +85,10 @@ public class DataManager {
 		return token;
 	}
 
+	public boolean isOperational() {
+		return token != null;
+	}
+
 	public void recoverPassword(RecoverPassword email) {
 		if (!loadingManager.addLoading(DataLoad.PASSWORD_RECOVERY)) {
 			return;
@@ -138,7 +142,10 @@ public class DataManager {
 			return myBike;
 		}
 
-		updateBorrowedBike();
+		// Get borrowed bike might be called from fragments created while the activity is terminating. Well done android optimizations..
+		if (isOperational()) {
+			updateBorrowedBike();
+		}
 		return null;
 	}
 

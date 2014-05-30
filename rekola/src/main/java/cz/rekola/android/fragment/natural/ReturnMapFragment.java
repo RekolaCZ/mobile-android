@@ -108,6 +108,9 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		if (!getApp().getDataManager().isOperational())
+			return;
+
 		vReturned.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

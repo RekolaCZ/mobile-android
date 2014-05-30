@@ -48,6 +48,13 @@ public class MainActivity extends Activity implements PageController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+		// App was restarted and lost all data manager context. (Save instance state is not used yet, if ever..)
+		if (!getApp().getDataManager().isOperational()) {
+			finish(); // Relogin to update the context
+			return;
+		}
+
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
 		ButterKnife.inject(this);
@@ -56,13 +63,8 @@ public class MainActivity extends Activity implements PageController {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
 		actionBar.setHomeButtonEnabled(false);
 
-		// App was restarted and lost all data manager context. (Save instance state is not used yet, if ever..)
-		if (getApp().getDataManager().getToken() == null) {
-			finish(); // Relogin to update the context
-			return;
-		}
-
 		pageManager = new PageManager();
+
 		MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
 		if (myBike != null) {
 			pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
@@ -86,6 +88,10 @@ public class MainActivity extends Activity implements PageController {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+		// Create options menu might be called even if the activity is terminating.
+		if (!getApp().getDataManager().isOperational())
+			return super.onCreateOptionsMenu(menu);
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_actions, menu);
 		pageManager.setupOptionsMenu(menu, getApp().getDataManager().getBorrowedBike(false));

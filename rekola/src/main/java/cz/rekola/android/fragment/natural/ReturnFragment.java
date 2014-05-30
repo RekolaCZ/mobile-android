@@ -47,6 +47,9 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		if (!getApp().getDataManager().isOperational())
+			return;
+
 		populateData();
 
 		vReturn.setOnClickListener(new View.OnClickListener() {

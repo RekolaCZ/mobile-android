@@ -35,6 +35,9 @@ public class BorrowFragment extends BaseMainFragment {
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		if (!getApp().getDataManager().isOperational())
+			return;
+
 		vBorrow.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

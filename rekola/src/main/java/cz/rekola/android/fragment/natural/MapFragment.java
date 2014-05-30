@@ -120,6 +120,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 		super.onViewCreated(view, savedInstanceState);
 		ButterKnife.inject(this, view);
 
+		if (!getApp().getDataManager().isOperational())
+			return;
+
 		vOverlay.init(this);
 		mapManager.init();
 
