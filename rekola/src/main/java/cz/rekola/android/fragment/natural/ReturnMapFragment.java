@@ -122,7 +122,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 				}
 				// TODO: May throw NumberFormatException!
 				getAct().hideKeyboard();
-				getApp().getDataManager().returnBike(Integer.parseInt(myBike.bike.bikeCode),
+				getApp().getDataManager().returnBike(/*Integer.parseInt(*/myBike.bike.id/*)*/,
 						new ReturningBike(new ReturningLocation(center.latitude, center.longitude, vNote.getText().toString())));
 			}
 		});
