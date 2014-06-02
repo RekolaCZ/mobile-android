@@ -36,6 +36,7 @@ public class RekolaApp extends Application {
 						}*/
 						request.addHeader(Constants.HEADER_KEY_API_VERSION, versionManager.getApiVersion());
 						request.addHeader(Constants.HEADER_KEY_ACCEPT_LANGUAGE, versionManager.getAcceptLanguage());
+						request.addHeader(Constants.HEADER_KEY_OS, versionManager.getOs());
 					}
 				})
 				.build();

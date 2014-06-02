@@ -10,6 +10,7 @@ public class Constants {
 	//public static final String HEADER_KEY_USER_AGENT = "client-agent";
 	public static final String HEADER_KEY_API_VERSION = "x-api-version";
 	public static final String HEADER_KEY_ACCEPT_LANGUAGE = "accept-language";
+	public static final String HEADER_KEY_OS = "client-os";
 
 	public static final String HEADER_VALUE_USER_AGENT = "rekola/%s (Model %s; Android %s; Locale %s; Resolution %sx%s; Dpi %s)";
 
