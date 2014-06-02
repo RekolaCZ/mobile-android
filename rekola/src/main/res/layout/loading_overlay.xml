@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<cz.rekola.android.view.LoadingOverlay xmlns:android="http://schemas.android.com/apk/res/android"
+<cz.rekola.app.view.LoadingOverlay xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/loading_overlay"
 	style="@style/Layout"
 	android:visibility="gone"
@@ -20,4 +20,4 @@
 		android:layout_marginBottom="@dimen/grid_4"
 		android:text="@string/login_connecting"/>
 
-</cz.rekola.android.view.LoadingOverlay>
+</cz.rekola.app.view.LoadingOverlay>

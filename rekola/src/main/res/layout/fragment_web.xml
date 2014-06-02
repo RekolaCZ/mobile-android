@@ -6,7 +6,7 @@
 	android:gravity="center"
 	android:layout_gravity="top|center_horizontal">
 
-	<cz.rekola.android.view.ApiWebView
+	<cz.rekola.app.view.ApiWebView
 		android:id="@+id/profile_web"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"

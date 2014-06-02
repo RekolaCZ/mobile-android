@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/Layout">
 
-	<cz.rekola.android.view.ApiWebView
+	<cz.rekola.app.view.ApiWebView
 		android:id="@+id/return_bike_web"
 		style="@style/Layout"
 		android:layout_weight="1"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cz.rekola.android.view.BikeOverlayView xmlns:android="http://schemas.android.com/apk/res/android"
+<cz.rekola.app.view.BikeOverlayView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/map_overlay"
 	style="@style/Layout"
 	android:layout_height="wrap_content"
@@ -72,4 +72,4 @@
 
 	</LinearLayout>
 
-</cz.rekola.android.view.BikeOverlayView>
+</cz.rekola.app.view.BikeOverlayView>
