@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.rekola.android">
+    package="cz.rekola.app">
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -50,7 +50,11 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
+			android:value="AIzaSyBbqcXPyM0UCMoXzNo_tsxHb_DvWPBWtYk"/>
+			<!--
+			RELEASE:
             android:value="AIzaSyCmYMy-X7bJ7sIJr6wOhLxdwpAQ9xw16eg"/>
+            -->
     </application>
 
 </manifest>
