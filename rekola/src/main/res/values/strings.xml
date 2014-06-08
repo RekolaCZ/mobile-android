@@ -33,6 +33,8 @@
 
 	<string name="webbikedetail_title">Bike Detail</string>
 
+	<string name="profile_title">Profile</string>
+
 	<!-- Bike name parameter -->
 	<string name="return_bike_name">Bike %s at your service.</string>
 

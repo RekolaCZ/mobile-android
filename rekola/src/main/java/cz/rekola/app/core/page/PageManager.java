@@ -38,13 +38,13 @@ public class PageManager {
 	public enum EPageState {
 		//								Uses menu item order.
 		//				action bar link {BORROW, RETURN, MAP, PROFILE, OVERFLOW, LOGOUT}, Use cache, Up to Root State, Root state drawable, Back State, TitleId, menu item id, BaseMainFragment
-		BORROW			(new boolean[]	{false, false, true, true, false, false}, false, false, R.drawable.actionbar_ic_borrow, null, null, R.id.action_borrow, BorrowFragment.class ),
+		BORROW			(new boolean[]	{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_borrow, null, null, R.id.action_borrow, BorrowFragment.class ),
 		RETURN			(new boolean[]	{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_return, null, null, R.id.action_return, ReturnFragment.class),
 		MAP				(new boolean[]	{true, true, false, true, false, false}, true, false, R.drawable.actionbar_ic_map, BORROW/*or RETURN*/, null, R.id.action_map, MapFragment.class),
-		PROFILE			(new boolean[]	{true, true, true, false, true, true}, false, false, null, BORROW/*or RETURN*/, null, R.id.action_profile, ProfileWebFragment.class),
+		PROFILE			(new boolean[]	{false, false, false, false, true, true}, false, true, null, BORROW/*or RETURN*/, R.string.profile_title, R.id.action_profile, ProfileWebFragment.class),
 
 		// Other states without actionbar access.
-		RETURN_MAP		(new boolean[]	{false, false, true, false, false, false}, false, true, null, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),
+		RETURN_MAP		(new boolean[]	{false, false, false, false, false, false}, false, true, null, RETURN, R.string.returnmap_title, null, ReturnMapFragment.class ),
 		WEB_RETURN		(new boolean[]	{true, true, true, true, false, false}, false, false, null, BORROW, null, null, ReturnWebFragment.class),
 		WEB_BIKE_DETAIL	(new boolean[]	{true, true, true, true, false, false}, false, true, null, MAP/*or RETURN*/, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
 
