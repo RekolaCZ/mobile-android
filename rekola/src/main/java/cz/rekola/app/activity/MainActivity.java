@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements PageController {
 
 	@Override
 	public void onBackPressed() {
-		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getApp().getDataManager().getBorrowedBike(false), getResources())) {
+		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getResources())) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
