@@ -67,6 +67,10 @@ public class DirectionManager {
 
 			GMapV2Direction md = new GMapV2Direction();
 			Document doc = md.getDocument(dirPar.start, dirPar.end, dirPar.mode);
+
+			if (doc == null)
+				return null;
+
 			ArrayList<LatLng> directionPoint = md.getDirection(doc);
 			PolylineOptions rectLine = new PolylineOptions().width(dirPar.size).color(dirPar.color);
 
@@ -74,7 +78,7 @@ public class DirectionManager {
 				rectLine.add(directionPoint.get(i));
 			}
 
-			return(rectLine);
+			return rectLine;
 		}
 
 		@Override

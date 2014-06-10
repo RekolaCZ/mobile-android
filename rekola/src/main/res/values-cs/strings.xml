@@ -60,6 +60,7 @@
 	<string name="error_bike_details_failed">Stáhnování informací o podrobnostech kola selhalo.</string>
 	<string name="error_web_load_failed">Nepovedlo se načíst podrobnosti.</string>
 	<string name="error_get_pois_failed">Nepovedlo se načíst informace o zajímavých bodech.</string>
+	<string name="error_directions">Nepovedlo se načíst informace o trase.</string>
 	<string name="error_old_app_version">Omlouváme se, ale verze Vaší aplikace není dále podporována.\n\nStáhněte si prosím nejnovější verzi.</string>
 	<string name="success_password_recovery">Zkontrolujte prosím Váš e-mail pro další pokyny.</string>
 

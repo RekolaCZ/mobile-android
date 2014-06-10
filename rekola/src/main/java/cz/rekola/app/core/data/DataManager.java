@@ -280,8 +280,11 @@ public class DataManager {
 		return (loadingManager.addLoading(DataLoad.CUSTOM_LOAD_DIRECTIONS));
 	}
 
-	public void customLoadDirectionsFinished() {
+	public void customLoadDirectionsFinished(boolean success) {
 		loadingManager.removeLoading(DataLoad.CUSTOM_LOAD_DIRECTIONS);
+		if (!success) {
+			app.getBus().post(new MessageEvent(app.getResources().getString(R.string.error_directions)));
+		}
 	}
 
 	private void handleGlobalError(RetrofitError error, String title) {

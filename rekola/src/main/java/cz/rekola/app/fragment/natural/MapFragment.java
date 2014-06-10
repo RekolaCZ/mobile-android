@@ -308,13 +308,13 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
 		@Override
 		public void onDirectionsLoaded() {
-			getApp().getDataManager().customLoadDirectionsFinished();
+			getApp().getDataManager().customLoadDirectionsFinished(true);
 			directionManager.addDirections(map);
 		}
 
 		@Override
 		public void onDirectionsError() {
-			getApp().getDataManager().customLoadDirectionsFinished();
+			getApp().getDataManager().customLoadDirectionsFinished(false);
 		}
 	}
 
