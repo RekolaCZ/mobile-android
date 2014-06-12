@@ -137,6 +137,14 @@ public class PageManager {
 			}
 		}
 
+		// Release unused cached Borrow/Return fragment when the other is selected.
+		if (newState == EPageState.BORROW) {
+			cache.remove(EPageState.RETURN);
+		}
+		if (newState == EPageState.RETURN) {
+			cache.remove(EPageState.BORROW);
+		}
+
 		this.state = newState;
 
 		return fragment;

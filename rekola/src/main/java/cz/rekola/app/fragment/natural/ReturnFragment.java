@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
 import cz.rekola.app.core.Constants;
+import cz.rekola.app.core.bus.BorrowedBikeAvailableEvent;
+import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.view.ApiWebView;
@@ -83,6 +87,16 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
 	@Override
 	public boolean onWebApiEvent(String paramUrl) {
 		return false;
+	}
+
+	@Subscribe
+	public void bikeBorrowed(LockCodeEvent event) {
+		populateData();
+	}
+
+	@Subscribe
+	public void isBorrowedBikeAvailable(BorrowedBikeAvailableEvent event) {
+		populateData();
 	}
 
 	private void populateData() {
