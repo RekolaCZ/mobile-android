@@ -50,7 +50,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-			android:value="AIzaSyBbqcXPyM0UCMoXzNo_tsxHb_DvWPBWtYk"/>
+			android:value="AIzaSyCmYMy-X7bJ7sIJr6wOhLxdwpAQ9xw16eg"/>
 			<!--
 			RELEASE:
 			android:value="AIzaSyCmYMy-X7bJ7sIJr6wOhLxdwpAQ9xw16eg"/>

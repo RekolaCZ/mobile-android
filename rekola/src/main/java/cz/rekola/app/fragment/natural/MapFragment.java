@@ -33,6 +33,7 @@ import cz.rekola.app.api.model.Bike;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.BikesAvailableEvent;
 import cz.rekola.app.core.bus.BikesFailedEvent;
+import cz.rekola.app.core.bus.ReturnBikeEvent;
 import cz.rekola.app.core.loc.MyLocation;
 import cz.rekola.app.core.loc.MyLocationListener;
 import cz.rekola.app.core.map.DirectionManager;
@@ -147,6 +148,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 	@Subscribe
 	public void bikesFailed(BikesFailedEvent event) {
 
+	}
+
+	@Subscribe
+	public void bikeReturned(ReturnBikeEvent event) {
+		getApp().getDataManager().getBikes(true); // Force update bikes.
 	}
 
 	@Override
