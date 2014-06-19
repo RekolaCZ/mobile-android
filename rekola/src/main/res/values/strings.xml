@@ -21,6 +21,7 @@
 	<string name="borrow_info_1">Code can be found on the rear fender or on a rear stick.</string>
 	<string name="borrow_info_2">After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time.</string>
 	<string name="borrow_borrow">Borrow a bike</string>
+	<string name="borrow_code_hint">6-digit code</string>
 
 	<string name="return_info_lock_code">Lock code:</string>
 	<string name="return_return">Return</string>

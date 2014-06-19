@@ -27,7 +27,7 @@
 				android:id="@+id/bike_code"
 				style="@style/EditText"
 				android:textSize="@dimen/text_xxlarge"
-				android:hint="6-digit code"
+				android:hint="@string/borrow_code_hint"
 				android:maxLength="@integer/bike_code_length"
 				android:inputType="number"
 				android:imeOptions="actionDone"
