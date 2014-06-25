@@ -217,7 +217,11 @@ public class DataManager {
 		});
 	}
 
-	public void returnBike(int bikeCode, ReturningBike returningBike) {
+	public void returnBike(final int bikeCode, final ReturningBike returningBike) {
+		returnBikeRecursive(bikeCode, returningBike, true);
+	}
+
+	private void returnBikeRecursive(final int bikeCode, final ReturningBike returningBike, final boolean retry) {
 		if (!loadingManager.addLoading(DataLoad.RETURN_BIKE)) {
 			return;
 		}
@@ -236,6 +240,13 @@ public class DataManager {
 			@Override
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.RETURN_BIKE);
+
+				// retrofit.RetrofitError: java.io.EOFException: https://github.com/square/retrofit/issues/397
+				if (error.toString().contains("java.io.EOFException") && retry){
+					returnBikeRecursive(bikeCode, returningBike, false);
+					return;
+				}
+
 				ReturnBikeFailedEvent event = new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.UNKNOWN, null);
 				if (error.getResponse() != null) {
 					switch (error.getResponse().getStatus()) {
