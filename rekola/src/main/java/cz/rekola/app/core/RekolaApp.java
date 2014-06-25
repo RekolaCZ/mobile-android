@@ -62,7 +62,13 @@ public class RekolaApp extends Application {
 		return bus;
 	}
 
-	public DataManager getDataManager() { return dataManager; }
+	public DataManager getDataManager() {
+		return dataManager;
+	}
+
+	public void resetDataManager() {
+		dataManager = new DataManager(this);
+	}
 
 	public PreferencesManager getPreferencesManager() {
 		return preferencesManager;

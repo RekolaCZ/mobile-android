@@ -86,6 +86,12 @@ public class MainActivity extends Activity implements PageController {
 		getApp().getBus().unregister(errorBar);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		getApp().resetDataManager();
+	}
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		// Create options menu might be called even if the activity is terminating.

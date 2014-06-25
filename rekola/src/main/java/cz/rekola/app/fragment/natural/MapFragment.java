@@ -237,6 +237,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
 				if (lastBike != null && lastBike.id == bike.id) {
 					newMarker = marker; // new marker after update
+					lastBike = bike;
 				}
 			}
 
