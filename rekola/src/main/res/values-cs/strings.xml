@@ -19,7 +19,7 @@
 
 	<string name="borrow_title">Půjčit kolo</string>
 	<string name="borrow_info_1">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
-	<string name="borrow_info_2">Po zadání kódu získáte kód zámku. Od té chvíle vám běží čas, za který platíte svou karmou.</string>
+	<string name="borrow_info_2">Po zadání kódu získáte kód zámku a můžete začít kolo používat.</string>
 	<string name="borrow_borrow">Půjčit kolo</string>
 	<string name="borrow_code_hint">šestimístný kód</string>
 

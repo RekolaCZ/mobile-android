@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements PageController {
 
 		// App was restarted and lost all data manager context. (Save instance state is not used yet, if ever..)
 		if (!getApp().getDataManager().isOperational()) {
-			finish(); // Relogin to update the context
+			startLoginActivity(null); // Relogin to update the context
 			return;
 		}
 
