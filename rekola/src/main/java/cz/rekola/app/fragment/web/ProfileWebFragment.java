@@ -1,5 +1,6 @@
 package cz.rekola.app.fragment.web;
 
+import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.fragment.base.BaseWebFragment;
 import cz.rekola.app.webapi.WebApiConstants;
@@ -15,7 +16,8 @@ public class ProfileWebFragment extends BaseWebFragment {
 	public boolean onWebApiEvent(String paramUrl) {
 		if (paramUrl != null && paramUrl.endsWith(WebApiConstants.PARAM_LOGOUT)) {
 			getApp().getPreferencesManager().setPassword(null);
-			getActivity().finish();
+			//getActivity().finish();
+			((MainActivity)getActivity()).startLoginActivity(null);
 			return true;
 		}
 		return false;

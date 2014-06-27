@@ -19,7 +19,7 @@
 
 	<string name="borrow_title">Borrow Bike</string>
 	<string name="borrow_info_1">Code can be found on the rear fender or on a rear stick.</string>
-	<string name="borrow_info_2">After entering the code, you will receive a bike lock code. From that moment, you pay by your karma for the running time.</string>
+	<string name="borrow_info_2">After entering the code, you will receive a bike lock code and you can start using the bike.</string>
 	<string name="borrow_borrow">Borrow a bike</string>
 	<string name="borrow_code_hint">6-digit code</string>
 
@@ -62,7 +62,8 @@
 	<string name="error_web_load_failed">Failed to load details.</string>
 	<string name="error_get_pois_failed">Failed to download info about places of interest.</string>
 	<string name="error_directions">Failed to load directions.</string>
-	<string name="error_old_app_version">Sorry, but your application is outdated.\n\nPlese upgrade to latest version.</string>
+	<string name="error_old_app_version">Sorry, but your application is outdated.\n\nPlease upgrade to latest version.</string>
+	<string name="error_session_expired">You have been logged out.</string>
 	<string name="success_password_recovery">Please, check your email for further password recovery instructions.</string>
 
 </resources>

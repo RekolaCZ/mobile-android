@@ -63,6 +63,7 @@
 	<string name="error_get_pois_failed">Nepovedlo se načíst informace o zajímavých bodech.</string>
 	<string name="error_directions">Nepovedlo se načíst informace o trase.</string>
 	<string name="error_old_app_version">Omlouváme se, ale Vaše verze aplikace už není podporována.\n\nStáhněte si, prosím, nejnovější verzi.</string>
+	<string name="error_session_expired">Byl jste odhlášen.</string>
 	<string name="success_password_recovery">Zkontrolujte, prosím, svůj e-mail pro další pokyny.</string>
 
 </resources>

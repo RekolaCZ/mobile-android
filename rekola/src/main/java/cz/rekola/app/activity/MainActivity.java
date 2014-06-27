@@ -121,7 +121,7 @@ public class MainActivity extends Activity implements PageController {
 			case R.id.action_logout:
 				// TODO: Add yes/no dialog
 				getApp().getPreferencesManager().setPassword(null);
-				finish();
+				startLoginActivity(null);
 				break;
 			case android.R.id.home:
 				pageManager.setUpState(getFragmentManager(), getActionBar(), getResources());
@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements PageController {
 		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getResources())) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // This might be a cause for the stack mess..
+			//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // This might be a cause for the stack mess..
 			startActivity(intent);
 		}
 		invalidateOptionsMenu();
@@ -174,14 +174,12 @@ public class MainActivity extends Activity implements PageController {
 
 	@Subscribe
 	public void onAuthorizationRequired(AuthorizationRequiredEvent event) {
-		getApp().resetDataManager();
-		finish();
+		startLoginActivity(getResources().getString(R.string.error_session_expired));
 	}
 
 	@Subscribe
 	public void onIncompatibleApi(IncompatibleApiEvent event) {
-		getApp().resetDataManager();
-		finish();
+		startLoginActivity(getResources().getString(R.string.error_old_app_version));
 	}
 
 	@Override
@@ -221,6 +219,16 @@ public class MainActivity extends Activity implements PageController {
 	public void hideKeyboard() {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+	}
+
+	public void startLoginActivity(String message) {
+		getApp().resetDataManager();
+		Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+		if (message != null) {
+			intent.putExtra(LoginActivity.EXTRA_MESSAGE, message);
+		}
+		startActivity(intent);
+		finish();
 	}
 
 	private RekolaApp getApp() {

@@ -36,6 +36,8 @@ import cz.rekola.app.view.MessageBarView;
 
 public class LoginActivity extends Activity {
 
+	public static final String EXTRA_MESSAGE = "extra_message";
+
 	@InjectView(R.id.username)
 	EditText vUsername;
 	@InjectView(R.id.password)
@@ -135,6 +137,11 @@ public class LoginActivity extends Activity {
 		} else {
 			vLoading.hide();
 		}
+
+		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE)) {
+			errorBar.onMessage(new MessageEvent(getIntent().getExtras().getString(EXTRA_MESSAGE)));
+			getIntent().removeExtra(EXTRA_MESSAGE);
+		}
 	}
 
 	@Override
@@ -214,6 +221,7 @@ public class LoginActivity extends Activity {
 	private void startMainActivity() {
 		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 		startActivity(intent);
+		finish();
 	}
 
 	private RekolaApp getApp() {
