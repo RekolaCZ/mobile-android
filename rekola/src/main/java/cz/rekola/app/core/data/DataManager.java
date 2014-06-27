@@ -58,7 +58,15 @@ public class DataManager {
 		loadingManager = new LoadingManager();
 	}
 
-	public void login(Credentials credentials) { // Make the login EOFException solid..
+	public void login(Credentials credentials) {
+		loginRecursive(credentials, true);
+	}
+
+	/**
+	 * Hack-fix for retrofit java.io.EOFException thrown sometimes on first try in POST, PUT requests containing \n.
+	 * GET requests are fine.
+	 */
+	private void loginRecursive(final Credentials credentials, final boolean retry) {
 		if (!loadingManager.addLoading(DataLoad.LOGIN)) {
 			return;
 		}
@@ -75,6 +83,13 @@ public class DataManager {
 			@Override
 			public void failure(RetrofitError error) {
 				loadingManager.removeLoading(DataLoad.LOGIN);
+
+				// retrofit.RetrofitError: java.io.EOFException: https://github.com/square/retrofit/issues/397
+				if (error.toString().contains("java.io.EOFException") && retry) {
+					loginRecursive(credentials, false);
+					return;
+				}
+
 				app.getBus().post(new LoginFailedEvent());
 				handleGlobalError(error, app.getResources().getString(R.string.error_title_login_failed));
 			}
@@ -242,7 +257,7 @@ public class DataManager {
 				loadingManager.removeLoading(DataLoad.RETURN_BIKE);
 
 				// retrofit.RetrofitError: java.io.EOFException: https://github.com/square/retrofit/issues/397
-				if (error.toString().contains("java.io.EOFException") && retry){
+				if (error.toString().contains("java.io.EOFException") && retry) {
 					returnBikeRecursive(bikeCode, returningBike, false);
 					return;
 				}
