@@ -89,7 +89,6 @@ public class MainActivity extends Activity implements PageController {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		getApp().resetDataManager();
 	}
 
     @Override
@@ -139,7 +138,7 @@ public class MainActivity extends Activity implements PageController {
 		if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getResources())) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // This might be a cause for the stack mess..
 			startActivity(intent);
 		}
 		invalidateOptionsMenu();
@@ -175,11 +174,13 @@ public class MainActivity extends Activity implements PageController {
 
 	@Subscribe
 	public void onAuthorizationRequired(AuthorizationRequiredEvent event) {
+		getApp().resetDataManager();
 		finish();
 	}
 
 	@Subscribe
 	public void onIncompatibleApi(IncompatibleApiEvent event) {
+		getApp().resetDataManager();
 		finish();
 	}
 

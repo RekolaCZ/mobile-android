@@ -58,7 +58,7 @@ public class DataManager {
 		loadingManager = new LoadingManager();
 	}
 
-	public void login(Credentials credentials) {
+	public void login(Credentials credentials) { // Make the login EOFException solid..
 		if (!loadingManager.addLoading(DataLoad.LOGIN)) {
 			return;
 		}
