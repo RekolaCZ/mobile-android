@@ -328,7 +328,12 @@ public class DataManager {
 			return;
 		}
 
-		MessageError msgErr = (MessageError) error.getBodyAs(MessageError.class);
+		MessageError msgErr;
+		try {
+			msgErr = (MessageError) error.getBodyAs(MessageError.class);
+		} catch (Exception e) {
+			msgErr = new MessageError();
+		}
 		if (msgErr.message == null || msgErr.message.isEmpty()) {
 			app.getBus().post(new MessageEvent(title));
 		} else {
