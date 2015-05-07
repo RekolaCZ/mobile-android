@@ -32,7 +32,7 @@ import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 import cz.rekola.app.view.MessageBarView;
 
-public class MainActivity extends Activity implements PageController {
+public class MainActivity extends BaseActivity implements PageController {
 
 	@InjectView(R.id.fragment_container)
 	FrameLayout vFragmentContainer;

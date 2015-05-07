@@ -34,7 +34,7 @@ import cz.rekola.app.core.bus.PasswordRecoveryFailed;
 import cz.rekola.app.view.LoadingOverlay;
 import cz.rekola.app.view.MessageBarView;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
 	public static final String EXTRA_MESSAGE = "extra_message";
 

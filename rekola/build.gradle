@@ -1,5 +1,30 @@
 apply plugin: 'com.android.application'
 
+
+/**
+ * Copies mapping from build output folder into own output folder.
+ * Caution: This task asumes that folder outputs and proguard exists and mapping is in sub sub folder of proguard folder. If anything changes in gradle build configuration, this task has to be updated
+ */
+task copyMapping << {
+    copy {
+        from(new File(new File(buildDir.getPath(), "outputs"), "mapping").listFiles()[0].listFiles()[0]) {
+            include '**/mapping.txt'
+        }
+        into new File(projectDir.parent, "outputs")
+        includeEmptyDirs = false
+    }
+    println "Proguard mapping copied"
+}
+
+/**
+ * Initialize copy of mapping.txt after progurad task is performed
+ */
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+    if (task.name.startsWith("proguard")) {
+        copyMapping.execute()
+    }
+}
+
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
@@ -11,11 +36,31 @@ android {
         versionName "2.0.4"
     }
 
+    signingConfigs {
+
+        debug {
+            keyAlias "androiddebugkey"
+            storeFile file("../keystore/debug.keystore")
+            storePassword 'android'
+            keyPassword 'android'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
     buildTypes {
+        debug {
+            applicationVariants.all { variant -> //Copy result apk to "outputs" folder in project root and rename it to App.apk
+                def projectRoot = project.rootDir
+                def outputs = new File(projectRoot, "outputs")
+                outputs.mkdirs();
+                variant.outputs.each { output ->
+                    output.outputFile = new File(outputs, "App.apk")
+                }
+            }
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
@@ -28,5 +73,6 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.5.0'
     compile "com.jakewharton:butterknife:4.0.1"
     compile 'com.squareup:otto:1.3.4'
+    compile 'net.hockeyapp.android:HockeySDK:3.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
