@@ -1,6 +1,58 @@
 apply plugin: 'com.android.application'
 
 
+//**CUSTOM TASKS**//
+
+/**
+ * Read password from console and store it to signing release config settings
+ */
+task readPasswordFromInput << {
+    def console = System.console()
+    ext.keystorePassword = console.readLine('\n\n\n> Enter keystore password: ')
+    android.signingConfigs.release.storePassword = ext.keystorePassword
+    android.signingConfigs.release.keyPassword = ext.keystorePassword
+}
+
+/**
+ * Increase version code in config gradle.properties file
+ */
+task increaseVersionCode << {
+    def versionPropFile = "../gradle.properties";
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(file(versionPropFile)))
+    int versionCode = versionProps['mBuild'].toInteger()
+    versionProps['mBuild'] = (versionCode + 1) + ""
+    versionProps.store(new FileOutputStream(file(versionPropFile)), "Build properties")
+    println 'increasing version code to ' + versionProps['mBuild']
+}
+
+/**
+ * Get count of git commits
+ */
+def getGitCommits() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-list', 'HEAD', '--count'
+        standardOutput = stdout
+    }
+    return Integer.parseInt(stdout.toString().trim())
+}
+
+/**
+ * Read version code from standart input and store it inside gradle.properties config file
+ */
+task setVersionCode << {
+    def versionPropFile = "../gradle.properties";
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(file(versionPropFile)))
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
+    print "Input:"
+    def userInput = br.readLine()
+    versionProps['mBuild'] = userInput
+    versionProps.store(new FileOutputStream(file(versionPropFile)), "Build properties")
+    println 'increasing version code to ' + versionProps['mBuild']
+}
+
 /**
  * Copies mapping from build output folder into own output folder.
  * Caution: This task asumes that folder outputs and proguard exists and mapping is in sub sub folder of proguard folder. If anything changes in gradle build configuration, this task has to be updated
@@ -30,13 +82,23 @@ android {
     buildToolsVersion '22.0.1'
 
     defaultConfig {
+        applicationId project.mPackageName
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 9
-        versionName "2.0.4"
+        versionCode getGitCommits()
+        versionName project.mVersionName
+        manifestPlaceholders = [appName: project.mAppName]
     }
 
     signingConfigs {
+
+        release {
+            keyAlias project.mKeyAlias
+            storeFile file("../keystore/" + project.mKeyFile)
+            storePassword project.mKeyPass
+            keyPassword project.mKeyPass
+        }
+
 
         debug {
             keyAlias "androiddebugkey"
@@ -52,6 +114,18 @@ android {
     }
     buildTypes {
         debug {
+            applicationIdSuffix '.dev'
+            manifestPlaceholders = [appName: project.mAppName + " D"]
+
+        }
+        //beta build that is sent to hockeyapp for testing purposes
+        beta {
+            applicationIdSuffix '.beta'
+            manifestPlaceholders = [appName: project.mAppName + " B " + defaultConfig.versionCode]
+
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant -> //Copy result apk to "outputs" folder in project root and rename it to App.apk
                 def projectRoot = project.rootDir
                 def outputs = new File(projectRoot, "outputs")
@@ -60,12 +134,40 @@ android {
                     output.outputFile = new File(outputs, "App.apk")
                 }
             }
+
         }
+
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant -> //Copy result apk to "outputs" folder in project root and rename it to App.apk
+                def projectRoot = project.rootDir
+                def outputs = new File(projectRoot, "outputs")
+                outputs.mkdirs();
+                variant.outputs.each { output ->
+                    output.outputFile = new File(outputs, "Release.apk")
+                }
+            }
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'AndroidManifest.xml'
+    }
+
 }
 
 dependencies {
