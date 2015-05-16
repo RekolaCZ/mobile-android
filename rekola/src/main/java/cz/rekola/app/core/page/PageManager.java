@@ -40,7 +40,7 @@ public class PageManager {
 		//				action bar link {BORROW, RETURN, MAP, PROFILE, OVERFLOW, LOGOUT}, Use cache, Up to Root State, Root state drawable, TitleId, menu item id, BaseMainFragment
 		BORROW			(new boolean[]	{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_borrow, null, R.id.action_borrow, BorrowFragment.class ),
 		RETURN			(new boolean[]	{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_return, null, R.id.action_return, ReturnFragment.class),
-		MAP				(new boolean[]	{true, true, false, true, false, false}, true, false, R.drawable.actionbar_ic_map, null, R.id.action_map, MapFragment.class),
+		MAP				(new boolean[]	{true, true, false, true, false, false}, false, false, R.drawable.actionbar_ic_map, null, R.id.action_map, MapFragment.class),
 		PROFILE			(new boolean[]	{false, false, false, false, true, true}, false, true, null, R.string.profile_title, R.id.action_profile, ProfileWebFragment.class),
 
 		// Other states without actionbar access.
