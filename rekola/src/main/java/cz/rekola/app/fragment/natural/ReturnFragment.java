@@ -9,35 +9,31 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
-import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
-import cz.rekola.app.view.ApiWebView;
-import cz.rekola.app.webapi.WebApiHandler;
 
-public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
+public class ReturnFragment extends BaseMainFragment {
 
-    @InjectView(R.id.return_bike_web)
-    ApiWebView vWeb;
 
-    @InjectView(R.id.bike_name)
+    @InjectView(R.id.vehicleName)
     TextView vBikeName;
     @InjectView(R.id.lock_code)
     TextView vLockCode;
+    @InjectView(R.id.borrowed_from_date)
+    TextView vBorrowedFromDate;
+    @InjectView(R.id.borrowed_from_time)
+    TextView vBorrowedFromTime;
+
+
     @InjectView(R.id.return_bike)
     Button vReturn;
     @InjectView(R.id.return_bike_detail)
     Button vDetail;
-    @InjectView(R.id.return_bike_issue)
-    Button vIssue;
 
     private int bikeId = -1; // Invalid bike id
 
@@ -70,23 +66,6 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
             }
         });
 
-        vIssue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getPageController().requestWebBikeDetail(bikeId, true);
-            }
-        });
-
-        // TODO: Handle api key expiration!
-        Map extraHeaderMap = new HashMap<String, String>();
-        extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
-
-        vWeb.init(getApp().getBus(), this, String.format(Constants.WEBAPI_BIKE_RETURNED_URL, bikeId), extraHeaderMap);
-    }
-
-    @Override
-    public boolean onWebApiEvent(String paramUrl) {
-        return false;
     }
 
     @Subscribe
@@ -106,15 +85,20 @@ public class ReturnFragment extends BaseMainFragment implements WebApiHandler {
             return;
         }
 
+        //TODO: lastSeen should be date and time
         if (myBike.bike != null) {
+            vBorrowedFromDate.setText(myBike.bike.lastSeen);
+
             bikeId = myBike.bike.id;
-            setData(String.format(getResources().getString(R.string.return_bike_name), myBike.bike.name), myBike.bike.lockCode);
+            setData(myBike.bike.name, myBike.bike.lockCode);
             return;
         }
 
         if (myBike.lockCode != null) {
+            vBorrowedFromDate.setText(myBike.lockCode.bike.lastSeen);
+
             bikeId = myBike.lockCode.bike.id;
-            setData(String.format(getResources().getString(R.string.return_bike_name), myBike.lockCode.bike.name), myBike.lockCode.lockCode);
+            setData(myBike.lockCode.bike.name, myBike.lockCode.lockCode);
             return;
         }
     }

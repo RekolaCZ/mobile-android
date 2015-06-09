@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Common-->
+    <color name="base_pink">#ff339c</color>
+    <color name="light_pink">#ff7abf</color>
+    <color name="light_pink2">#fd48a6</color>
+    <color name="very_light_pink">#ffd2d9</color>
+    <color name="very_light_pink2">#ffebf5</color>
+    <color name="dark_pink">#ef268e</color>
+
+
+
+    <color name="base_green">#7d8d38</color>
+    <color name="light_green">#7d8c23</color>
+    <color name="dark_green">#64712d</color>
+
+    <color name="grey">#59ffffff</color>
+    <color name="light_grey">#ececec</color>
+    <color name="grey2">#c2c2c2</color>
+
+
+
     <color name="transparent">#00000000</color>
+
+
+    <!-- Borrow screen-->
+    <color name="borrow_edit_text_pin">#ececec</color>
+    <color name="warning_gray">#ffd2d9</color>
+
+    <!-- Map overlay-->
+
+    <color name="map_overlay_background">#ee3897</color>
+
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

@@ -16,6 +16,7 @@
 
     <dimen name="text_header">32dp</dimen>
 
+    <dimen name="text_xxxlarge">24sp</dimen>
     <dimen name="text_xxlarge">22sp</dimen>
     <dimen name="text_xlarge">20sp</dimen>
     <dimen name="text_large">18sp</dimen>
@@ -77,5 +78,10 @@
     <dimen name="grid_48">192dp</dimen>
     <dimen name="grid_49">196dp</dimen>
     <dimen name="grid_50">200dp</dimen>
+
+    <!--  Login dimens -->
+    <dimen name="login_logo_padding_horizontal">40dp</dimen> <!--  left + right  -->
+    <dimen name="login_logo_padding_vertical">10dp</dimen>   <!--  top + bottom  -->
+    <dimen name="login_button_radius">5dp</dimen>
 
 </resources>

@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
@@ -13,19 +14,19 @@ import cz.rekola.app.R;
 import cz.rekola.app.api.model.Bike;
 import cz.rekola.app.core.anim.MyAnimator;
 
-public class BikeOverlayView extends LinearLayout {
+public class BikeOverlayView extends RelativeLayout {
 
     @InjectView(R.id.map_overlay_area)
     LinearLayout vOverlayArea;
 
-    @InjectView(R.id.map_overlay_close)
-    ImageView vClose;
-
     @InjectView(R.id.map_overlay_name)
     TextView vName;
 
-    @InjectView(R.id.map_overlay_street)
-    TextView vStreet;
+    @InjectView(R.id.map_overlay_distance)
+    TextView vDistance;
+
+    @InjectView(R.id.map_overlay_inoperational)
+    TextView vInoperational;
 
     @InjectView(R.id.map_overlay_note)
     TextView vNote;
@@ -36,11 +37,14 @@ public class BikeOverlayView extends LinearLayout {
     @InjectView(R.id.map_overlay_route)
     ImageView vRoute;
 
+    @InjectView(R.id.map_overlay_center_map)
+    ImageView vCenterMap;
+
+
     @InjectView(R.id.map_overlay_bike_detail)
     LinearLayout vBikeDetail;
 
     private BikeOverlayListener callbacks;
-    private int height;
 
     public BikeOverlayView(Context context) {
         super(context);
@@ -59,13 +63,6 @@ public class BikeOverlayView extends LinearLayout {
         super.onFinishInflate();
         ButterKnife.inject(this, this);
 
-        vClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callbacks.onClose();
-            }
-        });
-
         vRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,12 +76,20 @@ public class BikeOverlayView extends LinearLayout {
                 callbacks.onBikeDetailPressed();
             }
         });
+
+        vCenterMap.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callbacks.onCenterMapPressed();
+            }
+        });
     }
 
     @Override
     protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
         super.onSizeChanged(xNew, yNew, xOld, yOld);
-        callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
+        if (callbacks != null)
+            callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
     }
 
     public void init(BikeOverlayListener callbacks) {
@@ -92,17 +97,24 @@ public class BikeOverlayView extends LinearLayout {
     }
 
     public void show(Bike bike) {
-        vName.setText(bike.name + ", " + bike.location.distance);
-        vStreet.setText(bike.location.address);
+        vName.setText(bike.name);
+        vDistance.setText(bike.location.distance);
         vNote.setText(bike.location.note);
         vDescription.setText(bike.description);
+
+        int visibility = bike.operational ? GONE : VISIBLE;
+        vInoperational.setVisibility(visibility);
+
+        vOverlayArea.setVisibility(VISIBLE);
+        vRoute.setVisibility(VISIBLE);
 
         MyAnimator.showSlideUp(this);
         callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
     }
 
     public void hide() {
-        MyAnimator.hideSlideDown(this);
+        vRoute.setVisibility(GONE);
+        MyAnimator.hideSlideDown(vOverlayArea);
         callbacks.onHeightChanged(0);
     }
 
@@ -112,6 +124,8 @@ public class BikeOverlayView extends LinearLayout {
         public void onRoutePressed();
 
         public void onBikeDetailPressed();
+
+        public void onCenterMapPressed();
 
         public void onHeightChanged(int height);
     }

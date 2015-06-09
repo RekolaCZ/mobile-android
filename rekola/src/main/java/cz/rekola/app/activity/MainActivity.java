@@ -1,17 +1,16 @@
 package cz.rekola.app.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.squareup.otto.Subscribe;
@@ -19,6 +18,7 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
+import cz.rekola.app.activity.base.BaseActivity;
 import cz.rekola.app.core.RekolaApp;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.app.core.bus.DataLoadingFinished;
@@ -33,9 +33,6 @@ import cz.rekola.app.fragment.web.ReturnWebFragment;
 import cz.rekola.app.view.MessageBarView;
 
 public class MainActivity extends BaseActivity implements PageController {
-
-    @InjectView(R.id.fragment_container)
-    FrameLayout vFragmentContainer;
 
     @InjectView(R.id.progress)
     ProgressBar progressBar;
@@ -55,21 +52,21 @@ public class MainActivity extends BaseActivity implements PageController {
             return;
         }
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD); // TODO: May produce NPE
+        setOwnActionBar();
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(false);
 
         pageManager = new PageManager();
 
-        MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
+        MyBikeWrapper myBike = getMyBike();
         if (myBike != null) {
-            pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
+            pageManager.setState(myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW, getFragmentManager(), getSupportActionBar(), getResources());
         }
     }
+
 
     @Override
     public void onResume() {
@@ -97,45 +94,47 @@ public class MainActivity extends BaseActivity implements PageController {
         if (!getApp().getDataManager().isOperational())
             return super.onCreateOptionsMenu(menu);
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
-        pageManager.setupOptionsMenu(menu, getApp().getDataManager().getBorrowedBike(false));
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_borrow:
-                pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager(), getActionBar(), getResources());
-                break;
-            case R.id.action_return:
-                pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar(), getResources());
+    private void setOwnActionBar() {
+        LayoutInflater inflator = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflator.inflate(R.layout.custom_action_bar, null);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setCustomView(v);
+    }
+
+    public void onCustomOptionsItemSelected(View v) {
+        switch (v.getId()) {
+            case R.id.action_lock:
+                MyBikeWrapper myBike = getMyBike();
+                pageManager.setState(myBike != null && myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW,
+                        getFragmentManager(), getSupportActionBar(), getResources());
+
+                pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager(), getSupportActionBar(), getResources());
                 break;
             case R.id.action_map:
-                pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar(), getResources());
+                pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getSupportActionBar(), getResources());
                 break;
             case R.id.action_profile:
-                pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager(), getActionBar(), getResources());
-                break;
-            case R.id.action_logout:
-                // TODO: Add yes/no dialog
-                getApp().getPreferencesManager().setPassword(null);
-                startLoginActivity(null);
+                pageManager.setState(PageManager.EPageState.PROFILE, getFragmentManager(), getSupportActionBar(), getResources());
                 break;
             case android.R.id.home:
-                pageManager.setUpState(getFragmentManager(), getActionBar(), getResources());
+                pageManager.setUpState(getFragmentManager(), getSupportActionBar(), getResources());
                 break;
             default:
-                return super.onOptionsItemSelected(item);
+                Log.e(TAG, "unknown options menu item " + v.getId() + " " + v.toString());
         }
-        invalidateOptionsMenu();
-        return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (!pageManager.setBackState(getFragmentManager(), getActionBar(), getResources())) {
+        if (!pageManager.setBackState(getFragmentManager(), getSupportActionBar(), getResources())) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // This might be a cause for the stack mess..
@@ -143,11 +142,6 @@ public class MainActivity extends BaseActivity implements PageController {
         }
         invalidateOptionsMenu();
     }
-
-	/*@Override
-    public boolean onNavigateUp() {
-		return false;
-	}*/
 
     @Subscribe
     public void dataLoadingStarted(DataLoadingStarted event) {
@@ -184,25 +178,25 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void requestMap() {
-        pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getActionBar(), getResources());
+        pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getSupportActionBar(), getResources());
         invalidateOptionsMenu();
     }
 
     @Override
     public void requestReturnBike() {
-        pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getActionBar(), getResources());
+        pageManager.setState(PageManager.EPageState.RETURN, getFragmentManager(), getSupportActionBar(), getResources());
         invalidateOptionsMenu();
     }
 
     @Override
     public void requestReturnMap() {
-        pageManager.setState(PageManager.EPageState.RETURN_MAP, getFragmentManager(), getActionBar(), getResources());
+        pageManager.setState(PageManager.EPageState.RETURN_MAP, getFragmentManager(), getSupportActionBar(), getResources());
         invalidateOptionsMenu();
     }
 
     @Override
     public void requestWebBikeDetail(int id, boolean issues) {
-        Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getActionBar(), getResources());
+        Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getSupportActionBar(), getResources());
         if (fragment != null && fragment instanceof BikeDetailWebFragment)
             ((BikeDetailWebFragment) fragment).init(id, issues);
         invalidateOptionsMenu();
@@ -210,10 +204,14 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void requestWebBikeReturned(String successUrl) {
-        Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getActionBar(), getResources());
+        Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_RETURN, getFragmentManager(), getSupportActionBar(), getResources());
         if (fragment != null && fragment instanceof ReturnWebFragment)
             ((ReturnWebFragment) fragment).init(successUrl);
         invalidateOptionsMenu();
+    }
+
+    private MyBikeWrapper getMyBike() {
+        return  getApp().getDataManager().getBorrowedBike(false);
     }
 
     public void hideKeyboard() {

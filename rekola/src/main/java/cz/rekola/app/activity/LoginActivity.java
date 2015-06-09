@@ -17,6 +17,7 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
+import cz.rekola.app.activity.base.BaseActivity;
 import cz.rekola.app.api.requestmodel.Credentials;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
 import cz.rekola.app.core.Constants;

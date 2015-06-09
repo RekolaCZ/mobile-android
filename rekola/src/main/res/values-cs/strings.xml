@@ -7,40 +7,40 @@
     <string name="login_username_hint">e-mail</string>
     <string name="login_password_hint">heslo</string>
     <string name="login_log_in">Přihlásit se</string>
-    <string name="login_registration">Nejste členem?</string>
+    <string name="login_registration">Registrace</string>
     <string name="login_connecting">Přihlašuji…</string>
     <string name="login_connecting_progress">Už to bude…</string>
-    <string name="login_forgot_password">Zapoměli jste heslo?</string>
+    <string name="login_forgot_password">Zapomněli jste heslo?</string>
 
     <string name="reset_title">Reset hesla</string>
     <string name="reset_reset">Reset</string>
     <string name="reset_info">Po zadání e-mailu Vám budou zaslány informace pro obnovu hesla.</string>
     <string name="reset_recall">Už vím, zpátky.</string>
 
-    <string name="borrow_title">Půjčit kolo</string>
-    <string name="borrow_info_1">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
-    <string name="borrow_info_2">Po zadání kódu získáte kód zámku a můžete začít kolo používat.</string>
+    <string name="borrow_info_1">Vložte 6-ti místný digitální kód pro získání kódu zámku a můžete začít kolo používat.</string>
+    <string name="borrow_info_2">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
     <string name="borrow_borrow">Půjčit kolo</string>
-    <string name="borrow_code_hint">šestimístný kód</string>
+    <string name="borrow_code_hint">Vložte šestimístný kód</string>
 
     <string name="return_info_lock_code">Kód zámku:</string>
     <string name="return_return">Vrátit</string>
     <string name="return_bike_detail">Detail kola</string>
     <string name="return_bike_issue">Problém?</string>
 
-    <string name="returnmap_title">Upřesnit lokaci</string>
-    <string name="returnmap_note_hint">Upřesněte prosím, kde se kolo nachází. (např. 3. lampa od zastávky)</string>
-    <string name="returnmap_bike_returned">Kolo vráceno</string>
+    <string name="returnmap_title">Vrácení kola</string>
+    <string name="returnmap_note_hint">Např. před vstupem do kavárny</string>
+    <string name="returnmap_bike_returned">Vrátit</string>
+    <string name="returnmap_bike_position">Přesná poloha kola</string>
 
     <string name="webbikedetail_title">Detail kola</string>
 
     <string name="profile_title">Profil</string>
 
-    <!-- Bike name parameter -->
-    <string name="return_bike_name">Kolo %s k vašim službám.</string>
+    <string name="map_overlay_inoperational">Pozor, nepojízdné!</string>
 
+    <!-- Bike name parameter -->
     <string name="menu_borrow">Půjčit</string>
-    <string name="menu_return">Vrátit</string>
+    <string name="menu_return">Vrátit kolo</string>
     <string name="menu_map">Mapa</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_logout">Odhlásit</string>

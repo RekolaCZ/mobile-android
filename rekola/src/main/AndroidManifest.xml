@@ -24,12 +24,12 @@
         android:icon="@drawable/ic_launcher"
         android:logo="@drawable/navbar_ic_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/GreenTheme">
 
         <activity
             android:name=".activity.LoginActivity"
             android:label="${appName}"
-            android:theme="@style/LoginTheme"
+            android:theme="@style/PinkTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/reset_overlay"
+    style="@style/Layout"
+    android:background="@color/background_window"
+    android:visibility="gone"
+    >
+
+    <ScrollView style="@style/Layout">
+
+        <LinearLayout
+            style="@style/Layout"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/text_header"
+            android:gravity="center">
+
+            <TextView
+                style="@style/TextView"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:text="@string/reset_title"
+                android:textColor="@color/gray_2"
+                android:textSize="32dp" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:gravity="center"
+                android:text="@string/reset_info"
+                android:textColor="@color/gray_2" />
+
+            <EditText
+                android:id="@+id/reset_username"
+                style="@style/EditText"
+                android:hint="@string/login_username_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress" />
+
+            <Button
+                android:id="@+id/reset"
+                style="@style/Button"
+                android:layout_below="@id/password"
+                android:layout_marginBottom="@dimen/grid_20"
+                android:text="@string/reset_reset" />
+
+        </LinearLayout>
+    </ScrollView>
+    >
+
+    <TextView
+        android:id="@+id/reset_recall"
+        style="@style/TextView"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/grid_4"
+        android:text="@string/reset_recall"
+        android:textColor="@color/clickable_text"
+        android:textSize="@dimen/text_medium" />
+
+</FrameLayout>

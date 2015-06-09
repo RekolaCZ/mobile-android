@@ -2,50 +2,68 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Layout">
 
-    <ScrollView style="@style/Layout">
 
-        <LinearLayout
+    <LinearLayout style="@style/Layout">
+
+
+        <ScrollView
             style="@style/Layout"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/grid_8"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-            <TextView
-                style="@style/TextView"
-                android:textSize="@dimen/text_header"
-                android:layout_marginBottom="@dimen/margin_large"
-                android:text="@string/borrow_title" />
+            <LinearLayout
+                style="@style/Layout"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/grid_8"
+                android:layout_marginRight="@dimen/grid_8"
+                android:layout_marginTop="@dimen/grid_8"
+                android:gravity="center">
 
-            <TextView
-                style="@style/TextView"
-                android:layout_marginBottom="@dimen/margin_large"
-                android:gravity="center"
-                android:text="@string/borrow_info_1" />
 
-            <EditText
-                android:id="@+id/bike_code"
-                style="@style/EditText"
-                android:textSize="@dimen/text_xxlarge"
-                android:hint="@string/borrow_code_hint"
-                android:maxLength="@integer/bike_code_length"
-                android:inputType="number"
-                android:imeOptions="actionDone"
-                android:layout_gravity="center" />
+                <ImageView
+                    style="@style/ImageView"
+                    android:padding="10dp"
+                    android:src="@drawable/logo_web" />
 
-            <Button
-                android:id="@+id/borrow"
-                style="@style/Button"
-                android:text="@string/borrow_borrow" />
 
-            <TextView
-                style="@style/TextView"
-                android:layout_marginTop="@dimen/margin_large"
-                android:layout_marginBottom="@dimen/margin_xlarge"
-                android:gravity="center"
-                android:text="@string/borrow_info_2" />
+                <TextView
+                    style="@style/TextView"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:gravity="center"
+                    android:text="@string/borrow_info_1"
+                    android:textColor="@color/black" />
 
-        </LinearLayout>
 
-    </ScrollView>
+                <TextView
+                    style="@style/TextView"
+                    android:layout_marginBottom="@dimen/margin_xlarge"
+                    android:gravity="center"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="@string/borrow_info_2"
+                    android:textSize="@dimen/text_small" />
+
+                <EditText
+                    android:id="@+id/bike_code"
+                    style="@style/EditTextBorrow"
+                    android:layout_gravity="center"
+                    android:hint="@string/borrow_code_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="@integer/bike_code_length" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/borrow"
+            style="@style/PinkButton"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:layout_marginLeft="@dimen/grid_8"
+            android:layout_marginRight="@dimen/grid_8"
+            android:text="@string/borrow_borrow" />
+
+    </LinearLayout>
 
 </FrameLayout>

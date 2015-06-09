@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Layout">
 
     <FrameLayout
+        android:id="@+id/flMap"
         style="@style/Layout"
-        android:layout_weight="1">
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/flBottom"
+        >
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
@@ -23,16 +26,26 @@
 
     <FrameLayout
         style="@style/Layout"
+        android:id="@id/flBottom"
+        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
-        android:layout_weight="0">
+     >
 
         <LinearLayout
             style="@style/Layout"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/grid_4"
+            android:padding="@dimen/grid_2"
             android:layout_gravity="center"
             android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/vehicleName"
+                style="@style/TextView"
+                android:textColor="@color/black"
+                android:layout_gravity="left"
+                android:layout_below="@id/ivVehicleIcon"
+                android:text="@string/returnmap_bike_position" />
 
             <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
             <EditText
@@ -40,7 +53,7 @@
                 style="@style/EditText"
                 android:hint="@string/returnmap_note_hint"
                 android:inputType="text|textCapSentences"
-                android:singleLine="true"
+                android:background="@drawable/edit_text_border"
                 android:lines="2"
                 android:scrollHorizontally="false"
                 android:imeOptions="actionDone"
@@ -50,12 +63,18 @@
 
             <Button
                 android:id="@+id/bike_returned"
-                style="@style/Button"
+                style="@style/PinkButton"
                 android:layout_marginBottom="0dp"
-                android:text="@string/returnmap_bike_returned"></Button>
+                android:text="@string/returnmap_bike_returned"/>
 
         </LinearLayout>
-
     </FrameLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/center_map"
+        style="@style/IconImageView"
+        android:layout_marginBottom="-47dp"
+        android:layout_above="@id/flBottom"
+        android:src="@drawable/ic_location_inverse" />
+
+</RelativeLayout>

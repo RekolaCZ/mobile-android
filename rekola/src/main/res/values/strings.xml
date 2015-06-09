@@ -3,42 +3,42 @@
 
     <string name="app_name">Rekola</string>
 
-    <string name="login_title">Log in</string>
-    <string name="login_username_hint">email</string>
-    <string name="login_password_hint">password</string>
-    <string name="login_log_in">Log in</string>
-    <string name="login_registration">Not a member?</string>
+    <string name="login_username_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_log_in">Sign in</string>
+    <string name="login_registration">Register</string>
     <string name="login_connecting">Connecting…</string>
     <string name="login_connecting_progress">Almost there…</string>
-    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_forgot_password">Forgot Password?</string>
+    <string name="login_ackee">Mobile app by</string>
 
     <string name="reset_title">Reset Password</string>
     <string name="reset_reset">Reset</string>
     <string name="reset_info">Enter your email to get instructions on how to reset your password.</string>
     <string name="reset_recall">I remembered, go back</string>
 
-    <string name="borrow_title">Borrow Bike</string>
-    <string name="borrow_info_1">Code can be found on the rear fender or on a rear stick.</string>
-    <string name="borrow_info_2">After entering the code, you will receive a bike lock code and you can start using the bike.</string>
+    <string name="borrow_info_1">Enter the bike 6-digit code to receive the lock passcode and start using your bike</string>
+    <string name="borrow_info_2">Code can be found on the rear fender or on a rear stick</string>
     <string name="borrow_borrow">Borrow a bike</string>
-    <string name="borrow_code_hint">6-digit code</string>
+    <string name="borrow_code_hint">Enter 6-digit code</string>
 
-    <string name="return_info_lock_code">Lock code:</string>
+    <string name="return_info_lock_code">Lock code</string>
     <string name="return_return">Return</string>
     <string name="return_bike_detail">Bike Detail</string>
     <string name="return_bike_issue">Report Issue</string>
 
     <string name="returnmap_title">Edit Location</string>
     <string name="returnmap_note_hint">Describe the exact bike location. (e.g. 3rd lamp from the bus stop)</string>
-    <string name="returnmap_bike_returned">Bike Returned</string>
+    <string name="returnmap_bike_returned">Return</string>
+    <string name="returnmap_bike_position">The exact position of bike</string>
 
     <string name="webbikedetail_title">Bike Detail</string>
 
     <string name="profile_title">Profile</string>
 
-    <!-- Bike name parameter -->
-    <string name="return_bike_name">Bike %s at your service.</string>
+    <string name="map_overlay_inoperational">Warning, inoperational!</string>
 
+    <!-- Bike name parameter -->
     <string name="menu_borrow">Borrow</string>
     <string name="menu_return">Return</string>
     <string name="menu_map">Map</string>

@@ -19,14 +19,9 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
-    <style name="ActionBar.Overflow">
-        <item name="android:src">@drawable/actionbar_ic_overflow</item>
-    </style>
-
     <style name="ActionBar.DropDown" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:dropDownSelector">@drawable/selector</item>
         <item name="android:background">@drawable/actionbar_spinner</item>
-        <!--<item name="android:popupBackground">@color/white</item>-->
     </style>
 
     <style name="ActionBar.DropDownListView" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
@@ -41,7 +36,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_medium</item>
-        <item name="android:textColor">@color/gray_2</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Button" parent="@android:style/Widget.Holo.Light.Button">
@@ -73,10 +68,81 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- NEW STYLES -->
+    <style name="PinkEditText" parent="EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:background">@drawable/edit_text_fill</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="PinkButton" parent="Button">
+        <item name="android:background">@drawable/button_pink</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="TitleTextView" parent="TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_xxlarge</item>
+    </style>
+
+    <style name="IconImageView" parent="ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
     <!-- custom styles for views -->
     <style name="TextViewOverlay" parent="TextView">
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textColor">@color/text_inverse</item>
+    </style>
+
+    <!-- Login styles -->
+    <style name="LogoImageView" parent="ImageView">
+        <item name="android:paddingLeft">@dimen/login_logo_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/login_logo_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/login_logo_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/login_logo_padding_vertical</item>
+    </style>
+
+
+    <style name="SignInButton" parent="Button">
+        <item name="android:background">@drawable/button_sign_in</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/light_green</item>
+        <item name="android:padding">@dimen/grid_3</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
+
+    <!-- Borrow styles -->
+    <style name="EditTextBorrow" parent="@android:style/Widget.Holo.Light.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/very_light_pink</item>
+        <item name="android:textColor">@color/text_edit</item>
+        <item name="android:textSize">@dimen/text_xxlarge</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:padding">@dimen/grid_3</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
 </resources>

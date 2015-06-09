@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,6 +52,8 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     EditText vNote;
     @InjectView(R.id.bike_returned)
     Button vReturned;
+    @InjectView(R.id.center_map)
+    ImageView vCenterMap;
 
     private PoiManager pois = new PoiManager();
 
@@ -89,17 +92,15 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
         // Gets to GoogleMap from the MapView and does initialization stuff
         map = vMap.getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(false);
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 15);
-        map.moveCamera(cameraUpdate);
-
+        centerMapOnMyLocation(false);
         return rootView;
     }
 
@@ -124,6 +125,13 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
                 getAct().hideKeyboard();
                 getApp().getDataManager().returnBike(/*Integer.parseInt(*/myBike.bike.id/*)*/,
                         new ReturningBike(new ReturningLocation(center.latitude, center.longitude, vNote.getText().toString())));
+            }
+        });
+
+        vCenterMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                centerMapOnMyLocation(true);
             }
         });
 
@@ -165,23 +173,6 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     public void poisFailedEvent(PoisFailedEvent event) {
     }
 
-	/*@Override
-    public boolean onMyLocationButtonClick() {
-		if (bikeMarker != null) {
-			setupMap();
-		}
-
-		return false;
-	}*/
-
-	/*private void setupMap() {
-		map.clear();
-		bikeMarker = map.addMarker(new MarkerOptions()
-				.position(getApp().getMyLocationManager().getLastKnownLatLng())
-				.title("TODO: Bike name")
-				.draggable(true));
-	}*/
-
     @Override
     public void onMyLocationChanged(MyLocation myLocation) {
         // TODO: This may cause location update just before a user clicks on the return button!
@@ -191,6 +182,14 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
     @Override
     public void onMyLocationError() {
+    }
+
+    private void centerMapOnMyLocation(boolean animate) {
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 15);
+        if (animate)
+            map.animateCamera(cameraUpdate);
+        else
+            map.moveCamera(cameraUpdate);
     }
 
     private void setupMap() {

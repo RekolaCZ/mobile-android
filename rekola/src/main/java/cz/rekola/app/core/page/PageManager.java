@@ -1,15 +1,16 @@
 package cz.rekola.app.core.page;
 
-import android.app.ActionBar;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Resources;
-import android.view.Menu;
+import android.support.v7.app.ActionBar;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.HashMap;
 
 import cz.rekola.app.R;
-import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.fragment.natural.BorrowFragment;
 import cz.rekola.app.fragment.natural.MapFragment;
@@ -35,34 +36,31 @@ public class PageManager {
     private HashMap<EPageState, Fragment> cache = new HashMap<>();
 
     public enum EPageState {
-        //								Uses menu item order.
-        //				action bar link {BORROW, RETURN, MAP, PROFILE, OVERFLOW, LOGOUT}, Use cache, Up to Root State, Root state drawable, TitleId, menu item id, BaseMainFragment
-        BORROW(new boolean[]{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_borrow, null, R.id.action_borrow, BorrowFragment.class),
-        RETURN(new boolean[]{false, false, true, true, false, false}, true, false, R.drawable.actionbar_ic_return, null, R.id.action_return, ReturnFragment.class),
-        MAP(new boolean[]{true, true, false, true, false, false}, false, false, R.drawable.actionbar_ic_map, null, R.id.action_map, MapFragment.class),
-        PROFILE(new boolean[]{false, false, false, false, true, true}, false, true, null, R.string.profile_title, R.id.action_profile, ProfileWebFragment.class),
+        //      Custom action bar view enabled,
+        //      Use cache,
+        //      Up state,
+        //      Title ID,
+        //      BaseMainFragment
+        BORROW(true, true, false, null, BorrowFragment.class),
+        RETURN(true, true, false, null, ReturnFragment.class),
+        MAP(true, false, false, null, MapFragment.class),
+        PROFILE(true, false, false, R.string.profile_title, ProfileWebFragment.class),
+        RETURN_MAP(false, false, true, R.string.returnmap_title, ReturnMapFragment.class),
+        WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
+        WEB_BIKE_DETAIL(true, false, true, R.string.webbikedetail_title, BikeDetailWebFragment.class);
 
-        // Other states without actionbar access.
-        RETURN_MAP(new boolean[]{false, false, false, false, false, false}, false, true, null, R.string.returnmap_title, null, ReturnMapFragment.class),
-        WEB_RETURN(new boolean[]{true, true, true, true, false, false}, false, false, null, null, null, ReturnWebFragment.class),
-        WEB_BIKE_DETAIL(new boolean[]{true, true, true, true, false, false}, false, true, null, R.string.webbikedetail_title, null, BikeDetailWebFragment.class);
-
-        EPageState(boolean[] actionAllowed, boolean useCache, boolean upState, Integer rootStateDrawable, Integer titleId, Integer actionResourceId, Class fragment) {
-            this.actionAllowed = actionAllowed;
+        EPageState(boolean customActionBarViewEnabled, boolean useCache, boolean upState, Integer titleId, Class fragment) {
+            this.customActionBarViewEnabled = customActionBarViewEnabled;
             this.useCache = useCache;
             this.upState = upState;
-            this.rootStateDrawable = rootStateDrawable;
             this.titleId = titleId;
-            this.actionResourceId = actionResourceId;
             this.fragment = fragment;
         }
 
-        final boolean[] actionAllowed;
+        final boolean customActionBarViewEnabled;
         final boolean useCache;
         final boolean upState;
-        final Integer rootStateDrawable;
         final Integer titleId;
-        final Integer actionResourceId;
         final Class<BaseMainFragment> fragment;
     }
 
@@ -78,24 +76,23 @@ public class PageManager {
         if (this.state == newState)
             return null;
 
-        if (newState.rootStateDrawable != null) { // It is a root state
-            rootState = newState;
-        }
-
         actionBar.setHomeButtonEnabled(newState.upState);
         actionBar.setDisplayHomeAsUpEnabled(newState.upState);
-        if (newState.upState) {
-            actionBar.setLogo(null);
-            actionBar.setIcon(resources.getDrawable(rootState.rootStateDrawable));
-        } else {
-            actionBar.setLogo(R.drawable.navbar_ic_logo);
-            actionBar.setIcon(null);
-        }
 
-        if (newState.titleId == null)
-            actionBar.setTitle("");
+        actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
+
+        if (newState.customActionBarViewEnabled)
+            actionBar.getCustomView().setVisibility(View.VISIBLE);
         else
+            actionBar.getCustomView().setVisibility(View.GONE);
+
+        if (newState.titleId == null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setTitle("");
+        } else {
+            actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setTitle(newState.titleId);
+        }
 
         Fragment fragment = cache.get(newState);
         if (fragment == null) {
@@ -146,6 +143,7 @@ public class PageManager {
         }
 
         this.state = newState;
+        setIconsHighlights(newState, actionBar);
 
         return fragment;
     }
@@ -171,40 +169,27 @@ public class PageManager {
         return true;
     }
 
-    public void setupOptionsMenu(Menu menu, MyBikeWrapper myBike) {
-        OptionsMenuConfig menuConfig = new OptionsMenuConfig();
-        menuConfig.setupMenu(menu);
+    //if action is active, than has another "active" icon
+    private void setIconsHighlights(EPageState activeState, ActionBar actionBar) {
+        View custoView = actionBar.getCustomView();
+        ImageView lockIcon = (ImageView) custoView.findViewById(R.id.action_lock);
+        ImageView mapIcon = (ImageView) custoView.findViewById(R.id.action_map);
+        ImageView profileIcon = (ImageView) custoView.findViewById(R.id.action_profile);
 
-        // Special handling for bike detail
-        if (state == EPageState.WEB_BIKE_DETAIL) {
-            if (rootState == EPageState.RETURN) {
-                menu.findItem(EPageState.RETURN.actionResourceId).setVisible(false);
-            }
-            if (rootState == EPageState.MAP) {
-                menu.findItem(EPageState.MAP.actionResourceId).setVisible(false);
-            }
-        }
+        if (activeState == EPageState.BORROW || activeState == EPageState.RETURN)
+            lockIcon.setImageResource(R.drawable.actionbar_ic_lock_active);
+        else
+            lockIcon.setImageResource(R.drawable.actionbar_ic_lock);
 
-        // Special handling of borrow/return menu items
-        if (myBike != null) {
-            if (myBike.isBorrowed()) {
-                menu.findItem(EPageState.BORROW.actionResourceId).setVisible(false);
-            } else {
-                menu.findItem(EPageState.RETURN.actionResourceId).setVisible(false);
-            }
-        }
-    }
+        if (activeState == EPageState.MAP)
+            mapIcon.setImageResource(R.drawable.actionbar_ic_map_active);
+        else
+            mapIcon.setImageResource(R.drawable.actionbar_ic_map);
 
-    private class OptionsMenuConfig {
-        private int index = 0;
+        if (activeState == EPageState.PROFILE)
+            profileIcon.setImageResource(R.drawable.actionbar_ic_profile_active);
+        else
+            profileIcon.setImageResource(R.drawable.actionbar_ic_profile);
 
-        void setupMenu(Menu menu) {
-            for (int i = 0; i < menu.size(); i++) {
-                menu.getItem(i).setVisible(state.actionAllowed[index]);
-                index++;
-                if (menu.getItem(i).hasSubMenu())
-                    setupMenu(menu.getItem(i).getSubMenu());
-            }
-        }
     }
 }

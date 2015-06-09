@@ -2,15 +2,16 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light">
-        <!-- ActionBar Styles -->
+    <style name="GreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/base_green</item>
+        <item name="colorPrimaryDark">@color/dark_green</item>
+        <item name="colorAccent">@color/dark_green</item>
+
         <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionBar.Overflow</item>
         <item name="android:actionDropDownStyle">@style/ActionBar.DropDown</item>
         <item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
         <item name="android:actionBarItemBackground">@drawable/selector</item>
         <item name="android:dropDownListViewStyle">@style/ActionBar.DropDownListView</item>
-        <item name="android:homeAsUpIndicator">@drawable/actionbar_ic_up</item>
 
         <!-- widget styles: -->
         <item name="android:textViewStyle">@style/TextView</item>
@@ -22,7 +23,11 @@
 
     </style>
 
-    <style name="LoginTheme" parent="AppTheme">
+    <style name="PinkTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/base_pink</item>
+        <item name="colorPrimaryDark">@color/dark_pink</item>
+        <item name="colorAccent">@color/dark_pink</item>
+
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>

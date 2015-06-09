@@ -29,6 +29,7 @@ import java.util.TimerTask;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
+import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.api.model.Bike;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.BikesAvailableEvent;
@@ -107,8 +108,16 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         vMap.onCreate(savedInstanceState);
 
         // Gets to GoogleMap from the MapView and does initialization stuff
+/*				  vMap.getMapAsync(new OnMapReadyCallback) {
+         @Override
+         public void onMapReady(GoogleMap googleMap) {
+                map = googleMap;
+         }
+    });
+			*/
         map = vMap.getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(false);
         map.setMyLocationEnabled(true);
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
@@ -117,8 +126,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         MapsInitializer.initialize(this.getActivity());
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 13);
-        map.moveCamera(cameraUpdate);
+        centerMapOnMyLocation(false);
 
         vView = rootView;
         return rootView;
@@ -188,6 +196,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     }
 
     @Override
+    public void onCenterMapPressed() {
+        centerMapOnMyLocation(true);
+    }
+
+    @Override
     public void onHeightChanged(final int height) {
         // Map padding is not correctly updated when attached to overlay size changed event.. This is a hack-fix.
         Handler handler = new Handler();
@@ -197,6 +210,14 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
                 map.setPadding(0, 0, 0, height);
             }
         }, 100);
+    }
+
+    private void centerMapOnMyLocation(boolean animate) {
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 13);
+        if (animate)
+            map.animateCamera(cameraUpdate);
+        else
+            map.moveCamera(cameraUpdate);
     }
 
     private class MapManager implements GoogleMap.OnMarkerClickListener, DirectionManager.DirectionsLoadedListener {
@@ -243,7 +264,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
             if (newMarker == null) {
                 lastBike = null;
-                vOverlay.hide();
+                //   vOverlay.hide();
                 directionManager.hideDirections();
             } else {
                 lastMarker = newMarker;
