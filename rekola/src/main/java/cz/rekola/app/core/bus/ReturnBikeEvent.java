@@ -5,10 +5,10 @@ package cz.rekola.app.core.bus;
  */
 public class ReturnBikeEvent {
 
-	public final String successUrl;
+    public final String successUrl;
 
-	public ReturnBikeEvent(String successUrl) {
-		this.successUrl = successUrl;
-	}
+    public ReturnBikeEvent(String successUrl) {
+        this.successUrl = successUrl;
+    }
 
 }

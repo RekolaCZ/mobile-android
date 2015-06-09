@@ -3,60 +3,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Layout">
 
-	<FrameLayout
-		style="@style/Layout"
-		android:layout_weight="1">
+    <FrameLayout
+        style="@style/Layout"
+        android:layout_weight="1">
 
-		<com.google.android.gms.maps.MapView
-			android:id="@+id/mapView"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_weight="1"/>
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-		<ImageView
-			style="@style/ImageView"
-			android:layout_gravity="center"
-			android:clickable="false"
-			android:src="@drawable/ic_pin_return"/>
+        <ImageView
+            style="@style/ImageView"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:src="@drawable/ic_pin_return" />
 
-	</FrameLayout>
+    </FrameLayout>
 
-	<FrameLayout
-		style="@style/Layout"
-		android:layout_height="wrap_content"
-		android:layout_weight="0">
+    <FrameLayout
+        style="@style/Layout"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
 
-	<LinearLayout
-		style="@style/Layout"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:padding="@dimen/grid_4"
-		android:layout_gravity="center"
-		android:layout_weight="1">
+        <LinearLayout
+            style="@style/Layout"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/grid_4"
+            android:layout_gravity="center"
+            android:layout_weight="1">
 
-		<!-- inputType ... imeOptions is set from code, from xml it is not working. -->
-		<EditText
-			android:id="@+id/note"
-			style="@style/EditText"
-			android:hint="@string/returnmap_note_hint"
-			android:inputType="text|textCapSentences"
-			android:singleLine="true"
-			android:lines="2"
-			android:scrollHorizontally="false"
-			android:imeOptions="actionDone"
-			android:textColor="@color/text_primary"
-			android:gravity="top|left"
-			android:layout_gravity="center" />
+            <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
+            <EditText
+                android:id="@+id/note"
+                style="@style/EditText"
+                android:hint="@string/returnmap_note_hint"
+                android:inputType="text|textCapSentences"
+                android:singleLine="true"
+                android:lines="2"
+                android:scrollHorizontally="false"
+                android:imeOptions="actionDone"
+                android:textColor="@color/text_primary"
+                android:gravity="top|left"
+                android:layout_gravity="center" />
 
-		<Button
-			android:id="@+id/bike_returned"
-			style="@style/Button"
-			android:layout_marginBottom="0dp"
-			android:text="@string/returnmap_bike_returned">
-		</Button>
+            <Button
+                android:id="@+id/bike_returned"
+                style="@style/Button"
+                android:layout_marginBottom="0dp"
+                android:text="@string/returnmap_bike_returned"></Button>
 
-	</LinearLayout>
+        </LinearLayout>
 
-	</FrameLayout>
+    </FrameLayout>
 
 </LinearLayout>

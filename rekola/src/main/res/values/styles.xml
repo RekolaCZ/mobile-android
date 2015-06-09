@@ -1,82 +1,82 @@
 <resources>
 
-	<style name="Layout">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">match_parent</item>
-		<item name="android:orientation">vertical</item>
-	</style>
+    <style name="Layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 
-	<!-- ActionBar styles -->
-	<style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-		<item name="android:background">@drawable/actionbar_bg_solid</item>
-		<item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
-		<item name="android:titleTextStyle">@style/ActionBar.Title</item>
-	</style>
+    <!-- ActionBar styles -->
+    <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@drawable/actionbar_bg_solid</item>
+        <item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
+        <item name="android:titleTextStyle">@style/ActionBar.Title</item>
+    </style>
 
 
-	<style name="ActionBar.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-		<item name="android:textColor">@color/brown</item>
-		<item name="android:textSize">@dimen/text_large</item>
-	</style>
+    <style name="ActionBar.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
 
-	<style name="ActionBar.Overflow">
-		<item name="android:src">@drawable/actionbar_ic_overflow</item>
-	</style>
+    <style name="ActionBar.Overflow">
+        <item name="android:src">@drawable/actionbar_ic_overflow</item>
+    </style>
 
-	<style name="ActionBar.DropDown" parent="@android:style/Widget.Holo.Light.ActionBar">
-		<item name="android:dropDownSelector">@drawable/selector</item>
-		<item name="android:background">@drawable/actionbar_spinner</item>
-		<!--<item name="android:popupBackground">@color/white</item>-->
-	</style>
+    <style name="ActionBar.DropDown" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:dropDownSelector">@drawable/selector</item>
+        <item name="android:background">@drawable/actionbar_spinner</item>
+        <!--<item name="android:popupBackground">@color/white</item>-->
+    </style>
 
-	<style name="ActionBar.DropDownListView" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
-		<item name="android:listSelector">@drawable/selector</item>
-		<item name="android:divider">@color/gray_1</item>
-		<item name="android:dividerHeight">2px</item>
-		<item name="android:background">@color/white</item>
-	</style>
+    <style name="ActionBar.DropDownListView" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selector</item>
+        <item name="android:divider">@color/gray_1</item>
+        <item name="android:dividerHeight">2px</item>
+        <item name="android:background">@color/white</item>
+    </style>
 
-	<!-- global styles for views: -->
-	<style name="TextView" parent="@android:style/Widget.Holo.Light.TextView">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textSize">@dimen/text_medium</item>
-		<item name="android:textColor">@color/gray_2</item>
-	</style>
+    <!-- global styles for views: -->
+    <style name="TextView" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/gray_2</item>
+    </style>
 
-	<style name="Button" parent="@android:style/Widget.Holo.Light.Button">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:background">@drawable/button</item>-->
-		<item name="android:textSize">@dimen/text_medium</item>
-		<item name="android:textColor">@color/text_inverse</item>
-		<item name="android:padding">@dimen/grid_3</item>
-		<item name="android:layout_marginTop">@dimen/margin_small</item>
-		<item name="android:layout_marginBottom">@dimen/margin_small</item>
-	</style>
+    <style name="Button" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/button</item>-->
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/text_inverse</item>
+        <item name="android:padding">@dimen/grid_3</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
 
-	<style name="EditText" parent="@android:style/Widget.Holo.Light.EditText">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:gravity">center</item>
-		<item name="android:background">@drawable/edittext</item>
-		<item name="android:textColor">@color/text_edit</item>
-		<item name="android:textSize">@dimen/text_medium</item>
-		<item name="android:singleLine">true</item>
-		<item name="android:padding">@dimen/grid_3</item>
-		<item name="android:layout_marginTop">@dimen/margin_small</item>
-		<item name="android:layout_marginBottom">@dimen/margin_small</item>
-	</style>
+    <style name="EditText" parent="@android:style/Widget.Holo.Light.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:textColor">@color/text_edit</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:padding">@dimen/grid_3</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
 
-	<style name="ImageView">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-	</style>
+    <style name="ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
-	<!-- custom styles for views -->
-	<style name="TextViewOverlay" parent="TextView">
-		<item name="android:textSize">@dimen/text_large</item>
-		<item name="android:textColor">@color/text_inverse</item>
-	</style>
+    <!-- custom styles for views -->
+    <style name="TextViewOverlay" parent="TextView">
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textColor">@color/text_inverse</item>
+    </style>
 
 </resources>

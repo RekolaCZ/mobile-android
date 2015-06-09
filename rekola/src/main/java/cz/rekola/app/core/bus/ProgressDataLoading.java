@@ -5,9 +5,9 @@ package cz.rekola.app.core.bus;
  */
 public class ProgressDataLoading {
 
-	public final int progress;
+    public final int progress;
 
-	public ProgressDataLoading(int progress) {
-		this.progress = progress;
-	}
+    public ProgressDataLoading(int progress) {
+        this.progress = progress;
+    }
 }

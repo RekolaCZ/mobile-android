@@ -7,13 +7,13 @@ import cz.rekola.app.api.model.error.BaseError;
  */
 public class LockCodeFailedEvent extends BaseErrorEvent {
 
-	public EState state;
+    public EState state;
 
-	public LockCodeFailedEvent(EState state, BaseError error) {
-		super(error);
-		this.state = state;
-	}
+    public LockCodeFailedEvent(EState state, BaseError error) {
+        super(error);
+        this.state = state;
+    }
 
-	public enum EState {UNKNOWN, WRONG_CODE, FORBIDDEN, CONFLICT}
+    public enum EState {UNKNOWN, WRONG_CODE, FORBIDDEN, CONFLICT}
 
 }

@@ -5,22 +5,22 @@ package cz.rekola.app.core.bus;
  */
 public class MessageEvent {
 
-	public final MessageType type;
+    public final MessageType type;
 
-	public final String message;
+    public final String message;
 
-	public MessageEvent(String message) {
-		this.type = MessageType.ERROR;
-		this.message = message;
-	}
+    public MessageEvent(String message) {
+        this.type = MessageType.ERROR;
+        this.message = message;
+    }
 
-	public MessageEvent(MessageType type, String message) {
-		this.type = type;
-		this.message = message;
-	}
+    public MessageEvent(MessageType type, String message) {
+        this.type = type;
+        this.message = message;
+    }
 
-	public enum MessageType {
-		ERROR,
-		SUCCESS
-	}
+    public enum MessageType {
+        ERROR,
+        SUCCESS
+    }
 }

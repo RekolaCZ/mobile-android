@@ -7,10 +7,10 @@ import cz.rekola.app.api.model.error.BaseError;
  */
 public abstract class BaseErrorEvent {
 
-	public final BaseError error;
+    public final BaseError error;
 
-	public BaseErrorEvent(BaseError error) {
-		this.error = error;
-	}
+    public BaseErrorEvent(BaseError error) {
+        this.error = error;
+    }
 
 }

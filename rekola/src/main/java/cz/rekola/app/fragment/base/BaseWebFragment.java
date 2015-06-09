@@ -17,33 +17,33 @@ import cz.rekola.app.webapi.WebApiHandler;
 
 public abstract class BaseWebFragment extends BaseMainFragment implements WebApiHandler {
 
-	@InjectView(R.id.profile_web)
-	ApiWebView vWeb;
+    @InjectView(R.id.profile_web)
+    ApiWebView vWeb;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_profile, container, false);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		ButterKnife.inject(this, view);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.inject(this, view);
 
-		if (!getApp().getDataManager().isOperational())
-			return;
+        if (!getApp().getDataManager().isOperational())
+            return;
 
-		// TODO: Handle api key expiration!
-		Map extraHeaderMap = new HashMap<String, String>();
-		extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
+        // TODO: Handle api key expiration!
+        Map extraHeaderMap = new HashMap<String, String>();
+        extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
 
-		vWeb.init(getApp().getBus(), this, getStartUrl(), extraHeaderMap);
-	}
+        vWeb.init(getApp().getBus(), this, getStartUrl(), extraHeaderMap);
+    }
 
-	@Override
-	public boolean onWebApiEvent(String paramUrl) {
-		return false;
-	}
+    @Override
+    public boolean onWebApiEvent(String paramUrl) {
+        return false;
+    }
 
-	public abstract String getStartUrl();
+    public abstract String getStartUrl();
 }

@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cz.rekola.app.view.BikeOverlayView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/map_overlay"
-	style="@style/Layout"
-	android:layout_height="wrap_content"
-	android:layout_gravity="bottom"
-	android:visibility="gone">
+    android:id="@+id/map_overlay"
+    style="@style/Layout"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:visibility="gone">
 
-	<ImageView
-		android:id="@+id/map_overlay_close"
-		style="@style/ImageView"
-		android:paddingLeft="@dimen/grid_4"
-		android:src="@drawable/btn_close"/>
+    <ImageView
+        android:id="@+id/map_overlay_close"
+        style="@style/ImageView"
+        android:paddingLeft="@dimen/grid_4"
+        android:src="@drawable/btn_close" />
 
-	<LinearLayout
-		android:id="@+id/map_overlay_area"
-		style="@style/Layout"
-		android:orientation="horizontal"
-		android:background="@color/pink_1">
+    <LinearLayout
+        android:id="@+id/map_overlay_area"
+        style="@style/Layout"
+        android:orientation="horizontal"
+        android:background="@color/pink_1">
 
-		<LinearLayout
-			android:id="@+id/map_overlay_bike_detail"
-			style="@style/Layout"
-			android:layout_height="wrap_content"
-			android:padding="@dimen/grid_2"
-			android:background="@drawable/overlay"
-			android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/map_overlay_bike_detail"
+            style="@style/Layout"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/grid_2"
+            android:background="@drawable/overlay"
+            android:layout_weight="1">
 
-			<TextView
-				android:id="@+id/map_overlay_name"
-				style="@style/TextViewOverlay"
-				android:singleLine="true"
-				android:textSize="@dimen/text_xlarge"
-				android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/map_overlay_name"
+                style="@style/TextViewOverlay"
+                android:singleLine="true"
+                android:textSize="@dimen/text_xlarge"
+                android:textStyle="bold" />
 
-			<TextView
-				android:id="@+id/map_overlay_street"
-				style="@style/TextViewOverlay"
-				android:singleLine="true"
-				android:textSize="@dimen/text_large"/>
+            <TextView
+                android:id="@+id/map_overlay_street"
+                style="@style/TextViewOverlay"
+                android:singleLine="true"
+                android:textSize="@dimen/text_large" />
 
-			<TextView
-				android:id="@+id/map_overlay_note"
-				style="@style/TextViewOverlay"
-				android:singleLine="true"
-				android:textSize="@dimen/text_small"/>
+            <TextView
+                android:id="@+id/map_overlay_note"
+                style="@style/TextViewOverlay"
+                android:singleLine="true"
+                android:textSize="@dimen/text_small" />
 
-			<TextView
-				android:id="@+id/map_overlay_description"
-				style="@style/TextViewOverlay"
-				android:minLines="1"
-				android:maxLines="2"
-				android:textSize="@dimen/text_small" />
+            <TextView
+                android:id="@+id/map_overlay_description"
+                style="@style/TextViewOverlay"
+                android:minLines="1"
+                android:maxLines="2"
+                android:textSize="@dimen/text_small" />
 
-		</LinearLayout>
-		
-		<View
-			android:layout_width="1dp"
-			android:layout_height="fill_parent"
-			android:layout_marginTop="@dimen/grid_4"
-			android:layout_marginBottom="@dimen/grid_4"
-			android:background="#FF85C2"/>
+        </LinearLayout>
 
-		<ImageView
-			android:id="@+id/map_overlay_route"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:layout_gravity="center"
-			android:padding="@dimen/grid_2"
-			android:background="@drawable/overlay"
-			android:src="@drawable/ic_navigation"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/grid_4"
+            android:layout_marginBottom="@dimen/grid_4"
+            android:background="#FF85C2" />
 
-	</LinearLayout>
+        <ImageView
+            android:id="@+id/map_overlay_route"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="@dimen/grid_2"
+            android:background="@drawable/overlay"
+            android:src="@drawable/ic_navigation" />
+
+    </LinearLayout>
 
 </cz.rekola.app.view.BikeOverlayView>

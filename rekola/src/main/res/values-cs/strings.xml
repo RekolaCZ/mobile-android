@@ -3,67 +3,67 @@
 
     <string name="app_name">Rekola</string>
 
-	<string name="login_title">Přihlásit se</string>
-	<string name="login_username_hint">e-mail</string>
-	<string name="login_password_hint">heslo</string>
-	<string name="login_log_in">Přihlásit se</string>
-	<string name="login_registration">Nejste členem?</string>
-	<string name="login_connecting">Přihlašuji…</string>
-	<string name="login_connecting_progress">Už to bude…</string>
-	<string name="login_forgot_password">Zapoměli jste heslo?</string>
+    <string name="login_title">Přihlásit se</string>
+    <string name="login_username_hint">e-mail</string>
+    <string name="login_password_hint">heslo</string>
+    <string name="login_log_in">Přihlásit se</string>
+    <string name="login_registration">Nejste členem?</string>
+    <string name="login_connecting">Přihlašuji…</string>
+    <string name="login_connecting_progress">Už to bude…</string>
+    <string name="login_forgot_password">Zapoměli jste heslo?</string>
 
-	<string name="reset_title">Reset hesla</string>
-	<string name="reset_reset">Reset</string>
-	<string name="reset_info">Po zadání e-mailu Vám budou zaslány informace pro obnovu hesla.</string>
-	<string name="reset_recall">Už vím, zpátky.</string>
+    <string name="reset_title">Reset hesla</string>
+    <string name="reset_reset">Reset</string>
+    <string name="reset_info">Po zadání e-mailu Vám budou zaslány informace pro obnovu hesla.</string>
+    <string name="reset_recall">Už vím, zpátky.</string>
 
-	<string name="borrow_title">Půjčit kolo</string>
-	<string name="borrow_info_1">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
-	<string name="borrow_info_2">Po zadání kódu získáte kód zámku a můžete začít kolo používat.</string>
-	<string name="borrow_borrow">Půjčit kolo</string>
-	<string name="borrow_code_hint">šestimístný kód</string>
+    <string name="borrow_title">Půjčit kolo</string>
+    <string name="borrow_info_1">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
+    <string name="borrow_info_2">Po zadání kódu získáte kód zámku a můžete začít kolo používat.</string>
+    <string name="borrow_borrow">Půjčit kolo</string>
+    <string name="borrow_code_hint">šestimístný kód</string>
 
-	<string name="return_info_lock_code">Kód zámku:</string>
-	<string name="return_return">Vrátit</string>
-	<string name="return_bike_detail">Detail kola</string>
-	<string name="return_bike_issue">Problém?</string>
+    <string name="return_info_lock_code">Kód zámku:</string>
+    <string name="return_return">Vrátit</string>
+    <string name="return_bike_detail">Detail kola</string>
+    <string name="return_bike_issue">Problém?</string>
 
-	<string name="returnmap_title">Upřesnit lokaci</string>
-	<string name="returnmap_note_hint">Upřesněte prosím, kde se kolo nachází. (např. 3. lampa od zastávky)</string>
-	<string name="returnmap_bike_returned">Kolo vráceno</string>
+    <string name="returnmap_title">Upřesnit lokaci</string>
+    <string name="returnmap_note_hint">Upřesněte prosím, kde se kolo nachází. (např. 3. lampa od zastávky)</string>
+    <string name="returnmap_bike_returned">Kolo vráceno</string>
 
-	<string name="webbikedetail_title">Detail kola</string>
+    <string name="webbikedetail_title">Detail kola</string>
 
-	<string name="profile_title">Profil</string>
+    <string name="profile_title">Profil</string>
 
-	<!-- Bike name parameter -->
-	<string name="return_bike_name">Kolo %s k vašim službám.</string>
+    <!-- Bike name parameter -->
+    <string name="return_bike_name">Kolo %s k vašim službám.</string>
 
-	<string name="menu_borrow">Půjčit</string>
-	<string name="menu_return">Vrátit</string>
-	<string name="menu_map">Mapa</string>
-	<string name="menu_profile">Profil</string>
-	<string name="menu_logout">Odhlásit</string>
+    <string name="menu_borrow">Půjčit</string>
+    <string name="menu_return">Vrátit</string>
+    <string name="menu_map">Mapa</string>
+    <string name="menu_profile">Profil</string>
+    <string name="menu_logout">Odhlásit</string>
 
-	<!-- Error messages -->
-	<string name="error_network">Chyba připojení.</string>
-	<string name="error_missing_credentials">Zadejte svůj e-mail a heslo.</string>
-	<string name="error_missing_username">Zadejte svůj e-mail.</string>
-	<string name="error_title_login_failed">Přihlášení selhalo.</string>
-	<string name="error_title_password_recovery_failed">Obnova hesla se nezdařila.</string>
-	<string name="error_get_bikes_failed">Stahování informací o kolech se nezdařilo.</string>
-	<string name="error_get_borrowed_bike_failed">Stahování informace o půjčeném kole se nezdařilo.</string>
-	<string name="error_borrow_bike_failed">Půjčení kola se nezdařilo.</string>
-	<string name="error_return_bike_failed">Vrácení kola se nezdařilo.</string>
-	<string name="error_incorrect_bike_code">Nesprávný kód kola.</string>
-	<string name="error_no_bike_borrowed">Žádné kolo není půjčené.</string>
-	<string name="error_unknown_borrowed_bike_code">Neznámý kód půjčeného kola.</string>
-	<string name="error_bike_details_failed">Stahování informací o podrobnostech kola se nezdařilo.</string>
-	<string name="error_web_load_failed">Nepovedlo se načíst podrobnosti.</string>
-	<string name="error_get_pois_failed">Nepovedlo se načíst informace o zajímavých bodech.</string>
-	<string name="error_directions">Nepovedlo se načíst informace o trase.</string>
-	<string name="error_old_app_version">Omlouváme se, ale Vaše verze aplikace už není podporována.\n\nStáhněte si, prosím, nejnovější verzi.</string>
-	<string name="error_session_expired">Byl jste odhlášen.</string>
-	<string name="success_password_recovery">Zkontrolujte, prosím, svůj e-mail pro další pokyny.</string>
+    <!-- Error messages -->
+    <string name="error_network">Chyba připojení.</string>
+    <string name="error_missing_credentials">Zadejte svůj e-mail a heslo.</string>
+    <string name="error_missing_username">Zadejte svůj e-mail.</string>
+    <string name="error_title_login_failed">Přihlášení selhalo.</string>
+    <string name="error_title_password_recovery_failed">Obnova hesla se nezdařila.</string>
+    <string name="error_get_bikes_failed">Stahování informací o kolech se nezdařilo.</string>
+    <string name="error_get_borrowed_bike_failed">Stahování informace o půjčeném kole se nezdařilo.</string>
+    <string name="error_borrow_bike_failed">Půjčení kola se nezdařilo.</string>
+    <string name="error_return_bike_failed">Vrácení kola se nezdařilo.</string>
+    <string name="error_incorrect_bike_code">Nesprávný kód kola.</string>
+    <string name="error_no_bike_borrowed">Žádné kolo není půjčené.</string>
+    <string name="error_unknown_borrowed_bike_code">Neznámý kód půjčeného kola.</string>
+    <string name="error_bike_details_failed">Stahování informací o podrobnostech kola se nezdařilo.</string>
+    <string name="error_web_load_failed">Nepovedlo se načíst podrobnosti.</string>
+    <string name="error_get_pois_failed">Nepovedlo se načíst informace o zajímavých bodech.</string>
+    <string name="error_directions">Nepovedlo se načíst informace o trase.</string>
+    <string name="error_old_app_version">Omlouváme se, ale Vaše verze aplikace už není podporována.\n\nStáhněte si, prosím, nejnovější verzi.</string>
+    <string name="error_session_expired">Byl jste odhlášen.</string>
+    <string name="success_password_recovery">Zkontrolujte, prosím, svůj e-mail pro další pokyny.</string>
 
 </resources>

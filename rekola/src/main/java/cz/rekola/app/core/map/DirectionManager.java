@@ -13,93 +13,94 @@ import java.util.ArrayList;
 
 public class DirectionManager {
 
-	private DownloadDirectionsTask directionTask;
-	private Polyline directionPath;
-	private PolylineOptions rectLine;
-	private DirectionsLoadedListener callback;
+    private DownloadDirectionsTask directionTask;
+    private Polyline directionPath;
+    private PolylineOptions rectLine;
+    private DirectionsLoadedListener callback;
 
-	public DirectionManager(DirectionsLoadedListener callback) {
-		this.callback = callback;
-	}
+    public DirectionManager(DirectionsLoadedListener callback) {
+        this.callback = callback;
+    }
 
-	public void loadDirections(int id, DirectionParams params) {
-		cancelTasks();
+    public void loadDirections(int id, DirectionParams params) {
+        cancelTasks();
 
-		directionTask = new DownloadDirectionsTask();
-		directionTask.execute(params);
-	}
+        directionTask = new DownloadDirectionsTask();
+        directionTask.execute(params);
+    }
 
-	public void addDirections(GoogleMap map) {
-		if (rectLine == null)
-			return;
+    public void addDirections(GoogleMap map) {
+        if (rectLine == null)
+            return;
 
-		if (directionPath != null) {
-			directionPath.remove();
-		}
+        if (directionPath != null) {
+            directionPath.remove();
+        }
 
-		directionPath = map.addPolyline(rectLine);
-	}
+        directionPath = map.addPolyline(rectLine);
+    }
 
-	public void hideDirections() {
-		cancelTasks();
-		rectLine = null;
-		if (directionPath != null) {
-			directionPath.remove();
-			directionPath = null;
-		}
-	}
+    public void hideDirections() {
+        cancelTasks();
+        rectLine = null;
+        if (directionPath != null) {
+            directionPath.remove();
+            directionPath = null;
+        }
+    }
 
-	private void cancelTasks() {
-		if (directionTask != null) {
-			directionTask.cancel(true);
-			callback.onDirectionsError();
-			directionTask = null;
-		}
-	}
+    private void cancelTasks() {
+        if (directionTask != null) {
+            directionTask.cancel(true);
+            callback.onDirectionsError();
+            directionTask = null;
+        }
+    }
 
-	private class DownloadDirectionsTask extends AsyncTask<DirectionParams, Void, PolylineOptions> {
+    private class DownloadDirectionsTask extends AsyncTask<DirectionParams, Void, PolylineOptions> {
 
-		private DirectionParams dirPar;
+        private DirectionParams dirPar;
 
-		@Override
-		protected PolylineOptions doInBackground(DirectionParams... directionParams) {
-			dirPar = directionParams[0];
+        @Override
+        protected PolylineOptions doInBackground(DirectionParams... directionParams) {
+            dirPar = directionParams[0];
 
-			GMapV2Direction md = new GMapV2Direction();
-			Document doc = md.getDocument(dirPar.start, dirPar.end, dirPar.mode);
+            GMapV2Direction md = new GMapV2Direction();
+            Document doc = md.getDocument(dirPar.start, dirPar.end, dirPar.mode);
 
-			if (doc == null)
-				return null;
+            if (doc == null)
+                return null;
 
-			ArrayList<LatLng> directionPoint = md.getDirection(doc);
-			PolylineOptions rectLine = new PolylineOptions().width(dirPar.size).color(dirPar.color);
+            ArrayList<LatLng> directionPoint = md.getDirection(doc);
+            PolylineOptions rectLine = new PolylineOptions().width(dirPar.size).color(dirPar.color);
 
-			for(int i = 0 ; i < directionPoint.size() ; i++) {
-				rectLine.add(directionPoint.get(i));
-			}
+            for (int i = 0; i < directionPoint.size(); i++) {
+                rectLine.add(directionPoint.get(i));
+            }
 
-			return rectLine;
-		}
+            return rectLine;
+        }
 
-		@Override
-		protected void onPostExecute(PolylineOptions result) {
-			directionTask = null;
-			if (result == null) {
-				if (directionPath != null) {
-					directionPath.remove();
-				}
-				directionPath = null;
-				rectLine = null;
-				callback.onDirectionsError();
-				return;
-			}
-			rectLine = result;
-			callback.onDirectionsLoaded();
-		}
-	}
+        @Override
+        protected void onPostExecute(PolylineOptions result) {
+            directionTask = null;
+            if (result == null) {
+                if (directionPath != null) {
+                    directionPath.remove();
+                }
+                directionPath = null;
+                rectLine = null;
+                callback.onDirectionsError();
+                return;
+            }
+            rectLine = result;
+            callback.onDirectionsLoaded();
+        }
+    }
 
-	public interface DirectionsLoadedListener {
-		public void onDirectionsLoaded();
-		public void onDirectionsError();
-	}
+    public interface DirectionsLoadedListener {
+        public void onDirectionsLoaded();
+
+        public void onDirectionsError();
+    }
 }
