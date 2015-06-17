@@ -4,6 +4,6 @@
     <stroke android:width="2dp" android:color="@color/base_green" />
     <corners android:radius="5dp"/>
     <padding
-        android:left="15dp" android:right="15dp"
+        android:left="20dp" android:right="20dp"
         android:top="10dp" android:bottom="10dp" />
 </shape>

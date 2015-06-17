@@ -1,15 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_gravity="top|center_horizontal">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Layout"
+    android:layout_marginLeft="@dimen/grid_5"
+    android:layout_marginRight="@dimen/grid_5"
+    android:layout_marginTop="@dimen/grid_5"
+    tools:context="cz.rekola.app.fragment.natural.ProfileFragment">
 
-    <cz.rekola.app.view.ApiWebView
-        android:id="@+id/profile_web"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center" />
+    <LinearLayout
+        style="@style/Layout"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/name"
+            style="@style/TitleTextView"
+            android:textSize="@dimen/text_xxxlarge"
+            android:layout_marginBottom="@dimen/grid_2"
+            android:text="Korben Dallas"
+             />
+
+        <LinearLayout
+            style="@style/Layout"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/grid_3"
+            >
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:text="@string/profile_membership_end"
+                android:textColor="@color/pink_1" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="29.9. 2015"
+                android:textColor="@color/pink_1"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/TextViewGreenBorder"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="@dimen/grid_5"
+            android:drawableLeft="@drawable/ic_logout"
+            android:drawablePadding="7dp"
+            android:text="@string/profile_logout" />
+
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+
+            tools:context=".GridLayoutActivity">
+
+            <TextView
+                style="@style/TextViewGridDescription"
+                android:text="@string/profile_email" />
+
+            <TextView
+                style="@style/TextViewGridValue"
+                android:text="@string/profile_email" />
+
+
+            <TextView
+                style="@style/TextViewGridDescription"
+                android:text="@string/profile_address" />
+
+            <TextView
+                style="@style/TextViewGridValue"
+                android:text="@string/profile_address" />
+
+            <TextView
+                style="@style/TextViewGridDescription"
+                android:text="@string/profile_phone" />
+
+            <TextView
+                style="@style/TextViewGridValue"
+                android:text="@string/profile_phone" />
+
+        </GridLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnAbout"
+        style="@style/ButtonGrey"
+        android:layout_gravity="bottom"
+        android:text="@string/about_title"
+        android:layout_marginBottom="@dimen/grid_6"
+        />
+
+</FrameLayout>

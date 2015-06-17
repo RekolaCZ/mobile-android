@@ -100,7 +100,7 @@
 
         <Button
             android:id="@+id/return_bike"
-            style="@style/PinkButton"
+            style="@style/ButtonPink"
             android:layout_alignParentBottom="true"
             android:text="@string/return_return" />
 

@@ -50,20 +50,16 @@
             <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
             <EditText
                 android:id="@+id/note"
-                style="@style/EditText"
+                style="@style/EditTextPinkBorder"
                 android:hint="@string/returnmap_note_hint"
                 android:inputType="text|textCapSentences"
-                android:background="@drawable/edit_text_border"
                 android:lines="2"
-                android:scrollHorizontally="false"
                 android:imeOptions="actionDone"
-                android:textColor="@color/text_primary"
-                android:gravity="top|left"
-                android:layout_gravity="center" />
+            />
 
             <Button
                 android:id="@+id/bike_returned"
-                style="@style/PinkButton"
+                style="@style/ButtonPink"
                 android:layout_marginBottom="0dp"
                 android:text="@string/returnmap_bike_returned"/>
 

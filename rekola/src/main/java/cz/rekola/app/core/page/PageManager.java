@@ -14,10 +14,10 @@ import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.fragment.natural.BorrowFragment;
 import cz.rekola.app.fragment.natural.MapFragment;
+import cz.rekola.app.fragment.natural.ProfileFragment;
 import cz.rekola.app.fragment.natural.ReturnFragment;
 import cz.rekola.app.fragment.natural.ReturnMapFragment;
 import cz.rekola.app.fragment.web.BikeDetailWebFragment;
-import cz.rekola.app.fragment.web.ProfileWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 
 public class PageManager {
@@ -43,9 +43,9 @@ public class PageManager {
         //      BaseMainFragment
         BORROW(true, true, false, null, BorrowFragment.class),
         RETURN(true, true, false, null, ReturnFragment.class),
-        MAP(true, false, false, null, MapFragment.class),
-        PROFILE(true, false, false, R.string.profile_title, ProfileWebFragment.class),
-        RETURN_MAP(false, false, true, R.string.returnmap_title, ReturnMapFragment.class),
+        MAP(true, true, false, null, MapFragment.class), //TODO set up cache, but must handle release map fragment
+        PROFILE(true, false, false, null, ProfileFragment.class),
+        RETURN_MAP(false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
         WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
         WEB_BIKE_DETAIL(true, false, true, R.string.webbikedetail_title, BikeDetailWebFragment.class);
 

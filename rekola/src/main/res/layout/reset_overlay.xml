@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/reset_overlay"
     style="@style/Layout"
     android:background="@color/background_window"
-    android:visibility="gone"
-    >
+    android:visibility="gone">
 
     <ScrollView style="@style/Layout">
 
@@ -29,16 +27,19 @@
                 android:text="@string/reset_info"
                 android:textColor="@color/gray_2" />
 
+            <!--    textCursorDrawable null, because of some bug, that caused invisible cursor-->
             <EditText
                 android:id="@+id/reset_username"
-                style="@style/EditText"
+                style="@style/EditTextPinkBorder"
                 android:hint="@string/login_username_hint"
                 android:imeOptions="actionDone"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColor="@color/text_primary"
+                android:textCursorDrawable="@null" />
 
             <Button
                 android:id="@+id/reset"
-                style="@style/Button"
+                style="@style/ButtonPink"
                 android:layout_below="@id/password"
                 android:layout_marginBottom="@dimen/grid_20"
                 android:text="@string/reset_reset" />

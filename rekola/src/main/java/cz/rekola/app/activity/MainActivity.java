@@ -116,7 +116,6 @@ public class MainActivity extends BaseActivity implements PageController {
                 pageManager.setState(myBike != null && myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW,
                         getFragmentManager(), getSupportActionBar(), getResources());
 
-                pageManager.setState(PageManager.EPageState.BORROW, getFragmentManager(), getSupportActionBar(), getResources());
                 break;
             case R.id.action_map:
                 pageManager.setState(PageManager.EPageState.MAP, getFragmentManager(), getSupportActionBar(), getResources());
@@ -211,7 +210,7 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     private MyBikeWrapper getMyBike() {
-        return  getApp().getDataManager().getBorrowedBike(false);
+        return getApp().getDataManager().getBorrowedBike(false);
     }
 
     public void hideKeyboard() {

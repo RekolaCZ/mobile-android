@@ -58,7 +58,7 @@
 
         <Button
             android:id="@+id/borrow"
-            style="@style/PinkButton"
+            style="@style/ButtonPink"
             android:layout_marginBottom="@dimen/margin_large"
             android:layout_marginLeft="@dimen/grid_8"
             android:layout_marginRight="@dimen/grid_8"

@@ -27,14 +27,14 @@
 
             <EditText
                 android:id="@+id/username"
-                style="@style/PinkEditText"
+                style="@style/EditTextPinkFilled"
                 android:hint="@string/login_username_hint"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/password"
-                style="@style/PinkEditText"
+                style="@style/EditTextPinkFilled"
                 android:hint="@string/login_password_hint"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword" />
