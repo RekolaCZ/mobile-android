@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.fragment.natural.AboutFragment;
 import cz.rekola.app.fragment.natural.BorrowFragment;
 import cz.rekola.app.fragment.natural.MapFragment;
 import cz.rekola.app.fragment.natural.ProfileFragment;
@@ -43,9 +44,10 @@ public class PageManager {
         //      BaseMainFragment
         BORROW(true, true, false, null, BorrowFragment.class),
         RETURN(true, true, false, null, ReturnFragment.class),
-        MAP(true, true, false, null, MapFragment.class), //TODO set up cache, but must handle release map fragment
+        MAP(true, true, false, null, MapFragment.class),
         PROFILE(true, false, false, null, ProfileFragment.class),
         RETURN_MAP(false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
+        ABOUT(false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
         WEB_BIKE_DETAIL(true, false, true, R.string.webbikedetail_title, BikeDetailWebFragment.class);
 
@@ -78,6 +80,10 @@ public class PageManager {
 
         actionBar.setHomeButtonEnabled(newState.upState);
         actionBar.setDisplayHomeAsUpEnabled(newState.upState);
+
+        if (newState.upState) { // It is a root state
+            rootState = state;
+        }
 
         actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
 

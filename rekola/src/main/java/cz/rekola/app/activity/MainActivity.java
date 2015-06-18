@@ -194,6 +194,12 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
+    public void requestAbout() {
+        pageManager.setState(PageManager.EPageState.ABOUT, getFragmentManager(), getSupportActionBar(), getResources());
+        invalidateOptionsMenu();
+    }
+
+    @Override
     public void requestWebBikeDetail(int id, boolean issues) {
         Fragment fragment = pageManager.setState(PageManager.EPageState.WEB_BIKE_DETAIL, getFragmentManager(), getSupportActionBar(), getResources());
         if (fragment != null && fragment instanceof BikeDetailWebFragment)

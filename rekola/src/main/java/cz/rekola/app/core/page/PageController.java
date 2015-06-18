@@ -8,6 +8,8 @@ public interface PageController {
 
     public void requestReturnMap();
 
+    public void requestAbout();
+
     public void requestWebBikeDetail(int id, boolean issues);
 
     public void requestWebBikeReturned(String successUrl);

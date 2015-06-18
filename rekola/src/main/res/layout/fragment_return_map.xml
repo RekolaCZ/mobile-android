@@ -3,18 +3,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Layout">
 
+
+    <FrameLayout
+        android:id="@+id/flBottom"
+        style="@style/Layout"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            style="@style/Layout"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/grid_2">
+
+            <TextView
+                android:id="@+id/vehicleName"
+                style="@style/TextView"
+                android:layout_below="@id/ivVehicleIcon"
+                android:layout_gravity="left"
+                android:text="@string/returnmap_bike_position"
+                android:textColor="@color/black" />
+
+            <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
+            <EditText
+                android:id="@+id/note"
+                style="@style/EditTextPinkBorder"
+                android:hint="@string/returnmap_note_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text|textCapSentences"
+                android:lines="2" />
+
+            <Button
+                android:id="@+id/bike_returned"
+                style="@style/ButtonPink"
+                android:layout_marginBottom="0dp"
+                android:text="@string/returnmap_bike_returned" />
+
+        </LinearLayout>
+    </FrameLayout>
+
     <FrameLayout
         android:id="@+id/flMap"
         style="@style/Layout"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/flBottom"
-        >
+        android:layout_above="@id/flBottom"
+        android:layout_alignParentTop="true">
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            />
 
         <ImageView
             style="@style/ImageView"
@@ -24,53 +64,11 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        style="@style/Layout"
-        android:id="@id/flBottom"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-     >
-
-        <LinearLayout
-            style="@style/Layout"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/grid_2"
-            android:layout_gravity="center"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/vehicleName"
-                style="@style/TextView"
-                android:textColor="@color/black"
-                android:layout_gravity="left"
-                android:layout_below="@id/ivVehicleIcon"
-                android:text="@string/returnmap_bike_position" />
-
-            <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
-            <EditText
-                android:id="@+id/note"
-                style="@style/EditTextPinkBorder"
-                android:hint="@string/returnmap_note_hint"
-                android:inputType="text|textCapSentences"
-                android:lines="2"
-                android:imeOptions="actionDone"
-            />
-
-            <Button
-                android:id="@+id/bike_returned"
-                style="@style/ButtonPink"
-                android:layout_marginBottom="0dp"
-                android:text="@string/returnmap_bike_returned"/>
-
-        </LinearLayout>
-    </FrameLayout>
-
     <ImageView
         android:id="@+id/center_map"
         style="@style/IconImageView"
-        android:layout_marginBottom="-47dp"
         android:layout_above="@id/flBottom"
+        android:layout_marginBottom="-40dp"
         android:src="@drawable/ic_location_inverse" />
 
 </RelativeLayout>

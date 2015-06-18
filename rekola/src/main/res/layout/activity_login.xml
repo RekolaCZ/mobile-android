@@ -70,7 +70,7 @@
 
             <ImageView
                 style="@style/ImageView"
-                android:src="@drawable/logo_ackee"
+                android:src="@drawable/logo_ackee_bw"
                 android:padding="5dp"
                 />
         </LinearLayout>
