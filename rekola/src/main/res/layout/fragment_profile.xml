@@ -15,18 +15,16 @@
         <TextView
             android:id="@+id/name"
             style="@style/TitleTextView"
-            android:textSize="@dimen/text_xxxlarge"
             android:layout_marginBottom="@dimen/grid_2"
             android:text="Korben Dallas"
-             />
+            android:textSize="@dimen/text_xxxlarge" />
 
         <LinearLayout
             style="@style/Layout"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
             android:layout_marginBottom="@dimen/grid_3"
-            >
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/TextView"
@@ -45,6 +43,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvLogout"
             style="@style/TextViewGreenBorder"
             android:layout_width="wrap_content"
             android:layout_marginBottom="@dimen/grid_5"
@@ -94,8 +93,7 @@
         android:id="@+id/btnAbout"
         style="@style/ButtonGrey"
         android:layout_gravity="bottom"
-        android:text="@string/about_title"
         android:layout_marginBottom="@dimen/grid_6"
-        />
+        android:text="@string/about_title" />
 
 </FrameLayout>

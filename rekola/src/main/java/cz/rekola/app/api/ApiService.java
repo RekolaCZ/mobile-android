@@ -28,6 +28,9 @@ public interface ApiService {
     @PUT("/password-recovery")
     public void recoverPassword(@Body RecoverPassword body, Callback<Object> callback);
 
+    @GET("/accounts/mine/logout")
+    public void logout(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Object> callback);
+
     @GET("/bikes/all")
     public void getBikes(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
 

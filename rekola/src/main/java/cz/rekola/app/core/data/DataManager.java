@@ -1,5 +1,7 @@
 package cz.rekola.app.core.data;
 
+import android.util.Log;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +45,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class DataManager {
+
+    public static final String TAG = "DataManager";
 
     private RekolaApp app;
 
@@ -92,6 +96,27 @@ public class DataManager {
 
                 app.getBus().post(new LoginFailedEvent());
                 handleGlobalError(error, app.getResources().getString(R.string.error_title_login_failed));
+            }
+        });
+    }
+
+    public void logout() {
+        if (token == null || !loadingManager.addLoading(DataLoad.LOGOUT)) {
+            return;
+        }
+
+        //only invalidate token, so user don't need to know about success or failure
+        ApiService apiService = app.getApiService();
+        apiService.logout(token.apiKey, new Callback<Object>() {
+            @Override
+            public void success(Object unused, Response response) {
+                loadingManager.removeLoading(DataLoad.LOGOUT);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                loadingManager.removeLoading(DataLoad.LOGOUT);
+                Log.e(TAG, "logout error " + error.getMessage());
             }
         });
     }
@@ -353,6 +378,7 @@ public class DataManager {
 
     private enum DataLoad {
         LOGIN,
+        LOGOUT,
         PASSWORD_RECOVERY,
         BORROWED_BIKE,
         BIKES,
