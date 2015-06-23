@@ -10,7 +10,7 @@ public interface PageController {
 
     public void requestAbout();
 
-    public void requestWebBikeDetail(int id, boolean issues);
+    public void requestBikeDetail(int bikeID);
 
     public void requestWebBikeReturned(String successUrl);
 

@@ -62,7 +62,7 @@ public class ReturnFragment extends BaseMainFragment {
         vDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPageController().requestWebBikeDetail(bikeId, false);
+                getPageController().requestBikeDetail(bikeId);
             }
         });
 

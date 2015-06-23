@@ -2,6 +2,11 @@
 <resources>
 
     <!-- Common-->
+    <color name="colorPrimary">@color/base_green</color>
+    <color name="colorPrimaryDark">@color/dark_green</color>
+    <color name="colorAccent">@color/dark_green</color>
+
+
     <color name="base_pink">#ff339c</color>
     <color name="light_pink">#ff7abf</color>
     <color name="light_pink2">#fd48a6</color>

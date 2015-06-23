@@ -86,4 +86,7 @@
     <!--  top + bottom  -->
     <dimen name="login_button_radius">5dp</dimen>
 
+    <!-- padding -->
+    <dimen name="action_bar_icon_padding">15dp</dimen>
+
 </resources>

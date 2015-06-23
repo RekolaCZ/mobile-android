@@ -14,9 +14,29 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
  */
 public class BikeDetailFragment extends BaseMainFragment {
 
+    private static String ARG_BIKE_ID = "BIKE_ID";
+
+    private int mBikeID;
+
+    public static BikeDetailFragment newInstance(int bikeID) {
+        BikeDetailFragment fragment = new BikeDetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_BIKE_ID, bikeID);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public BikeDetailFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mBikeID = getArguments().getInt(ARG_BIKE_ID);
+        }
     }
 
 
