@@ -2,6 +2,7 @@ package cz.rekola.app.core.data;
 
 import android.util.Log;
 
+import java.net.HttpURLConnection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -206,7 +207,7 @@ public class DataManager {
             public void failure(RetrofitError error) {
                 loadingManager.removeLoading(DataLoad.BORROWED_BIKE);
                 if (error.getResponse() != null) {
-                    if (error.getResponse().getStatus() == 404) {
+                    if (error.getResponse().getStatus() == HttpURLConnection.HTTP_NOT_FOUND) {
                         myBike = new MyBikeWrapper();
                         app.getBus().post(new BorrowedBikeAvailableEvent());
                         return;
@@ -240,13 +241,13 @@ public class DataManager {
                 LockCodeFailedEvent event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.UNKNOWN, null);
                 if (error.getResponse() != null) {
                     switch (error.getResponse().getStatus()) {
-                        case 400:
+                        case HttpURLConnection.HTTP_BAD_REQUEST:
                             event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.WRONG_CODE, null);
                             break;
-                        case 403:
+                        case HttpURLConnection.HTTP_FORBIDDEN:
                             event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.FORBIDDEN, null);
                             break;
-                        case 409:
+                        case HttpURLConnection.HTTP_CONFLICT:
                             event = new LockCodeFailedEvent(LockCodeFailedEvent.EState.FORBIDDEN, (BikeConflictError) error.getBodyAs(BikeConflictError.class));
                             break;
                     }
@@ -290,7 +291,7 @@ public class DataManager {
                 ReturnBikeFailedEvent event = new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.UNKNOWN, null);
                 if (error.getResponse() != null) {
                     switch (error.getResponse().getStatus()) {
-                        case 409:
+                        case HttpURLConnection.HTTP_CONFLICT:
                             event = new ReturnBikeFailedEvent(ReturnBikeFailedEvent.EState.CONFLICT, (BikeConflictError) error.getBodyAs(BikeConflictError.class));
                             break;
                     }
@@ -366,10 +367,10 @@ public class DataManager {
         }
 
         switch (error.getResponse().getStatus()) {
-            case 401:
+            case HttpURLConnection.HTTP_UNAUTHORIZED:
                 app.getBus().post(new AuthorizationRequiredEvent());
                 break;
-            case 426:
+            case 426: //Upgrade required
                 app.getBus().post(new IncompatibleApiEvent());
                 break;
         }

@@ -4,28 +4,8 @@
     android:layout_height="match_parent"
     tools:context="cz.rekola.app.fragment.natural.AboutFragment">
 
-
-    <TextView
-        style="@style/TextView"
-        android:layout_above="@+id/ivAckeeLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="@string/about_text"
-        android:textColor="@color/grey7"
-        android:textSize="@dimen/text_xlarge" />
-
     <ImageView
-        android:id="@id/ivAckeeLogo"
-        style="@style/ImageView"
-        android:layout_above="@+id/ivBackGround"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:src="@drawable/logo_ackee" />
-
-    <ImageView
-        android:id="@id/ivBackGround"
+        android:id="@+id/ivBackGround"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -35,6 +15,30 @@
         android:paddingLeft="40dp"
         android:paddingStart="40dp"
         android:src="@drawable/about_background" />
+
+
+    <ImageView
+        android:id="@+id/ivAckeeLogo"
+        style="@style/ImageView"
+        android:layout_above="@id/ivBackGround"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        android:src="@drawable/logo_ackee" />
+
+    <TextView
+        style="@style/TextView"
+        android:layout_above="@id/ivAckeeLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/about_text"
+        android:textColor="@color/grey7"
+        android:textSize="@dimen/text_xlarge" />
+
+
+
+
 
 
 </RelativeLayout>
