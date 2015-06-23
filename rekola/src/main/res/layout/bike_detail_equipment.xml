@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/vehicleName"
+        style="@style/TitleTextView"
+        android:layout_marginBottom="10dp"
+        android:text="@string/bike_detail_equipments"
+        android:textSize="@dimen/text_xlarge" />
+
+
+    <!-- equipments will be dynamically added in code (is loaded via api)-->
+    <LinearLayout
+        android:id="@+id/equipments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_warning_red" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_equipments_detail"
+        style="@style/TextView"
+        android:layout_gravity="center"
+        android:background="@drawable/border_green"
+        android:text="@string/bike_detail_equipment_info"
+        android:textColor="@color/base_green"
+        android:textSize="@dimen/text_medium" />
+
+
+</LinearLayout>

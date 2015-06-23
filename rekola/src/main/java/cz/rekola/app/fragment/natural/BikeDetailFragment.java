@@ -10,12 +10,12 @@ import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 /**
- * About app
+ * Info about bike for user (there is info screen for serviceman)like name, problems, last returned, ...
  */
-public class AboutFragment extends BaseMainFragment {
+public class BikeDetailFragment extends BaseMainFragment {
 
 
-    public AboutFragment() {
+    public BikeDetailFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class AboutFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        return inflater.inflate(R.layout.fragment_bike_detail, container, false);
     }
 
 

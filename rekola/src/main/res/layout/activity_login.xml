@@ -53,27 +53,25 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium" />
 
-        <LinearLayout
-            style="@style/Layout"
-            android:orientation="horizontal"
-            android:alpha="0.4"
-            android:layout_gravity="center_vertical"
-            android:gravity="center">
+            <LinearLayout
+                style="@style/Layout"
+                android:orientation="horizontal"
+                android:alpha="0.4"
+                android:layout_gravity="center_vertical"
+                android:gravity="center">
 
-            <TextView
-                style="@style/TextView"
-                android:text="@string/login_ackee"
-                android:textColor="@color/light_grey"
-                android:textSize="@dimen/text_small"
-                android:padding="5dp"
-                />
+                <TextView
+                    style="@style/TextView"
+                    android:text="@string/login_ackee"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_small"
+                    android:padding="5dp" />
 
-            <ImageView
-                style="@style/ImageView"
-                android:src="@drawable/logo_ackee_bw"
-                android:padding="5dp"
-                />
-        </LinearLayout>
+                <ImageView
+                    style="@style/ImageView"
+                    android:src="@drawable/logo_ackee_bw"
+                    android:padding="5dp" />
+            </LinearLayout>
 
         </LinearLayout>
 

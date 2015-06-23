@@ -43,7 +43,8 @@
 
     <string name="webbikedetail_title">Detail kola</string>
 
-    <string name="map_overlay_inoperational">Pozor, nepojízdné!</string>
+    <string name="bike_inoperational">Pozor, nepojízdné!</string>
+    <string name="bike_operational_with_issues">Pojízdné s problémy</string>
 
     <!-- Bike name parameter -->
     <string name="menu_borrow">Půjčit</string>
@@ -51,6 +52,13 @@
     <string name="menu_map">Mapa</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_logout">Odhlásit</string>
+
+    <!-- Bike detail -->
+    <string name="bike_detail_recently_returned">Naposledy vráceno</string>
+    <string name="bike_detail_equipments">Vybavení</string>
+    <string name="bike_detail_equipment_info">Více info</string>
+    <string name="bike_detail_issues">Problémy</string>
+    <string name="bike_detail_add_issue">Přidat problém</string>
 
     <!-- Error messages -->
     <string name="error_network">Chyba připojení.</string>

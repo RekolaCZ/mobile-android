@@ -43,7 +43,8 @@
 
     <string name="webbikedetail_title">Bike Detail</string>
 
-    <string name="map_overlay_inoperational">Warning, inoperational!</string>
+    <string name="bike_inoperational">Warning, inoperational!</string>
+    <string name="bike_operational_with_issues">Operational with issues</string>
 
     <!-- Bike name parameter -->
     <string name="menu_borrow">Borrow</string>
@@ -51,6 +52,13 @@
     <string name="menu_map">Map</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Log out</string>
+
+    <!-- Bike detail -->
+    <string name="bike_detail_recently_returned">Recently returned</string>
+    <string name="bike_detail_equipments">Equipments</string>
+    <string name="bike_detail_equipment_info">More info</string>
+    <string name="bike_detail_issues">Issues</string>
+    <string name="bike_detail_add_issue">Add issue</string>
 
     <!-- Error messages -->
     <string name="error_network">Connection problem.</string>

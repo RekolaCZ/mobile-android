@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivAckeeLogo"
+        style="@style/ImageView"
+        android:paddingTop="10dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:src="@drawable/logo_ackee" />
+
+
+    <TextView
+        style="@style/TextView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:text="Lady favorit"
+        android:textColor="@color/dark_pink2"
+        android:textSize="@dimen/text_xlarge" />
+
+    <TextView
+        android:id="@+id/vehicleName"
+        style="@style/TitleTextView"
+        android:text="Kníže Pupík Ignor" />
+
+    <TextView
+        android:id="@+id/operational_with_problems"
+        style="@style/TextViewWarning"
+        android:drawableLeft="@drawable/icon_warning_yellow"
+        android:drawableStart="@drawable/icon_warning_yellow"
+        android:text="@string/bike_operational_with_issues"
+        android:textColor="@color/warning_yellow" />
+
+    <TextView
+        android:id="@+id/inoperational"
+        style="@style/TextViewWarning"
+        android:drawableLeft="@drawable/icon_warning_red"
+        android:drawableStart="@drawable/icon_warning_red"
+        android:text="@string/bike_inoperational"
+        android:textColor="@color/warning_pink" />
+
+
+    <TextView
+        android:id="@+id/map_overlay_inoperational"
+        style="@style/TextView"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Městské kolo s nosičem, košíkem, protišlapnou brzdou a nábojovou převodovkou"
+        android:textColor="@color/grey5"
+        android:textSize="@dimen/text_small" />
+
+</LinearLayout>

@@ -37,8 +37,4 @@
         android:textSize="@dimen/text_xlarge" />
 
 
-
-
-
-
 </RelativeLayout>

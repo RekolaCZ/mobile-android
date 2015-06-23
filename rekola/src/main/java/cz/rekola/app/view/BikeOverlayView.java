@@ -28,6 +28,9 @@ public class BikeOverlayView extends RelativeLayout {
     @InjectView(R.id.map_overlay_inoperational)
     TextView vInoperational;
 
+    @InjectView(R.id.map_overlay_operational_with_issues)
+    TextView vOperationalWithIssues;
+
     @InjectView(R.id.map_overlay_note)
     TextView vNote;
 
@@ -104,6 +107,11 @@ public class BikeOverlayView extends RelativeLayout {
 
         int visibility = bike.operational ? GONE : VISIBLE;
         vInoperational.setVisibility(visibility);
+
+
+        //TODO set correct visibility
+        //  if(bike.operational && bike.issues != null)
+        vOperationalWithIssues.setVisibility(GONE);
 
         vOverlayArea.setVisibility(VISIBLE);
         vRoute.setVisibility(VISIBLE);

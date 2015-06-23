@@ -13,12 +13,12 @@ import java.util.HashMap;
 import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.fragment.natural.AboutFragment;
+import cz.rekola.app.fragment.natural.BikeDetailFragment;
 import cz.rekola.app.fragment.natural.BorrowFragment;
 import cz.rekola.app.fragment.natural.MapFragment;
 import cz.rekola.app.fragment.natural.ProfileFragment;
 import cz.rekola.app.fragment.natural.ReturnFragment;
 import cz.rekola.app.fragment.natural.ReturnMapFragment;
-import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 
 public class PageManager {
@@ -49,7 +49,7 @@ public class PageManager {
         RETURN_MAP(false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
         ABOUT(false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
-        WEB_BIKE_DETAIL(true, false, true, R.string.webbikedetail_title, BikeDetailWebFragment.class);
+        WEB_BIKE_DETAIL(true, false, true, null, BikeDetailFragment.class);
 
         EPageState(boolean customActionBarViewEnabled, boolean useCache, boolean upState, Integer titleId, Class fragment) {
             this.customActionBarViewEnabled = customActionBarViewEnabled;

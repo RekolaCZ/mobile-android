@@ -80,8 +80,10 @@
     <dimen name="grid_50">200dp</dimen>
 
     <!--  Login dimens -->
-    <dimen name="login_logo_padding_horizontal">40dp</dimen> <!--  left + right  -->
-    <dimen name="login_logo_padding_vertical">10dp</dimen>   <!--  top + bottom  -->
+    <dimen name="login_logo_padding_horizontal">40dp</dimen>
+    <!--  left + right  -->
+    <dimen name="login_logo_padding_vertical">10dp</dimen>
+    <!--  top + bottom  -->
     <dimen name="login_button_radius">5dp</dimen>
 
 </resources>

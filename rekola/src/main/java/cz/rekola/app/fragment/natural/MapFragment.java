@@ -29,7 +29,6 @@ import java.util.TimerTask;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
-import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.api.model.Bike;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.BikesAvailableEvent;
