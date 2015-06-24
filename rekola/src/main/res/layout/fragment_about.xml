@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cz.rekola.app.fragment.natural.AboutFragment">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="cz.rekola.app.fragment.natural.AboutFragment">
 
     <ImageView
         android:id="@+id/ivBackGround"
@@ -14,7 +14,7 @@
         android:adjustViewBounds="true"
         android:paddingLeft="40dp"
         android:paddingStart="40dp"
-        android:src="@drawable/about_background" />
+        android:src="@drawable/about_background"/>
 
 
     <ImageView
@@ -25,7 +25,7 @@
         android:layout_marginBottom="100dp"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
-        android:src="@drawable/logo_ackee" />
+        android:src="@drawable/logo_ackee"/>
 
     <TextView
         style="@style/TextView"
@@ -34,7 +34,7 @@
         android:layout_marginBottom="20dp"
         android:text="@string/about_text"
         android:textColor="@color/grey7"
-        android:textSize="@dimen/text_xlarge" />
+        android:textSize="@dimen/text_xlarge"/>
 
 
 </RelativeLayout>

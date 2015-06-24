@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout"
-    android:background="@color/base_pink">
+             style="@style/Layout"
+             android:background="@color/base_pink">
 
     <ScrollView style="@style/Layout">
 
@@ -19,31 +19,31 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/login_registration"
                 android:textAllCaps="true"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_medium"/>
 
             <ImageView
                 style="@style/LogoImageView"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"/>
 
             <EditText
                 android:id="@+id/username"
                 style="@style/EditTextPinkFilled"
                 android:hint="@string/login_username_hint"
                 android:imeOptions="actionNext"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"/>
 
             <EditText
                 android:id="@+id/password"
                 style="@style/EditTextPinkFilled"
                 android:hint="@string/login_password_hint"
                 android:imeOptions="actionDone"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"/>
 
             <Button
                 android:id="@+id/login"
                 style="@style/SignInButton"
                 android:layout_below="@id/password"
-                android:text="@string/login_log_in" />
+                android:text="@string/login_log_in"/>
 
             <TextView
                 android:id="@+id/recover_password"
@@ -51,7 +51,7 @@
                 android:layout_margin="@dimen/grid_4"
                 android:text="@string/login_forgot_password"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_medium"/>
 
             <LinearLayout
                 style="@style/Layout"
@@ -65,22 +65,22 @@
                     android:text="@string/login_ackee"
                     android:textColor="@color/light_grey"
                     android:textSize="@dimen/text_small"
-                    android:padding="5dp" />
+                    android:padding="5dp"/>
 
                 <ImageView
                     style="@style/ImageView"
                     android:src="@drawable/logo_ackee_bw"
-                    android:padding="5dp" />
+                    android:padding="5dp"/>
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
 
-    <include layout="@layout/reset_overlay" />
+    <include layout="@layout/reset_overlay"/>
 
-    <include layout="@layout/loading_overlay" />
+    <include layout="@layout/loading_overlay"/>
 
-    <include layout="@layout/message_bar" />
+    <include layout="@layout/message_bar"/>
 
 </FrameLayout>

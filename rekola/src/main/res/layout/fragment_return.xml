@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout">
+              style="@style/Layout">
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/Layout"
-        android:padding="@dimen/grid_4">
+                    style="@style/Layout"
+                    android:padding="@dimen/grid_4">
 
         <ImageView
             android:id="@+id/ivVehicleIcon"
             style="@style/ImageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_navigation" />
+            android:src="@drawable/ic_navigation"/>
 
         <TextView
             android:id="@+id/vehicleName"
@@ -21,7 +21,7 @@
             android:layout_below="@id/ivVehicleIcon"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:text="Kníže Pupík Ignor" />
+            android:text="Kníže Pupík Ignor"/>
 
         <LinearLayout
             android:id="@+id/llBorrowed"
@@ -37,27 +37,27 @@
                 style="@style/TextView"
                 android:padding="4dp"
                 android:text="Půjčeno"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/borrowed_from_date"
                 style="@style/TextView"
                 android:padding="4dp"
                 android:text="25.8."
-                android:textColor="@color/light_pink2" />
+                android:textColor="@color/light_pink2"/>
 
             <TextView
                 style="@style/TextView"
                 android:padding="4dp"
                 android:text="/"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/borrowed_from_time"
                 style="@style/TextView"
                 android:padding="4dp"
                 android:text="TODO"
-                android:textColor="@color/light_pink2" />
+                android:textColor="@color/light_pink2"/>
 
         </LinearLayout>
 
@@ -70,7 +70,7 @@
             android:background="@drawable/border_green"
             android:text="@string/return_bike_detail"
             android:textColor="@color/base_green"
-            android:textSize="@dimen/text_large" />
+            android:textSize="@dimen/text_large"/>
 
         <TextView
             android:id="@+id/lock_code"
@@ -82,7 +82,7 @@
             android:text="2679"
             android:textColor="@color/text_primary"
             android:textSize="60sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/lock_code_text"
@@ -95,14 +95,14 @@
             android:paddingRight="10dp"
             android:text="@string/return_info_lock_code"
             android:textAllCaps="true"
-            android:textColor="@color/gray_2" />
+            android:textColor="@color/gray_2"/>
 
 
         <Button
             android:id="@+id/return_bike"
             style="@style/ButtonPink"
             android:layout_alignParentBottom="true"
-            android:text="@string/return_return" />
+            android:text="@string/return_return"/>
 
     </RelativeLayout>
 

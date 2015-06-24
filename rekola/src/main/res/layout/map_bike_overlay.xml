@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cz.rekola.app.view.BikeOverlayView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/map_overlay"
-    style="@style/Layout"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:visibility="visible">
+                                    android:id="@+id/map_overlay"
+                                    style="@style/Layout"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:visibility="visible">
 
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:background="@drawable/overlay"
             android:gravity="top"
             android:padding="5dp"
-            android:src="@drawable/ic_navigation" />
+            android:src="@drawable/ic_navigation"/>
 
         <LinearLayout
             android:id="@+id/map_overlay_bike_detail"
@@ -40,7 +40,7 @@
                 android:singleLine="true"
                 android:text="Maxipes Fík"
                 android:textSize="@dimen/text_xlarge"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/map_overlay_distance"
@@ -48,7 +48,7 @@
                 android:singleLine="true"
                 android:text="3 km"
                 android:textSize="@dimen/text_large"
-                android:textStyle="italic" />
+                android:textStyle="italic"/>
 
             <TextView
                 android:id="@+id/map_overlay_inoperational"
@@ -57,7 +57,7 @@
                 android:drawableStart="@drawable/ic_warning"
                 android:text="@string/bike_inoperational"
                 android:textColor="@color/warning_gray"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_medium"/>
 
             <TextView
                 android:id="@+id/map_overlay_operational_with_issues"
@@ -66,7 +66,7 @@
                 android:drawableStart="@drawable/ic_warning"
                 android:text="@string/bike_operational_with_issues"
                 android:textColor="@color/warning_gray"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_medium"/>
 
 
             <TextView
@@ -75,7 +75,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:singleLine="true"
                 android:text="Note"
-                android:textSize="@dimen/text_large" />
+                android:textSize="@dimen/text_large"/>
 
             <TextView
                 android:id="@+id/map_overlay_description"
@@ -84,7 +84,7 @@
                 android:minLines="1"
                 android:text="Description"
                 android:textColor="@color/warning_gray"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_medium"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -96,12 +96,12 @@
         android:layout_above="@id/map_overlay_area"
         android:layout_marginBottom="-35dp"
         android:src="@drawable/ic_navigation"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/map_overlay_center_map"
         style="@style/IconImageView"
         android:layout_above="@id/map_overlay_route"
-        android:src="@drawable/ic_location" />
+        android:src="@drawable/ic_location"/>
 
 </cz.rekola.app.view.BikeOverlayView>

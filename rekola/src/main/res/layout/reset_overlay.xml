@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/reset_overlay"
-    style="@style/Layout"
-    android:background="@color/background_window"
-    android:visibility="gone">
+             android:id="@+id/reset_overlay"
+             style="@style/Layout"
+             android:background="@color/background_window"
+             android:visibility="gone">
 
     <ScrollView style="@style/Layout">
 
@@ -18,14 +18,14 @@
                 android:layout_marginBottom="@dimen/margin_large"
                 android:text="@string/reset_title"
                 android:textColor="@color/gray_2"
-                android:textSize="32dp" />
+                android:textSize="32dp"/>
 
             <TextView
                 style="@style/TextView"
                 android:layout_marginBottom="@dimen/margin_large"
                 android:gravity="center"
                 android:text="@string/reset_info"
-                android:textColor="@color/gray_2" />
+                android:textColor="@color/gray_2"/>
 
             <!--    textCursorDrawable null, because of some bug, that caused invisible cursor-->
             <EditText
@@ -35,14 +35,14 @@
                 android:imeOptions="actionDone"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/text_primary"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"/>
 
             <Button
                 android:id="@+id/reset"
                 style="@style/ButtonPink"
                 android:layout_below="@id/password"
                 android:layout_marginBottom="@dimen/grid_20"
-                android:text="@string/reset_reset" />
+                android:text="@string/reset_reset"/>
 
         </LinearLayout>
     </ScrollView>
@@ -55,6 +55,6 @@
         android:layout_margin="@dimen/grid_4"
         android:text="@string/reset_recall"
         android:textColor="@color/clickable_text"
-        android:textSize="@dimen/text_medium" />
+        android:textSize="@dimen/text_medium"/>
 
 </FrameLayout>

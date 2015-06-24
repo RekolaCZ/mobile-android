@@ -1,5 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout">
+             style="@style/Layout">
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -12,6 +12,6 @@
         android:visibility="gone"
         style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"></ProgressBar>
 
-    <include layout="@layout/message_bar" />
+    <include layout="@layout/message_bar"/>
 
 </FrameLayout>

@@ -1,29 +1,29 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
-    android:orientation="vertical"
-    tools:context="cz.rekola.app.fragment.natural.BikeDetailFragment">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            tools:context="cz.rekola.app.fragment.natural.BikeDetailFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/bike_detail_basic" />
+        <include layout="@layout/bike_detail_basic"/>
 
-        <include layout="@layout/bike_detail_line" />
+        <include layout="@layout/bike_detail_line"/>
 
-        <include layout="@layout/bike_detail_recently_returned" />
+        <include layout="@layout/bike_detail_recently_returned"/>
 
-        <include layout="@layout/bike_detail_line" />
+        <include layout="@layout/bike_detail_line"/>
 
-        <include layout="@layout/bike_detail_equipment" />
+        <include layout="@layout/bike_detail_equipment"/>
 
-        <include layout="@layout/bike_detail_line" />
+        <include layout="@layout/bike_detail_line"/>
 
-        <include layout="@layout/bike_detail_issues" />
+        <include layout="@layout/bike_detail_issues"/>
 
 
     </LinearLayout>

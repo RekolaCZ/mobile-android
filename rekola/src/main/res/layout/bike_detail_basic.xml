@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/ivAckeeLogo"
@@ -10,7 +10,7 @@
         android:paddingTop="10dp"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
-        android:src="@drawable/logo_ackee" />
+        android:src="@drawable/logo_ackee"/>
 
 
     <TextView
@@ -19,12 +19,12 @@
         android:layout_marginBottom="20dp"
         android:text="Lady favorit"
         android:textColor="@color/dark_pink2"
-        android:textSize="@dimen/text_xlarge" />
+        android:textSize="@dimen/text_xlarge"/>
 
     <TextView
         android:id="@+id/vehicleName"
         style="@style/TitleTextView"
-        android:text="Kníže Pupík Ignor" />
+        android:text="Kníže Pupík Ignor"/>
 
     <TextView
         android:id="@+id/operational_with_problems"
@@ -32,7 +32,7 @@
         android:drawableLeft="@drawable/icon_warning_yellow"
         android:drawableStart="@drawable/icon_warning_yellow"
         android:text="@string/bike_operational_with_issues"
-        android:textColor="@color/warning_yellow" />
+        android:textColor="@color/warning_yellow"/>
 
     <TextView
         android:id="@+id/inoperational"
@@ -40,7 +40,7 @@
         android:drawableLeft="@drawable/icon_warning_red"
         android:drawableStart="@drawable/icon_warning_red"
         android:text="@string/bike_inoperational"
-        android:textColor="@color/warning_pink" />
+        android:textColor="@color/warning_pink"/>
 
 
     <TextView
@@ -54,6 +54,6 @@
         android:paddingRight="10dp"
         android:text="Městské kolo s nosičem, košíkem, protišlapnou brzdou a nábojovou převodovkou"
         android:textColor="@color/grey5"
-        android:textSize="@dimen/text_small" />
+        android:textSize="@dimen/text_small"/>
 
 </LinearLayout>

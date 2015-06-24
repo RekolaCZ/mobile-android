@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/grid_5"
-    android:layout_marginRight="@dimen/grid_5"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/grid_5"
+              android:layout_marginRight="@dimen/grid_5"
+              android:orientation="vertical">
 
 
     <TextView
@@ -12,14 +12,14 @@
         style="@style/TitleTextView"
         android:layout_marginBottom="10dp"
         android:text="@string/bike_detail_issues"
-        android:textSize="@dimen/text_xlarge" />
+        android:textSize="@dimen/text_xlarge"/>
 
     <Button
         android:id="@+id/btn_equipments_detail"
         style="@style/ButtonPink"
         android:layout_gravity="center"
         android:text="@string/bike_detail_add_issue"
-        android:textSize="@dimen/text_medium" />
+        android:textSize="@dimen/text_medium"/>
 
 
 </LinearLayout>

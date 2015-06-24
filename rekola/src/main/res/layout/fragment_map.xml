@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout">
+             style="@style/Layout">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
-        style="@style/Layout" />
+        style="@style/Layout"/>
 
-    <include layout="@layout/map_bike_overlay" />
+    <include layout="@layout/map_bike_overlay"/>
 
 </FrameLayout>

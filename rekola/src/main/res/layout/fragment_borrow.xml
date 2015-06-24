@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout">
+             style="@style/Layout">
 
 
     <LinearLayout style="@style/Layout">
@@ -23,7 +23,7 @@
                 <ImageView
                     style="@style/ImageView"
                     android:padding="10dp"
-                    android:src="@drawable/logo_web" />
+                    android:src="@drawable/logo_web"/>
 
 
                 <TextView
@@ -31,7 +31,7 @@
                     android:layout_marginBottom="@dimen/margin_large"
                     android:gravity="center"
                     android:text="@string/borrow_info_1"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"/>
 
 
                 <TextView
@@ -41,7 +41,7 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:text="@string/borrow_info_2"
-                    android:textSize="@dimen/text_small" />
+                    android:textSize="@dimen/text_small"/>
 
                 <EditText
                     android:id="@+id/bike_code"
@@ -50,7 +50,7 @@
                     android:hint="@string/borrow_code_hint"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:maxLength="@integer/bike_code_length" />
+                    android:maxLength="@integer/bike_code_length"/>
 
 
             </LinearLayout>
@@ -62,7 +62,7 @@
             android:layout_marginBottom="@dimen/margin_large"
             android:layout_marginLeft="@dimen/grid_8"
             android:layout_marginRight="@dimen/grid_8"
-            android:text="@string/borrow_borrow" />
+            android:text="@string/borrow_borrow"/>
 
     </LinearLayout>
 

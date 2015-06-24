@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Layout"
-    android:layout_marginLeft="@dimen/grid_5"
-    android:layout_marginRight="@dimen/grid_5"
-    android:layout_marginTop="@dimen/grid_5"
-    tools:context="cz.rekola.app.fragment.natural.ProfileFragment">
+             xmlns:tools="http://schemas.android.com/tools"
+             style="@style/Layout"
+             android:layout_marginLeft="@dimen/grid_5"
+             android:layout_marginRight="@dimen/grid_5"
+             android:layout_marginTop="@dimen/grid_5"
+             tools:context="cz.rekola.app.fragment.natural.ProfileFragment">
 
     <LinearLayout
         style="@style/Layout"
@@ -17,7 +17,7 @@
             style="@style/TitleTextView"
             android:layout_marginBottom="@dimen/grid_2"
             android:text="Korben Dallas"
-            android:textSize="@dimen/text_xxxlarge" />
+            android:textSize="@dimen/text_xxxlarge"/>
 
         <LinearLayout
             style="@style/Layout"
@@ -30,7 +30,7 @@
                 style="@style/TextView"
                 android:layout_width="wrap_content"
                 android:text="@string/profile_membership_end"
-                android:textColor="@color/pink_1" />
+                android:textColor="@color/pink_1"/>
 
             <TextView
                 style="@style/TextView"
@@ -38,7 +38,7 @@
                 android:paddingLeft="5dp"
                 android:text="29.9. 2015"
                 android:textColor="@color/pink_1"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -49,41 +49,41 @@
             android:layout_marginBottom="@dimen/grid_5"
             android:drawableLeft="@drawable/ic_logout"
             android:drawablePadding="7dp"
-            android:text="@string/profile_logout" />
+            android:text="@string/profile_logout"/>
 
 
         <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
 
-            tools:context=".GridLayoutActivity">
-
-            <TextView
-                style="@style/TextViewGridDescription"
-                android:text="@string/profile_email" />
-
-            <TextView
-                style="@style/TextViewGridValue"
-                android:text="@string/profile_email" />
-
+                    tools:context=".GridLayoutActivity">
 
             <TextView
                 style="@style/TextViewGridDescription"
-                android:text="@string/profile_address" />
+                android:text="@string/profile_email"/>
 
             <TextView
                 style="@style/TextViewGridValue"
-                android:text="@string/profile_address" />
+                android:text="@string/profile_email"/>
+
 
             <TextView
                 style="@style/TextViewGridDescription"
-                android:text="@string/profile_phone" />
+                android:text="@string/profile_address"/>
 
             <TextView
                 style="@style/TextViewGridValue"
-                android:text="@string/profile_phone" />
+                android:text="@string/profile_address"/>
+
+            <TextView
+                style="@style/TextViewGridDescription"
+                android:text="@string/profile_phone"/>
+
+            <TextView
+                style="@style/TextViewGridValue"
+                android:text="@string/profile_phone"/>
 
         </GridLayout>
 
@@ -94,6 +94,6 @@
         style="@style/ButtonGrey"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/grid_6"
-        android:text="@string/about_title" />
+        android:text="@string/about_title"/>
 
 </FrameLayout>

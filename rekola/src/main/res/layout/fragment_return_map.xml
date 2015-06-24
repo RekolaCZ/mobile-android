@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout">
+                style="@style/Layout">
 
 
     <FrameLayout
@@ -24,7 +24,7 @@
                 android:layout_below="@id/ivVehicleIcon"
                 android:layout_gravity="left"
                 android:text="@string/returnmap_bike_position"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"/>
 
             <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
             <EditText
@@ -33,13 +33,13 @@
                 android:hint="@string/returnmap_note_hint"
                 android:imeOptions="actionDone"
                 android:inputType="text|textCapSentences"
-                android:lines="2" />
+                android:lines="2"/>
 
             <Button
                 android:id="@+id/bike_returned"
                 style="@style/ButtonPink"
                 android:layout_marginBottom="0dp"
-                android:text="@string/returnmap_bike_returned" />
+                android:text="@string/returnmap_bike_returned"/>
 
         </LinearLayout>
     </FrameLayout>
@@ -53,13 +53,13 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <ImageView
             style="@style/ImageView"
             android:layout_gravity="center"
             android:clickable="false"
-            android:src="@drawable/ic_pin_return" />
+            android:src="@drawable/ic_pin_return"/>
 
     </FrameLayout>
 
@@ -68,6 +68,6 @@
         style="@style/IconImageView"
         android:layout_above="@id/flBottom"
         android:layout_marginBottom="-40dp"
-        android:src="@drawable/ic_location_inverse" />
+        android:src="@drawable/ic_location_inverse"/>
 
 </RelativeLayout>

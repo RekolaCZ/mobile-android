@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@color/very_light_pink2" />
+    <item android:state_pressed="true" android:drawable="@color/very_light_pink2"/>
     <!-- pressed -->
-    <item android:state_focused="true" android:drawable="@color/very_light_pink2" />
+    <item android:state_focused="true" android:drawable="@color/very_light_pink2"/>
     <!-- focused -->
-    <item android:drawable="@color/light_pink" />
+    <item android:drawable="@color/light_pink"/>
     <!-- default -->
 </selector>
