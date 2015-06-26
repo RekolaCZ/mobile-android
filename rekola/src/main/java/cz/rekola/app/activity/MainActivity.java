@@ -200,10 +200,15 @@ public class MainActivity extends BaseActivity implements PageController {
         invalidateOptionsMenu();
     }
 
+    @Override
+    public void requestAddIssue() {
+        setState(PageManager.EPageState.ADD_ISSUE);
+        invalidateOptionsMenu();
+    }
+
     private Fragment setState(PageManager.EPageState pageState) {
         return pageManager.setState(pageState, this, getFragmentManager(), getSupportActionBar(), getResources());
     }
-
 
     private MyBikeWrapper getMyBike() {
         return getApp().getDataManager().getBorrowedBike(false);

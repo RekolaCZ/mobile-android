@@ -205,7 +205,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
             llEquipments = (LinearLayout) itemView.findViewById(R.id.llEquipments);
             btn_equipments_detail = (Button) itemView.findViewById(R.id.btn_equipments_detail);
 
-            btn_equipments_detail = (Button) itemView.findViewById(R.id.btn_add_issue);
+            btn_add_issue = (Button) itemView.findViewById(R.id.btn_add_issue);
 
             tvIssueTitle = (TextView) itemView.findViewById(R.id.tvIssueTitle);
 

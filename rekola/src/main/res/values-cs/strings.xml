@@ -60,6 +60,13 @@
     <string name="bike_detail_issues">Problémy</string>
     <string name="bike_detail_add_issue">Přidat problém</string>
 
+    <!-- Add issue -->
+    <string name="add_issue_title">Hlášení problémů</string>
+    <string name="add_issue_type">Typ problémů</string>
+    <string name="add_issue_detail_description">Detailní popis závady</string>
+    <string name="add_issue_inoperational">Kolo je nepojízdné</string>
+    <string name="add_issue_report_issue">Nahlásit problém</string>
+
     <!-- Error messages -->
     <string name="error_network">Chyba připojení.</string>
     <string name="error_missing_credentials">Zadejte svůj e-mail a heslo.</string>

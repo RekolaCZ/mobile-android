@@ -14,4 +14,6 @@ public interface PageController {
 
     public void requestWebBikeReturned(String successUrl);
 
+    public void requestAddIssue();
+
 }

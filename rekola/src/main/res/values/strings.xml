@@ -60,6 +60,13 @@
     <string name="bike_detail_issues">Issues</string>
     <string name="bike_detail_add_issue">Add issue</string>
 
+    <!-- Add issue -->
+    <string name="add_issue_title">Report an issue</string>
+    <string name="add_issue_type">Issue type</string>
+    <string name="add_issue_detail_description">Detail issue description</string>
+    <string name="add_issue_inoperational">Bike is inoperational</string>
+    <string name="add_issue_report_issue">Report issue</string>
+
     <!-- Error messages -->
     <string name="error_network">Connection problem.</string>
     <string name="error_missing_credentials">Fill in your email and password.</string>
