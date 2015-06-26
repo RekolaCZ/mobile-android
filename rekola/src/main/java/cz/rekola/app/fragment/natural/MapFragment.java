@@ -13,16 +13,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 import com.squareup.otto.Subscribe;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,6 +32,8 @@ import cz.rekola.app.core.bus.BikesFailedEvent;
 import cz.rekola.app.core.bus.ReturnBikeEvent;
 import cz.rekola.app.core.loc.MyLocation;
 import cz.rekola.app.core.loc.MyLocationListener;
+import cz.rekola.app.core.map.Cluster.BikeClusterItem;
+import cz.rekola.app.core.map.Cluster.BikeRenderer;
 import cz.rekola.app.core.map.DirectionManager;
 import cz.rekola.app.core.map.DirectionParams;
 import cz.rekola.app.fragment.base.BaseMainFragment;
@@ -50,6 +48,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     BikeOverlayView vOverlay;
 
     private MapManager mapManager = new MapManager();
+    private ClusterManager<BikeClusterItem> mClusterManager;
     private Timer timer;
 
     private View vView;
@@ -100,20 +99,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             return vView;
         }
 
-
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
         // Gets the MapView from the XML layout and creates it
         vMap = (MapView) rootView.findViewById(R.id.mapView);
         vMap.onCreate(savedInstanceState);
 
-        // Gets to GoogleMap from the MapView and does initialization stuff
-/*				  vMap.getMapAsync(new OnMapReadyCallback) {
-         @Override
-         public void onMapReady(GoogleMap googleMap) {
-                map = googleMap;
-         }
-    });
-			*/
         map = vMap.getMap();
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(false);
@@ -219,75 +209,71 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             map.moveCamera(cameraUpdate);
     }
 
-    private class MapManager implements GoogleMap.OnMarkerClickListener, DirectionManager.DirectionsLoadedListener {
+    private class MapManager implements ClusterManager.OnClusterItemClickListener<BikeClusterItem>,
+            DirectionManager.DirectionsLoadedListener {
 
-        private Map<Marker, Bike> markerMap = new HashMap<>();
-
-        private BitmapDescriptor markerNormalBitmap;
-        private BitmapDescriptor markerFocusedBitmap;
-
-        private Marker lastMarker = null;
-        private Bike lastBike = null;
-
+        private BikeClusterItem lastBikeClusterItem = null;
         private DirectionManager directionManager = new DirectionManager(this);
 
         void init() {
-            map.setOnMarkerClickListener(this);
-            markerNormalBitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_normal);
-            markerFocusedBitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_focused_pressed);
+            mClusterManager = new ClusterManager<>(getActivity(), map);
+            mClusterManager.setOnClusterItemClickListener(this);
+            mClusterManager.setRenderer(new BikeRenderer(getActivity(), getActivity()
+                    .getLayoutInflater(), map, mClusterManager));
+
+            // Point the map's listeners at the listeners implemented by the cluster
+            // manager.
+            map.setOnCameraChangeListener(mClusterManager);
+            map.setOnMarkerClickListener(mClusterManager);
         }
 
         void updateMap(List<Bike> bikes) {
-            if (lastMarker != null) {
-                lastMarker.setIcon(markerNormalBitmap);
-            }
+         /*   if (lastBikeClusterItem != null) {
+                lastBikeClusterItem.setIcon(markerNormalBitmap);
+            }*/
 
             map.clear();
-            markerMap.clear();
-            lastMarker = null;
+            lastBikeClusterItem = null;
 
-            Marker newMarker = null;
+            BikeClusterItem newBikeClusterItem = null;
             for (Bike bike : bikes) {
-                Marker marker = map.addMarker(new MarkerOptions()
-                        .position(new LatLng(bike.location.lat, bike.location.lng))
-                                //.alpha(0.7f)
-                        .title(bike.name)
-                        .icon(markerNormalBitmap));
-                markerMap.put(marker, bike);
+                BikeClusterItem bikeClusterItem = new BikeClusterItem(bike);
+                mClusterManager.addItem(bikeClusterItem);
 
-                if (lastBike != null && lastBike.id == bike.id) {
-                    newMarker = marker; // new marker after update
-                    lastBike = bike;
+                if (lastBikeClusterItem != null && lastBikeClusterItem.getBike().id == bike.id) {
+                    newBikeClusterItem = bikeClusterItem; // new marker after update
+                    lastBikeClusterItem = bikeClusterItem;
                 }
             }
+            mClusterManager.cluster(); //will draw icons
 
-            if (newMarker == null) {
-                lastBike = null;
-                //   vOverlay.hide();
+            if (newBikeClusterItem == null) {
+                vOverlay.hide();
                 directionManager.hideDirections();
             } else {
-                lastMarker = newMarker;
-                vOverlay.show(lastBike);
-                lastMarker.setIcon(markerFocusedBitmap);
-                lastMarker.showInfoWindow(); // Force to top
+                lastBikeClusterItem = newBikeClusterItem;
+                vOverlay.show(lastBikeClusterItem.getBike());
+                //  lastMarker.setIcon(markerFocusedBitmap);
+                //  lastMarker.showInfoWindow(); // Force to top
                 directionManager.addDirections(map);
             }
         }
 
         void notifyOverlayClose() {
-            lastBike = null;
-            if (lastMarker != null) {
+            lastBikeClusterItem = null;
+           /* if (lastMarker != null) {
                 lastMarker.setIcon(markerNormalBitmap);
                 lastMarker = null;
-            }
+            }*/
             vOverlay.hide();
             directionManager.hideDirections();
         }
 
         void notifyRoutePressed() {
-            if (lastBike == null)
+            if (lastBikeClusterItem == null)
                 return;
 
+            Bike lastBike = lastBikeClusterItem.getBike();
             DirectionParams params = new DirectionParams(
                     getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
                     new LatLng(lastBike.location.lat, lastBike.location.lng),
@@ -301,36 +287,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         }
 
         void notifyBikeDetailPressed() {
-            if (lastBike != null) {
-                getPageController().requestBikeDetail(lastBike.id);
+            if (lastBikeClusterItem != null) {
+                getPageController().requestBikeDetail(lastBikeClusterItem.getBike().id);
             }
-        }
-
-        @Override
-        public boolean onMarkerClick(Marker marker) {
-            if (lastMarker != null) {
-                lastMarker.setIcon(markerNormalBitmap);
-                directionManager.hideDirections();
-            }
-
-            if (marker.equals(lastMarker)) {
-                lastMarker = null;
-                lastBike = null;
-                vOverlay.hide();
-                directionManager.hideDirections();
-                return true;
-            }
-
-            marker.setIcon(markerFocusedBitmap);
-
-            lastBike = markerMap.get(marker);
-            lastMarker = marker;
-
-            if (lastBike != null) {
-                vOverlay.show(lastBike);
-            }
-
-            return false;
         }
 
         @Override
@@ -342,6 +301,32 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         @Override
         public void onDirectionsError() {
             getApp().getDataManager().customLoadDirectionsFinished(false);
+        }
+
+        @Override
+        public boolean onClusterItemClick(BikeClusterItem bikeClusterItem) {
+
+            if (lastBikeClusterItem != null) {
+                //   lastMarker.setIcon(markerNormalBitmap);
+                directionManager.hideDirections();
+            }
+
+            if (bikeClusterItem.equals(lastBikeClusterItem)) {
+                lastBikeClusterItem = null;
+                vOverlay.hide();
+                directionManager.hideDirections();
+                return true;
+            }
+
+            // marker.setIcon(markerFocusedBitmap);
+
+            lastBikeClusterItem = bikeClusterItem;
+
+            if (lastBikeClusterItem != null) {
+                vOverlay.show(lastBikeClusterItem.getBike());
+            }
+
+            return false;
         }
     }
 
