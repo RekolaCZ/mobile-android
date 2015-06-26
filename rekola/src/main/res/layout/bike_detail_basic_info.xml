@@ -5,7 +5,7 @@
               android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/ivAckeeLogo"
+        android:id="@+id/ivBikeIcon"
         style="@style/ImageView"
         android:paddingTop="10dp"
         android:paddingLeft="80dp"
@@ -15,6 +15,7 @@
 
     <TextView
         style="@style/TextView"
+        android:id="@+id/tvBikeType"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         android:text="Lady favorit"
@@ -22,12 +23,12 @@
         android:textSize="@dimen/text_xlarge"/>
 
     <TextView
-        android:id="@+id/vehicleName"
+        android:id="@+id/tvBikeName"
         style="@style/TitleTextView"
         android:text="Kníže Pupík Ignor"/>
 
     <TextView
-        android:id="@+id/operational_with_problems"
+        android:id="@+id/tvOperational_with_problems"
         style="@style/TextViewWarning"
         android:drawableLeft="@drawable/icon_warning_yellow"
         android:drawableStart="@drawable/icon_warning_yellow"
@@ -35,7 +36,7 @@
         android:textColor="@color/warning_yellow"/>
 
     <TextView
-        android:id="@+id/inoperational"
+        android:id="@+id/tvInoperational"
         style="@style/TextViewWarning"
         android:drawableLeft="@drawable/icon_warning_red"
         android:drawableStart="@drawable/icon_warning_red"
@@ -44,7 +45,7 @@
 
 
     <TextView
-        android:id="@+id/map_overlay_inoperational"
+        android:id="@+id/tvBikeDescription"
         style="@style/TextView"
         android:layout_gravity="center"
         android:gravity="center"

@@ -8,18 +8,14 @@
 
 
     <TextView
-        android:id="@+id/vehicleName"
-        style="@style/TitleTextView"
+        android:id="@+id/tvIssueTitle"
+        style="@style/TextView"
         android:layout_marginBottom="10dp"
-        android:text="@string/bike_detail_issues"
-        android:textSize="@dimen/text_xlarge"/>
-
-    <Button
-        android:id="@+id/btn_equipments_detail"
-        style="@style/ButtonPink"
-        android:layout_gravity="center"
-        android:text="@string/bike_detail_add_issue"
-        android:textSize="@dimen/text_medium"/>
+        android:text="issue title"
+        android:textColor="@color/base_green"
+        android:textSize="@dimen/text_xlarge"
+        android:textStyle="bold"
+        />
 
 
 </LinearLayout>

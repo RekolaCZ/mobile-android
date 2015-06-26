@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/grid_5"
+              android:layout_marginRight="@dimen/grid_5"
+              android:layout_marginBottom="20dp"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        >
+
+
+        <TextView
+            android:id="@+id/tvUserName"
+            style="@style/TextView"
+            android:text="User Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_xlarge"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/TextView"
+            android:text=" / "
+            android:textColor="@color/dark_pink2"
+            android:textSize="@dimen/text_xlarge"
+            />
+
+        <TextView
+            android:id="@+id/tvIssueDate"
+            style="@style/TextView"
+            android:text="21.05.2015"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_xlarge"
+            />
+
+        <TextView
+            style="@style/TextView"
+            android:text=" / "
+            android:textColor="@color/dark_pink2"
+            android:textSize="@dimen/text_xlarge"
+            />
+
+
+        <TextView
+            android:id="@+id/tvIssueTime"
+            style="@style/TextView"
+            android:text="14:55"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_xlarge"
+            />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvIssueDescription"
+        style="@style/TextView"
+        android:layout_marginBottom="10dp"
+        android:text="fds dsfsd afasd dsfds ffsdfsd dfsdf sdfds dsfsd dsfsd"
+        android:textColor="@color/grey5"
+        android:textSize="@dimen/text_large"
+        />
+
+</LinearLayout>

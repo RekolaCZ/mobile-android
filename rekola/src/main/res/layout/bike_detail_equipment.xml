@@ -15,7 +15,7 @@
 
     <!-- equipments will be dynamically added in code (is loaded via api)-->
     <LinearLayout
-        android:id="@+id/equipments"
+        android:id="@+id/llEquipments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
