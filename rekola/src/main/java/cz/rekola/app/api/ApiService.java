@@ -7,6 +7,7 @@ import cz.rekola.app.api.model.bike.BorrowedBike;
 import cz.rekola.app.api.model.bike.LockCode;
 import cz.rekola.app.api.model.bike.ReturnedBike;
 import cz.rekola.app.api.model.map.Poi;
+import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.api.model.user.Token;
 import cz.rekola.app.api.requestmodel.Credentials;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
@@ -45,4 +46,7 @@ public interface ApiService {
 
     @GET("/location/pois")
     public void getPois(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
+
+    @GET("/accounts/mine")
+    public void getAccount(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Account> callback);
 }

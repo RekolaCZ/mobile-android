@@ -3,6 +3,7 @@ package cz.rekola.app.core.data;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import cz.rekola.app.api.model.bike.ReturnedBike;
 import cz.rekola.app.api.model.error.BikeConflictError;
 import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.api.model.map.Poi;
+import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.api.model.user.Token;
 import cz.rekola.app.api.requestmodel.Credentials;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
@@ -55,6 +57,7 @@ public class DataManager {
     private List<Bike> bikes;
     private MyBikeWrapper myBike;
     private List<Poi> pois;
+    private Account account;
 
     private LoadingManager loadingManager;
 
@@ -339,6 +342,42 @@ public class DataManager {
         }
     }
 
+    public Account getAccount() {
+
+//TODO delete after api will be ready
+        Account account = new Account();
+        account.name = "Korben Dallas";
+        account.membershipEnd = new Date(0);
+        account.email = "mail@example.com";
+        account.phone = "+420 555 888 777";
+        account.address = "Bechyňova 274/8, Praha 6";
+        return account;
+
+/*
+        if (account != null  || !loadingManager.addLoading(DataLoad.ACCOUNT)) {
+            return account;
+        }
+
+        ApiService apiService = app.getApiService();
+        apiService.getAccount(token.apiKey, new Callback<Account>() {
+                    @Override
+                    public void success(Account account, Response response) {
+                        loadingManager.removeLoading(DataLoad.ACCOUNT);
+                        DataManager.this.account = account;
+                        app.getBus().post(new BikesAvailableEvent());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        loadingManager.removeLoading(DataLoad.ACCOUNT);
+                        handleGlobalError(error, app.getResources().getString(R.string.error_get_bikes_failed));
+                    }
+                });
+
+        return null;
+        */
+    }
+
     private void handleGlobalError(RetrofitError error, String title) {
         if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
             if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
@@ -386,8 +425,8 @@ public class DataManager {
         BORROW_BIKE,
         RETURN_BIKE,
         POIS,
-
-        CUSTOM_LOAD_DIRECTIONS
+        CUSTOM_LOAD_DIRECTIONS,
+        ACCOUNT
     }
 
     private class LoadingManager {

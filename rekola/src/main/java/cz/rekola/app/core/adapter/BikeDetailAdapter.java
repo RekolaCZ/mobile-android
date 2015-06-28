@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
 import cz.rekola.app.R;
+import cz.rekola.app.Utils.DateUtils;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.model.BikeDetailItem;
 
@@ -112,12 +112,8 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
             position) {
         Date date = mData.get(position).getRecentlyReturned();
 
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        viewHolder.tvRecReturnedDate.setText(dateFormat.format(date));
-
-        DateFormat timeFormat = DateFormat.getTimeInstance();
-        viewHolder.tvRecReturnedTime.setText(timeFormat.format(date));
-
+        viewHolder.tvRecReturnedDate.setText(DateUtils.getDate(date));
+        viewHolder.tvRecReturnedTime.setText(DateUtils.getTime(date));
         viewHolder.tvRecReturnedDescription.setText(mData.get(position).getRecentPlaceDescription());
     }
 
@@ -147,11 +143,8 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
         Date date = issueUpdate.issuedAt;
 
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        viewHolder.tvIssueDate.setText(dateFormat.format(date));
-
-        DateFormat timeFormat = DateFormat.getTimeInstance();
-        viewHolder.tvIssueTime.setText(timeFormat.format(date));
+        viewHolder.tvIssueDate.setText(DateUtils.getDate(date));
+        viewHolder.tvIssueTime.setText(DateUtils.getTime(date));
     }
 
     @Override
