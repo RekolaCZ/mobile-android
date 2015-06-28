@@ -3,7 +3,7 @@ package cz.rekola.app.core.map.Cluster;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
-import cz.rekola.app.api.model.Bike;
+import cz.rekola.app.api.model.bike.Bike;
 
 /**
  * TODO add class description

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
-import cz.rekola.app.api.model.Bike;
+import cz.rekola.app.api.model.bike.Bike;
 import cz.rekola.app.core.anim.MyAnimator;
 
 public class BikeOverlayView extends RelativeLayout {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.rekola.app.R;
-import cz.rekola.app.api.model.Zone;
+import cz.rekola.app.api.model.map.Zone;
 
 /**
  * TODO add class description

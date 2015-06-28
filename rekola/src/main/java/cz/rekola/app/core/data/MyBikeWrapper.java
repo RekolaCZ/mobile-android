@@ -1,7 +1,7 @@
 package cz.rekola.app.core.data;
 
-import cz.rekola.app.api.model.BorrowedBike;
-import cz.rekola.app.api.model.LockCode;
+import cz.rekola.app.api.model.bike.BorrowedBike;
+import cz.rekola.app.api.model.bike.LockCode;
 
 /**
  * Holds the BorrowedBike or LockCode information if a bike is borrowed.

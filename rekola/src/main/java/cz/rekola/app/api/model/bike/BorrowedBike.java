@@ -1,4 +1,4 @@
-package cz.rekola.app.api.model;
+package cz.rekola.app.api.model.bike;
 
 public class BorrowedBike extends Bike {
 

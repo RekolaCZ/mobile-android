@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
-import cz.rekola.app.api.model.IssueUpdate;
+import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.adapter.BikeDetailAdapter;
 import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.fragment.base.BaseMainFragment;

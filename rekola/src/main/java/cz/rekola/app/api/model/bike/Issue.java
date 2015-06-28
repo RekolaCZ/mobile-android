@@ -1,4 +1,4 @@
-package cz.rekola.app.api.model;
+package cz.rekola.app.api.model.bike;
 
 import java.util.List;
 

@@ -5,8 +5,8 @@ import android.widget.Button;
 import java.util.Date;
 import java.util.List;
 
-import cz.rekola.app.api.model.Equipment;
-import cz.rekola.app.api.model.IssueUpdate;
+import cz.rekola.app.api.model.bike.Equipment;
+import cz.rekola.app.api.model.bike.IssueUpdate;
 
 /**
  * TODO add class description
