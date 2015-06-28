@@ -42,19 +42,64 @@ import cz.rekola.app.view.BikeOverlayView;
 
 public class MapFragment extends BaseMainFragment implements MyLocationListener, BikeOverlayView.BikeOverlayListener {
 
-    MapView vMap;
-    GoogleMap map;
+    @InjectView(R.id.overlay_map)
+    BikeOverlayView mOverlayMap;
+    @InjectView(R.id.view_map)
+    MapView mViewMap;
 
-    @InjectView(R.id.map_overlay)
-    BikeOverlayView vOverlay;
-
+    private GoogleMap mGooglemap;
     private MapManager mapManager = new MapManager();
     private Timer timer;
-    private View vView;
+    private View mMapFragmentView;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mMapFragmentView != null) { //some hack because of problem with google map
+            return mMapFragmentView;
+        }
+
+        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        ButterKnife.inject(this, rootView);
+
+        mViewMap.onCreate(savedInstanceState);
+
+        mGooglemap = mViewMap.getMap();
+        mGooglemap.getUiSettings().setMyLocationButtonEnabled(false);
+        mGooglemap.getUiSettings().setZoomControlsEnabled(false);
+        mGooglemap.setMyLocationEnabled(true);
+        mGooglemap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mGooglemap.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        MapsInitializer.initialize(this.getActivity());
+
+        // Updates the location and zoom of the MapView
+        centerMapOnMyLocation(false);
+
+        mMapFragmentView = rootView;
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (!getApp().getDataManager().isOperational())
+            return;
+
+        mOverlayMap.init(this);
+        mapManager.init();
+
+        if (getApp().getDataManager().getBikes(false) != null) {
+            setupMap();
+        }
+    }
+
 
     @Override
     public void onResume() {
-        vMap.onResume();
+        mViewMap.onResume();
         super.onResume();
         getApp().getMyLocationManager().register(this);
 
@@ -77,63 +122,19 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         timer.cancel();
         getApp().getMyLocationManager().unregister(this);
         super.onPause();
-        vMap.onPause();
+        mViewMap.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        vMap.onDestroy();
+        mViewMap.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        vMap.onLowMemory();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (vView != null) {
-            return vView;
-        }
-
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        // Gets the MapView from the XML layout and creates it
-        vMap = (MapView) rootView.findViewById(R.id.mapView);
-        vMap.onCreate(savedInstanceState);
-
-        map = vMap.getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.getUiSettings().setZoomControlsEnabled(false);
-        map.setMyLocationEnabled(true);
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        map.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
-
-        // Updates the location and zoom of the MapView
-        centerMapOnMyLocation(false);
-
-        vView = rootView;
-        return rootView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
-
-        if (!getApp().getDataManager().isOperational())
-            return;
-
-        vOverlay.init(this);
-        mapManager.init();
-
-        if (getApp().getDataManager().getBikes(false) != null) {
-            setupMap();
-        }
+        mViewMap.onLowMemory();
     }
 
     @Subscribe
@@ -195,7 +196,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                map.setPadding(0, 0, 0, height);
+                mGooglemap.setPadding(0, 0, 0, height);
             }
         }, 100);
     }
@@ -203,9 +204,15 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     private void centerMapOnMyLocation(boolean animate) {
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 13);
         if (animate)
-            map.animateCamera(cameraUpdate);
+            mGooglemap.animateCamera(cameraUpdate);
         else
-            map.moveCamera(cameraUpdate);
+            mGooglemap.moveCamera(cameraUpdate);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
 
@@ -217,15 +224,15 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         private DirectionManager directionManager = new DirectionManager(this);
 
         void init() {
-            mClusterManager = new ClusterManager<>(getActivity(), map);
+            mClusterManager = new ClusterManager<>(getActivity(), mGooglemap);
             mClusterManager.setOnClusterItemClickListener(this);
             mClusterManager.setRenderer(new BikeRenderer(getActivity(), getActivity()
-                    .getLayoutInflater(), map, mClusterManager));
+                    .getLayoutInflater(), mGooglemap, mClusterManager));
 
             // Point the map's listeners at the listeners implemented by the cluster
             // manager.
-            map.setOnCameraChangeListener(mClusterManager);
-            map.setOnMarkerClickListener(mClusterManager);
+            mGooglemap.setOnCameraChangeListener(mClusterManager);
+            mGooglemap.setOnMarkerClickListener(mClusterManager);
         }
 
         void updateMap(List<Bike> bikes) {
@@ -233,10 +240,10 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
                 lastBikeClusterItem.setIcon(markerNormalBitmap);
             }*/
 
-            map.clear();
+            mGooglemap.clear();
             mClusterManager.clearItems();
 
-            ZonesManager.drawTestZone(getActivity(), map);
+            ZonesManager.drawTestZone(getActivity(), mGooglemap);
 
             lastBikeClusterItem = null;
             BikeClusterItem newBikeClusterItem = null;
@@ -253,14 +260,14 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             mClusterManager.cluster(); //will draw icons
 
             if (newBikeClusterItem == null) {
-                vOverlay.hide();
+                mOverlayMap.hide();
                 directionManager.hideDirections();
             } else {
                 lastBikeClusterItem = newBikeClusterItem;
-                vOverlay.show(lastBikeClusterItem.getBike());
+                mOverlayMap.show(lastBikeClusterItem.getBike());
                 //  lastMarker.setIcon(markerFocusedBitmap);
                 //  lastMarker.showInfoWindow(); // Force to top
-                directionManager.addDirections(map);
+                directionManager.addDirections(mGooglemap);
             }
         }
 
@@ -270,7 +277,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
                 lastMarker.setIcon(markerNormalBitmap);
                 lastMarker = null;
             }*/
-            vOverlay.hide();
+            mOverlayMap.hide();
             directionManager.hideDirections();
         }
 
@@ -300,7 +307,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         @Override
         public void onDirectionsLoaded() {
             getApp().getDataManager().customLoadDirectionsFinished(true);
-            directionManager.addDirections(map);
+            directionManager.addDirections(mGooglemap);
         }
 
         @Override
@@ -318,7 +325,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
             if (bikeClusterItem.equals(lastBikeClusterItem)) {
                 lastBikeClusterItem = null;
-                vOverlay.hide();
+                mOverlayMap.hide();
                 directionManager.hideDirections();
                 return true;
             }
@@ -328,7 +335,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             lastBikeClusterItem = bikeClusterItem;
 
             if (lastBikeClusterItem != null) {
-                vOverlay.show(lastBikeClusterItem.getBike());
+                mOverlayMap.show(lastBikeClusterItem.getBike());
             }
 
             return false;

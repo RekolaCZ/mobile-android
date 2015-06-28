@@ -11,6 +11,7 @@ import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.core.bus.LockCodeEvent;
@@ -20,14 +21,17 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 
 public class BorrowFragment extends BaseMainFragment {
 
-    @InjectView(R.id.bike_code)
-    EditText vBikeCode;
-    @InjectView(R.id.borrow)
-    Button vBorrow;
+
+    @InjectView(R.id.txt_bike_code)
+    EditText mTxtBikeCode;
+    @InjectView(R.id.btn_borrow)
+    Button mBtnBorrow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_borrow, container, false);
+        View view = inflater.inflate(R.layout.fragment_borrow, container, false);
+        ButterKnife.inject(this, view);
+        return view;
     }
 
     @Override
@@ -37,18 +41,16 @@ public class BorrowFragment extends BaseMainFragment {
 
         if (!getApp().getDataManager().isOperational())
             return;
+    }
 
-        vBorrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (vBikeCode.getText().length() != getResources().getInteger(R.integer.bike_code_length)) {
-                    getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_incorrect_bike_code)));
-                    return;
-                }
-                getAct().hideKeyboard();
-                getApp().getDataManager().borrowBike(Integer.parseInt(vBikeCode.getText().toString()));
-            }
-        });
+    @OnClick(R.id.btn_borrow)
+    public void borrowOnClick() {
+        if (mTxtBikeCode.getText().length() != getResources().getInteger(R.integer.bike_code_length)) {
+            getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_incorrect_bike_code)));
+            return;
+        }
+        getAct().hideKeyboard();
+        getApp().getDataManager().borrowBike(Integer.parseInt(mTxtBikeCode.getText().toString()));
     }
 
     @Subscribe
@@ -65,4 +67,9 @@ public class BorrowFragment extends BaseMainFragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
 }

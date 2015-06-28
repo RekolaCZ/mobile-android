@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:id="@+id/vehicleName"
+        android:id="@+id/txt_vehicle_name"
         style="@style/TitleTextView"
         android:text="@string/bike_detail_recently_returned"
         android:textSize="@dimen/text_xlarge"
@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvRecReturnedDate"
+            android:id="@+id/txt_rec_returned_date"
             style="@style/TextView"
             android:drawableLeft="@drawable/icon_calendar"
             android:drawablePadding="2dp"
@@ -31,7 +31,7 @@
             android:textColor="@color/dark_pink2"/>
 
         <TextView
-            android:id="@+id/tvRecReturnedTime"
+            android:id="@+id/txt_rec_returned_time"
             style="@style/TextView"
             android:drawableLeft="@drawable/icon_clock"
             android:drawablePadding="2dp"
@@ -42,7 +42,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvRecReturnedDescription"
+        android:id="@+id/txt_rec_returned_description"
         style="@style/TextView"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"

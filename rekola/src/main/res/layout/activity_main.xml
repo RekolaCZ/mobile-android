@@ -3,14 +3,14 @@
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        style="@style/Layout"></FrameLayout>
+        style="@style/Layout"/>
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"></ProgressBar>
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"/>
 
     <include layout="@layout/message_bar"/>
 

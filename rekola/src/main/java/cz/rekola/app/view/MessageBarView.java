@@ -19,8 +19,8 @@ public class MessageBarView extends LinearLayout {
 
     private static final int MESSAGE_TIMEOUT = 5000;
 
-    @InjectView(R.id.error_text)
-    TextView message;
+    @InjectView(R.id.txt_error_text)
+    TextView mTxtErrorText;
 
     private final Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -62,7 +62,7 @@ public class MessageBarView extends LinearLayout {
 
     @Subscribe
     public void onMessage(MessageEvent event) {
-        message.setText(event.message);
+        mTxtErrorText.setText(event.message);
         switch (event.type) {
             case SUCCESS:
                 setBackgroundColor(getResources().getColor(R.color.green));

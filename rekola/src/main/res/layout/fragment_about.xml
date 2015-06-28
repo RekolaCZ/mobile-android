@@ -5,7 +5,7 @@
                 tools:context="cz.rekola.app.fragment.natural.AboutFragment">
 
     <ImageView
-        android:id="@+id/ivBackGround"
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -18,9 +18,9 @@
 
 
     <ImageView
-        android:id="@+id/ivAckeeLogo"
+        android:id="@+id/img_ackee_logo"
         style="@style/ImageView"
-        android:layout_above="@id/ivBackGround"
+        android:layout_above="@id/img_background"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:paddingLeft="60dp"
@@ -29,7 +29,7 @@
 
     <TextView
         style="@style/TextView"
-        android:layout_above="@id/ivAckeeLogo"
+        android:layout_above="@id/img_ackee_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:text="@string/about_text"

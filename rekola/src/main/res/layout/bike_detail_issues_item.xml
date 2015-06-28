@@ -15,7 +15,7 @@
 
 
         <TextView
-            android:id="@+id/tvUserName"
+            android:id="@+id/txt_user_name"
             style="@style/TextView"
             android:text="User Name"
             android:textColor="@color/black"
@@ -30,7 +30,7 @@
             />
 
         <TextView
-            android:id="@+id/tvIssueDate"
+            android:id="@+id/txt_issue_date"
             style="@style/TextView"
             android:text="21.05.2015"
             android:textColor="@color/black"
@@ -46,7 +46,7 @@
 
 
         <TextView
-            android:id="@+id/tvIssueTime"
+            android:id="@+id/txt_issue_time"
             style="@style/TextView"
             android:text="14:55"
             android:textColor="@color/black"
@@ -58,7 +58,7 @@
 
 
     <TextView
-        android:id="@+id/tvIssueDescription"
+        android:id="@+id/txt_issue_description"
         style="@style/TextView"
         android:layout_marginBottom="10dp"
         android:text="fds dsfsd afasd dsfds ffsdfsd dfsdf sdfds dsfsd dsfsd"

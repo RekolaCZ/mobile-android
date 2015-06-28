@@ -44,7 +44,7 @@
                     android:textSize="@dimen/text_small"/>
 
                 <EditText
-                    android:id="@+id/bike_code"
+                    android:id="@+id/txt_bike_code"
                     style="@style/EditTextBorrow"
                     android:layout_gravity="center"
                     android:hint="@string/borrow_code_hint"
@@ -57,7 +57,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/borrow"
+            android:id="@+id/btn_borrow"
             style="@style/ButtonPink"
             android:layout_marginBottom="@dimen/margin_large"
             android:layout_marginLeft="@dimen/grid_8"

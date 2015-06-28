@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:id="@+id/vehicleName"
+        android:id="@+id/txt_vehicle_name"
         style="@style/TitleTextView"
         android:layout_marginBottom="10dp"
         android:text="@string/bike_detail_equipments"
@@ -15,7 +15,7 @@
 
     <!-- equipments will be dynamically added in code (is loaded via api)-->
     <LinearLayout
-        android:id="@+id/llEquipments"
+        android:id="@+id/ll_equipments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

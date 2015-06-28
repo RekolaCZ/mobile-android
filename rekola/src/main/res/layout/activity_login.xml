@@ -13,7 +13,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/registration"
+                android:id="@+id/btn_registration"
                 style="@style/TextView"
                 android:layout_gravity="top|right"
                 android:fontFamily="sans-serif-medium"
@@ -26,27 +26,27 @@
                 android:src="@drawable/logo"/>
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/txt_user_name"
                 style="@style/EditTextPinkFilled"
                 android:hint="@string/login_username_hint"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"/>
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/txt_password"
                 style="@style/EditTextPinkFilled"
                 android:hint="@string/login_password_hint"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"/>
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/btn_login"
                 style="@style/SignInButton"
-                android:layout_below="@id/password"
+                android:layout_below="@id/txt_password"
                 android:text="@string/login_log_in"/>
 
             <TextView
-                android:id="@+id/recover_password"
+                android:id="@+id/btn_recover_password"
                 style="@style/TextView"
                 android:layout_margin="@dimen/grid_4"
                 android:text="@string/login_forgot_password"

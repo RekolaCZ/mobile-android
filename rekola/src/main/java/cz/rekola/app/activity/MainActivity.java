@@ -34,8 +34,8 @@ public class MainActivity extends BaseActivity implements PageController {
     @InjectView(R.id.progress)
     ProgressBar progressBar;
 
-    @InjectView(R.id.error_bar)
-    MessageBarView errorBar;
+    @InjectView(R.id.layout_error_bar)
+    MessageBarView mLayoutErrorBar;
 
     private PageManager pageManager;
 
@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity implements PageController {
     public void onResume() {
         super.onResume();
         getApp().getBus().register(this);
-        getApp().getBus().register(errorBar);
+        getApp().getBus().register(mLayoutErrorBar);
         setProgressBarIndeterminateVisibility(false);
     }
 
@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity implements PageController {
     public void onPause() {
         super.onPause();
         getApp().getBus().unregister(this);
-        getApp().getBus().unregister(errorBar);
+        getApp().getBus().unregister(mLayoutErrorBar);
     }
 
     @Override
@@ -96,16 +96,16 @@ public class MainActivity extends BaseActivity implements PageController {
 
     public void onCustomOptionsItemSelected(View v) {
         switch (v.getId()) {
-            case R.id.action_lock:
+            case R.id.img_action_lock:
                 MyBikeWrapper myBike = getMyBike();
                 PageManager.EPageState pageState = myBike != null && myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW;
                 pageManager.setState(pageState, this, getFragmentManager(), getSupportActionBar(), getResources());
 
                 break;
-            case R.id.action_map:
+            case R.id.img_action_map:
                 pageManager.setState(PageManager.EPageState.MAP, this, getFragmentManager(), getSupportActionBar(), getResources());
                 break;
-            case R.id.action_profile:
+            case R.id.img_action_profile:
                 pageManager.setState(PageManager.EPageState.PROFILE, this, getFragmentManager(), getSupportActionBar(), getResources());
                 break;
             case android.R.id.home:

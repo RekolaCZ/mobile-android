@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,6 +24,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.api.model.map.Poi;
@@ -43,58 +42,30 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 
 public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.OnMyLocationButtonClickListener,*/ MyLocationListener {
 
-    MapView vMap;
-    GoogleMap map;
+    @InjectView(R.id.txt_note)
+    EditText mTxtNote;
+    @InjectView(R.id.view_map)
+    MapView mViewMap;
+
+    private GoogleMap mGoogleMap;
 
     private MapLocationUpdater mapLocUpdater = new MapLocationUpdater();
 
-    @InjectView(R.id.note)
-    EditText vNote;
-    @InjectView(R.id.bike_returned)
-    Button vReturned;
-    @InjectView(R.id.center_map)
-    ImageView vCenterMap;
 
     private PoiManager pois = new PoiManager();
 
     @Override
-    public void onResume() {
-        vMap.onResume();
-        super.onResume();
-        getApp().getMyLocationManager().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getApp().getMyLocationManager().unregister(this);
-        vMap.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        vMap.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        vMap.onLowMemory();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_return_map, container, false);
-        // Gets the MapView from the XML layout and creates it
-        vMap = (MapView) rootView.findViewById(R.id.mapView);
-        vMap.onCreate(savedInstanceState);
+        ButterKnife.inject(this, rootView);
+
+        mViewMap.onCreate(savedInstanceState);
 
         // Gets to GoogleMap from the MapView and does initialization stuff
-        map = vMap.getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.getUiSettings().setZoomControlsEnabled(false);
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mGoogleMap = mViewMap.getMap();
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
@@ -107,33 +78,9 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
 
         if (!getApp().getDataManager().isOperational())
             return;
-
-        vReturned.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LatLng center = map.getCameraPosition().target;
-                MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
-                if (myBike == null || myBike.bike == null || myBike.bike.bikeCode == null || myBike.bike.bikeCode.length() == 0) {
-                    getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
-                    return;
-                }
-                // TODO: May throw NumberFormatException!
-                getAct().hideKeyboard();
-                getApp().getDataManager().returnBike(/*Integer.parseInt(*/myBike.bike.id/*)*/,
-                        new ReturningBike(new ReturningLocation(center.latitude, center.longitude, vNote.getText().toString())));
-            }
-        });
-
-        vCenterMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                centerMapOnMyLocation(true);
-            }
-        });
 
         pois.init();
 
@@ -141,13 +88,60 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
             setupMap();
         }
 
-        vNote.setInputType(
+        mTxtNote.setInputType(
                 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-        vNote.setSingleLine(true);
-        vNote.setLines(2);
-        vNote.setHorizontallyScrolling(false);
-        vNote.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        mTxtNote.setSingleLine(true);
+        mTxtNote.setLines(2);
+        mTxtNote.setHorizontallyScrolling(false);
+        mTxtNote.setImeOptions(EditorInfo.IME_ACTION_DONE);
     }
+
+    @OnClick(R.id.btn_return_bike)
+    public void returnBikeOnClick() {
+        LatLng center = mGoogleMap.getCameraPosition().target;
+        MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
+        if (myBike == null || myBike.bike == null || myBike.bike.bikeCode == null || myBike.bike.bikeCode.length() == 0) {
+            getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
+            return;
+        }
+        // TODO: May throw NumberFormatException!
+        getAct().hideKeyboard();
+        getApp().getDataManager().returnBike(/*Integer.parseInt(*/myBike.bike.id/*)*/,
+                new ReturningBike(new ReturningLocation(center.latitude, center.longitude, mTxtNote
+                        .getText().toString())));
+    }
+
+    @OnClick(R.id.btn_center_map)
+    public void centerMapOnClick() {
+        centerMapOnMyLocation(true);
+    }
+
+    @Override
+    public void onResume() {
+        mViewMap.onResume();
+        super.onResume();
+        getApp().getMyLocationManager().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getApp().getMyLocationManager().unregister(this);
+        mViewMap.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mViewMap.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mViewMap.onLowMemory();
+    }
+
 
     @Subscribe
     public void bikeReturned(ReturnBikeEvent event) {
@@ -187,9 +181,9 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     private void centerMapOnMyLocation(boolean animate) {
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 15);
         if (animate)
-            map.animateCamera(cameraUpdate);
+            mGoogleMap.animateCamera(cameraUpdate);
         else
-            map.moveCamera(cameraUpdate);
+            mGoogleMap.moveCamera(cameraUpdate);
     }
 
     private void setupMap() {
@@ -200,21 +194,27 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         pois.updateMap(poisList);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
     private class PoiManager implements GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
         void init() {
-            map.setOnMarkerClickListener(this);
-            map.setOnInfoWindowClickListener(this);
+            mGoogleMap.setOnMarkerClickListener(this);
+            mGoogleMap.setOnInfoWindowClickListener(this);
         }
 
         void updateMap(List<Poi> pois) {
-            map.clear();
+            mGoogleMap.clear();
 
             for (Poi poi : pois) {
                 BitmapDescriptor bmp = POIS.getBmpFromType(poi.type);
                 if (bmp == null)
                     continue;
-                map.addMarker(new MarkerOptions()
+                mGoogleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(poi.lat, poi.lng))
                         .title(poi.description)
                         .icon(bmp));
@@ -232,14 +232,14 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
             // TODO: Do not move to graves positions!
             // TODO: Put bay name into the note field if not present
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(marker.getPosition());
-            map.animateCamera(cameraUpdate);
+            mGoogleMap.animateCamera(cameraUpdate);
         }
     }
 
     private enum POIS {
         BAY("bay", R.drawable.ic_pin_parking_normal),
         GRAVE("grave", R.drawable.ic_pin_grave_normal),
-        NOPARKING("noparking", R.drawable.ic_pin_noparking_normal);
+        NO_PARKING("noparking", R.drawable.ic_pin_noparking_normal);
 
         static BitmapDescriptor getBmpFromType(String type) {
             for (POIS p : POIS.values()) {
@@ -250,7 +250,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
             return null;
         }
 
-        private POIS(String type, int resourceId) {
+        POIS(String type, int resourceId) {
             this.type = type;
             bmp = BitmapDescriptorFactory.fromResource(resourceId);
         }
@@ -280,7 +280,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
                 zoomLevel = 17;
 
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLocation.getLatLng(), zoomLevel);
-            map.animateCamera(cameraUpdate);
+            mGoogleMap.animateCamera(cameraUpdate);
 
             bestAcc = acc;
         }

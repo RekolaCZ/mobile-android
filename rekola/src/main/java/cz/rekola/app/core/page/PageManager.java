@@ -198,24 +198,24 @@ public class PageManager {
         if (customView.findViewById(R.id.custom_action_bar_default) == null)
             return;
 
-        ImageView lockIcon = (ImageView) customView.findViewById(R.id.action_lock);
-        ImageView mapIcon = (ImageView) customView.findViewById(R.id.action_map);
-        ImageView profileIcon = (ImageView) customView.findViewById(R.id.action_profile);
+        ImageView imgLockIcon = (ImageView) customView.findViewById(R.id.img_action_lock);
+        ImageView imgMapIcon = (ImageView) customView.findViewById(R.id.img_action_map);
+        ImageView imgProfileIcon = (ImageView) customView.findViewById(R.id.img_action_profile);
 
         if (activeState == EPageState.BORROW || activeState == EPageState.RETURN)
-            lockIcon.setImageResource(R.drawable.actionbar_ic_lock_active);
+            imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock_active);
         else
-            lockIcon.setImageResource(R.drawable.actionbar_ic_lock);
+            imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock);
 
         if (activeState == EPageState.MAP)
-            mapIcon.setImageResource(R.drawable.actionbar_ic_map_active);
+            imgMapIcon.setImageResource(R.drawable.actionbar_ic_map_active);
         else
-            mapIcon.setImageResource(R.drawable.actionbar_ic_map);
+            imgMapIcon.setImageResource(R.drawable.actionbar_ic_map);
 
         if (activeState == EPageState.PROFILE)
-            profileIcon.setImageResource(R.drawable.actionbar_ic_profile_active);
+            imgProfileIcon.setImageResource(R.drawable.actionbar_ic_profile_active);
         else
-            profileIcon.setImageResource(R.drawable.actionbar_ic_profile);
+            imgProfileIcon.setImageResource(R.drawable.actionbar_ic_profile);
 
     }
 

@@ -5,7 +5,7 @@
 
 
     <FrameLayout
-        android:id="@+id/flBottom"
+        android:id="@+id/layout_bottom"
         style="@style/Layout"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
@@ -19,16 +19,14 @@
             android:padding="@dimen/grid_2">
 
             <TextView
-                android:id="@+id/vehicleName"
                 style="@style/TextView"
-                android:layout_below="@id/ivVehicleIcon"
                 android:layout_gravity="left"
                 android:text="@string/returnmap_bike_position"
                 android:textColor="@color/black"/>
 
             <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
             <EditText
-                android:id="@+id/note"
+                android:id="@+id/txt_note"
                 style="@style/EditTextPinkBorder"
                 android:hint="@string/returnmap_note_hint"
                 android:imeOptions="actionDone"
@@ -36,7 +34,7 @@
                 android:lines="2"/>
 
             <Button
-                android:id="@+id/bike_returned"
+                android:id="@+id/btn_return_bike"
                 style="@style/ButtonPink"
                 android:layout_marginBottom="0dp"
                 android:text="@string/returnmap_bike_returned"/>
@@ -45,13 +43,13 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/flMap"
+        android:id="@+id/layout_map"
         style="@style/Layout"
-        android:layout_above="@id/flBottom"
+        android:layout_above="@id/layout_bottom"
         android:layout_alignParentTop="true">
 
         <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
+            android:id="@+id/view_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -64,9 +62,9 @@
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/center_map"
+        android:id="@+id/btn_center_map"
         style="@style/IconImageView"
-        android:layout_above="@id/flBottom"
+        android:layout_above="@id/layout_bottom"
         android:layout_marginBottom="-40dp"
         android:src="@drawable/ic_location_inverse"/>
 

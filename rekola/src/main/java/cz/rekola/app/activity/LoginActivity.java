@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.activity.base.BaseActivity;
 import cz.rekola.app.api.requestmodel.Credentials;
@@ -38,32 +38,33 @@ import cz.rekola.app.view.MessageBarView;
 public class LoginActivity extends BaseActivity {
 
     public static final String EXTRA_MESSAGE = "extra_message";
+    @InjectView(R.id.btn_registration)
+    TextView mBtnRegistration;
+    @InjectView(R.id.txt_user_name)
+    EditText mTxtUserName;
+    @InjectView(R.id.txt_password)
+    EditText mTxtPassword;
+    @InjectView(R.id.btn_login)
+    Button mBtnLogin;
+    @InjectView(R.id.btn_recover_password)
+    TextView mBtnRecoverPassword;
+    @InjectView(R.id.txt_reset_user_name)
+    EditText mTxtResetUserName;
+    @InjectView(R.id.btn_reset_password)
+    Button mBtnResetPassword;
+    @InjectView(R.id.btn_reset_recall)
+    TextView mBtnResetRecall;
+    @InjectView(R.id.overlay_reset)
+    FrameLayout mOverlayReset;
+    @InjectView(R.id.txt_loading_message)
+    TextView mTxtLoadingMessage;
+    @InjectView(R.id.overlay_loading)
+    LoadingOverlay mOverlayLoading;
+    @InjectView(R.id.txt_error_text)
+    TextView mTxtErrorText;
+    @InjectView(R.id.layout_error_bar)
+    MessageBarView mLayoutErrorBar;
 
-    @InjectView(R.id.username)
-    EditText vUsername;
-    @InjectView(R.id.password)
-    EditText vPassword;
-    @InjectView(R.id.login)
-    Button vLogin;
-    @InjectView(R.id.recover_password)
-    TextView vRecoverPassword;
-    @InjectView(R.id.registration)
-    TextView vRegistration;
-
-    @InjectView(R.id.reset_overlay)
-    FrameLayout vResetOverlay;
-    @InjectView(R.id.reset_username)
-    EditText vResetUsername;
-    @InjectView(R.id.reset)
-    Button vReset;
-    @InjectView(R.id.reset_recall)
-    TextView vRecall;
-
-    @InjectView(R.id.loading_overlay)
-    LoadingOverlay vLoading;
-
-    @InjectView(R.id.error_bar)
-    MessageBarView errorBar;
 
     private ViewHelper viewHelper = new ViewHelper();
 
@@ -72,84 +73,75 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
-
-        vLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewHelper.saveCredentials();
-                if (!viewHelper.canLogin()) {
-                    getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_credentials)));
-                    return;
-                }
-
-                login();
-            }
-        });
-
-        vRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
-                startActivity(browserIntent);
-            }
-        });
-
-        vRecoverPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (vResetUsername.getText().length() == 0) {
-                    vResetUsername.setText(vUsername.getText());
-                }
-                MyAnimator.showSlideUp(vResetOverlay);
-            }
-        });
-
-        vRecall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideKeyboard();
-                MyAnimator.hideSlideDown(vResetOverlay);
-            }
-        });
-
-        vReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!viewHelper.canReset()) {
-                    getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_username)));
-                    return;
-                }
-
-                reset();
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         getApp().getBus().register(this);
-        getApp().getBus().register(errorBar);
-        vUsername.setText(getApp().getPreferencesManager().getUsername());
-        vPassword.setText(getApp().getPreferencesManager().getPassword());
+        getApp().getBus().register(mLayoutErrorBar);
+        mTxtUserName.setText(getApp().getPreferencesManager().getUsername());
+        mTxtPassword.setText(getApp().getPreferencesManager().getPassword());
 
         if (viewHelper.canLogin()) {
             login();
         } else {
-            vLoading.hide();
+            mOverlayLoading.hide();
         }
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE)) {
-            errorBar.onMessage(new MessageEvent(getIntent().getExtras().getString(EXTRA_MESSAGE)));
+            mLayoutErrorBar.onMessage(new MessageEvent(getIntent().getExtras().getString(EXTRA_MESSAGE)));
             getIntent().removeExtra(EXTRA_MESSAGE);
         }
+    }
+
+    @OnClick(R.id.btn_login)
+    public void loginOnClick() {
+        viewHelper.saveCredentials();
+        if (!viewHelper.canLogin()) {
+            getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_credentials)));
+            return;
+        }
+
+        login();
+    }
+
+    @OnClick(R.id.btn_registration)
+    public void registrationOnClick() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
+        startActivity(browserIntent);
+    }
+
+    @OnClick(R.id.btn_recover_password)
+    public void recoverPasswordOnClick() {
+        if (mTxtResetUserName.getText().length() == 0) {
+            mTxtResetUserName.setText(mTxtResetUserName.getText());
+        }
+
+        MyAnimator.showSlideUp(mOverlayReset);
+    }
+
+    @OnClick(R.id.btn_reset_recall)
+    public void resetRecallOnClick() {
+        hideKeyboard();
+        MyAnimator.hideSlideDown(mOverlayReset);
+    }
+
+    @OnClick(R.id.btn_reset_password)
+    public void resetPasswordOnClick() {
+        if (!viewHelper.canReset()) {
+            getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_username)));
+            return;
+        }
+
+        reset();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getApp().getBus().unregister(this);
-        getApp().getBus().unregister(errorBar);
+        getApp().getBus().unregister(mLayoutErrorBar);
     }
 
     @Override
@@ -165,18 +157,18 @@ public class LoginActivity extends BaseActivity {
     @Subscribe
     public void loginAvailable(LoginAvailableEvent event) {
         getApp().getDataManager().getBorrowedBike(true);
-        vLoading.setProgress();
+        mOverlayLoading.setProgress();
     }
 
     @Subscribe
     public void loginFailed(LoginFailedEvent event) {
-        vLoading.hide();
+        mOverlayLoading.hide();
     }
 
     @Subscribe
     public void passwordRecoveryEvent(PasswordRecoveryEvent event) {
         getApp().getBus().post(new MessageEvent(MessageEvent.MessageType.SUCCESS, getResources().getString(R.string.success_password_recovery)));
-        MyAnimator.hideSlideDown(vResetOverlay);
+        MyAnimator.hideSlideDown(mOverlayReset);
     }
 
     @Subscribe
@@ -190,7 +182,7 @@ public class LoginActivity extends BaseActivity {
 
     @Subscribe
     public void isBorrowedBikeFailed(BorrowedBikeFailedEvent event) {
-        vLoading.hide();
+        mOverlayLoading.hide();
     }
 
     @Subscribe
@@ -209,14 +201,14 @@ public class LoginActivity extends BaseActivity {
 
     private void login() {
         hideKeyboard();
-        errorBar.hide();
-        vLoading.show();
+        mLayoutErrorBar.hide();
+        mOverlayLoading.show();
         getApp().getDataManager().login(viewHelper.getCredentials());
     }
 
     private void reset() {
         hideKeyboard();
-        getApp().getDataManager().recoverPassword(new RecoverPassword(vResetUsername.getText().toString()));
+        getApp().getDataManager().recoverPassword(new RecoverPassword(mTxtResetUserName.getText().toString()));
     }
 
     private void startMainActivity() {
@@ -232,20 +224,21 @@ public class LoginActivity extends BaseActivity {
     private class ViewHelper {
 
         private boolean canLogin() {
-            return (vUsername.getText().length() > 0 && vPassword.getText().length() > 0);
+            return (mTxtUserName.getText().length() > 0 && mTxtPassword.getText().length() > 0);
         }
 
         private boolean canReset() {
-            return (vResetUsername.getText().length() > 0 && vResetUsername.getText().toString().contains("@"));
+            return (mTxtResetUserName.getText().length() > 0 && mTxtResetUserName.getText().toString().contains
+                    ("@"));
         }
 
         private Credentials getCredentials() {
-            return new Credentials(vUsername.getText().toString(), vPassword.getText().toString());
+            return new Credentials(mTxtUserName.getText().toString(), mTxtPassword.getText().toString());
         }
 
         private void saveCredentials() {
-            getApp().getPreferencesManager().setUsername(vUsername.getText().toString());
-            getApp().getPreferencesManager().setPassword(vPassword.getText().toString());
+            getApp().getPreferencesManager().setUsername(mTxtUserName.getText().toString());
+            getApp().getPreferencesManager().setPassword(mTxtPassword.getText().toString());
         }
     }
 }

@@ -103,48 +103,48 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
     private void onBindBasicInfo(BikeDetailAdapter.ViewHolder viewHolder, final int position) {
         //TODO load image into ivBikeIcon
         //TODO hide or show icons operationalWithIssues, inOperational
-        viewHolder.tvBikeType.setText(mData.get(position).getBikeType());
-        viewHolder.tvBikeName.setText(mData.get(position).getBikeName());
-        viewHolder.tvBikeDescription.setText(mData.get(position).getBikeDescription());
+        viewHolder.mTxtBikeType.setText(mData.get(position).getBikeType());
+        viewHolder.mTxtBikeName.setText(mData.get(position).getBikeName());
+        viewHolder.mTxtBikeDescription.setText(mData.get(position).getBikeDescription());
     }
 
     private void onBindRecentlyReturned(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
-        Date date = mData.get(position).getRecentlyReturned();
+        Date recentlyReturnedDate = mData.get(position).getRecentlyReturned();
 
-        viewHolder.tvRecReturnedDate.setText(DateUtils.getDate(date));
-        viewHolder.tvRecReturnedTime.setText(DateUtils.getTime(date));
-        viewHolder.tvRecReturnedDescription.setText(mData.get(position).getRecentPlaceDescription());
+        viewHolder.mTxtRecReturnedDate.setText(DateUtils.getDate(recentlyReturnedDate));
+        viewHolder.mTxtRecReturnedTime.setText(DateUtils.getTime(recentlyReturnedDate));
+        viewHolder.mTxtRecReturnedDescription.setText(mData.get(position).getRecentPlaceDescription());
     }
 
     private void onBindEquipment(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
 //TODO add equipment
-        viewHolder.btn_equipments_detail.setOnClickListener(mData.get(position)
+        viewHolder.mBtnEquipmentsDetail.setOnClickListener(mData.get(position)
                 .getEquipmentsDetailListener());
     }
 
     private void onBindIssueHeader(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
-        viewHolder.btn_add_issue.setOnClickListener(mData.get(position).getAddIssueListener());
+        viewHolder.mBtnAddIssue.setOnClickListener(mData.get(position).getAddIssueListener());
     }
 
     private void onBindIssueTitle(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
-        viewHolder.tvIssueTitle.setText(mData.get(position).getIssueTitle());
+        viewHolder.mTxtIssueTitle.setText(mData.get(position).getIssueTitle());
     }
 
     private void onBindIssueItem(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
         IssueUpdate issueUpdate = mData.get(position).getIssueUpdate();
 
-        viewHolder.tvUserName.setText(issueUpdate.author);
-        viewHolder.tvIssueDescription.setText(issueUpdate.description);
+        viewHolder.mTxtUserName.setText(issueUpdate.author);
+        viewHolder.mTxtIssueDescription.setText(issueUpdate.description);
 
-        Date date = issueUpdate.issuedAt;
+        Date issueAtDate = issueUpdate.issuedAt;
 
-        viewHolder.tvIssueDate.setText(DateUtils.getDate(date));
-        viewHolder.tvIssueTime.setText(DateUtils.getTime(date));
+        viewHolder.mTxtIssueDate.setText(DateUtils.getDate(issueAtDate));
+        viewHolder.mTxtIssueTime.setText(DateUtils.getTime(issueAtDate));
     }
 
     @Override
@@ -158,27 +158,32 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        //TYPE_BASIC_INFO
+        ImageView mImgBike;
+        TextView mTxtBikeType;
+        TextView mTxtBikeName;
+        TextView mTxtBikeDescription;
 
-        ImageView ivBikeIcon;
-        TextView tvBikeType;
-        TextView tvBikeName;
-        TextView tvBikeDescription;
+        //TYPE_RECENTLY_RETURNED
+        TextView mTxtRecReturnedDate;
+        TextView mTxtRecReturnedTime;
+        TextView mTxtRecReturnedDescription;
 
-        TextView tvRecReturnedDate;
-        TextView tvRecReturnedTime;
-        TextView tvRecReturnedDescription;
+        //TYPE_EQUIPMENT
+        LinearLayout mLlEquipments;
+        Button mBtnEquipmentsDetail;
 
-        LinearLayout llEquipments;
-        Button btn_equipments_detail;
+        //TYPE_ISSUE_HEADER
+        Button mBtnAddIssue;
 
-        Button btn_add_issue;
+        //TYPE_ISSUE_TITLE
+        TextView mTxtIssueTitle;
 
-        TextView tvIssueTitle;
-
-        TextView tvUserName;
-        TextView tvIssueDate;
-        TextView tvIssueTime;
-        TextView tvIssueDescription;
+        //TYPE_ISSUE_ITEM
+        TextView mTxtUserName;
+        TextView mTxtIssueDate;
+        TextView mTxtIssueTime;
+        TextView mTxtIssueDescription;
 
         public final int typeView;
 
@@ -186,27 +191,40 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
             super(itemView);
 
             this.typeView = typeView;
-            ivBikeIcon = (ImageView) itemView.findViewById(R.id.ivBikeIcon);
-            tvBikeType = (TextView) itemView.findViewById(R.id.tvBikeType);
-            tvBikeName = (TextView) itemView.findViewById(R.id.tvBikeName);
-            tvBikeDescription = (TextView) itemView.findViewById(R.id.tvBikeDescription);
 
-            tvRecReturnedDate = (TextView) itemView.findViewById(R.id.tvRecReturnedDate);
-            tvRecReturnedTime = (TextView) itemView.findViewById(R.id.tvRecReturnedTime);
-            tvRecReturnedDescription = (TextView) itemView.findViewById(R.id.tvRecReturnedDescription);
-
-            llEquipments = (LinearLayout) itemView.findViewById(R.id.llEquipments);
-            btn_equipments_detail = (Button) itemView.findViewById(R.id.btn_equipments_detail);
-
-            btn_add_issue = (Button) itemView.findViewById(R.id.btn_add_issue);
-
-            tvIssueTitle = (TextView) itemView.findViewById(R.id.tvIssueTitle);
-
-            tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
-            tvIssueDate = (TextView) itemView.findViewById(R.id.tvIssueDate);
-            tvIssueTime = (TextView) itemView.findViewById(R.id.tvIssueTime);
-            tvIssueDescription = (TextView) itemView.findViewById(R.id.tvIssueDescription);
+            switch (typeView) {
+                case BikeDetailItem.TYPE_SEPARATOR:
+                    break;
+                case BikeDetailItem.TYPE_BASIC_INFO:
+                    mImgBike = (ImageView) itemView.findViewById(R.id.img_bike);
+                    mTxtBikeType = (TextView) itemView.findViewById(R.id.txt_bike_type);
+                    mTxtBikeName = (TextView) itemView.findViewById(R.id.txt_bike_name);
+                    mTxtBikeDescription = (TextView) itemView.findViewById(R.id.txt_bike_description);
+                    break;
+                case BikeDetailItem.TYPE_RECENTLY_RETURNED:
+                    mTxtRecReturnedDate = (TextView) itemView.findViewById(R.id.txt_rec_returned_date);
+                    mTxtRecReturnedTime = (TextView) itemView.findViewById(R.id.txt_rec_returned_time);
+                    mTxtRecReturnedDescription = (TextView) itemView.findViewById(R.id.txt_rec_returned_description);
+                    break;
+                case BikeDetailItem.TYPE_EQUIPMENT:
+                    mLlEquipments = (LinearLayout) itemView.findViewById(R.id.ll_equipments);
+                    mBtnEquipmentsDetail = (Button) itemView.findViewById(R.id.btn_equipments_detail);
+                    break;
+                case BikeDetailItem.TYPE_ISSUE_HEADER:
+                    mBtnAddIssue = (Button) itemView.findViewById(R.id.btn_add_issue);
+                    break;
+                case BikeDetailItem.TYPE_ISSUE_TITLE:
+                    mTxtIssueTitle = (TextView) itemView.findViewById(R.id.txt_issue_title);
+                    break;
+                case BikeDetailItem.TYPE_ISSUE_ITEM:
+                    mTxtUserName = (TextView) itemView.findViewById(R.id.txt_user_name);
+                    mTxtIssueDate = (TextView) itemView.findViewById(R.id.txt_issue_date);
+                    mTxtIssueTime = (TextView) itemView.findViewById(R.id.txt_issue_time);
+                    mTxtIssueDescription = (TextView) itemView.findViewById(R.id.txt_issue_description);
+                    break;
+                default:
+                    Log.e(TAG, "unknown typeView " + typeView);
+            }
         }
-
     }
 }

@@ -16,36 +16,28 @@ import cz.rekola.app.core.anim.MyAnimator;
 
 public class BikeOverlayView extends RelativeLayout {
 
-    @InjectView(R.id.map_overlay_area)
-    LinearLayout vOverlayArea;
-
-    @InjectView(R.id.map_overlay_name)
-    TextView vName;
-
-    @InjectView(R.id.map_overlay_distance)
-    TextView vDistance;
-
-    @InjectView(R.id.map_overlay_inoperational)
-    TextView vInoperational;
-
-    @InjectView(R.id.map_overlay_operational_with_issues)
-    TextView vOperationalWithIssues;
-
-    @InjectView(R.id.map_overlay_note)
-    TextView vNote;
-
-    @InjectView(R.id.map_overlay_description)
-    TextView vDescription;
-
-    @InjectView(R.id.map_overlay_route)
-    ImageView vRoute;
-
-    @InjectView(R.id.map_overlay_center_map)
-    ImageView vCenterMap;
-
-
-    @InjectView(R.id.map_overlay_bike_detail)
-    LinearLayout vBikeDetail;
+    @InjectView(R.id.img_bike)
+    ImageView mImgBike;
+    @InjectView(R.id.txt_bike_name)
+    TextView mTxtBikeName;
+    @InjectView(R.id.txt_distance)
+    TextView mTxtDistance;
+    @InjectView(R.id.txt_inoperational)
+    TextView mTxtInoperational;
+    @InjectView(R.id.txt_operational_with_issues)
+    TextView mTxtOperationalWithIssues;
+    @InjectView(R.id.txt_note)
+    TextView mTxtNote;
+    @InjectView(R.id.txt_description)
+    TextView mTxtDescription;
+    @InjectView(R.id.layout_bike_detail)
+    LinearLayout mLayoutBikeDetail;
+    @InjectView(R.id.overlay_map_area)
+    LinearLayout mOverlayMapArea;
+    @InjectView(R.id.btn_route)
+    ImageView mbtnRoute;
+    @InjectView(R.id.btn_center_map)
+    ImageView mbtnCenterMap;
 
     private BikeOverlayListener callbacks;
 
@@ -66,21 +58,21 @@ public class BikeOverlayView extends RelativeLayout {
         super.onFinishInflate();
         ButterKnife.inject(this, this);
 
-        vRoute.setOnClickListener(new View.OnClickListener() {
+        mbtnRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callbacks.onRoutePressed();
             }
         });
 
-        vBikeDetail.setOnClickListener(new View.OnClickListener() {
+        mLayoutBikeDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callbacks.onBikeDetailPressed();
             }
         });
 
-        vCenterMap.setOnClickListener(new OnClickListener() {
+        mbtnCenterMap.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 callbacks.onCenterMapPressed();
@@ -88,11 +80,12 @@ public class BikeOverlayView extends RelativeLayout {
         });
     }
 
+
     @Override
     protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
         super.onSizeChanged(xNew, yNew, xOld, yOld);
         if (callbacks != null)
-            callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
+            callbacks.onHeightChanged(mOverlayMapArea.getMeasuredHeight());
     }
 
     public void init(BikeOverlayListener callbacks) {
@@ -100,29 +93,29 @@ public class BikeOverlayView extends RelativeLayout {
     }
 
     public void show(Bike bike) {
-        vName.setText(bike.name);
-        vDistance.setText(bike.location.distance);
-        vNote.setText(bike.location.note);
-        vDescription.setText(bike.description);
+        mTxtBikeName.setText(bike.name);
+        mTxtDistance.setText(bike.location.distance);
+        mTxtNote.setText(bike.location.note);
+        mTxtDescription.setText(bike.description);
 
         int visibility = bike.operational ? GONE : VISIBLE;
-        vInoperational.setVisibility(visibility);
+        mTxtInoperational.setVisibility(visibility);
 
 
         //TODO set correct visibility
         //  if(bike.operational && bike.issues != null)
-        vOperationalWithIssues.setVisibility(GONE);
+        mTxtOperationalWithIssues.setVisibility(GONE);
 
-        vOverlayArea.setVisibility(VISIBLE);
-        vRoute.setVisibility(VISIBLE);
+        mOverlayMapArea.setVisibility(VISIBLE);
+        mbtnRoute.setVisibility(VISIBLE);
 
         MyAnimator.showSlideUp(this);
-        callbacks.onHeightChanged(vOverlayArea.getMeasuredHeight());
+        callbacks.onHeightChanged(mOverlayMapArea.getMeasuredHeight());
     }
 
     public void hide() {
-        vRoute.setVisibility(GONE);
-        MyAnimator.hideSlideDown(vOverlayArea);
+        mbtnRoute.setVisibility(GONE);
+        MyAnimator.hideSlideDown(mOverlayMapArea);
         callbacks.onHeightChanged(0);
     }
 

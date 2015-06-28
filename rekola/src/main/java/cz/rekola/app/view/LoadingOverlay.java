@@ -12,8 +12,8 @@ import cz.rekola.app.R;
 
 public class LoadingOverlay extends FrameLayout {
 
-    @InjectView(R.id.loading_message)
-    TextView vMessage;
+    @InjectView(R.id.txt_loading_message)
+    TextView mTxtLoadingMessage;
 
     public LoadingOverlay(Context context) {
         super(context);
@@ -34,7 +34,7 @@ public class LoadingOverlay extends FrameLayout {
     }
 
     public void show() {
-        vMessage.setText(getResources().getString(R.string.login_connecting));
+        mTxtLoadingMessage.setText(getResources().getString(R.string.login_connecting));
         setVisibility(View.VISIBLE);
     }
 
@@ -43,6 +43,6 @@ public class LoadingOverlay extends FrameLayout {
     }
 
     public void setProgress() {
-        vMessage.setText(getResources().getString(R.string.login_connecting_progress));
+        mTxtLoadingMessage.setText(getResources().getString(R.string.login_connecting_progress));
     }
 }
