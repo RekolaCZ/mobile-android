@@ -14,6 +14,7 @@
     <color name="very_light_pink2">#ffebf5</color>
     <color name="dark_pink">#ef268e</color>
     <color name="dark_pink2">#fd349c</color>
+    <color name="pink_transparent">#30ff339c</color>
 
     <color name="base_green">#7d8d38</color>
     <color name="light_green">#7d8c23</color>

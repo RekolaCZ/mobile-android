@@ -36,6 +36,7 @@ import cz.rekola.app.core.map.Cluster.BikeClusterItem;
 import cz.rekola.app.core.map.Cluster.BikeRenderer;
 import cz.rekola.app.core.map.DirectionManager;
 import cz.rekola.app.core.map.DirectionParams;
+import cz.rekola.app.core.map.ZonesManager;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.view.BikeOverlayView;
 
@@ -48,9 +49,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     BikeOverlayView vOverlay;
 
     private MapManager mapManager = new MapManager();
-    private ClusterManager<BikeClusterItem> mClusterManager;
     private Timer timer;
-
     private View vView;
 
     @Override
@@ -209,9 +208,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             map.moveCamera(cameraUpdate);
     }
 
+
     private class MapManager implements ClusterManager.OnClusterItemClickListener<BikeClusterItem>,
             DirectionManager.DirectionsLoadedListener {
 
+        private ClusterManager<BikeClusterItem> mClusterManager;
         private BikeClusterItem lastBikeClusterItem = null;
         private DirectionManager directionManager = new DirectionManager(this);
 
@@ -233,9 +234,13 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             }*/
 
             map.clear();
-            lastBikeClusterItem = null;
+            mClusterManager.clearItems();
 
+            ZonesManager.drawTestZone(getActivity(), map);
+
+            lastBikeClusterItem = null;
             BikeClusterItem newBikeClusterItem = null;
+
             for (Bike bike : bikes) {
                 BikeClusterItem bikeClusterItem = new BikeClusterItem(bike);
                 mClusterManager.addItem(bikeClusterItem);
