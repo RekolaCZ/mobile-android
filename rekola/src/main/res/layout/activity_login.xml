@@ -23,7 +23,7 @@
 
             <ImageView
                 style="@style/LogoImageView"
-                android:src="@drawable/logo"/>
+                android:src="@drawable/logo_recola_white"/>
 
             <EditText
                 android:id="@+id/txt_user_name"

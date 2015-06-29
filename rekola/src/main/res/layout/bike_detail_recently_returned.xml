@@ -22,9 +22,9 @@
         <TextView
             android:id="@+id/txt_rec_returned_date"
             style="@style/TextView"
-            android:drawableLeft="@drawable/icon_calendar"
+            android:drawableLeft="@drawable/ic_calendar"
             android:drawablePadding="2dp"
-            android:drawableStart="@drawable/icon_calendar"
+            android:drawableStart="@drawable/ic_calendar"
             android:text="14.05."
             android:layout_marginRight="20dp"
             android:layout_marginEnd="20dp"
@@ -33,9 +33,9 @@
         <TextView
             android:id="@+id/txt_rec_returned_time"
             style="@style/TextView"
-            android:drawableLeft="@drawable/icon_clock"
+            android:drawableLeft="@drawable/ic_clock"
             android:drawablePadding="2dp"
-            android:drawableStart="@drawable/icon_clock"
+            android:drawableStart="@drawable/ic_clock"
             android:text="08:36"
             android:textColor="@color/dark_pink2"/>
 

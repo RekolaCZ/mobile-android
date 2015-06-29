@@ -30,16 +30,16 @@
     <TextView
         android:id="@+id/txt_operational_with_problems"
         style="@style/TextViewWarning"
-        android:drawableLeft="@drawable/icon_warning_yellow"
-        android:drawableStart="@drawable/icon_warning_yellow"
+        android:drawableLeft="@drawable/ic_warning_yellow"
+        android:drawableStart="@drawable/ic_warning_yellow"
         android:text="@string/bike_operational_with_issues"
         android:textColor="@color/warning_yellow"/>
 
     <TextView
         android:id="@+id/txt_inoperational"
         style="@style/TextViewWarning"
-        android:drawableLeft="@drawable/icon_warning_red"
-        android:drawableStart="@drawable/icon_warning_red"
+        android:drawableLeft="@drawable/ic_warning_red"
+        android:drawableStart="@drawable/ic_warning_red"
         android:text="@string/bike_inoperational"
         android:textColor="@color/warning_pink"/>
 

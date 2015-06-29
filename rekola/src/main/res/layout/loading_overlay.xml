@@ -9,7 +9,7 @@
     <ImageView
         style="@style/ImageView"
         android:layout_gravity="center"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/logo_recola_white"/>
 
     <TextView
         android:id="@+id/txt_loading_message"

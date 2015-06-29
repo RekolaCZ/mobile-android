@@ -14,9 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 import cz.rekola.app.R;
-import cz.rekola.app.Utils.DateUtils;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.model.BikeDetailItem;
+import cz.rekola.app.utils.DateUtils;
 
 /**
  * TODO add class description

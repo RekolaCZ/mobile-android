@@ -1,4 +1,4 @@
-package cz.rekola.app.Utils;
+package cz.rekola.app.utils;
 
 import java.text.DateFormat;
 import java.util.Date;

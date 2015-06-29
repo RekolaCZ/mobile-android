@@ -23,7 +23,7 @@
                 <ImageView
                     style="@style/ImageView"
                     android:padding="10dp"
-                    android:src="@drawable/logo_web"/>
+                    android:src="@drawable/logo_recola_web"/>
 
 
                 <TextView

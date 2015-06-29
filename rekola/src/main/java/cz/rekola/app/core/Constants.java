@@ -13,7 +13,6 @@ public class Constants {
     public static final String HEADER_KEY_OS = "client-os";
 
     public static final String HEADER_VALUE_USER_AGENT = "rekola/%s (Model %s; Android %s; Locale %s; Resolution %sx%s; Dpi %s)";
-
     public static final String REKOLA_API_URL = "https://moje.rekola.cz/api";
 
     public static final String WEBAPI_BIKE_DETAIL_URL = REKOLA_API_URL + "/bikes/%s/info-webview";
