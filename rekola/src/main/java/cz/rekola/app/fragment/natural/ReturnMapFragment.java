@@ -133,7 +133,8 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewMap.onDestroy();
+        if (mViewMap != null)
+            mViewMap.onDestroy();
     }
 
     @Override

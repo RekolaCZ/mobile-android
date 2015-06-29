@@ -128,7 +128,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewMap.onDestroy();
+        if (mViewMap != null)
+            mViewMap.onDestroy();
     }
 
     @Override
