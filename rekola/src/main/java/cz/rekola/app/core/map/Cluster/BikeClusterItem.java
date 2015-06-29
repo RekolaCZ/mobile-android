@@ -14,6 +14,7 @@ public class BikeClusterItem implements ClusterItem {
 
     private final LatLng mPosition;
     private final Bike mBike;
+    private boolean isSelected;  //because of different color for last selected bike
 
     public BikeClusterItem(Bike bike) {
         mBike = bike;
@@ -37,7 +38,14 @@ public class BikeClusterItem implements ClusterItem {
         BikeClusterItem that = (BikeClusterItem) o;
 
         return !(mPosition != null ? !mPosition.equals(that.mPosition) : that.mPosition != null);
+    }
 
+    public boolean isSelectedBike() {
+        return isSelected;
+    }
+
+    public void setIsSelectedBike(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
     @Override

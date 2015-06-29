@@ -30,6 +30,7 @@ import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.api.requestmodel.ReturningLocation;
+import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.PoisAvailableEvent;
 import cz.rekola.app.core.bus.PoisFailedEvent;
@@ -180,7 +181,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     }
 
     private void centerMapOnMyLocation(boolean animate) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 15);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), Constants.DEFAULT_RETURN_MAP_ZOOM_LEVEL);
         if (animate)
             mGoogleMap.animateCamera(cameraUpdate);
         else

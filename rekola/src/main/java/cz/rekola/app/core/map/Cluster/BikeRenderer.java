@@ -4,14 +4,19 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
+
+import java.util.HashMap;
 
 import cz.rekola.app.R;
 
@@ -24,21 +29,23 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
     private Context mContext;
     private final View mBikeView;
+    private final ImageView mImgBikeIconBackground;
     private final View mBikeClusterView;
     private final IconGenerator mIconGenerator;
     private final IconGenerator mClusterIconGenerator;
+    private HashMap<BikeClusterItem, Marker> markerBikeItemMap = new HashMap<>();
 
     public BikeRenderer(Context context, LayoutInflater layoutInflater, GoogleMap map,
                         ClusterManager<BikeClusterItem>
                                 clusterManager) {
         super(context, map, clusterManager);
         mContext = context;
-
         mIconGenerator = new IconGenerator(mContext);
         mClusterIconGenerator = new IconGenerator(mContext);
 
         mBikeView = layoutInflater.inflate(R.layout.map_cluster_bike, null);
         mBikeClusterView = layoutInflater.inflate(R.layout.map_cluster_bikes, null);
+        mImgBikeIconBackground = (ImageView) mBikeView.findViewById(R.id.img_bike_icon_background);
 
         mIconGenerator.setContentView(mBikeView);
         mIconGenerator.setBackground(null);
@@ -47,13 +54,66 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         mClusterIconGenerator.setBackground(null);
     }
 
+    public void setIconSelected(BikeClusterItem bikeClusterItem) {
+        if (!markerBikeItemMap.containsKey(bikeClusterItem))
+            return;
+
+        Marker marker = markerBikeItemMap.get(bikeClusterItem);
+        marker.setIcon(getIconBikeIsSelected());
+    }
+
+    public void setIconUnselected(BikeClusterItem bikeClusterItem) {
+        if (!markerBikeItemMap.containsKey(bikeClusterItem))
+            return;
+
+        Marker marker = markerBikeItemMap.get(bikeClusterItem);
+
+        if (!bikeClusterItem.getBike().operational) //bike is broken
+            marker.setIcon(getIconBikeIsBroken());
+        else
+            marker.setIcon(getIconBikeDefault());
+    }
+
     // Draw a single bike.
     @Override
     protected void onBeforeClusterItemRendered(BikeClusterItem bikeClusterItem, MarkerOptions markerOptions) {
         //mImageView.setImageResource(person.profilePhoto);
+
+        if (bikeClusterItem.isSelectedBike())
+            setOneBikeBackGround(R.drawable.map_bike_selected);
+        else if (!bikeClusterItem.getBike().operational) //bike is broken
+            setOneBikeBackGround(R.drawable.map_bike_broken);
+        else
+            setOneBikeBackGround(R.drawable.map_bike_default);
+
         Bitmap icon = mIconGenerator.makeIcon();
         String title = bikeClusterItem.getBike().name;
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(title);
+    }
+
+    private BitmapDescriptor getIconBikeIsSelected() {
+        setOneBikeBackGround(R.drawable.map_bike_selected);
+        return BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon());
+    }
+
+    private BitmapDescriptor getIconBikeIsBroken() {
+        setOneBikeBackGround(R.drawable.map_bike_broken);
+        return BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon());
+    }
+
+    private BitmapDescriptor getIconBikeDefault() {
+        setOneBikeBackGround(R.drawable.map_bike_default);
+        return BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon());
+    }
+
+    @Override
+    protected void onClusterItemRendered(BikeClusterItem bikeClusterItem, Marker marker) {
+        super.onClusterItemRendered(bikeClusterItem, marker);
+        markerBikeItemMap.put(bikeClusterItem, marker);
+    }
+
+    private void setOneBikeBackGround(int resId) {
+        mImgBikeIconBackground.setImageResource(resId);
     }
 
     // Draw multiple bikes
@@ -64,6 +124,10 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         String bikeCount = Integer.toString(cluster.getSize());
         Bitmap icon = mClusterIconGenerator.makeIcon(bikeCount);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(bikeCount);
+
+        for (BikeClusterItem bikeClusterItem : cluster.getItems()) {
+            markerBikeItemMap.remove(bikeClusterItem);
+        }
     }
 
     @Override

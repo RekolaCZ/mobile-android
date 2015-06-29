@@ -5,9 +5,10 @@
              android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/img_bike_icon_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_map_bike"
+        android:src="@drawable/map_bike_default"
         />
 
     <ImageView

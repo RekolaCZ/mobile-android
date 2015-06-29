@@ -203,7 +203,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     }
 
     private void centerMapOnMyLocation(boolean animate) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), 13);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp()
+                        .getMyLocationManager().getLastKnownMyLocation().getLatLng(),
+                Constants.DEFAULT_BIKES_MAP_ZOOM_LEVEL);
         if (animate)
             mGooglemap.animateCamera(cameraUpdate);
         else
@@ -221,14 +223,16 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             DirectionManager.DirectionsLoadedListener {
 
         private ClusterManager<BikeClusterItem> mClusterManager;
+        private BikeRenderer mBikeRenderer;
         private BikeClusterItem lastBikeClusterItem = null;
-        private DirectionManager directionManager = new DirectionManager(this);
+        private DirectionManager directionManager = new DirectionManager(this); //navigation to bike
 
         void init() {
             mClusterManager = new ClusterManager<>(getActivity(), mGooglemap);
             mClusterManager.setOnClusterItemClickListener(this);
-            mClusterManager.setRenderer(new BikeRenderer(getActivity(), getActivity()
-                    .getLayoutInflater(), mGooglemap, mClusterManager));
+            mBikeRenderer = new BikeRenderer(getActivity(), getActivity()
+                    .getLayoutInflater(), mGooglemap, mClusterManager);
+            mClusterManager.setRenderer(mBikeRenderer);
 
             // Point the map's listeners at the listeners implemented by the cluster
             // manager.
@@ -237,10 +241,6 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         }
 
         void updateMap(List<Bike> bikes) {
-         /*   if (lastBikeClusterItem != null) {
-                lastBikeClusterItem.setIcon(markerNormalBitmap);
-            }*/
-
             mGooglemap.clear();
             mClusterManager.clearItems();
 
@@ -266,18 +266,12 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             } else {
                 lastBikeClusterItem = newBikeClusterItem;
                 mOverlayMap.show(lastBikeClusterItem.getBike());
-                //  lastMarker.setIcon(markerFocusedBitmap);
-                //  lastMarker.showInfoWindow(); // Force to top
                 directionManager.addDirections(mGooglemap);
             }
         }
 
         void notifyOverlayClose() {
             lastBikeClusterItem = null;
-           /* if (lastMarker != null) {
-                lastMarker.setIcon(markerNormalBitmap);
-                lastMarker = null;
-            }*/
             mOverlayMap.hide();
             directionManager.hideDirections();
         }
@@ -319,29 +313,44 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         @Override
         public boolean onClusterItemClick(BikeClusterItem bikeClusterItem) {
 
-            if (lastBikeClusterItem != null) {
-                //   lastMarker.setIcon(markerNormalBitmap);
-                directionManager.hideDirections();
-            }
+            directionManager.hideDirections();
 
+            //clicked on same the bike
             if (bikeClusterItem.equals(lastBikeClusterItem)) {
-                lastBikeClusterItem = null;
-                mOverlayMap.hide();
-                directionManager.hideDirections();
+                if (bikeClusterItem.isSelectedBike()) {
+                    setBikeUnselected(bikeClusterItem);
+                    mOverlayMap.hide();
+                } else {
+                    setBikeSelected(bikeClusterItem);
+                    mOverlayMap.show(bikeClusterItem.getBike());
+                }
                 return true;
             }
-
-            // marker.setIcon(markerFocusedBitmap);
+            //else deselect last bike and select new bike
+            else {
+                if (lastBikeClusterItem != null) {
+                    setBikeUnselected(lastBikeClusterItem);
+                }
+                setBikeSelected(bikeClusterItem);
+            }
 
             lastBikeClusterItem = bikeClusterItem;
-
-            if (lastBikeClusterItem != null) {
-                mOverlayMap.show(lastBikeClusterItem.getBike());
-            }
+            mOverlayMap.show(lastBikeClusterItem.getBike());
 
             return false;
         }
+
+        private void setBikeSelected(BikeClusterItem bikeClusterItem) {
+            bikeClusterItem.setIsSelectedBike(true);
+            mBikeRenderer.setIconSelected(bikeClusterItem);
+        }
+
+        private void setBikeUnselected(BikeClusterItem bikeClusterItem) {
+            bikeClusterItem.setIsSelectedBike(false);
+            mBikeRenderer.setIconUnselected(bikeClusterItem);
+        }
     }
+
 
     /**
      * Hack to move the selected marker to the front.
