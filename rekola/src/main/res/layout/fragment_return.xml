@@ -85,7 +85,6 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/lock_code_label"
             style="@style/TextView"
             android:layout_above="@id/txt_lock_code"
             android:layout_centerHorizontal="true"

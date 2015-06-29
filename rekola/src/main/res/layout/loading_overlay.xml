@@ -3,9 +3,8 @@
 <cz.rekola.app.view.LoadingOverlay xmlns:android="http://schemas.android.com/apk/res/android"
                                    android:id="@+id/overlay_loading"
                                    style="@style/Layout"
-                                   android:visibility="gone"
                                    android:clickable="true"
-                                   android:background="@color/white">
+                                   android:background="@color/base_pink">
 
     <ImageView
         style="@style/ImageView"
@@ -15,9 +14,10 @@
     <TextView
         android:id="@+id/txt_loading_message"
         style="@style/TextView"
-        android:textColor="@color/brown"
+        android:textColor="@color/white"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/grid_4"
         android:text="@string/login_connecting"/>
+
 
 </cz.rekola.app.view.LoadingOverlay>

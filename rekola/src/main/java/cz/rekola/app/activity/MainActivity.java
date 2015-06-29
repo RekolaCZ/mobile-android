@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ProgressBar;
 
+import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
@@ -31,11 +31,11 @@ import cz.rekola.app.view.MessageBarView;
 
 public class MainActivity extends BaseActivity implements PageController {
 
-    @InjectView(R.id.progress)
-    ProgressBar progressBar;
 
     @InjectView(R.id.layout_error_bar)
     MessageBarView mLayoutErrorBar;
+    @InjectView(R.id.progress_circle_bar)
+    CircleProgressBar mProgressCircleBar;
 
     private PageManager pageManager;
 
@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity implements PageController {
 
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-
         pageManager = new PageManager();
 
         MyBikeWrapper myBike = getMyBike();
@@ -67,7 +66,6 @@ public class MainActivity extends BaseActivity implements PageController {
         super.onResume();
         getApp().getBus().register(this);
         getApp().getBus().register(mLayoutErrorBar);
-        setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
@@ -129,25 +127,27 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Subscribe
     public void dataLoadingStarted(DataLoadingStarted event) {
-        setProgressBarIndeterminateVisibility(true);
+        mProgressCircleBar.setVisibility(View.VISIBLE);
     }
 
     @Subscribe
     public void dataLoadingFinished(DataLoadingFinished event) {
-        setProgressBarIndeterminateVisibility(false);
+        mProgressCircleBar.setVisibility(View.INVISIBLE);
     }
 
     @Subscribe
     public void dataLoadingProgress(ProgressDataLoading event) {
         if (event.progress == 100) {
-            progressBar.setVisibility(View.GONE);
+            mProgressCircleBar.setShowProgressText(false);
+            mProgressCircleBar.setVisibility(View.INVISIBLE);
             return;
         }
         if (event.progress == 0) {
-            progressBar.setVisibility(View.VISIBLE);
+            mProgressCircleBar.setShowProgressText(true);
+            mProgressCircleBar.setVisibility(View.VISIBLE);
             return;
         }
-        progressBar.setProgress(event.progress);
+        mProgressCircleBar.setProgress(event.progress);
     }
 
     @Subscribe
