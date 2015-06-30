@@ -105,11 +105,22 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
             getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_unknown_borrowed_bike_code)));
             return;
         }
-        // TODO: May throw NumberFormatException!
+
         getAct().hideKeyboard();
-        getApp().getDataManager().returnBike(/*Integer.parseInt(*/myBike.bike.id/*)*/,
-                new ReturningBike(new ReturningLocation(center.latitude, center.longitude, mTxtNote
-                        .getText().toString())));
+
+        MyLocation location = getApp().getMyLocationManager().getLastKnownMyLocation();
+
+        ReturningLocation returningLocation = new ReturningLocation();
+        returningLocation.lat = center.latitude;
+        returningLocation.lng = center.longitude;
+        returningLocation.sensorLat = location.lat;
+        returningLocation.sensorLng = location.lng;
+        returningLocation.sensorAccuracy = location.acc;
+        returningLocation.note = mTxtNote.getText().toString();
+
+        ReturningBike returningBike = new ReturningBike(returningLocation);
+
+        getApp().getDataManager().returnBike(myBike.bike.id, returningBike);
     }
 
     @OnClick(R.id.btn_center_map)
