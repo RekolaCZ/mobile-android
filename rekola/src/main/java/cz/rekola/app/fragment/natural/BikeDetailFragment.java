@@ -4,6 +4,7 @@ package cz.rekola.app.fragment.natural;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,14 @@ import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 /**
- * Info about bike for user (there is info screen for serviceman)like name, problems, last returned, ...
+ * Info about bike for user (there is info screen for serviceman)like name, problems, last returned, ...f
  */
 public class BikeDetailFragment extends BaseMainFragment {
+    public static final String TAG = BikeDetailAdapter.class.getName();
 
-    private int mBikeID = -1;
+    private static String ARG_BIKE_ID = "BIKE_ID";
+    private final int UNDEFINED_BIKE = -1;
+    private int mBikeID = UNDEFINED_BIKE;
     List<BikeDetailItem> mBikeDetailItemList;
 
     @InjectView(R.id.rvBikeDetail)
@@ -53,6 +57,10 @@ public class BikeDetailFragment extends BaseMainFragment {
         View view = inflater.inflate(R.layout.fragment_bike_detail, container, false);
         ButterKnife.inject(this, view);
 
+        if (savedInstanceState != null) {
+            mBikeID = savedInstanceState.getInt(ARG_BIKE_ID);
+        }
+
         RecyclerView rvBikeDetail = (RecyclerView) view.findViewById(R.id.rvBikeDetail);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -70,6 +78,13 @@ public class BikeDetailFragment extends BaseMainFragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARG_BIKE_ID, mBikeID);
+    }
+
+
     @Subscribe
     public void isBikeDetailAvailable(BikesAvailableEvent event) {
         setBikeInfo();
@@ -81,6 +96,11 @@ public class BikeDetailFragment extends BaseMainFragment {
     }
 
     private void setBikeInfo() {
+        if (mBikeID == UNDEFINED_BIKE) {
+            Log.e(TAG, "bike was not defined");
+            return;
+        }
+
         Bike bike = getApp().getDataManager().getBike(mBikeID);
         if (bike == null)
             return; // will be set later by event isBikeDetailAvailable
@@ -131,7 +151,8 @@ public class BikeDetailFragment extends BaseMainFragment {
         Button.OnClickListener addIssueListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPageController().requestAddIssue();
+                //TODO solve problem with back state
+                //getPageController().requestAddIssue();
             }
         };
 
