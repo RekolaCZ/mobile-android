@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity implements PageController {
     public void requestBikeDetail(int bikeID) {
         Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
         if (fragment != null && fragment instanceof BikeDetailFragment)
-            ((BikeDetailFragment) fragment).newInstance(bikeID);
+            ((BikeDetailFragment) fragment).init(bikeID);
         invalidateOptionsMenu();
     }
 

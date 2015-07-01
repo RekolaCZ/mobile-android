@@ -1,6 +1,11 @@
 package cz.rekola.app.core.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +31,11 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
     public static final String TAG = BikeDetailAdapter.class.getName();
 
     private final List<BikeDetailItem> mData;
+    private final Context mContext;
 
-    public BikeDetailAdapter(List<BikeDetailItem> data) {
+    public BikeDetailAdapter(List<BikeDetailItem> data, Context context) {
         mData = data;
+        mContext = context;
     }
 
     @Override
@@ -102,10 +109,16 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
     private void onBindBasicInfo(BikeDetailAdapter.ViewHolder viewHolder, final int position) {
         //TODO load image into ivBikeIcon
-        //TODO hide or show icons operationalWithIssues, inOperational
-        viewHolder.mTxtBikeType.setText(mData.get(position).getBikeType());
-        viewHolder.mTxtBikeName.setText(mData.get(position).getBikeName());
-        viewHolder.mTxtBikeDescription.setText(mData.get(position).getBikeDescription());
+        BikeDetailItem bikeDetailItem = mData.get(position);
+
+        int operationalWithProblemsVisibility = bikeDetailItem.isOperationalWithIssues() ? View.VISIBLE : View.GONE;
+        int inoperationalVisibility = bikeDetailItem.isInOperational() ? View.VISIBLE : View.GONE;
+        viewHolder.mTxtOperationalWithProblems.setVisibility(operationalWithProblemsVisibility);
+        viewHolder.mTxtInoperational.setVisibility(inoperationalVisibility);
+
+        viewHolder.mTxtBikeType.setText(bikeDetailItem.getBikeType());
+        viewHolder.mTxtBikeName.setText(bikeDetailItem.getBikeName());
+        viewHolder.mTxtBikeDescription.setText(bikeDetailItem.getBikeDescription());
     }
 
     private void onBindRecentlyReturned(BikeDetailAdapter.ViewHolder viewHolder, final int
@@ -136,15 +149,36 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
     private void onBindIssueItem(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
+
         IssueUpdate issueUpdate = mData.get(position).getIssueUpdate();
 
-        viewHolder.mTxtUserName.setText(issueUpdate.author);
+        int colorBasePink = mContext.getResources().getColor(R.color.base_pink);
+        String slash = " / ";
+
+        SpannableStringBuilder userNameAndDateTime = new SpannableStringBuilder();
+        int start = userNameAndDateTime.length();
+
+        //set author name
+        userNameAndDateTime.append(issueUpdate.author);
+        userNameAndDateTime.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // set " / "
+        start = userNameAndDateTime.length();
+        userNameAndDateTime.append(slash);
+        userNameAndDateTime.setSpan(new ForegroundColorSpan(colorBasePink), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        //set issue date
+        userNameAndDateTime.append("1.1. 2012"); //TODO DateUtils.getDate(issueAtDate)
+
+        // set " / "
+        start = userNameAndDateTime.length();
+        userNameAndDateTime.append(slash);
+        userNameAndDateTime.setSpan(new ForegroundColorSpan(colorBasePink), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // set issue time
+        userNameAndDateTime.append("11:00"); //TODO DateUtils.getTime(issueAtDate)
+
+        viewHolder.mTxtUserNameAndDateTime.setText(userNameAndDateTime);
         viewHolder.mTxtIssueDescription.setText(issueUpdate.description);
-
-        Date issueAtDate = issueUpdate.issuedAt;
-
-        viewHolder.mTxtIssueDate.setText(DateUtils.getDate(issueAtDate));
-        viewHolder.mTxtIssueTime.setText(DateUtils.getTime(issueAtDate));
     }
 
     @Override
@@ -163,6 +197,8 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         TextView mTxtBikeType;
         TextView mTxtBikeName;
         TextView mTxtBikeDescription;
+        TextView mTxtOperationalWithProblems;
+        TextView mTxtInoperational;
 
         //TYPE_RECENTLY_RETURNED
         TextView mTxtRecReturnedDate;
@@ -180,9 +216,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         TextView mTxtIssueTitle;
 
         //TYPE_ISSUE_ITEM
-        TextView mTxtUserName;
-        TextView mTxtIssueDate;
-        TextView mTxtIssueTime;
+        TextView mTxtUserNameAndDateTime;
         TextView mTxtIssueDescription;
 
         public final int typeView;
@@ -200,6 +234,9 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
                     mTxtBikeType = (TextView) itemView.findViewById(R.id.txt_bike_type);
                     mTxtBikeName = (TextView) itemView.findViewById(R.id.txt_bike_name);
                     mTxtBikeDescription = (TextView) itemView.findViewById(R.id.txt_bike_description);
+                    mTxtOperationalWithProblems = (TextView) itemView.findViewById(R.id.txt_operational_with_problems);
+                    mTxtInoperational = (TextView) itemView.findViewById(R.id.txt_inoperational);
+
                     break;
                 case BikeDetailItem.TYPE_RECENTLY_RETURNED:
                     mTxtRecReturnedDate = (TextView) itemView.findViewById(R.id.txt_rec_returned_date);
@@ -217,9 +254,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
                     mTxtIssueTitle = (TextView) itemView.findViewById(R.id.txt_issue_title);
                     break;
                 case BikeDetailItem.TYPE_ISSUE_ITEM:
-                    mTxtUserName = (TextView) itemView.findViewById(R.id.txt_user_name);
-                    mTxtIssueDate = (TextView) itemView.findViewById(R.id.txt_issue_date);
-                    mTxtIssueTime = (TextView) itemView.findViewById(R.id.txt_issue_time);
+                    mTxtUserNameAndDateTime = (TextView) itemView.findViewById(R.id.txt_user_name_and_datetime);
                     mTxtIssueDescription = (TextView) itemView.findViewById(R.id.txt_issue_description);
                     break;
                 default:

@@ -4,6 +4,7 @@ import java.util.List;
 
 import cz.rekola.app.api.model.bike.Bike;
 import cz.rekola.app.api.model.bike.BorrowedBike;
+import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.LockCode;
 import cz.rekola.app.api.model.bike.ReturnedBike;
 import cz.rekola.app.api.model.map.Poi;
@@ -43,6 +44,9 @@ public interface ApiService {
 
     @PUT("/bikes/{id}/return")
     public void returnBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
+
+    @GET("/bikes/{bikeId}/issues?onlyOpen=1")
+    public void getBikeIssues(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("bikeId") int bikeId, Callback<List<Issue>> callback);
 
     @GET("/location/pois")
     public void getPois(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);

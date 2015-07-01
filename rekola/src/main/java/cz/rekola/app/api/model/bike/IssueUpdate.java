@@ -9,5 +9,5 @@ import java.util.Date;
 public class IssueUpdate {
     public String author;
     public String description;
-    public Date issuedAt;
+    public String issuedAt; //TODO replace with Date
 }

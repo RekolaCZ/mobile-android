@@ -74,6 +74,7 @@
     <string name="error_title_login_failed">Přihlášení selhalo.</string>
     <string name="error_title_password_recovery_failed">Obnova hesla se nezdařila.</string>
     <string name="error_get_bikes_failed">Stahování informací o kolech se nezdařilo.</string>
+    <string name="error_get_bike_failed">Stahování informací o kole se nezdařilo.</string>
     <string name="error_get_account_failed">Stahování informací o účtu se nezdařilo.</string>
     <string name="error_get_borrowed_bike_failed">Stahování informace o půjčeném kole se nezdařilo.</string>
     <string name="error_borrow_bike_failed">Půjčení kola se nezdařilo.</string>

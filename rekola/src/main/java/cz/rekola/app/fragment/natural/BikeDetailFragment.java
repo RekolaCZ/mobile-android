@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +18,12 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
+import cz.rekola.app.api.model.bike.Bike;
+import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.adapter.BikeDetailAdapter;
+import cz.rekola.app.core.bus.BikeIssuesAvailableEvent;
+import cz.rekola.app.core.bus.BikesAvailableEvent;
 import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
@@ -26,34 +32,20 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
  */
 public class BikeDetailFragment extends BaseMainFragment {
 
-    private static String ARG_BIKE_ID = "BIKE_ID";
-
-    private int mBikeID;
+    private int mBikeID = -1;
+    List<BikeDetailItem> mBikeDetailItemList;
 
     @InjectView(R.id.rvBikeDetail)
     RecyclerView rvBikeDetail;
 
-    public static BikeDetailFragment newInstance(int bikeID) {
-        BikeDetailFragment fragment = new BikeDetailFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_BIKE_ID, bikeID);
-        fragment.setArguments(args);
-        return fragment;
+
+    public void init(int bikeID) {
+        mBikeID = bikeID;
     }
 
     public BikeDetailFragment() {
         // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mBikeID = getArguments().getInt(ARG_BIKE_ID);
-        }
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,26 +59,75 @@ public class BikeDetailFragment extends BaseMainFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvBikeDetail.setLayoutManager(layoutManager);
 
-        BikeDetailAdapter adapter = new BikeDetailAdapter(getBikeDetailListItem());
+        mBikeDetailItemList = new ArrayList<>();
+
+        BikeDetailAdapter adapter = new BikeDetailAdapter(mBikeDetailItemList, getActivity());
         rvBikeDetail.setAdapter(adapter);
+
+        setBikeInfo();
+        setBikeIssues();
+
         return view;
     }
 
-    private List<BikeDetailItem> getBikeDetailListItem() {
-        List<BikeDetailItem> bikeDetailItemList = new ArrayList<>();
-        BikeDetailItem basicInfo = BikeDetailItem.getBasicInfoInstance("bikeIconUrl",
-                "bikeType", "bikeName", true, true, "description");
-        BikeDetailItem separator = BikeDetailItem.getSeparatorInstance();
-        BikeDetailItem recentlyReturned = BikeDetailItem.getRecentlyReturnedInstance(new Date(0),
-                "recentPlaceDescription");
+    @Subscribe
+    public void isBikeDetailAvailable(BikesAvailableEvent event) {
+        setBikeInfo();
+    }
 
+    @Subscribe
+    public void isBikeIssuesAvailable(BikeIssuesAvailableEvent event) {
+        setBikeIssues();
+    }
+
+    private void setBikeInfo() {
+        Bike bike = getApp().getDataManager().getBike(mBikeID);
+        if (bike == null)
+            return; // will be set later by event isBikeDetailAvailable
+
+
+        boolean operationalWithIssues = bike.operational; //&& bike.issues.size() > 0; TODO set up with new api
+        BikeDetailItem basicInfo = getBasicInfoItem(bike, operationalWithIssues);
+        BikeDetailItem separator = BikeDetailItem.getSeparatorInstance();
+        BikeDetailItem recentlyReturned = getRecentlyReturnedItem(bike);
+
+        BikeDetailItem equipments = getEquipmentsItem(bike);
+        BikeDetailItem issueHeader = getIssueHeaderItem(bike);
+
+        mBikeDetailItemList.add(basicInfo);
+        mBikeDetailItemList.add(separator);
+        mBikeDetailItemList.add(recentlyReturned);
+        mBikeDetailItemList.add(separator);
+        mBikeDetailItemList.add(equipments);
+        mBikeDetailItemList.add(separator);
+        mBikeDetailItemList.add(issueHeader);
+
+        rvBikeDetail.getAdapter().notifyDataSetChanged();
+    }
+
+
+    BikeDetailItem getBasicInfoItem(Bike bike, boolean operationalWithIssues) {
+        return BikeDetailItem.getBasicInfoInstance(bike.iconUrl, bike.bikeType, bike.name, operationalWithIssues,
+                bike.operational, bike.description);
+    }
+
+    BikeDetailItem getRecentlyReturnedItem(Bike bike) {
+        return BikeDetailItem.getRecentlyReturnedInstance(new Date(0), //TODO replace with bike.date
+                bike.location.note);
+    }
+
+    BikeDetailItem getEquipmentsItem(Bike bike) {
         Button.OnClickListener equipmentsDetailListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //TODO add dialog fragment
             }
         };
 
+        return BikeDetailItem.getEquipmentInstance(bike.equipment, equipmentsDetailListener);
+    }
+
+    BikeDetailItem getIssueHeaderItem(Bike bike) {
         Button.OnClickListener addIssueListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,31 +135,28 @@ public class BikeDetailFragment extends BaseMainFragment {
             }
         };
 
-        BikeDetailItem equipments = BikeDetailItem.getEquipmentInstance(null, equipmentsDetailListener);
-        BikeDetailItem issueHeader = BikeDetailItem.getIssueHeaderInstance(addIssueListener);
-        BikeDetailItem issueTitle = BikeDetailItem.getIssueTitleInstance("issueTitle");
-
-        IssueUpdate issueUpdate = new IssueUpdate();
-        issueUpdate.author = "User Name";
-        issueUpdate.description = "dsf dsf ds fds dsf dfs dfs fds fsd fsd f dsf ds f dsf dsfsdfds" +
-                " dsfsdf dsfsd fds fsd f dsfds  dsfsdfsdf";
-        issueUpdate.issuedAt = new Date(0);
-
-        BikeDetailItem issueItem = BikeDetailItem.getIssueItemInstance(issueUpdate);
-
-        bikeDetailItemList.add(basicInfo);
-        bikeDetailItemList.add(separator);
-        bikeDetailItemList.add(recentlyReturned);
-        bikeDetailItemList.add(separator);
-        bikeDetailItemList.add(equipments);
-        bikeDetailItemList.add(separator);
-        bikeDetailItemList.add(issueHeader);
-        bikeDetailItemList.add(issueTitle);
-        bikeDetailItemList.add(issueItem);
-        bikeDetailItemList.add(issueItem);
-
-        return bikeDetailItemList;
+        return BikeDetailItem.getIssueHeaderInstance(addIssueListener);
     }
 
+    private void setBikeIssues() {
+        List<Issue> bikeIssues = getApp().getDataManager().getBikeIssues(mBikeID);
+        if (bikeIssues == null)
+            return;
+
+        for (Issue issue : bikeIssues) {
+            BikeDetailItem issueTitle = BikeDetailItem.getIssueTitleInstance(issue.title);
+            mBikeDetailItemList.add(issueTitle);
+            setBikeIssueUpdates(issue.updates);
+        }
+
+        rvBikeDetail.getAdapter().notifyDataSetChanged();
+    }
+
+    private void setBikeIssueUpdates(List<IssueUpdate> bikeIssueUpdates) {
+        for (IssueUpdate issueUpdate : bikeIssueUpdates) {
+            BikeDetailItem issueItem = BikeDetailItem.getIssueItemInstance(issueUpdate);
+            mBikeDetailItemList.add(issueItem);
+        }
+    }
 
 }

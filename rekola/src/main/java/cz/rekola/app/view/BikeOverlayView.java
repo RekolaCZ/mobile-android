@@ -110,6 +110,7 @@ public class BikeOverlayView extends RelativeLayout {
         mbtnRoute.setVisibility(VISIBLE);
 
         MyAnimator.showSlideUp(this);
+
         callbacks.onHeightChanged(mOverlayMapArea.getMeasuredHeight());
     }
 

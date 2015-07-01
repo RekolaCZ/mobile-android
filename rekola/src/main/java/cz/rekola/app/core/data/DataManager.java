@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.net.HttpURLConnection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +13,7 @@ import cz.rekola.app.R;
 import cz.rekola.app.api.ApiService;
 import cz.rekola.app.api.model.bike.Bike;
 import cz.rekola.app.api.model.bike.BorrowedBike;
+import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.LockCode;
 import cz.rekola.app.api.model.bike.ReturnedBike;
 import cz.rekola.app.api.model.error.BikeConflictError;
@@ -24,6 +26,8 @@ import cz.rekola.app.api.requestmodel.RecoverPassword;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.core.RekolaApp;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
+import cz.rekola.app.core.bus.BikeIssueFailedEvent;
+import cz.rekola.app.core.bus.BikeIssuesAvailableEvent;
 import cz.rekola.app.core.bus.BikesAvailableEvent;
 import cz.rekola.app.core.bus.BikesFailedEvent;
 import cz.rekola.app.core.bus.BorrowedBikeAvailableEvent;
@@ -55,10 +59,10 @@ public class DataManager {
 
     private Token token;
     private List<Bike> bikes;
+    HashMap<Integer, List<Issue>> bikeIssuesMap = new HashMap<>(); //HashMap<bikeId, issues>
     private MyBikeWrapper myBike;
     private List<Poi> pois;
     private Account account;
-
     private LoadingManager loadingManager;
 
     public DataManager(RekolaApp app) {
@@ -181,6 +185,20 @@ public class DataManager {
         return null;
     }
 
+    public Bike getBike(int bikeId) {
+        if (myBike != null && myBike.bike.id == bikeId) {
+            return myBike.bike;
+        } else if (bikes != null) {
+            for (Bike bike : bikes) {
+                if (bike.id == bikeId)
+                    return bike;
+            }
+        } else //bike not found
+            getBikes(false);
+
+        return null;
+    }
+
     public MyBikeWrapper getBorrowedBike(boolean forceUpdate) {
         if (myBike != null && !forceUpdate) {
             return myBike;
@@ -217,6 +235,7 @@ public class DataManager {
                     }
                 }
                 app.getBus().post(new BorrowedBikeFailedEvent());
+                Log.e(TAG, error.toString());
                 handleGlobalError(error, app.getResources().getString(R.string.error_get_borrowed_bike_failed));
             }
         });
@@ -378,6 +397,31 @@ public class DataManager {
         */
     }
 
+    public List<Issue> getBikeIssues(final int bikeId) {
+        if (bikeIssuesMap.containsKey(bikeId) || !loadingManager.addLoading(DataLoad.BIKE_ISSUES)) {
+            return bikeIssuesMap.get(bikeId);
+        }
+
+        ApiService apiService = app.getApiService();
+        apiService.getBikeIssues(token.apiKey, bikeId, new Callback<List<Issue>>() {
+            @Override
+            public void success(List<Issue> bikeIssues, Response response) {
+                loadingManager.removeLoading(DataLoad.BIKE_ISSUES);
+                DataManager.this.bikeIssuesMap.put(bikeId, bikeIssues);
+                app.getBus().post(new BikeIssuesAvailableEvent());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                loadingManager.removeLoading(DataLoad.BIKE_ISSUES);
+                app.getBus().post(new BikeIssueFailedEvent());
+                handleGlobalError(error, app.getResources().getString(R.string.error_get_bike_failed));
+            }
+        });
+
+        return null;
+    }
+
     private void handleGlobalError(RetrofitError error, String title) {
         if (error.getResponse() == null) { // This is a bug in retrofit when handling incorrect authentication
             if (error.getCause() != null && error.getCause().getMessage() != null && error.getCause().getMessage().contains("No authentication challenges found")) { // 401
@@ -422,6 +466,7 @@ public class DataManager {
         PASSWORD_RECOVERY,
         BORROWED_BIKE,
         BIKES,
+        BIKE_ISSUES,
         BORROW_BIKE,
         RETURN_BIKE,
         POIS,

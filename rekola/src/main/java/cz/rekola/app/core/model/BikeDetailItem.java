@@ -31,7 +31,7 @@ public class BikeDetailItem {
     private String bikeName;
     private String bikeDescription;
     private boolean operationalWithIssues;
-    private boolean inOperational;
+    private boolean operational;
 
     //@layout/bike_detail_recently_returned
     private Date recentlyReturned;
@@ -56,10 +56,10 @@ public class BikeDetailItem {
     }
 
     public static BikeDetailItem getBasicInfoInstance(String bikeIconUrl, String bikeType, String bikeName,
-                                                      boolean operationalWithIssues, boolean inOperational,
+                                                      boolean operationalWithIssues, boolean operational,
                                                       String description) {
         return new BikeDetailItem(TYPE_BASIC_INFO, bikeIconUrl, bikeType, bikeName,
-                operationalWithIssues, inOperational, description);
+                operationalWithIssues, operational, description);
     }
 
     public static BikeDetailItem getRecentlyReturnedInstance(Date recentlyReturned, String recentPlaceDescription) {
@@ -98,13 +98,13 @@ public class BikeDetailItem {
 
     //TYPE_BASIC_INFO
     private BikeDetailItem(int type, String bikeIconUrl, String bikeType, String bikeName, boolean
-            operationalWithIssues, boolean inOperational, String bikeDescription) {
+            operationalWithIssues, boolean operational, String bikeDescription) {
         mType = type;
         this.bikeIconUrl = bikeIconUrl;
         this.bikeType = bikeType;
         this.bikeName = bikeName;
         this.operationalWithIssues = operationalWithIssues;
-        this.inOperational = inOperational;
+        this.operational = operational;
         this.bikeDescription = bikeDescription;
     }
 
@@ -162,7 +162,11 @@ public class BikeDetailItem {
     }
 
     public boolean isInOperational() {
-        return inOperational;
+        return !operational;
+    }
+
+    public boolean isOperational() {
+        return operational;
     }
 
     public String getBikeDescription() {
