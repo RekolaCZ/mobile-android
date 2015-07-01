@@ -47,6 +47,7 @@
 -dontwarn javax.**
 -dontwarn com.squareup.**
 -dontwarn butterknife.**
+-dontwarn okio.**
 
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable

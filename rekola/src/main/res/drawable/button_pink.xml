@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
-    <solid android:color="@color/base_pink"/>
-    <corners android:radius="@dimen/login_button_radius"/>
-</shape>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/button_pink_normal" android:state_focused="false" android:state_pressed="false"/>
+    <item android:drawable="@drawable/button_pink_pressed" android:state_focused="true" android:state_pressed="false"/>
+    <item android:drawable="@drawable/button_pink_pressed" android:state_focused="false" android:state_pressed="true"/>
+
+</selector>

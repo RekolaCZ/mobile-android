@@ -186,7 +186,7 @@ public class DataManager {
     }
 
     public Bike getBike(int bikeId) {
-        if (myBike != null && myBike.bike.id == bikeId) {
+        if (myBike != null && myBike.bike != null && myBike.bike.id == bikeId) {
             return myBike.bike;
         } else if (bikes != null) {
             for (Bike bike : bikes) {

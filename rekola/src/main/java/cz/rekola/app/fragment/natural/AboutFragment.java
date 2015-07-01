@@ -14,12 +14,6 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
  */
 public class AboutFragment extends BaseMainFragment {
 
-
-    public AboutFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

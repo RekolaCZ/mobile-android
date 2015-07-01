@@ -33,9 +33,9 @@
         android:id="@+id/btn_equipments_detail"
         style="@style/TextView"
         android:layout_gravity="center"
-        android:background="@drawable/border_green"
+        android:background="@drawable/button_green_border"
+        android:textColor="@drawable/button_green_text"
         android:text="@string/bike_detail_equipment_info"
-        android:textColor="@color/base_green"
         android:textSize="@dimen/text_medium"/>
 
 

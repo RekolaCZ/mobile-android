@@ -113,9 +113,9 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         ReturningLocation returningLocation = new ReturningLocation();
         returningLocation.lat = center.latitude;
         returningLocation.lng = center.longitude;
-        returningLocation.sensorLat = location.lat;
+     /*   returningLocation.sensorLat = location.lat; //TODO uncomment
         returningLocation.sensorLng = location.lng;
-        returningLocation.sensorAccuracy = location.acc;
+        returningLocation.sensorAccuracy = location.acc; */
         returningLocation.note = mTxtNote.getText().toString();
 
         ReturningBike returningBike = new ReturningBike(returningLocation);

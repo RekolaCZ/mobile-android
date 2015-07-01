@@ -1,0 +1,10 @@
+diff a/rekola/src/main/java/cz/rekola/app/fragment/natural/BikeDetailFragment.java b/rekola/src/main/java/cz/rekola/app/fragment/natural/BikeDetailFragment.java	(rejected hunks)
+@@ -60,8 +60,6 @@
+         rvBikeDetail.setLayoutManager(layoutManager);
+ 
+         mBikeDetailItemList = new ArrayList<>();
+-        setBikeInfo();
+-        setBikeIssues();
+         BikeDetailAdapter adapter = new BikeDetailAdapter(mBikeDetailItemList, getActivity());
+         rvBikeDetail.setAdapter(adapter);
+ 

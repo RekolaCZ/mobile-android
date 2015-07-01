@@ -22,9 +22,8 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
  */
 public class AddIssueFragment extends BaseMainFragment {
 
-
     @InjectView(R.id.spn_issue_type)
-    Spinner spn_issue_type;
+    Spinner spnIssueType;
 
     public AddIssueFragment() {
         // Required empty public constructor
@@ -44,14 +43,16 @@ public class AddIssueFragment extends BaseMainFragment {
 
     private void setSpinner() {
         List<String> spinnerArray = new ArrayList<String>();
-        for (int i = 0; i < 10; i++)
-            spinnerArray.add("item " + i);
 
+        //TODO add corrext items
+        for (int i = 0; i < 10; i++) {
+            spinnerArray.add("item " + i);
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout
                 .simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_issue_type.setAdapter(adapter);
+        spnIssueType.setAdapter(adapter);
     }
 
 
