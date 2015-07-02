@@ -15,6 +15,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.squareup.otto.Subscribe;
 
@@ -219,7 +220,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     }
 
 
-    private class MapManager implements ClusterManager.OnClusterItemClickListener<BikeClusterItem>,
+    private class MapManager implements ClusterManager.OnClusterItemClickListener<BikeClusterItem>, ClusterManager.OnClusterClickListener<BikeClusterItem>,
             DirectionManager.DirectionsLoadedListener {
 
         private ClusterManager<BikeClusterItem> mClusterManager;
@@ -230,6 +231,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         void init() {
             mClusterManager = new ClusterManager<>(getActivity(), mGooglemap);
             mClusterManager.setOnClusterItemClickListener(this);
+            mClusterManager.setOnClusterClickListener(this);
+
             mBikeRenderer = new BikeRenderer(getActivity(), getActivity()
                     .getLayoutInflater(), mGooglemap, mClusterManager);
             mClusterManager.setRenderer(mBikeRenderer);
@@ -312,9 +315,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
         @Override
         public boolean onClusterItemClick(BikeClusterItem bikeClusterItem) {
-
             directionManager.hideDirections();
-
             //clicked on same the bike
             if (bikeClusterItem.equals(lastBikeClusterItem)) {
                 if (bikeClusterItem.isSelectedBike()) {
@@ -340,6 +341,13 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             return false;
         }
 
+        @Override
+        public boolean onClusterClick(Cluster<BikeClusterItem> cluster) {
+            mGooglemap.moveCamera(CameraUpdateFactory.newLatLng(cluster.getPosition()));
+            mGooglemap.animateCamera(CameraUpdateFactory.zoomIn());
+            return true;
+        }
+
         private void setBikeSelected(BikeClusterItem bikeClusterItem) {
             bikeClusterItem.setIsSelectedBike(true);
             mBikeRenderer.setIconSelected(bikeClusterItem);
@@ -349,6 +357,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             bikeClusterItem.setIsSelectedBike(false);
             mBikeRenderer.setIconUnselected(bikeClusterItem);
         }
+
     }
 
 
