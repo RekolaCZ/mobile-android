@@ -52,6 +52,23 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+/**
+ * Data manager for get and store data from api. Storing is only in this class and this class is part of MainActivity
+ * <p/>
+ * How it works:
+ * 1) All data is stored in class variables e.g. List<Bike> bikes;
+ * 2) Some Fragment need data, so it will call getApp().getDataManager().getBikes(true);
+ * 3) First time it will return null, but it will run asynchronous request to api
+ * 4) If data is available or it fail, it is driven by event library Otto
+ * 5) In fragment is subscribe method e.g.
+ *
+ * @Subscribe public void bikesAvailable(BikesAvailableEvent event) {
+ * setupMap();
+ * }
+ * <p/>
+ * and that's all
+ */
+
 public class DataManager {
 
     public static final String TAG = "DataManager";

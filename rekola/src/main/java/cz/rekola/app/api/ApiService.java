@@ -24,6 +24,10 @@ import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
+/**
+ * Retrofit declaration
+ */
+
 public interface ApiService {
     @POST("/accounts/mine/login")
     public void login(@Body Credentials body, Callback<Token> callback);

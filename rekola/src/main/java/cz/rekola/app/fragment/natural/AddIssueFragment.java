@@ -1,7 +1,6 @@
 package cz.rekola.app.fragment.natural;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Screen to add new issue
  */
 public class AddIssueFragment extends BaseMainFragment {
 

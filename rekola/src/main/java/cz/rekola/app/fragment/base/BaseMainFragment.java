@@ -8,6 +8,10 @@ import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.core.RekolaApp;
 import cz.rekola.app.core.page.PageController;
 
+/**
+ * Base fragment, all other fragment should extend this fragment
+ */
+
 public abstract class BaseMainFragment extends Fragment {
 
     @Override

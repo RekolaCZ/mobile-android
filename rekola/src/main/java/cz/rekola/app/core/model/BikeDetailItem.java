@@ -9,7 +9,7 @@ import cz.rekola.app.api.model.bike.Equipment;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 
 /**
- * TODO add class description
+ * Class is used for recycler view to show different views
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {24. 6. 2015}
  */
 

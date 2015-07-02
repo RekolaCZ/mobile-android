@@ -4,7 +4,6 @@ package cz.rekola.app.core.page;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -25,6 +24,10 @@ import cz.rekola.app.fragment.natural.ProfileFragment;
 import cz.rekola.app.fragment.natural.ReturnFragment;
 import cz.rekola.app.fragment.natural.ReturnMapFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
+
+/**
+ * Works like own fragment manager
+ */
 
 public class PageManager {
 
@@ -81,10 +84,9 @@ public class PageManager {
      * @param actionBar
      * @return Newly created fragment
      */
-    public Fragment setState(EPageState newState, Context context, FragmentManager fragmentManager, ActionBar actionBar, Resources resources) {
+    public Fragment setState(EPageState newState, Context context, FragmentManager fragmentManager, ActionBar actionBar) {
         if (this.state == newState)
             return null;
-
 
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -175,18 +177,18 @@ public class PageManager {
         return fragment;
     }
 
-    public void setUpState(Context context, FragmentManager fragmentManager, ActionBar actionBar, Resources resources) {
+    public void setUpState(Context context, FragmentManager fragmentManager, ActionBar actionBar) {
         if (!state.upState)
             return;
 
-        setState(rootState, context, fragmentManager, actionBar, resources);
+        setState(rootState, context, fragmentManager, actionBar);
     }
 
-    public boolean setBackState(Context context, FragmentManager fragmentManager, ActionBar actionBar, Resources resources) {
+    public boolean setBackState(Context context, FragmentManager fragmentManager, ActionBar actionBar) {
         if (!state.upState)
             return false;
 
-        setUpState(context, fragmentManager, actionBar, resources);
+        setUpState(context, fragmentManager, actionBar);
         return true;
     }
 

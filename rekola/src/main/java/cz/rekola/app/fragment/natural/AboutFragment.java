@@ -10,7 +10,7 @@ import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 /**
- * About app
+ * Screen about app
  */
 public class AboutFragment extends BaseMainFragment {
 

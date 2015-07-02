@@ -3,6 +3,10 @@ package cz.rekola.app.fragment.web;
 import cz.rekola.app.fragment.base.BaseWebFragment;
 import cz.rekola.app.webapi.WebApiConstants;
 
+/**
+ * Screen when bike is returned
+ */
+
 public class ReturnWebFragment extends BaseWebFragment {
 
     private String successUrl;

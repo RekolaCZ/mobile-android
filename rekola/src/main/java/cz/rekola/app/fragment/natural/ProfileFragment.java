@@ -1,7 +1,6 @@
 package cz.rekola.app.fragment.natural;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,7 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.utils.DateUtils;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Screen about user
  */
 public class ProfileFragment extends BaseMainFragment {
 

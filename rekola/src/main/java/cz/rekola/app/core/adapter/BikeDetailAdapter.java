@@ -24,7 +24,7 @@ import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.utils.DateUtils;
 
 /**
- * TODO add class description
+ * Adapter for recycleview in BikeDetailFragment
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {24. 6. 2015}
  */
 public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.ViewHolder> {

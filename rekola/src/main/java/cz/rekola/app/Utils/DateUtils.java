@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 /**
- * Date utils for uniform date formatting
+ * Class to simplify and uniform work with Date
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {28. 6. 2015}
  **/
 public class DateUtils {

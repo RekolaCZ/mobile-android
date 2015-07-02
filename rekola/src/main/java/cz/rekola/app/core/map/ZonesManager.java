@@ -12,7 +12,7 @@ import cz.rekola.app.R;
 import cz.rekola.app.api.model.map.Zone;
 
 /**
- * TODO add class description
+ * Class to add boundaries into app, where user can find and left bikes
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {28. 6. 2015}
  **/
 public class ZonesManager {
@@ -23,7 +23,6 @@ public class ZonesManager {
             map.addPolygon(getZonePolygonOptions(context, zone.getCoords()));
         }
     }
-
 
     private static PolygonOptions getZonePolygonOptions(Context context, List<LatLng>
             zonesPoints) {

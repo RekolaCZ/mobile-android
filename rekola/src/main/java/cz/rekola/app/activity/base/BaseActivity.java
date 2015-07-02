@@ -8,8 +8,9 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.CrashManagerListener;
 
 import cz.config.HockeyConfig;
+import cz.rekola.app.core.RekolaApp;
 
-/**
+/** Base Activity, all new Activity should extend this Activity
  * Created on 7.5.2015 by tomas.krabac@ackee.cz
  */
 
@@ -37,6 +38,9 @@ public class BaseActivity extends ActionBarActivity {
         });
     }
 
+    protected RekolaApp getApp() {
+        return (RekolaApp) getApplication();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

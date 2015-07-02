@@ -15,6 +15,10 @@ import cz.rekola.app.core.Constants;
 import cz.rekola.app.view.ApiWebView;
 import cz.rekola.app.webapi.WebApiHandler;
 
+/**
+ * Base fragment for webviews
+ */
+
 public abstract class BaseWebFragment extends BaseMainFragment implements WebApiHandler {
 
     @InjectView(R.id.profile_web)

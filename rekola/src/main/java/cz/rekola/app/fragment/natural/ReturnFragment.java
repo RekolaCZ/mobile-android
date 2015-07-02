@@ -19,8 +19,11 @@ import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.utils.DateUtils;
 
-public class ReturnFragment extends BaseMainFragment {
+/**
+ * Screen to return bike
+ */
 
+public class ReturnFragment extends BaseMainFragment {
 
     @InjectView(R.id.img_bike)
     ImageView mImgBike;

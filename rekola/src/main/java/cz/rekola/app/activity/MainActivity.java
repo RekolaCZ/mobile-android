@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
 import cz.rekola.app.activity.base.BaseActivity;
-import cz.rekola.app.core.RekolaApp;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.app.core.bus.DataLoadingFinished;
 import cz.rekola.app.core.bus.DataLoadingStarted;
@@ -31,6 +30,9 @@ import cz.rekola.app.view.MessageBarView;
 
 public class MainActivity extends BaseActivity implements PageController {
 
+    /**
+     * Activity is running when user is successful logged
+     */
 
     @InjectView(R.id.layout_error_bar)
     MessageBarView mLayoutErrorBar;
@@ -97,17 +99,17 @@ public class MainActivity extends BaseActivity implements PageController {
             case R.id.img_action_lock:
                 MyBikeWrapper myBike = getMyBike();
                 PageManager.EPageState pageState = myBike != null && myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW;
-                pageManager.setState(pageState, this, getFragmentManager(), getSupportActionBar(), getResources());
+                setState(pageState);
 
                 break;
             case R.id.img_action_map:
-                pageManager.setState(PageManager.EPageState.MAP, this, getFragmentManager(), getSupportActionBar(), getResources());
+                setState(PageManager.EPageState.MAP);
                 break;
             case R.id.img_action_profile:
-                pageManager.setState(PageManager.EPageState.PROFILE, this, getFragmentManager(), getSupportActionBar(), getResources());
+                setState(PageManager.EPageState.PROFILE);
                 break;
             case android.R.id.home:
-                pageManager.setUpState(this, getFragmentManager(), getSupportActionBar(), getResources());
+                pageManager.setUpState(this, getFragmentManager(), getSupportActionBar());
                 break;
             default:
                 Log.e(TAG, "unknown options menu item " + v.getId() + " " + v.toString());
@@ -116,7 +118,7 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void onBackPressed() {
-        if (!pageManager.setBackState(this, getFragmentManager(), getSupportActionBar(), getResources())) {
+        if (!pageManager.setBackState(this, getFragmentManager(), getSupportActionBar())) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // This might be a cause for the stack mess..
@@ -159,6 +161,10 @@ public class MainActivity extends BaseActivity implements PageController {
     public void onIncompatibleApi(IncompatibleApiEvent event) {
         startLoginActivity(getResources().getString(R.string.error_old_app_version));
     }
+
+    /**
+     * methods to change fragments
+     */
 
     @Override
     public void requestMap() {
@@ -207,7 +213,7 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     private Fragment setState(PageManager.EPageState pageState) {
-        return pageManager.setState(pageState, this, getFragmentManager(), getSupportActionBar(), getResources());
+        return pageManager.setState(pageState, this, getFragmentManager(), getSupportActionBar());
     }
 
     private MyBikeWrapper getMyBike() {
@@ -227,9 +233,5 @@ public class MainActivity extends BaseActivity implements PageController {
         }
         startActivity(intent);
         finish();
-    }
-
-    private RekolaApp getApp() {
-        return (RekolaApp) getApplication();
     }
 }

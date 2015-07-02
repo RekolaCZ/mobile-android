@@ -19,6 +19,10 @@ import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
+/**
+ * Screen to borrow bike
+ */
+
 public class BorrowFragment extends BaseMainFragment {
 
 

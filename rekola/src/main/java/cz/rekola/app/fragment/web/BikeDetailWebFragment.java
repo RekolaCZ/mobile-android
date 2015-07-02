@@ -3,6 +3,10 @@ package cz.rekola.app.fragment.web;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.fragment.base.BaseWebFragment;
 
+/**
+ * Screen to bike detail as webview (used to serviceman)
+ */
+
 public class BikeDetailWebFragment extends BaseWebFragment {
 
     private int id;

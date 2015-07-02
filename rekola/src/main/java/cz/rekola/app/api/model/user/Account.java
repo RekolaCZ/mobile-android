@@ -3,7 +3,7 @@ package cz.rekola.app.api.model.user;
 import java.util.Date;
 
 /**
- * TODO add class description
+ * User account
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {28. 6. 2015}
  **/
 public class Account {

@@ -6,6 +6,10 @@ import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
 
+/**
+ * Simplify to using shared preference
+ */
+
 public class PreferencesManager {
 
     public static final String PREFS_NAME = "MyPreferences";

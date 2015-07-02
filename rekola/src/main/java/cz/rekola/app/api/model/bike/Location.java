@@ -3,7 +3,9 @@ package cz.rekola.app.api.model.bike;
 import java.util.Date;
 
 public class Location {
-
+    /**
+     * Bike location
+     */
     public double lat;
     public double lng;
     public String address;

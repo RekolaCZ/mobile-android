@@ -34,7 +34,6 @@ public class RekolaApp extends Application {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
 
-
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.REKOLA_API_URL)
                 .setConverter(new GsonConverter(gson))

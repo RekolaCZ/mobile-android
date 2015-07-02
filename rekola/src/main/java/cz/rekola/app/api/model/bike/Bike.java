@@ -2,6 +2,10 @@ package cz.rekola.app.api.model.bike;
 
 import java.util.List;
 
+/**
+ * Bike model
+ */
+
 public class Bike {
 
     public int id;

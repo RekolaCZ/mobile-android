@@ -6,10 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -21,7 +19,6 @@ import cz.rekola.app.activity.base.BaseActivity;
 import cz.rekola.app.api.requestmodel.Credentials;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
 import cz.rekola.app.core.Constants;
-import cz.rekola.app.core.RekolaApp;
 import cz.rekola.app.core.anim.MyAnimator;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.app.core.bus.IncompatibleApiEvent;
@@ -35,36 +32,28 @@ import cz.rekola.app.core.bus.dataFailed.PasswordRecoveryFailed;
 import cz.rekola.app.view.LoadingOverlay;
 import cz.rekola.app.view.MessageBarView;
 
+/**
+ * Activity is used, when user is login or if he need need recover password
+ * <p/>
+ * first is showed login activity, if user want recover password, mOverlayReset overlay old view
+ * if user recover his password mOverlayReset will hide
+ */
+
 public class LoginActivity extends BaseActivity {
 
     public static final String EXTRA_MESSAGE = "extra_message";
-    @InjectView(R.id.btn_registration)
-    TextView mBtnRegistration;
     @InjectView(R.id.txt_user_name)
     EditText mTxtUserName;
     @InjectView(R.id.txt_password)
     EditText mTxtPassword;
     @InjectView(R.id.btn_login)
-    Button mBtnLogin;
-    @InjectView(R.id.btn_recover_password)
-    TextView mBtnRecoverPassword;
-    @InjectView(R.id.txt_reset_user_name)
     EditText mTxtResetUserName;
     @InjectView(R.id.btn_reset_password)
-    Button mBtnResetPassword;
-    @InjectView(R.id.btn_reset_recall)
-    TextView mBtnResetRecall;
-    @InjectView(R.id.overlay_reset)
     FrameLayout mOverlayReset;
     @InjectView(R.id.txt_loading_message)
-    TextView mTxtLoadingMessage;
-    @InjectView(R.id.overlay_loading)
     LoadingOverlay mOverlayLoading;
-    @InjectView(R.id.txt_error_text)
-    TextView mTxtErrorText;
     @InjectView(R.id.layout_error_bar)
     MessageBarView mLayoutErrorBar;
-
 
     private ViewHelper viewHelper = new ViewHelper();
 
@@ -134,7 +123,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        reset();
+        recoverPassword();
     }
 
     @Override
@@ -206,7 +195,7 @@ public class LoginActivity extends BaseActivity {
         getApp().getDataManager().login(viewHelper.getCredentials());
     }
 
-    private void reset() {
+    private void recoverPassword() {
         hideKeyboard();
         getApp().getDataManager().recoverPassword(new RecoverPassword(mTxtResetUserName.getText().toString()));
     }
@@ -217,10 +206,6 @@ public class LoginActivity extends BaseActivity {
         finish();
     }
 
-    private RekolaApp getApp() {
-        return (RekolaApp) getApplication();
-    }
-
     private class ViewHelper {
 
         private boolean canLogin() {
@@ -228,8 +213,8 @@ public class LoginActivity extends BaseActivity {
         }
 
         private boolean canReset() {
-            return (mTxtResetUserName.getText().length() > 0 && mTxtResetUserName.getText().toString().contains
-                    ("@"));
+            return (mTxtResetUserName.getText().length() > 0
+                    && mTxtResetUserName.getText().toString().contains("@"));
         }
 
         private Credentials getCredentials() {
