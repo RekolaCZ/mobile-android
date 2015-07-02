@@ -1,4 +1,4 @@
-package cz.rekola.app.core.bus;
+package cz.rekola.app.core.bus.dataFailed;
 
 /**
  * Created by palo on 09/05/14.

@@ -23,8 +23,8 @@ import cz.rekola.app.api.model.bike.Bike;
 import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.adapter.BikeDetailAdapter;
-import cz.rekola.app.core.bus.BikeIssuesAvailableEvent;
-import cz.rekola.app.core.bus.BikesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BikeIssuesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
 import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
@@ -106,7 +106,7 @@ public class BikeDetailFragment extends BaseMainFragment {
             return; // will be set later by event isBikeDetailAvailable
 
 
-        boolean operationalWithIssues = bike.operational; //&& bike.issues.size() > 0; TODO set up with new api
+        boolean operationalWithIssues = bike.operational && bike.issues.size() > 0;
         BikeDetailItem basicInfo = getBasicInfoItem(bike, operationalWithIssues);
         BikeDetailItem separator = BikeDetailItem.getSeparatorInstance();
         BikeDetailItem recentlyReturned = getRecentlyReturnedItem(bike);

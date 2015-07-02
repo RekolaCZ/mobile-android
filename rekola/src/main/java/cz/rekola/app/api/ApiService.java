@@ -7,6 +7,7 @@ import cz.rekola.app.api.model.bike.BorrowedBike;
 import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.LockCode;
 import cz.rekola.app.api.model.bike.ReturnedBike;
+import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.api.model.user.Token;
@@ -53,4 +54,7 @@ public interface ApiService {
 
     @GET("/accounts/mine")
     public void getAccount(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Account> callback);
+
+    @GET("/boundaries/")
+    public void getBoundaries(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Boundaries> callback);
 }

@@ -11,10 +11,9 @@ public class Bike {
     public String imageUrl;
     public String description;
     public String issue;
-    //   public List<Integer> issues; //TODO uncomment
+    public List<Integer> issues;
     public boolean borrowed;
     public boolean operational;
-    public String lastSeen; //TODO change to Date
     public Location location;
     public List<Equipment> equipment;
 }

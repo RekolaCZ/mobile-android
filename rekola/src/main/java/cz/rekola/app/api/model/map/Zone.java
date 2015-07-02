@@ -19,13 +19,13 @@ public class Zone {
 
     public List<LatLng> getCoords() {
 
-        //"coords": "14.4156831,50.0663613;14.4156831,50.0663613
+        //"coords": "14.480123900000002,50.1057677;14.479856200000002,50.1062329;...
         List<LatLng> parsedPoints = new ArrayList<>();
         String[] points = coords.split(POINTS_SEPARATOR);
         for (int i = 0; i < points.length; i++) {
             String[] coords = points[i].split(COORDS_SEPARATOR);
-            double lat = Double.valueOf(coords[0]);
-            double lng = Double.valueOf(coords[1]);
+            double lng = Double.valueOf(coords[0]);
+            double lat = Double.valueOf(coords[1]);
             parsedPoints.add(new LatLng(lat, lng));
         }
         return parsedPoints;

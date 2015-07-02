@@ -32,10 +32,10 @@ import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.api.requestmodel.ReturningLocation;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.MessageEvent;
-import cz.rekola.app.core.bus.PoisAvailableEvent;
-import cz.rekola.app.core.bus.PoisFailedEvent;
-import cz.rekola.app.core.bus.ReturnBikeEvent;
-import cz.rekola.app.core.bus.ReturnBikeFailedEvent;
+import cz.rekola.app.core.bus.dataAvailable.PoisAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
+import cz.rekola.app.core.bus.dataFailed.PoisFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.ReturnBikeFailedEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.core.loc.MyLocation;
 import cz.rekola.app.core.loc.MyLocationListener;
@@ -113,9 +113,9 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         ReturningLocation returningLocation = new ReturningLocation();
         returningLocation.lat = center.latitude;
         returningLocation.lng = center.longitude;
-     /*   returningLocation.sensorLat = location.lat; //TODO uncomment
+        returningLocation.sensorLat = location.lat;
         returningLocation.sensorLng = location.lng;
-        returningLocation.sensorAccuracy = location.acc; */
+        returningLocation.sensorAccuracy = location.acc;
         returningLocation.note = mTxtNote.getText().toString();
 
         ReturningBike returningBike = new ReturningBike(returningLocation);

@@ -13,10 +13,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cz.rekola.app.R;
-import cz.rekola.app.core.bus.BorrowedBikeAvailableEvent;
 import cz.rekola.app.core.bus.LockCodeEvent;
+import cz.rekola.app.core.bus.dataAvailable.BorrowedBikeAvailableEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.utils.DateUtils;
 
 public class ReturnFragment extends BaseMainFragment {
 
@@ -79,9 +80,8 @@ public class ReturnFragment extends BaseMainFragment {
             return;
         }
 
-        //TODO: lastSeen should be date and time
         if (myBike.bike != null) {
-            mTxtBorrowedFromDate.setText(myBike.bike.lastSeen);
+            mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.bike.location.returnedAt));
 
             bikeId = myBike.bike.id;
             setData(myBike.bike.name, myBike.bike.lockCode);
@@ -89,7 +89,7 @@ public class ReturnFragment extends BaseMainFragment {
         }
 
         if (myBike.lockCode != null) {
-            mTxtBorrowedFromDate.setText(myBike.lockCode.bike.lastSeen);
+            mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.lockCode.bike.location.returnedAt));
 
             bikeId = myBike.lockCode.bike.id;
             setData(myBike.lockCode.bike.name, myBike.lockCode.lockCode);

@@ -27,10 +27,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.bike.Bike;
+import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.core.Constants;
-import cz.rekola.app.core.bus.BikesAvailableEvent;
-import cz.rekola.app.core.bus.BikesFailedEvent;
-import cz.rekola.app.core.bus.ReturnBikeEvent;
+import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BoundariesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
+import cz.rekola.app.core.bus.dataFailed.BikesFailedEvent;
 import cz.rekola.app.core.loc.MyLocation;
 import cz.rekola.app.core.loc.MyLocationListener;
 import cz.rekola.app.core.map.Cluster.BikeClusterItem;
@@ -95,6 +97,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         if (getApp().getDataManager().getBikes(false) != null) {
             setupMap();
         }
+
+        setZones();
     }
 
 
@@ -139,6 +143,12 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         mViewMap.onLowMemory();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
     @Subscribe
     public void bikesAvailable(BikesAvailableEvent event) {
         setupMap();
@@ -154,20 +164,17 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         getApp().getDataManager().getBikes(true); // Force update bikes.
     }
 
+    @Subscribe
+    public void boundariesAvaible(BoundariesAvailableEvent event) {
+        setZones();
+    }
+
     @Override
     public void onMyLocationChanged(MyLocation myLocation) {
     }
 
     @Override
     public void onMyLocationError() {
-    }
-
-    private void setupMap() {
-        List<Bike> bikes = getApp().getDataManager().getBikes(false);
-        if (bikes == null)
-            return;
-
-        mapManager.updateMap(bikes);
     }
 
     // Overlay callbacks
@@ -213,12 +220,22 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             mGooglemap.moveCamera(cameraUpdate);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
+    private void setupMap() {
+        List<Bike> bikes = getApp().getDataManager().getBikes(false);
+        if (bikes == null)
+            return;
+
+        mapManager.updateMap(bikes);
     }
 
+    private void setZones() {
+        Boundaries boundaries = getApp().getDataManager().getBoundaries();
+        if (boundaries == null) {
+            return;
+        }
+
+        ZonesManager.drawZones(getActivity(), mGooglemap, boundaries.zones);
+    }
 
     private class MapManager implements ClusterManager.OnClusterItemClickListener<BikeClusterItem>, ClusterManager.OnClusterClickListener<BikeClusterItem>,
             DirectionManager.DirectionsLoadedListener {
@@ -244,10 +261,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         }
 
         void updateMap(List<Bike> bikes) {
-            mGooglemap.clear();
+            //    mGooglemap.clear();
             mClusterManager.clearItems();
-
-            ZonesManager.drawTestZone(getActivity(), mGooglemap);
 
             lastBikeClusterItem = null;
             BikeClusterItem newBikeClusterItem = null;

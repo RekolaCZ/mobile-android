@@ -16,7 +16,7 @@ import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.api.model.user.Account;
-import cz.rekola.app.core.bus.BikesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.utils.DateUtils;
 

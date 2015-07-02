@@ -6,7 +6,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.rekola.app.R;
@@ -18,15 +17,6 @@ import cz.rekola.app.api.model.map.Zone;
  **/
 public class ZonesManager {
     public static final String TAG = ZonesManager.class.getName();
-
-    public static void drawTestZone(Context context, GoogleMap map) {
-        List<Zone> zones = new ArrayList<>();
-        Zone zone = new Zone();
-        zone.name = "Praha";
-        zone.coords = "50.442224,13.829746;50.700395,16.702671;48.993308,13.796787";
-        zones.add(zone);
-        ZonesManager.drawZones(context, map, zones);
-    }
 
     public static void drawZones(Context context, GoogleMap map, List<Zone> zones) {
         for (Zone zone : zones) {

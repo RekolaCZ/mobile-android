@@ -76,9 +76,10 @@
     <string name="error_get_bikes_failed">Stahování informací o kolech se nezdařilo.</string>
     <string name="error_get_bike_failed">Stahování informací o kole se nezdařilo.</string>
     <string name="error_get_account_failed">Stahování informací o účtu se nezdařilo.</string>
-    <string name="error_get_borrowed_bike_failed">Stahování informace o půjčeném kole se nezdařilo.</string>
+    <string name="error_get_borrowed_bike_failed">Stahování informací o půjčeném kole se nezdařilo.</string>
     <string name="error_borrow_bike_failed">Půjčení kola se nezdařilo.</string>
     <string name="error_return_bike_failed">Vrácení kola se nezdařilo.</string>
+    <string name="error_get_boundaries_failed">Stahování informací o hranicích se nezdařilo.</string>
     <string name="error_incorrect_bike_code">Nesprávný kód kola.</string>
     <string name="error_no_bike_borrowed">Žádné kolo není půjčené.</string>
     <string name="error_unknown_borrowed_bike_code">Neznámý kód půjčeného kola.</string>

@@ -1,4 +1,4 @@
-package cz.rekola.app.core.bus;
+package cz.rekola.app.core.bus.dataFailed;
 
 /**
  * TODO add class description

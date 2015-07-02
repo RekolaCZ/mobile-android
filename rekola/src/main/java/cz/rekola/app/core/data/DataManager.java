@@ -3,7 +3,6 @@ package cz.rekola.app.core.data;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +17,7 @@ import cz.rekola.app.api.model.bike.LockCode;
 import cz.rekola.app.api.model.bike.ReturnedBike;
 import cz.rekola.app.api.model.error.BikeConflictError;
 import cz.rekola.app.api.model.error.MessageError;
+import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.api.model.user.Token;
@@ -26,26 +26,27 @@ import cz.rekola.app.api.requestmodel.RecoverPassword;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.core.RekolaApp;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
-import cz.rekola.app.core.bus.BikeIssueFailedEvent;
-import cz.rekola.app.core.bus.BikeIssuesAvailableEvent;
-import cz.rekola.app.core.bus.BikesAvailableEvent;
-import cz.rekola.app.core.bus.BikesFailedEvent;
-import cz.rekola.app.core.bus.BorrowedBikeAvailableEvent;
-import cz.rekola.app.core.bus.BorrowedBikeFailedEvent;
 import cz.rekola.app.core.bus.DataLoadingFinished;
 import cz.rekola.app.core.bus.DataLoadingStarted;
 import cz.rekola.app.core.bus.IncompatibleApiEvent;
 import cz.rekola.app.core.bus.LockCodeEvent;
-import cz.rekola.app.core.bus.LockCodeFailedEvent;
-import cz.rekola.app.core.bus.LoginAvailableEvent;
-import cz.rekola.app.core.bus.LoginFailedEvent;
 import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.PasswordRecoveryEvent;
-import cz.rekola.app.core.bus.PasswordRecoveryFailed;
-import cz.rekola.app.core.bus.PoisAvailableEvent;
-import cz.rekola.app.core.bus.PoisFailedEvent;
-import cz.rekola.app.core.bus.ReturnBikeEvent;
-import cz.rekola.app.core.bus.ReturnBikeFailedEvent;
+import cz.rekola.app.core.bus.dataAvailable.BikeIssuesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BorrowedBikeAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.BoundariesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.LoginAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.PoisAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
+import cz.rekola.app.core.bus.dataFailed.BikeIssueFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.BikesFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.BorrowedBikeFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.LoginFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.PasswordRecoveryFailed;
+import cz.rekola.app.core.bus.dataFailed.PoisFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.ReturnBikeFailedEvent;
 import cz.rekola.app.core.loc.MyLocation;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -63,6 +64,7 @@ public class DataManager {
     private MyBikeWrapper myBike;
     private List<Poi> pois;
     private Account account;
+    private Boundaries boundaries;
     private LoadingManager loadingManager;
 
     public DataManager(RekolaApp app) {
@@ -363,38 +365,51 @@ public class DataManager {
 
     public Account getAccount() {
 
-//TODO delete after api will be ready
-        Account account = new Account();
-        account.name = "Korben Dallas";
-        account.membershipEnd = new Date(0);
-        account.email = "mail@example.com";
-        account.phone = "+420 555 888 777";
-        account.address = "Bechyňova 274/8, Praha 6";
-        return account;
-
-/*
-        if (account != null  || !loadingManager.addLoading(DataLoad.ACCOUNT)) {
+        if (account != null || !loadingManager.addLoading(DataLoad.ACCOUNT)) {
             return account;
         }
 
         ApiService apiService = app.getApiService();
         apiService.getAccount(token.apiKey, new Callback<Account>() {
-                    @Override
-                    public void success(Account account, Response response) {
-                        loadingManager.removeLoading(DataLoad.ACCOUNT);
-                        DataManager.this.account = account;
-                        app.getBus().post(new BikesAvailableEvent());
-                    }
+            @Override
+            public void success(Account account, Response response) {
+                loadingManager.removeLoading(DataLoad.ACCOUNT);
+                DataManager.this.account = account;
+                app.getBus().post(new BikesAvailableEvent());
+            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        loadingManager.removeLoading(DataLoad.ACCOUNT);
-                        handleGlobalError(error, app.getResources().getString(R.string.error_get_bikes_failed));
-                    }
-                });
+            @Override
+            public void failure(RetrofitError error) {
+                loadingManager.removeLoading(DataLoad.ACCOUNT);
+                handleGlobalError(error, app.getResources().getString(R.string.error_get_bikes_failed));
+            }
+        });
 
         return null;
-        */
+    }
+
+    public Boundaries getBoundaries() {
+        if (boundaries != null || !loadingManager.addLoading(DataLoad.BOUNDARIES)) {
+            return boundaries;
+        }
+
+        ApiService apiService = app.getApiService();
+        apiService.getBoundaries(token.apiKey, new Callback<Boundaries>() {
+            @Override
+            public void success(Boundaries boundaries, Response response) {
+                loadingManager.removeLoading(DataLoad.BOUNDARIES);
+                DataManager.this.boundaries = boundaries;
+                app.getBus().post(new BoundariesAvailableEvent());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                loadingManager.removeLoading(DataLoad.BOUNDARIES);
+                handleGlobalError(error, app.getResources().getString(R.string.error_get_bike_failed));
+            }
+        });
+
+        return null;
     }
 
     public List<Issue> getBikeIssues(final int bikeId) {
@@ -471,7 +486,8 @@ public class DataManager {
         RETURN_BIKE,
         POIS,
         CUSTOM_LOAD_DIRECTIONS,
-        ACCOUNT
+        ACCOUNT,
+        BOUNDARIES
     }
 
     private class LoadingManager {

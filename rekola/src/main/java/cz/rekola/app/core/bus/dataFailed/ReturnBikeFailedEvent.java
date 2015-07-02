@@ -1,6 +1,7 @@
-package cz.rekola.app.core.bus;
+package cz.rekola.app.core.bus.dataFailed;
 
 import cz.rekola.app.api.model.error.BaseError;
+import cz.rekola.app.core.bus.BaseErrorEvent;
 
 /**
  * Failed to return the bike.

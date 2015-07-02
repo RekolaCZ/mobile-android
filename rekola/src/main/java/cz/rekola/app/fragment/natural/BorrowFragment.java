@@ -15,8 +15,8 @@ import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.core.bus.LockCodeEvent;
-import cz.rekola.app.core.bus.LockCodeFailedEvent;
 import cz.rekola.app.core.bus.MessageEvent;
+import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 public class BorrowFragment extends BaseMainFragment {

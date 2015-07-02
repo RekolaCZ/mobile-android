@@ -79,6 +79,7 @@
     <string name="error_get_borrowed_bike_failed">Failed to download borrowed bike info.</string>
     <string name="error_borrow_bike_failed">Failed to borrow a bike.</string>
     <string name="error_return_bike_failed">Failed to return the bike.</string>
+    <string name="error_get_boundaries_failed">Failed to download boundaries.</string>
     <string name="error_incorrect_bike_code">Incorrect bike code.</string>
     <string name="error_no_bike_borrowed">No bike borrowed.</string>
     <string name="error_unknown_borrowed_bike_code">Unknown borrowed bike code.</string>
