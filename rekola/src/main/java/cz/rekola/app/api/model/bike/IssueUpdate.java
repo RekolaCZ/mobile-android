@@ -1,6 +1,5 @@
 package cz.rekola.app.api.model.bike;
-
-import java.util.Date;
+// REVISION (David Bilik) Ty TODO u trid by meli bejt nejak popisny :D
 
 /**
  * TODO add class description

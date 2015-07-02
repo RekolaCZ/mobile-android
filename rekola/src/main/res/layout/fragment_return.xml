@@ -11,9 +11,10 @@
         <ImageView
             android:id="@+id/img_bike"
             style="@style/ImageView"
+            android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_navigation"/>
+            android:src="@drawable/img_bike"/>
 
         <TextView
             android:id="@+id/txt_bike_name"
@@ -81,7 +82,7 @@
             android:background="@drawable/border_grey"
             android:text="2679"
             android:textColor="@color/text_primary"
-            android:textSize="60sp"
+            android:textSize="50sp"
             android:textStyle="bold"/>
 
         <TextView
