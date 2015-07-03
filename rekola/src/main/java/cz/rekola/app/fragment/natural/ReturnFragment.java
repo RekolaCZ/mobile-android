@@ -17,7 +17,6 @@ import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.bus.dataAvailable.BorrowedBikeAvailableEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
-import cz.rekola.app.utils.DateUtils;
 
 /**
  * Screen to return bike
@@ -84,7 +83,7 @@ public class ReturnFragment extends BaseMainFragment {
         }
 
         if (myBike.bike != null) {
-            mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.bike.location.returnedAt));
+            //     mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.bike.location.returnedAt)); //TODO waiting for api
 
             bikeId = myBike.bike.id;
             setData(myBike.bike.name, myBike.bike.lockCode);
@@ -92,11 +91,10 @@ public class ReturnFragment extends BaseMainFragment {
         }
 
         if (myBike.lockCode != null) {
-            mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.lockCode.bike.location.returnedAt));
+            //  mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.lockCode.bike.location.returnedAt));  //TODO waiting for api
 
             bikeId = myBike.lockCode.bike.id;
             setData(myBike.lockCode.bike.name, myBike.lockCode.lockCode);
-            return;
         }
     }
 
