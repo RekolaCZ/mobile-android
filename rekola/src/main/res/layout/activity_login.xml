@@ -42,7 +42,6 @@
             <Button
                 android:id="@+id/btn_login"
                 style="@style/SignInButton"
-                android:layout_below="@id/txt_password"
                 android:text="@string/login_log_in"/>
 
             <TextView

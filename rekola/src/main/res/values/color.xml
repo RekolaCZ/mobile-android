@@ -22,13 +22,11 @@
     <color name="light_green">#7d8c23</color>
     <color name="dark_green">#64712d</color>
 
-    <color name="grey">#59ffffff</color>
     <color name="light_grey">#ececec</color>
     <color name="grey2">#c2c2c2</color>
     <color name="grey3">#e1e1e1</color>
     <color name="grey4">#707070</color>
     <color name="grey5">#666666</color>
-    <color name="grey6">#404040</color>
     <color name="grey7">#797979</color>
 
     <color name="warning_yellow">#ffb43d</color>
@@ -37,11 +35,6 @@
 
 
     <color name="transparent">#00000000</color>
-
-
-    <!-- Borrow screen-->
-    <color name="borrow_edit_text_pin">#ececec</color>
-
 
     <!-- Map overlay-->
 
@@ -56,7 +49,6 @@
     <color name="gray_1">#AAAAAA</color>
     <color name="gray_2">#999999</color>
     <color name="brown">#828E27</color>
-    <color name="brown_2">#728a20</color>
     <color name="red">#FF0000</color>
     <color name="green">#00AA00</color>
 

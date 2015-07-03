@@ -390,8 +390,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         // Hack to prevent info window from displaying: use a 0dp/0dp frame
         @Override
         public View getInfoWindow(Marker marker) {
-            View v = ((Activity) context).getLayoutInflater().inflate(R.layout.map_invisible_info, null);
-            return v;
+            return ((Activity) context).getLayoutInflater().inflate(R.layout.map_invisible_info, null);
         }
 
         @Override

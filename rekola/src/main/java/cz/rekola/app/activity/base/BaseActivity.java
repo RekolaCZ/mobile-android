@@ -1,7 +1,7 @@
 package cz.rekola.app.activity.base;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import net.hockeyapp.android.CrashManager;
@@ -14,7 +14,7 @@ import cz.rekola.app.core.RekolaApp;
  * Created on 7.5.2015 by tomas.krabac@ackee.cz
  */
 
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends AppCompatActivity {
     public static String TAG = BaseActivity.class.getName();
 
 

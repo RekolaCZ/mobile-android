@@ -46,11 +46,11 @@ public class LoginActivity extends BaseActivity {
     EditText mTxtUserName;
     @InjectView(R.id.txt_password)
     EditText mTxtPassword;
-    @InjectView(R.id.btn_login)
+    @InjectView(R.id.txt_reset_user_name)
     EditText mTxtResetUserName;
-    @InjectView(R.id.btn_reset_password)
+    @InjectView(R.id.overlay_reset)
     FrameLayout mOverlayReset;
-    @InjectView(R.id.txt_loading_message)
+    @InjectView(R.id.overlay_loading)
     LoadingOverlay mOverlayLoading;
     @InjectView(R.id.layout_error_bar)
     MessageBarView mLayoutErrorBar;

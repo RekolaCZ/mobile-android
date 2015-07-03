@@ -55,6 +55,6 @@ public class PreferencesManager {
     private void setStringPref(String pref, String data) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(pref, data);
-        editor.commit();
+        editor.apply();
     }
 }

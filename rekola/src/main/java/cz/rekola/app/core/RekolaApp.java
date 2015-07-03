@@ -57,6 +57,7 @@ public class RekolaApp extends Application {
 
     @Override
     public void onTerminate() {
+        super.onTerminate();
         myLocationManager.terminate(); // TODO: Is this necessary?
     }
 

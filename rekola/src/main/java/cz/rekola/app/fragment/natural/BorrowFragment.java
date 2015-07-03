@@ -42,9 +42,6 @@ public class BorrowFragment extends BaseMainFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
-
-        if (!getApp().getDataManager().isOperational())
-            return;
     }
 
     @OnClick(R.id.btn_borrow)
