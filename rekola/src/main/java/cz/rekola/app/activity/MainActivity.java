@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements PageController {
                 setState(PageManager.EPageState.PROFILE);
                 break;
             case android.R.id.home:
-                pageManager.setUpState(this, getFragmentManager(), getSupportActionBar());
+                pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
                 break;
             default:
                 Log.e(TAG, "unknown options menu item " + v.getId() + " " + v.toString());
@@ -118,11 +118,10 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void onBackPressed() {
-        if (!pageManager.setBackState(this, getFragmentManager(), getSupportActionBar())) {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // This might be a cause for the stack mess..
-            startActivity(intent);
+        if (pageManager.hasPrevState()) {
+            pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
+        } else {
+            super.onBackPressed();
         }
         invalidateOptionsMenu();
     }
@@ -213,7 +212,7 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     private Fragment setState(PageManager.EPageState pageState) {
-        return pageManager.setState(pageState, this, getFragmentManager(), getSupportActionBar());
+        return pageManager.setNextState(pageState, this, getFragmentManager(), getSupportActionBar());
     }
 
     private MyBikeWrapper getMyBike() {

@@ -34,7 +34,6 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 public class BikeDetailFragment extends BaseMainFragment {
     public static final String TAG = BikeDetailAdapter.class.getName();
 
-    private static String ARG_BIKE_ID = "BIKE_ID";
     private final int UNDEFINED_BIKE = -1;
     private int mBikeID = UNDEFINED_BIKE;
     List<BikeDetailItem> mBikeDetailItemList;
@@ -57,10 +56,6 @@ public class BikeDetailFragment extends BaseMainFragment {
         View view = inflater.inflate(R.layout.fragment_bike_detail, container, false);
         ButterKnife.inject(this, view);
 
-        if (savedInstanceState != null) {
-            mBikeID = savedInstanceState.getInt(ARG_BIKE_ID);
-        }
-
         RecyclerView rvBikeDetail = (RecyclerView) view.findViewById(R.id.rvBikeDetail);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -77,13 +72,6 @@ public class BikeDetailFragment extends BaseMainFragment {
 
         return view;
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(ARG_BIKE_ID, mBikeID);
-    }
-
 
     @Subscribe
     public void isBikeDetailAvailable(BikesAvailableEvent event) {
@@ -151,8 +139,7 @@ public class BikeDetailFragment extends BaseMainFragment {
         Button.OnClickListener addIssueListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO solve problem with back state
-                //getPageController().requestAddIssue();
+                getPageController().requestAddIssue();
             }
         };
 

@@ -6,12 +6,12 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseMainFragment;
@@ -38,12 +38,14 @@ public class PageManager {
      * Last used root state for back (up) calls.
      * This is the only contextual info here.
      */
-    private EPageState rootState = EPageState.MAP;
+    // private EPageState rootState = EPageState.MAP;
 
     /**
      * Fragment cache.
      */
     private HashMap<EPageState, Fragment> cache = new HashMap<>();
+
+    private Stack<EPageState> prevStates = new Stack<>();
 
     public enum EPageState {
         //      Custom action bar view enabled,
@@ -58,7 +60,7 @@ public class PageManager {
         RETURN_MAP(false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
         ABOUT(false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
-        BIKE_DETAIL(true, false, true, null, BikeDetailFragment.class),
+        BIKE_DETAIL(true, true, true, null, BikeDetailFragment.class),
         ADD_ISSUE(false, true, true, R.string.add_issue_title, AddIssueFragment.class);
 
         EPageState(boolean customActionBarViewEnabled, boolean useCache, boolean upState, Integer titleId, Class fragment) {
@@ -84,17 +86,19 @@ public class PageManager {
      * @param actionBar
      * @return Newly created fragment
      */
-    public Fragment setState(EPageState newState, Context context, FragmentManager fragmentManager, ActionBar actionBar) {
+    private Fragment setState(EPageState newState, Context context, FragmentManager
+            fragmentManager, ActionBar actionBar, boolean backPressed) {
         if (this.state == newState)
             return null;
-
-        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         actionBar.setHomeButtonEnabled(newState.upState);
         actionBar.setDisplayHomeAsUpEnabled(newState.upState);
 
-        if (newState.upState) { // It is a root state
-            rootState = state;
+
+        if (newState.upState && !backPressed) {
+            prevStates.push(state);
+        } else if (!newState.upState) {
+            prevStates.clear();
         }
 
         actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
@@ -177,19 +181,14 @@ public class PageManager {
         return fragment;
     }
 
-    public void setUpState(Context context, FragmentManager fragmentManager, ActionBar actionBar) {
-        if (!state.upState)
-            return;
-
-        setState(rootState, context, fragmentManager, actionBar);
+    public Fragment setNextState(EPageState newState, Context context, FragmentManager fragmentManager,
+                                 ActionBar actionBar) {
+        return setState(newState, context, fragmentManager, actionBar, false);
     }
 
-    public boolean setBackState(Context context, FragmentManager fragmentManager, ActionBar actionBar) {
-        if (!state.upState)
-            return false;
-
-        setUpState(context, fragmentManager, actionBar);
-        return true;
+    public void setPrevState(Context context, FragmentManager fragmentManager,
+                             ActionBar actionBar) {
+        setState(prevStates.pop(), context, fragmentManager, actionBar, true);
     }
 
     //if action is active, than has another "active" icon
@@ -239,8 +238,11 @@ public class PageManager {
         if (newCustomActionBarView != null) {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setCustomView(newCustomActionBarView);
-        } else
-            Log.e(TAG, "custom action bar is null");
+        }
+    }
+
+    public boolean hasPrevState() {
+        return !prevStates.empty();
     }
 
     private ColorDrawable getColor(Context context, int colorID) {
