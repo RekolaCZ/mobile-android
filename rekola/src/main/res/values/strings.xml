@@ -86,9 +86,9 @@
     <string name="error_bike_details_failed">Failed to load bike details.</string>
     <string name="error_web_load_failed">Failed to load details.</string>
     <string name="error_get_pois_failed">Failed to download info about places of interest.</string>
+    <string name="error_get_default_values_failed">Failed to download default values.</string>
     <string name="error_directions">Failed to load directions.</string>
     <string name="error_old_app_version">Sorry, but your application is outdated.\n\nPlease upgrade to latest version.</string>
     <string name="error_session_expired">You have been logged out.</string>
     <string name="success_password_recovery">Please, check your email for further password recovery instructions.</string>
-
 </resources>

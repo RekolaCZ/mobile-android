@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/border_edit_text_pink"
+            android:background="@drawable/spinner_pink"
             />
 
         <TextView
@@ -36,10 +36,9 @@
 
 
         <EditText
-            style="@style/TextView"
+            style="@style/EditTextPinkBorder"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
-            android:background="@drawable/border_grey"
             android:gravity="start"
             android:imeOptions="actionDone"
             android:inputType="text|textCapSentences|textMultiLine"
@@ -47,7 +46,6 @@
             android:maxLines="3"
             android:minLines="3"
             android:scrollbars="vertical"
-            android:text="@string/add_issue_detail_description"
             android:textColor="@color/black"
             />
 

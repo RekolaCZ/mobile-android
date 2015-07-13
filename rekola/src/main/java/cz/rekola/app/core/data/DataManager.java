@@ -15,6 +15,7 @@ import cz.rekola.app.api.model.bike.BorrowedBike;
 import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.LockCode;
 import cz.rekola.app.api.model.bike.ReturnedBike;
+import cz.rekola.app.api.model.defaultValues.DefaultValues;
 import cz.rekola.app.api.model.error.BikeConflictError;
 import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.api.model.map.Boundaries;
@@ -36,12 +37,14 @@ import cz.rekola.app.core.bus.dataAvailable.BikeIssuesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BorrowedBikeAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BoundariesAvailableEvent;
+import cz.rekola.app.core.bus.dataAvailable.DefaultValuesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.LoginAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.PoisAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
 import cz.rekola.app.core.bus.dataFailed.BikeIssueFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.BikesFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.BorrowedBikeFailedEvent;
+import cz.rekola.app.core.bus.dataFailed.DefaultValuesFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.LoginFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.PasswordRecoveryFailed;
@@ -82,6 +85,8 @@ public class DataManager {
     private List<Poi> pois;
     private Account account;
     private Boundaries boundaries;
+    private DefaultValues defaultValues;
+
     private LoadingManager loadingManager;
 
     public DataManager(RekolaApp app) {
@@ -198,6 +203,30 @@ public class DataManager {
                 loadingManager.removeLoading(DataLoad.BIKES);
                 app.getBus().post(new BikesFailedEvent());
                 handleGlobalError(error, app.getResources().getString(R.string.error_get_bikes_failed));
+            }
+        });
+
+        return null;
+    }
+
+    public DefaultValues getDefaultValues() {
+        if (defaultValues != null || !loadingManager.addLoading(DataLoad.DEFAULT_VALUES)) {
+            return defaultValues;
+        }
+
+        app.getApiService().getDefaultValues(token.apiKey, new Callback<DefaultValues>() {
+            @Override
+            public void success(DefaultValues defaultValues, Response response) {
+                loadingManager.removeLoading(DataLoad.DEFAULT_VALUES);
+                DataManager.this.defaultValues = defaultValues;
+                app.getBus().post(new DefaultValuesAvailableEvent());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                loadingManager.removeLoading(DataLoad.DEFAULT_VALUES);
+                app.getBus().post(new DefaultValuesFailedEvent());
+                handleGlobalError(error, app.getResources().getString(R.string.error_get_default_values_failed));
             }
         });
 
@@ -506,7 +535,8 @@ public class DataManager {
         POIS,
         CUSTOM_LOAD_DIRECTIONS,
         ACCOUNT,
-        BOUNDARIES
+        BOUNDARIES,
+        DEFAULT_VALUES
     }
 
     private class LoadingManager {

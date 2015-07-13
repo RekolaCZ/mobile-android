@@ -12,6 +12,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
@@ -22,9 +24,11 @@ import cz.rekola.app.core.bus.DataLoadingStarted;
 import cz.rekola.app.core.bus.IncompatibleApiEvent;
 import cz.rekola.app.core.bus.ProgressDataLoading;
 import cz.rekola.app.core.data.MyBikeWrapper;
+import cz.rekola.app.core.interfaces.SetIssueItemInterface;
 import cz.rekola.app.core.page.PageController;
 import cz.rekola.app.core.page.PageManager;
 import cz.rekola.app.fragment.natural.BikeDetailFragment;
+import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 import cz.rekola.app.view.MessageBarView;
 
@@ -109,7 +113,7 @@ public class MainActivity extends BaseActivity implements PageController {
                 setState(PageManager.EPageState.PROFILE);
                 break;
             case android.R.id.home:
-                pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
+                requestPrevState();
                 break;
             default:
                 Log.e(TAG, "unknown options menu item " + v.getId() + " " + v.toString());
@@ -198,6 +202,14 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
+    public void requestSpinnerList(ArrayList<String> listItems, SetIssueItemInterface setIssueItemInterface) {
+        Fragment fragment = setState(PageManager.EPageState.SPINNER_LIST);
+        if (fragment != null && fragment instanceof SpinnerListFragment)
+            ((SpinnerListFragment) fragment).init(listItems, setIssueItemInterface);
+        invalidateOptionsMenu();
+    }
+
+    @Override
     public void requestWebBikeReturned(String successUrl) {
         Fragment fragment = setState(PageManager.EPageState.WEB_RETURN);
         if (fragment != null && fragment instanceof ReturnWebFragment)
@@ -209,6 +221,11 @@ public class MainActivity extends BaseActivity implements PageController {
     public void requestAddIssue() {
         setState(PageManager.EPageState.ADD_ISSUE);
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void requestPrevState() {
+        pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
     }
 
     private Fragment setState(PageManager.EPageState pageState) {

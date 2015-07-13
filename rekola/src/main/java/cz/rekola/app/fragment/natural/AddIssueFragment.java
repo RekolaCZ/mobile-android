@@ -3,26 +3,34 @@ package cz.rekola.app.fragment.natural;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
+import cz.rekola.app.api.model.defaultValues.DefaultValues;
+import cz.rekola.app.api.model.defaultValues.Issue;
+import cz.rekola.app.core.bus.dataAvailable.DefaultValuesAvailableEvent;
+import cz.rekola.app.core.interfaces.SetIssueItemInterface;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 /**
  * Screen to add new issue
  */
-public class AddIssueFragment extends BaseMainFragment {
+public class AddIssueFragment extends BaseMainFragment implements SetIssueItemInterface {
 
     @InjectView(R.id.spn_issue_type)
     Spinner spnIssueType;
+
+    DefaultValues mDefaultValues;
 
     public AddIssueFragment() {
         // Required empty public constructor
@@ -40,19 +48,43 @@ public class AddIssueFragment extends BaseMainFragment {
         return view;
     }
 
-    private void setSpinner() {
-        List<String> spinnerArray = new ArrayList<String>();
-
-        //TODO add corrext items
-        for (int i = 0; i < 10; i++) {
-            spinnerArray.add("item " + i);
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout
-                .simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnIssueType.setAdapter(adapter);
+    @Subscribe
+    public void isDefaultValueAvailable(DefaultValuesAvailableEvent event) {
+        setSpinner();
     }
 
 
+    private void setSpinner() {
+        mDefaultValues = getApp().getDataManager().getDefaultValues();
+        if (mDefaultValues == null)
+            return; // will be set later by event isBikeDetailAvailable
+
+
+        final ArrayList<String> spinnerArray = new ArrayList<>();
+        final SetIssueItemInterface setIssueItemInterface = this;
+
+        for (Issue issue : mDefaultValues.issues) {
+            spinnerArray.add(issue.title);
+        }
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(getActivity(), R.layout.spinner_item_text, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnIssueType.setAdapter(adapter);
+        spnIssueType.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    getPageController().requestSpinnerList(spinnerArray, setIssueItemInterface);
+                }
+                return true;
+            }
+        });
+
+    }
+
+    @Override
+    public void setIssueItem(int item) {
+        spnIssueType.setSelection(item);
+    }
 }

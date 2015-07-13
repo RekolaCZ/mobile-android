@@ -23,6 +23,7 @@ import cz.rekola.app.fragment.natural.MapFragment;
 import cz.rekola.app.fragment.natural.ProfileFragment;
 import cz.rekola.app.fragment.natural.ReturnFragment;
 import cz.rekola.app.fragment.natural.ReturnMapFragment;
+import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 
 /**
@@ -61,7 +62,8 @@ public class PageManager {
         ABOUT(false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
         BIKE_DETAIL(true, true, true, null, BikeDetailFragment.class),
-        ADD_ISSUE(false, true, true, R.string.add_issue_title, AddIssueFragment.class);
+        ADD_ISSUE(false, true, true, R.string.add_issue_title, AddIssueFragment.class),
+        SPINNER_LIST(false, false, true, null, SpinnerListFragment.class);
 
         EPageState(boolean customActionBarViewEnabled, boolean useCache, boolean upState, Integer titleId, Class fragment) {
             this.customActionBarViewEnabled = customActionBarViewEnabled;
