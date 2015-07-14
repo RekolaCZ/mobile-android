@@ -51,9 +51,11 @@
 
         <CheckBox
             android:id="@+id/chk_inoperational"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:button="@drawable/checkbox_button"
+            android:paddingLeft="10dp"
             android:text="@string/add_issue_inoperational"
             android:textColor="@color/grey5"/>
 
