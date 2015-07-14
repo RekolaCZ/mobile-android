@@ -27,6 +27,7 @@ import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.core.interfaces.SetIssueItemInterface;
 import cz.rekola.app.core.page.PageController;
 import cz.rekola.app.core.page.PageManager;
+import cz.rekola.app.fragment.natural.AddIssueFragment;
 import cz.rekola.app.fragment.natural.BikeDetailFragment;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
@@ -218,8 +219,10 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
-    public void requestAddIssue() {
-        setState(PageManager.EPageState.ADD_ISSUE);
+    public void requestAddIssue(int bikeID) {
+        Fragment fragment = setState(PageManager.EPageState.ADD_ISSUE);
+        if (fragment != null && fragment instanceof AddIssueFragment)
+            ((AddIssueFragment) fragment).init(bikeID);
         invalidateOptionsMenu();
     }
 

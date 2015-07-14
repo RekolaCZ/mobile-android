@@ -23,6 +23,7 @@ import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.api.model.user.Token;
 import cz.rekola.app.api.requestmodel.Credentials;
+import cz.rekola.app.api.requestmodel.IssueReport;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.core.RekolaApp;
@@ -133,21 +134,20 @@ public class DataManager {
     }
 
     public void logout() {
-        if (token == null || !loadingManager.addLoading(DataLoad.LOGOUT)) {
+        if (token == null) {
             return;
         }
 
-        //only invalidate token, so user don't need to know about success or failure
+
         ApiService apiService = app.getApiService();
         apiService.logout(token.apiKey, new Callback<Object>() {
             @Override
             public void success(Object unused, Response response) {
-                loadingManager.removeLoading(DataLoad.LOGOUT);
+                //only invalidate token, so user don't need to know about success or failure
             }
 
             @Override
             public void failure(RetrofitError error) {
-                loadingManager.removeLoading(DataLoad.LOGOUT);
                 Log.e(TAG, "logout error " + error.getMessage());
             }
         });
@@ -398,6 +398,26 @@ public class DataManager {
         return null;
     }
 
+    public void reportIssue(int bikeID, IssueReport issueReport) {
+        if (token == null) {
+            return;
+        }
+
+        ApiService apiService = app.getApiService();
+        apiService.reportIssue(token.apiKey, bikeID, issueReport, new Callback<Object>() {
+            @Override
+            public void success(Object unused, Response response) {
+                // user don't need to know about success
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                handleGlobalError(error, app.getResources().getString(R.string.error_report_issue));
+            }
+        });
+
+    }
+
     public boolean customLoadDirections() {
         return (loadingManager.addLoading(DataLoad.CUSTOM_LOAD_DIRECTIONS));
     }
@@ -525,7 +545,6 @@ public class DataManager {
 
     private enum DataLoad {
         LOGIN,
-        LOGOUT,
         PASSWORD_RECOVERY,
         BORROWED_BIKE,
         BIKES,

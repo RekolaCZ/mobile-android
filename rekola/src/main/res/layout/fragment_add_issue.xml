@@ -37,6 +37,7 @@
 
         <EditText
             style="@style/EditTextPinkBorder"
+            android:id="@+id/txt_issue_description"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
             android:gravity="start"

@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class Bike {
+    public static final int UNDEFINED_BIKE = -1;
 
     public int id;
     public String name;

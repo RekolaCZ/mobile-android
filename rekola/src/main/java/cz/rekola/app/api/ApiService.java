@@ -13,6 +13,7 @@ import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.api.model.user.Token;
 import cz.rekola.app.api.requestmodel.Credentials;
+import cz.rekola.app.api.requestmodel.IssueReport;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.core.Constants;
@@ -65,4 +66,8 @@ public interface ApiService {
 
     @GET("/default-values/")
     public void getDefaultValues(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<DefaultValues> callback);
+
+    @POST("/bikes/{id}/issues")
+    public void reportIssue(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int  bikeId,
+                            @Body IssueReport body, Callback<Object> callback);
 }

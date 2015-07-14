@@ -34,8 +34,8 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 public class BikeDetailFragment extends BaseMainFragment {
     public static final String TAG = BikeDetailAdapter.class.getName();
 
-    private final int UNDEFINED_BIKE = -1;
-    private int mBikeID = UNDEFINED_BIKE;
+
+    private int mBikeID = Bike.UNDEFINED_BIKE;
     List<BikeDetailItem> mBikeDetailItemList;
 
     @InjectView(R.id.rvBikeDetail)
@@ -84,7 +84,7 @@ public class BikeDetailFragment extends BaseMainFragment {
     }
 
     private void setBikeInfo() {
-        if (mBikeID == UNDEFINED_BIKE) {
+        if (mBikeID == Bike.UNDEFINED_BIKE) {
             Log.e(TAG, "bike was not defined");
             return;
         }
@@ -135,11 +135,11 @@ public class BikeDetailFragment extends BaseMainFragment {
         return BikeDetailItem.getEquipmentInstance(bike.equipment, equipmentsDetailListener);
     }
 
-    BikeDetailItem getIssueHeaderItem(Bike bike) {
+    BikeDetailItem getIssueHeaderItem(final Bike bike) {
         Button.OnClickListener addIssueListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPageController().requestAddIssue();
+                getPageController().requestAddIssue(bike.id);
             }
         };
 

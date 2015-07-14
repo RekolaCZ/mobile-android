@@ -66,6 +66,7 @@
     <string name="add_issue_detail_description">Detail issue description</string>
     <string name="add_issue_inoperational">Bike is inoperational</string>
     <string name="add_issue_report_issue">Report issue</string>
+    <string name="add_issue_success">Issue was successfully reported, thank you!</string>
 
     <!-- Error messages -->
     <string name="error_network">Connection problem.</string>
@@ -88,7 +89,11 @@
     <string name="error_get_pois_failed">Failed to download info about places of interest.</string>
     <string name="error_get_default_values_failed">Failed to download default values.</string>
     <string name="error_directions">Failed to load directions.</string>
+    <string name="error_report_issue">Failed to report issue.</string>
     <string name="error_old_app_version">Sorry, but your application is outdated.\n\nPlease upgrade to latest version.</string>
     <string name="error_session_expired">You have been logged out.</string>
+    <string name="error_fill_issue_description">Please, fill issue description.</string>
+
+    <!-- Success messages -->
     <string name="success_password_recovery">Please, check your email for further password recovery instructions.</string>
 </resources>

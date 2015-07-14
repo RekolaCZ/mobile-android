@@ -2,6 +2,7 @@ package cz.rekola.app.core.page;
 
 import java.util.ArrayList;
 
+import cz.rekola.app.api.model.bike.Bike;
 import cz.rekola.app.core.interfaces.SetIssueItemInterface;
 
 public interface PageController {
@@ -20,7 +21,7 @@ public interface PageController {
 
     public void requestWebBikeReturned(String successUrl);
 
-    public void requestAddIssue();
+    public void requestAddIssue(int bikeID);
 
     public void requestPrevState();
 

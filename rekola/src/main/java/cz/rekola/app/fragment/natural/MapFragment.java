@@ -44,6 +44,7 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.view.BikeOverlayView;
 
 public class MapFragment extends BaseMainFragment implements MyLocationListener, BikeOverlayView.BikeOverlayListener {
+    public static final String TAG = MapFragment.class.getName();
 
     @InjectView(R.id.overlay_map)
     BikeOverlayView mOverlayMap;
