@@ -11,7 +11,7 @@ import cz.rekola.app.api.model.defaultValues.DefaultValues;
 import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.model.user.Account;
-import cz.rekola.app.api.model.user.Token;
+import cz.rekola.app.api.model.user.Login;
 import cz.rekola.app.api.requestmodel.Credentials;
 import cz.rekola.app.api.requestmodel.IssueReport;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
@@ -32,7 +32,7 @@ import retrofit.http.Query;
 
 public interface ApiService {
     @POST("/accounts/mine/login")
-    public void login(@Body Credentials body, Callback<Token> callback);
+    public void login(@Body Credentials body, Callback<Login> callback);
 
     @PUT("/password-recovery")
     public void recoverPassword(@Body RecoverPassword body, Callback<Object> callback);

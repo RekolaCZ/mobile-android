@@ -39,7 +39,7 @@ public abstract class BaseWebFragment extends BaseMainFragment implements WebApi
 
         // TODO: Handle api key expiration!
         Map extraHeaderMap = new HashMap<String, String>();
-        extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getToken().apiKey);
+        extraHeaderMap.put(Constants.HEADER_KEY_TOKEN, getApp().getDataManager().getApiKey());
 
         vWeb.init(getApp().getBus(), this, getStartUrl(), extraHeaderMap);
     }

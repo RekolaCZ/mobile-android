@@ -2,7 +2,6 @@ package cz.rekola.app.core.page;
 
 import java.util.ArrayList;
 
-import cz.rekola.app.api.model.bike.Bike;
 import cz.rekola.app.core.interfaces.SetIssueItemInterface;
 
 public interface PageController {
@@ -15,7 +14,7 @@ public interface PageController {
 
     public void requestAbout();
 
-    public void requestBikeDetail(int bikeID);
+    public void requestBikeDetail(int bikeID, boolean issues);
 
     public void requestSpinnerList(ArrayList<String> listItems, SetIssueItemInterface setIssueItemInterface);
 

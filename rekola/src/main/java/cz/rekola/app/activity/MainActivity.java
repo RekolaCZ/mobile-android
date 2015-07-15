@@ -195,12 +195,21 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
-    public void requestBikeDetail(int bikeID) {
-        Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
-        if (fragment != null && fragment instanceof BikeDetailFragment)
-            ((BikeDetailFragment) fragment).init(bikeID);
+    public void requestBikeDetail(int bikeID, boolean issues) {
+      /*  if (getApp().getDataManager().showWebviewForBikedetail()) {
+            Fragment fragment = setState(PageManager.EPageState.WEB_BIKE_DETAIL);
+            if (fragment != null && fragment instanceof BikeDetailWebFragment)
+                ((BikeDetailWebFragment) fragment).init(bikeID, issues);
+        } else TODO uncomment after testing */
+        {
+            Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
+            if (fragment != null && fragment instanceof BikeDetailFragment)
+                ((BikeDetailFragment) fragment).init(bikeID);
+        }
+
         invalidateOptionsMenu();
     }
+
 
     @Override
     public void requestSpinnerList(ArrayList<String> listItems, SetIssueItemInterface setIssueItemInterface) {

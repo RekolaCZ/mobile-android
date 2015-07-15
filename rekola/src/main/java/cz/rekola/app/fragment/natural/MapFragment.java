@@ -314,7 +314,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
         void notifyBikeDetailPressed() {
             if (lastBikeClusterItem != null) {
-                getPageController().requestBikeDetail(lastBikeClusterItem.getBike().id);
+                Bike bike = lastBikeClusterItem.getBike();
+                getPageController().requestBikeDetail(bike.id, bike.issues.size() > 0);
             }
         }
 

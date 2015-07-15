@@ -26,6 +26,7 @@ import cz.rekola.app.fragment.natural.ProfileFragment;
 import cz.rekola.app.fragment.natural.ReturnFragment;
 import cz.rekola.app.fragment.natural.ReturnMapFragment;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
+import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 
 /**
@@ -64,6 +65,7 @@ public class PageManager {
         ABOUT(false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
         BIKE_DETAIL(true, true, true, null, BikeDetailFragment.class),
+        WEB_BIKE_DETAIL(true, false, false, null, BikeDetailWebFragment.class),
         ADD_ISSUE(false, true, true, R.string.add_issue_title, AddIssueFragment.class),
         SPINNER_LIST(false, false, true, null, SpinnerListFragment.class);
 

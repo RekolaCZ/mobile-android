@@ -21,7 +21,7 @@ import cz.rekola.app.api.model.error.MessageError;
 import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.model.user.Account;
-import cz.rekola.app.api.model.user.Token;
+import cz.rekola.app.api.model.user.Login;
 import cz.rekola.app.api.requestmodel.Credentials;
 import cz.rekola.app.api.requestmodel.IssueReport;
 import cz.rekola.app.api.requestmodel.RecoverPassword;
@@ -79,7 +79,8 @@ public class DataManager {
 
     private RekolaApp app;
 
-    private Token token;
+    private String apiKey;
+    private boolean showWebviewForBikedetail;
     private List<Bike> bikes;
     HashMap<Integer, List<Issue>> bikeIssuesMap = new HashMap<>(); //HashMap<bikeId, issues>
     private MyBikeWrapper myBike;
@@ -109,11 +110,12 @@ public class DataManager {
         }
 
         ApiService apiService = app.getApiService();
-        apiService.login(credentials, new Callback<Token>() {
+        apiService.login(credentials, new Callback<Login>() {
             @Override
-            public void success(Token resp, Response response) {
+            public void success(Login resp, Response response) {
                 loadingManager.removeLoading(DataLoad.LOGIN);
-                token = resp;
+                apiKey = resp.apiKey;
+                showWebviewForBikedetail = resp.showWebviewForBikedetail;
                 app.getBus().post(new LoginAvailableEvent());
             }
 
@@ -134,16 +136,11 @@ public class DataManager {
     }
 
     public void logout() {
-        if (token == null) {
-            return;
-        }
-
-
         ApiService apiService = app.getApiService();
-        apiService.logout(token.apiKey, new Callback<Object>() {
+        apiService.logout(apiKey, new Callback<Object>() {
             @Override
             public void success(Object unused, Response response) {
-                //only invalidate token, so user don't need to know about success or failure
+                //only invalidate Token, so user don't need to know about success or failure
             }
 
             @Override
@@ -153,12 +150,16 @@ public class DataManager {
         });
     }
 
-    public Token getToken() {
-        return token;
+    public String getApiKey() {
+        return apiKey;
     }
 
     public boolean isOperational() {
-        return token != null;
+        return !apiKey.equals("");
+    }
+
+    public boolean showWebviewForBikedetail() {
+        return showWebviewForBikedetail;
     }
 
     public void recoverPassword(RecoverPassword email) {
@@ -190,7 +191,7 @@ public class DataManager {
 
         ApiService apiService = app.getApiService();
         MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-        apiService.getBikes(token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
+        apiService.getBikes(apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Bike>>() {
             @Override
             public void success(List<Bike> bikes, Response response) {
                 loadingManager.removeLoading(DataLoad.BIKES);
@@ -214,7 +215,7 @@ public class DataManager {
             return defaultValues;
         }
 
-        app.getApiService().getDefaultValues(token.apiKey, new Callback<DefaultValues>() {
+        app.getApiService().getDefaultValues(apiKey, new Callback<DefaultValues>() {
             @Override
             public void success(DefaultValues defaultValues, Response response) {
                 loadingManager.removeLoading(DataLoad.DEFAULT_VALUES);
@@ -264,7 +265,7 @@ public class DataManager {
             return;
 
         ApiService apiService = app.getApiService();
-        apiService.getBorrowedBike(token.apiKey, new Callback<BorrowedBike>() {
+        apiService.getBorrowedBike(apiKey, new Callback<BorrowedBike>() {
             @Override
             public void success(BorrowedBike borrowedBike, Response response) {
                 loadingManager.removeLoading(DataLoad.BORROWED_BIKE);
@@ -296,7 +297,7 @@ public class DataManager {
 
         ApiService apiService = app.getApiService();
         MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-        apiService.borrowBike(token.apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<LockCode>() {
+        apiService.borrowBike(apiKey, bikeCode, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<LockCode>() {
             @Override
             public void success(LockCode lockCode, Response response) {
                 loadingManager.removeLoading(DataLoad.BORROW_BIKE);
@@ -338,7 +339,7 @@ public class DataManager {
         }
 
         ApiService apiService = app.getApiService();
-        apiService.returnBike(token.apiKey, bikeCode, returningBike, new Callback<ReturnedBike>() {
+        apiService.returnBike(apiKey, bikeCode, returningBike, new Callback<ReturnedBike>() {
 
             @Override
             public void success(ReturnedBike returnedBike, Response response) {
@@ -379,7 +380,7 @@ public class DataManager {
 
         ApiService apiService = app.getApiService();
         MyLocation myLoc = app.getMyLocationManager().getLastKnownMyLocation();
-        apiService.getPois(token.apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Poi>>() {
+        apiService.getPois(apiKey, myLoc.lat.toString(), myLoc.lng.toString(), new Callback<List<Poi>>() {
             @Override
             public void success(List<Poi> pois, Response response) {
                 loadingManager.removeLoading(DataLoad.POIS);
@@ -399,12 +400,8 @@ public class DataManager {
     }
 
     public void reportIssue(int bikeID, IssueReport issueReport) {
-        if (token == null) {
-            return;
-        }
-
         ApiService apiService = app.getApiService();
-        apiService.reportIssue(token.apiKey, bikeID, issueReport, new Callback<Object>() {
+        apiService.reportIssue(apiKey, bikeID, issueReport, new Callback<Object>() {
             @Override
             public void success(Object unused, Response response) {
                 // user don't need to know about success
@@ -436,7 +433,7 @@ public class DataManager {
         }
 
         ApiService apiService = app.getApiService();
-        apiService.getAccount(token.apiKey, new Callback<Account>() {
+        apiService.getAccount(apiKey, new Callback<Account>() {
             @Override
             public void success(Account account, Response response) {
                 loadingManager.removeLoading(DataLoad.ACCOUNT);
@@ -460,7 +457,7 @@ public class DataManager {
         }
 
         ApiService apiService = app.getApiService();
-        apiService.getBoundaries(token.apiKey, new Callback<Boundaries>() {
+        apiService.getBoundaries(apiKey, new Callback<Boundaries>() {
             @Override
             public void success(Boundaries boundaries, Response response) {
                 loadingManager.removeLoading(DataLoad.BOUNDARIES);
@@ -484,7 +481,7 @@ public class DataManager {
         }
 
         ApiService apiService = app.getApiService();
-        apiService.getBikeIssues(token.apiKey, bikeId, new Callback<List<Issue>>() {
+        apiService.getBikeIssues(apiKey, bikeId, new Callback<List<Issue>>() {
             @Override
             public void success(List<Issue> bikeIssues, Response response) {
                 loadingManager.removeLoading(DataLoad.BIKE_ISSUES);
@@ -560,7 +557,7 @@ public class DataManager {
 
     private class LoadingManager {
 
-        private Set<DataLoad> loading = new HashSet<DataLoad>(DataLoad.values().length);
+        private Set<DataLoad> loading = new HashSet<>(DataLoad.values().length);
 
         boolean addLoading(DataLoad dataLoad) {
             if (loading.isEmpty()) {
