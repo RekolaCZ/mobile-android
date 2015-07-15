@@ -18,6 +18,7 @@ import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.view.CodeView;
 
 /**
  * Screen to borrow bike
@@ -27,7 +28,7 @@ public class BorrowFragment extends BaseMainFragment {
 
 
     @InjectView(R.id.txt_bike_code)
-    EditText mTxtBikeCode;
+    CodeView mTxtBikeCode;
     @InjectView(R.id.btn_borrow)
     Button mBtnBorrow;
 
@@ -51,7 +52,7 @@ public class BorrowFragment extends BaseMainFragment {
             return;
         }
         getAct().hideKeyboard();
-        getApp().getDataManager().borrowBike(Integer.parseInt(mTxtBikeCode.getText().toString()));
+        getApp().getDataManager().borrowBike(Integer.parseInt(mTxtBikeCode.getText()));
     }
 
     @Subscribe

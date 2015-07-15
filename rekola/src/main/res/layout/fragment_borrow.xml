@@ -1,69 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             style="@style/Layout">
+<ScrollView
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <LinearLayout
+        style="@style/Layout"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/grid_8"
+        android:layout_marginRight="@dimen/grid_8"
+        android:gravity="center">
 
 
-    <LinearLayout style="@style/Layout">
+        <ImageView
+            style="@style/ImageView"
+            android:padding="10dp"
+            android:src="@drawable/logo_recola_web"/>
 
 
-        <ScrollView
-            style="@style/Layout"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <LinearLayout
-                style="@style/Layout"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/grid_8"
-                android:layout_marginRight="@dimen/grid_8"
-                android:layout_marginTop="@dimen/grid_8"
-                android:gravity="center">
+        <TextView
+            style="@style/TextView"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:gravity="center"
+            android:text="@string/borrow_info_1"
+            android:textColor="@color/black"/>
 
 
-                <ImageView
-                    style="@style/ImageView"
-                    android:padding="10dp"
-                    android:src="@drawable/logo_recola_web"/>
+        <TextView
+            style="@style/TextView"
+            android:layout_marginBottom="@dimen/margin_xlarge"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/borrow_info_2"
+            android:textColor="@color/grey10"
+            android:textSize="@dimen/text_small"/>
 
+        <!--
+        <EditText
+            android:id="@+id/txt_bike_code"
+            style="@style/EditTextBorrow"
+            android:layout_gravity="center"
+            android:hint="@string/borrow_code_hint"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="@integer/bike_code_length"/>
+            -->
 
-                <TextView
-                    style="@style/TextView"
-                    android:layout_marginBottom="@dimen/margin_large"
-                    android:gravity="center"
-                    android:text="@string/borrow_info_1"
-                    android:textColor="@color/black"/>
-
-
-                <TextView
-                    style="@style/TextView"
-                    android:layout_marginBottom="@dimen/margin_xlarge"
-                    android:gravity="center"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:text="@string/borrow_info_2"
-                    android:textSize="@dimen/text_small"/>
-
-                <EditText
-                    android:id="@+id/txt_bike_code"
-                    style="@style/EditTextBorrow"
-                    android:layout_gravity="center"
-                    android:hint="@string/borrow_code_hint"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:maxLength="@integer/bike_code_length"/>
-
-
-            </LinearLayout>
-        </ScrollView>
+        <include
+            android:id="@+id/txt_bike_code"
+            layout="@layout/view_code"
+            android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/btn_borrow"
             style="@style/ButtonPink"
-            android:layout_marginBottom="@dimen/margin_large"
-            android:layout_marginLeft="@dimen/grid_8"
-            android:layout_marginRight="@dimen/grid_8"
+            android:layout_marginTop="@dimen/margin_large"
             android:text="@string/borrow_borrow"/>
 
     </LinearLayout>
+</ScrollView>
 
-</FrameLayout>
+

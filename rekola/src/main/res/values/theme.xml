@@ -19,7 +19,7 @@
         <!-- widget styles: -->
         <item name="android:textViewStyle">@style/TextView</item>
         <item name="android:buttonStyle">@style/Button</item>
-        <item name="android:editTextStyle">@style/EditText</item>
+
 
         <!-- other global styles: -->
         <item name="android:windowBackground">@color/background_window</item>

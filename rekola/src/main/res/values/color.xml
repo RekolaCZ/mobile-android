@@ -30,6 +30,12 @@
     <color name="grey5">#666666</color>
     <color name="grey6">#7d7d7d</color>
     <color name="grey7">#797979</color>
+    <color name="grey8">#898989</color>
+    <color name="grey9">#a7a7a7</color>
+    <color name="grey10">#9f9f9f</color>
+
+
+
 
     <color name="warning_yellow">#ffb43d</color>
     <color name="warning_pink">#ff4862</color>
