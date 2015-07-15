@@ -52,24 +52,27 @@ public class PageManager {
     private Stack<EPageState> prevStates = new Stack<>();
 
     public enum EPageState {
+        //      Visible action bar
         //      Custom action bar view enabled,
         //      Use cache,
         //      Up state,
         //      Title ID,
         //      BaseMainFragment
-        BORROW(true, true, false, null, BorrowFragment.class),
-        RETURN(true, true, false, null, ReturnFragment.class),
-        MAP(true, true, false, null, MapFragment.class),
-        PROFILE(true, false, false, null, ProfileFragment.class),
-        RETURN_MAP(false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
-        ABOUT(false, true, true, R.string.about_title, AboutFragment.class),
-        WEB_RETURN(true, false, false, null, ReturnWebFragment.class),
-        BIKE_DETAIL(true, true, true, null, BikeDetailFragment.class),
-        WEB_BIKE_DETAIL(true, false, false, null, BikeDetailWebFragment.class),
-        ADD_ISSUE(false, true, true, R.string.add_issue_title, AddIssueFragment.class),
-        SPINNER_LIST(false, false, true, null, SpinnerListFragment.class);
+        BORROW(true, true, true, false, null, BorrowFragment.class),
+        RETURN(true, true, true, false, null, ReturnFragment.class),
+        MAP(true, true, true, false, null, MapFragment.class),
+        PROFILE(true, true, false, false, null, ProfileFragment.class),
+        RETURN_MAP(true, false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
+        ABOUT(true, false, true, true, R.string.about_title, AboutFragment.class),
+        WEB_RETURN(false, true, false, false, null, ReturnWebFragment.class),
+        BIKE_DETAIL(true, true, true, true, null, BikeDetailFragment.class),
+        WEB_BIKE_DETAIL(false, true, false, false, null, BikeDetailWebFragment.class),
+        ADD_ISSUE(true, false, true, true, R.string.add_issue_title, AddIssueFragment.class),
+        SPINNER_LIST(false, false, false, true, null, SpinnerListFragment.class);
 
-        EPageState(boolean customActionBarViewEnabled, boolean useCache, boolean upState, Integer titleId, Class fragment) {
+        EPageState(boolean actionBarVisible, boolean customActionBarViewEnabled, boolean useCache,
+                   boolean upState, Integer titleId, Class fragment) {
+            this.actionBarVisible = actionBarVisible;
             this.customActionBarViewEnabled = customActionBarViewEnabled;
             this.useCache = useCache;
             this.upState = upState;
@@ -77,6 +80,7 @@ public class PageManager {
             this.fragment = fragment;
         }
 
+        final boolean actionBarVisible;
         final boolean customActionBarViewEnabled;
         final boolean useCache;
         final boolean upState;
@@ -97,31 +101,7 @@ public class PageManager {
         if (this.state == newState)
             return null;
 
-        actionBar.setHomeButtonEnabled(newState.upState);
-        actionBar.setDisplayHomeAsUpEnabled(newState.upState);
-
-
-        if (newState.upState && !backPressed) {
-            prevStates.push(state);
-        } else if (!newState.upState) {
-            prevStates.clear();
-        }
-
-        actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
-        setCustomActionBar(activity, actionBar, newState);
-
-        if (newState.customActionBarViewEnabled)
-            actionBar.getCustomView().setVisibility(View.VISIBLE);
-        else
-            actionBar.getCustomView().setVisibility(View.GONE);
-
-        if (newState.titleId == null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setTitle("");
-        } else {
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setTitle(newState.titleId);
-        }
+        setActionBar(activity, actionBar, newState, backPressed);
 
         Fragment fragment = cache.get(newState);
         if (fragment == null) {
@@ -196,6 +176,42 @@ public class PageManager {
     public void setPrevState(Activity activity, FragmentManager fragmentManager,
                              ActionBar actionBar) {
         setState(prevStates.pop(), activity, fragmentManager, actionBar, true);
+    }
+
+    private void setActionBar(Activity activity, ActionBar actionBar, EPageState newState,
+                              boolean backPressed) {
+        if (!newState.actionBarVisible) {
+            actionBar.hide();
+        } else {
+            actionBar.show();
+        }
+
+        actionBar.setHomeButtonEnabled(newState.upState);
+        actionBar.setDisplayHomeAsUpEnabled(newState.upState);
+
+
+        if (newState.upState && !backPressed) {
+            prevStates.push(state);
+        } else if (!newState.upState) {
+            prevStates.clear();
+        }
+
+        actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
+        setCustomActionBar(activity, actionBar, newState);
+
+        if (newState.customActionBarViewEnabled)
+            actionBar.getCustomView().setVisibility(View.VISIBLE);
+        else
+            actionBar.getCustomView().setVisibility(View.GONE);
+
+        if (newState.titleId == null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setTitle("");
+        } else {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle(newState.titleId);
+        }
+
     }
 
     //if action is active, than has another "active" icon
