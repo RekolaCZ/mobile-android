@@ -81,7 +81,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/border_grey"
             android:text="2679"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/black"
             android:textSize="50sp"
             android:textStyle="bold"/>
 
