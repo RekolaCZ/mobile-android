@@ -1,22 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/fragment_container"
-             style="@style/Layout">
+<FrameLayout
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/fragment_container"
+          style="@style/Layout"/>
 
     <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
         android:id="@+id/progress_circle_bar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:visibility="invisible"
-        app:mlpb_enable_circle_background="false"
-        app:mlpb_show_arrow="true"
         app:mlpb_arrow_height="5dp"
         app:mlpb_arrow_width="10dp"
+        app:mlpb_enable_circle_background="false"
+        app:mlpb_progress_color="@color/base_pink"
         app:mlpb_progress_stoke_width="5dp"
         app:mlpb_progress_text_visibility="invisible"
-        app:mlpb_progress_color="@color/base_pink"
-        android:layout_width="60dp"
-        android:layout_height="60dp"/>
+        app:mlpb_show_arrow="true"/>
 
     <include layout="@layout/message_bar"/>
 

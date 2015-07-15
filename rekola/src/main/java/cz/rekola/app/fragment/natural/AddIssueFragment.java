@@ -2,6 +2,7 @@ package cz.rekola.app.fragment.natural;
 
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,8 +89,14 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         IssueReportLocation location = new IssueReportLocation(latLng.latitude, latLng.longitude);
 
         IssueReport issueReport = new IssueReport(type, title, description, disabling, location);
-
         getApp().getDataManager().reportIssue(mBikeID, issueReport);
+
+        showDialog(R.string.add_issue_success, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPageController().requestMap();
+            }
+        });
     }
 
     @Subscribe
@@ -134,13 +141,14 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
      */
     private boolean isIssueDescriptionFilled() {
         if (mTxtIssueType.getText().toString().trim().equals("")) {
-            showDialog(getString(R.string.error_fill_issue_description));
+            showDialog(R.string.error_fill_issue_description, null);
             return false;
         } else
             return true;
     }
 
-    private void showDialog(String text) {
+    private void showDialog(int textID, DialogInterface.OnClickListener onClickListener) {
+        String text = getString(textID);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         // set title
@@ -149,6 +157,7 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         // set dialog message
         alertDialogBuilder
                 .setMessage(text)
+                .setPositiveButton(R.string.ok, onClickListener)
                 .setCancelable(false);
 
         // create alert dialog

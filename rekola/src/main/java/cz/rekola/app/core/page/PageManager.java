@@ -1,6 +1,7 @@
 package cz.rekola.app.core.page;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -88,7 +90,7 @@ public class PageManager {
      * @param actionBar
      * @return Newly created fragment
      */
-    private Fragment setState(EPageState newState, Context context, FragmentManager
+    private Fragment setState(EPageState newState, Activity activity, FragmentManager
             fragmentManager, ActionBar actionBar, boolean backPressed) {
         if (this.state == newState)
             return null;
@@ -104,7 +106,7 @@ public class PageManager {
         }
 
         actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
-        setCustomActionBar(context, actionBar, newState);
+        setCustomActionBar(activity, actionBar, newState);
 
         if (newState.customActionBarViewEnabled)
             actionBar.getCustomView().setVisibility(View.VISIBLE);
@@ -160,11 +162,11 @@ public class PageManager {
         }
 
         if (newState == EPageState.BIKE_DETAIL) {
-            ColorDrawable transparentColor = getColor(context, R.color.transparent);
+            ColorDrawable transparentColor = getColor(activity, R.color.transparent);
             actionBar.setBackgroundDrawable(transparentColor);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_pink);
         } else {
-            ColorDrawable primaryColor = getColor(context, R.color.colorPrimary);
+            ColorDrawable primaryColor = getColor(activity, R.color.colorPrimary);
             actionBar.setBackgroundDrawable(primaryColor);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white);
         }
@@ -179,18 +181,19 @@ public class PageManager {
 
         this.state = newState;
         setIconsHighlights(newState, actionBar);
+        hideKeyboard(activity);
 
         return fragment;
     }
 
-    public Fragment setNextState(EPageState newState, Context context, FragmentManager fragmentManager,
+    public Fragment setNextState(EPageState newState, Activity activity, FragmentManager fragmentManager,
                                  ActionBar actionBar) {
-        return setState(newState, context, fragmentManager, actionBar, false);
+        return setState(newState, activity, fragmentManager, actionBar, false);
     }
 
-    public void setPrevState(Context context, FragmentManager fragmentManager,
+    public void setPrevState(Activity activity, FragmentManager fragmentManager,
                              ActionBar actionBar) {
-        setState(prevStates.pop(), context, fragmentManager, actionBar, true);
+        setState(prevStates.pop(), activity, fragmentManager, actionBar, true);
     }
 
     //if action is active, than has another "active" icon
@@ -249,6 +252,14 @@ public class PageManager {
 
     private ColorDrawable getColor(Context context, int colorID) {
         return new ColorDrawable(context.getResources().getColor(colorID));
+    }
+
+    private void hideKeyboard(Activity activity) {
+        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
 }

@@ -3,6 +3,8 @@
 
     <string name="app_name">Rekola</string>
 
+    <string name="ok">OK</string>
+
     <string name="login_username_hint">e-mail</string>
     <string name="login_password_hint">heslo</string>
     <string name="login_log_in">Přihlásit se</string>

@@ -41,9 +41,7 @@ public class SpinnerListFragment extends BaseMainFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getAct().getSupportActionBar() != null) {
-            getAct().getSupportActionBar().hide();
-        }
+        hideActionBar();
     }
 
     @Override
@@ -60,10 +58,22 @@ public class SpinnerListFragment extends BaseMainFragment {
 
     @OnClick(R.id.btn_close)
     public void close() {
+        showActionBar();
+        getPageController().requestPrevState();
+    }
+
+    private void hideActionBar()
+    {
+        if (getAct().getSupportActionBar() != null) {
+            getAct().getSupportActionBar().hide();
+        }
+    }
+
+    private void showActionBar()
+    {
         if (getAct().getSupportActionBar() != null) {
             getAct().getSupportActionBar().show();
         }
-        getPageController().requestPrevState();
     }
 
     private void setListView() {
@@ -75,6 +85,7 @@ public class SpinnerListFragment extends BaseMainFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mSetIssueItemInterface.setIssueItem(position);
+                showActionBar();
                 getPageController().requestPrevState();
             }
         });
