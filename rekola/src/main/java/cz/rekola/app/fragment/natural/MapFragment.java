@@ -51,7 +51,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     @InjectView(R.id.view_map)
     MapView mViewMap;
 
-    private GoogleMap mGooglemap;
+    private GoogleMap mGoogleMap;
     private MapManager mapManager = new MapManager();
     private Timer timer;
     private View mMapFragmentView;
@@ -67,12 +67,12 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
         mViewMap.onCreate(savedInstanceState);
 
-        mGooglemap = mViewMap.getMap();
-        mGooglemap.getUiSettings().setMyLocationButtonEnabled(false);
-        mGooglemap.getUiSettings().setZoomControlsEnabled(false);
-        mGooglemap.setMyLocationEnabled(true);
-        mGooglemap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mGooglemap.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
+        mGoogleMap = mViewMap.getMap();
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.setMyLocationEnabled(true);
+        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mGoogleMap.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
@@ -206,7 +206,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mGooglemap.setPadding(0, 0, 0, height);
+                mGoogleMap.setPadding(0, 0, 0, height);
             }
         }, 100);
     }
@@ -216,9 +216,9 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
                         .getMyLocationManager().getLastKnownMyLocation().getLatLng(),
                 Constants.DEFAULT_BIKES_MAP_ZOOM_LEVEL);
         if (animate)
-            mGooglemap.animateCamera(cameraUpdate);
+            mGoogleMap.animateCamera(cameraUpdate);
         else
-            mGooglemap.moveCamera(cameraUpdate);
+            mGoogleMap.moveCamera(cameraUpdate);
     }
 
     private void setupMap() {
@@ -235,7 +235,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             return;
         }
 
-        ZonesManager.drawZones(getActivity(), mGooglemap, boundaries.zones);
+        ZonesManager.drawZones(getActivity(), mGoogleMap, boundaries.zones);
     }
 
     private class MapManager implements ClusterManager.OnClusterItemClickListener<BikeClusterItem>, ClusterManager.OnClusterClickListener<BikeClusterItem>,
@@ -247,22 +247,22 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         private DirectionManager directionManager = new DirectionManager(this); //navigation to bike
 
         void init() {
-            mClusterManager = new ClusterManager<>(getActivity(), mGooglemap);
+            mClusterManager = new ClusterManager<>(getActivity(), mGoogleMap);
             mClusterManager.setOnClusterItemClickListener(this);
             mClusterManager.setOnClusterClickListener(this);
 
             mBikeRenderer = new BikeRenderer(getActivity(), getActivity()
-                    .getLayoutInflater(), mGooglemap, mClusterManager);
+                    .getLayoutInflater(), mGoogleMap, mClusterManager);
             mClusterManager.setRenderer(mBikeRenderer);
 
             // Point the map's listeners at the listeners implemented by the cluster
             // manager.
-            mGooglemap.setOnCameraChangeListener(mClusterManager);
-            mGooglemap.setOnMarkerClickListener(mClusterManager);
+            mGoogleMap.setOnCameraChangeListener(mClusterManager);
+            mGoogleMap.setOnMarkerClickListener(mClusterManager);
         }
 
         void updateMap(List<Bike> bikes) {
-            //    mGooglemap.clear();
+            //    mGoogleMap.clear();
             mClusterManager.clearItems();
 
             lastBikeClusterItem = null;
@@ -285,7 +285,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
             } else {
                 lastBikeClusterItem = newBikeClusterItem;
                 mOverlayMap.show(lastBikeClusterItem.getBike());
-                directionManager.addDirections(mGooglemap);
+                directionManager.addDirections(mGoogleMap);
             }
         }
 
@@ -322,7 +322,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         @Override
         public void onDirectionsLoaded() {
             getApp().getDataManager().customLoadDirectionsFinished(true);
-            directionManager.addDirections(mGooglemap);
+            directionManager.addDirections(mGoogleMap);
         }
 
         @Override
@@ -360,8 +360,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
         @Override
         public boolean onClusterClick(Cluster<BikeClusterItem> cluster) {
-            mGooglemap.moveCamera(CameraUpdateFactory.newLatLng(cluster.getPosition()));
-            mGooglemap.animateCamera(CameraUpdateFactory.zoomIn());
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(cluster.getPosition()));
+            mGoogleMap.animateCamera(CameraUpdateFactory.zoomIn());
             return true;
         }
 

@@ -27,11 +27,13 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.error.MessageError;
+import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.api.requestmodel.ReturningLocation;
 import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.MessageEvent;
+import cz.rekola.app.core.bus.dataAvailable.BoundariesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.PoisAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
 import cz.rekola.app.core.bus.dataFailed.PoisFailedEvent;
@@ -39,6 +41,7 @@ import cz.rekola.app.core.bus.dataFailed.ReturnBikeFailedEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.core.loc.MyLocation;
 import cz.rekola.app.core.loc.MyLocationListener;
+import cz.rekola.app.core.map.ZonesManager;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.OnMyLocationButtonClickListener,*/ MyLocationListener {
@@ -88,6 +91,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         if (getApp().getDataManager().getPois(true) != null) {
             setupMap();
         }
+        setZones();
 
         mTxtNote.setInputType(
                 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
@@ -180,6 +184,11 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     public void poisFailedEvent(PoisFailedEvent event) {
     }
 
+    @Subscribe
+    public void boundariesAvaible(BoundariesAvailableEvent event) {
+        setZones();
+    }
+
     @Override
     public void onMyLocationChanged(MyLocation myLocation) {
         // TODO: This may cause location update just before a user clicks on the return button!
@@ -213,6 +222,15 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         ButterKnife.reset(this);
     }
 
+    private void setZones() {
+        Boundaries boundaries = getApp().getDataManager().getBoundaries();
+        if (boundaries == null) {
+            return;
+        }
+
+        ZonesManager.drawZones(getActivity(), mGoogleMap, boundaries.zones);
+    }
+
     private class PoiManager implements GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
         void init() {
@@ -221,7 +239,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         }
 
         void updateMap(List<Poi> pois) {
-            mGoogleMap.clear();
+            //   mGoogleMap.clear();
 
             for (Poi poi : pois) {
                 BitmapDescriptor bmp = POIS.getBmpFromType(poi.type);
