@@ -12,11 +12,11 @@
         />
 
     <ImageView
+        android:id="@+id/img_bike_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_bike_cluster"
         />
 
 </FrameLayout>

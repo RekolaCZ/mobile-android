@@ -15,8 +15,10 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import cz.rekola.app.R;
 
@@ -29,9 +31,11 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
     private Context mContext;
     private final View mBikeView;
+    private final ImageView mImgBikeIcon;
     private final ImageView mImgBikeIconBackground;
     private final View mBikeClusterView;
-    private final IconGenerator mIconGenerator;
+    private final IconGenerator mDefaultIconGenerator; //is used before bike image is loaded
+    private final IconGenerator mBikeIconGenerator;
     private final IconGenerator mClusterIconGenerator;
     private HashMap<BikeClusterItem, Marker> markerBikeItemMap = new HashMap<>();
 
@@ -40,15 +44,20 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
                                 clusterManager) {
         super(context, map, clusterManager);
         mContext = context;
-        mIconGenerator = new IconGenerator(mContext);
+        mDefaultIconGenerator = new IconGenerator(mContext);
+        mBikeIconGenerator = new IconGenerator(mContext);
         mClusterIconGenerator = new IconGenerator(mContext);
 
         mBikeView = layoutInflater.inflate(R.layout.map_cluster_bike, null);
         mBikeClusterView = layoutInflater.inflate(R.layout.map_cluster_bikes, null);
+        mImgBikeIcon = (ImageView) mBikeView.findViewById(R.id.img_bike_icon);
         mImgBikeIconBackground = (ImageView) mBikeView.findViewById(R.id.img_bike_icon_background);
 
-        mIconGenerator.setContentView(mBikeView);
-        mIconGenerator.setBackground(null);
+        mDefaultIconGenerator.setContentView(layoutInflater.inflate(R.layout.map_cluster_bike, null));
+        mDefaultIconGenerator.setBackground(null);
+
+        mBikeIconGenerator.setContentView(mBikeView);
+        mBikeIconGenerator.setBackground(null);
 
         mClusterIconGenerator.setContentView(mBikeClusterView);
         mClusterIconGenerator.setBackground(null);
@@ -77,7 +86,6 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
     // Draw a single bike.
     @Override
     protected void onBeforeClusterItemRendered(BikeClusterItem bikeClusterItem, MarkerOptions markerOptions) {
-        //mImageView.setImageResource(person.profilePhoto);
 
         if (bikeClusterItem.isSelectedBike())
             setOneBikeBackGround(R.drawable.map_bike_selected);
@@ -86,30 +94,41 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         else
             setOneBikeBackGround(R.drawable.map_bike_default);
 
-        Bitmap icon = mIconGenerator.makeIcon();
+        Bitmap icon = mDefaultIconGenerator.makeIcon();
         String title = bikeClusterItem.getBike().name;
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(title);
     }
 
     private BitmapDescriptor getIconBikeIsSelected() {
         setOneBikeBackGround(R.drawable.map_bike_selected);
-        return BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon());
+        return BitmapDescriptorFactory.fromBitmap(mBikeIconGenerator.makeIcon());
     }
 
     private BitmapDescriptor getIconBikeIsBroken() {
         setOneBikeBackGround(R.drawable.map_bike_broken);
-        return BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon());
+        return BitmapDescriptorFactory.fromBitmap(mBikeIconGenerator.makeIcon());
     }
 
     private BitmapDescriptor getIconBikeDefault() {
         setOneBikeBackGround(R.drawable.map_bike_default);
-        return BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon());
+        return BitmapDescriptorFactory.fromBitmap(mBikeIconGenerator.makeIcon());
     }
 
     @Override
     protected void onClusterItemRendered(BikeClusterItem bikeClusterItem, Marker marker) {
         super.onClusterItemRendered(bikeClusterItem, marker);
         markerBikeItemMap.put(bikeClusterItem, marker);
+
+        Random random = new Random();
+        int number = random.nextInt(4) + 1;
+
+        String urlBike = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike.png";
+        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/eq" + number + ".png";
+        Picasso.with(mContext).load(url).into(new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon));
+
+     /*
+        Picasso.with(mContext).load(bikeClusterItem.getBike().iconUrl)
+          .into(new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon)); //TODO waiting for api*/
     }
 
     private void setOneBikeBackGround(int resId) {
