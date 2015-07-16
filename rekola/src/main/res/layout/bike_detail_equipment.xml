@@ -17,15 +17,10 @@
     <LinearLayout
         android:id="@+id/ll_equipments"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_warning_red"/>
 
     </LinearLayout>
 

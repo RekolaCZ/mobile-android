@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Date;
 import java.util.List;
 
@@ -108,8 +110,12 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
     }
 
     private void onBindBasicInfo(BikeDetailAdapter.ViewHolder viewHolder, final int position) {
-        //TODO load image into ivBikeIcon
         BikeDetailItem bikeDetailItem = mData.get(position);
+
+        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/img_bike.png";
+        Glide.with(mContext).load(url).into(viewHolder.mImgBike);
+        //  Glide.with(mContext).load(bikeDetailItem.getBikeIconUrl()).into(viewHolder.mImgBike); TODO waiting for api
+
 
         int operationalWithProblemsVisibility = bikeDetailItem.isOperationalWithIssues() ? View.VISIBLE : View.GONE;
         int inoperationalVisibility = bikeDetailItem.isInOperational() ? View.VISIBLE : View.GONE;
@@ -132,10 +138,21 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
     private void onBindEquipment(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
+
+        viewHolder.mLlEquipments.removeAllViews();
+
 //TODO add equipment
+        BikeDetailItem bikeDetailItem = mData.get(position);
+      /*  for(Equipment equipment : bikeDetailItem.getEquipments())
+        {
+
+        }
+*/
+
         viewHolder.mBtnEquipmentsDetail.setOnClickListener(mData.get(position)
                 .getEquipmentsDetailListener());
     }
+
 
     private void onBindIssueHeader(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {

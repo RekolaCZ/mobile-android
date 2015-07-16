@@ -14,7 +14,7 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/img_bike"/>
+            />
 
         <TextView
             android:id="@+id/txt_bike_name"
