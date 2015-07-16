@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
@@ -104,8 +106,9 @@ public class BikeOverlayView extends RelativeLayout {
         int operationalWithIssues = bike.operational && bike.issues.size() > 0 ? VISIBLE : GONE;
         mTxtOperationalWithIssues.setVisibility(operationalWithIssues);
 
-        //    String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/img_bike.png";
-        //   Glide.with(getActivity()).load(url).into(mImgBike);
+        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike.png";
+        Glide.with(getContext()).load(url).into(mImgBike);
+        //   Glide.with(getContext()).load(bike.iconUrl).into(mImgBike); //TODO waiting for api
 
         mOverlayMapArea.setVisibility(VISIBLE);
         mbtnRoute.setVisibility(VISIBLE);

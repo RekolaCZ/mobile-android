@@ -24,7 +24,7 @@
             android:background="@drawable/overlay"
             android:gravity="top"
             android:layout_marginTop="20dp"
-            android:src="@drawable/ic_bike_cluster"/>
+            android:padding="10dp"/>
 
         <LinearLayout
             android:id="@+id/layout_bike_detail"
