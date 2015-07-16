@@ -16,7 +16,7 @@ public class Bike {
     public String imageUrl;
     public String description;
     public String issue;
-    public List<String> issues; //TODO waiting for new api List<Integer>
+    public List<Integer> issues;
     public boolean borrowed;
     public boolean operational;
     public Location location;

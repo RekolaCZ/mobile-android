@@ -6,7 +6,7 @@ import com.google.maps.android.clustering.ClusterItem;
 import cz.rekola.app.api.model.bike.Bike;
 
 /**
- * TODO add class description
+ * Bike item for grouping bikes on Google Map
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {26. 6. 2015}
  */
 public class BikeClusterItem implements ClusterItem {

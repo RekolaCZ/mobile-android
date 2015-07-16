@@ -98,13 +98,14 @@ public class BikeOverlayView extends RelativeLayout {
         mTxtNote.setText(bike.location.note);
         mTxtDescription.setText(bike.description);
 
-        int visibility = bike.operational ? GONE : VISIBLE;
-        mTxtInoperational.setVisibility(visibility);
+        int inoperationalVisibility = bike.operational ? GONE : VISIBLE;
+        mTxtInoperational.setVisibility(inoperationalVisibility);
 
+        int operationalWithIssues = bike.operational && bike.issues.size() > 0 ? VISIBLE : GONE;
+        mTxtOperationalWithIssues.setVisibility(operationalWithIssues);
 
-        //TODO set correct visibility
-        //  if(bike.operational && bike.issues != null)
-        mTxtOperationalWithIssues.setVisibility(GONE);
+        //    String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/img_bike.png";
+        //   Glide.with(getActivity()).load(url).into(mImgBike);
 
         mOverlayMapArea.setVisibility(VISIBLE);
         mbtnRoute.setVisibility(VISIBLE);

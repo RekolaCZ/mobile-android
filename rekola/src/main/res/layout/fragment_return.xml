@@ -44,7 +44,6 @@
                 android:id="@+id/txt_borrowed_from_date"
                 style="@style/TextView"
                 android:padding="4dp"
-                android:text="25.8."
                 android:textColor="@color/light_pink2"/>
 
             <TextView
@@ -57,7 +56,6 @@
                 android:id="@+id/txt_borrowed_from_time"
                 style="@style/TextView"
                 android:padding="4dp"
-                android:text="TODO"
                 android:textColor="@color/light_pink2"/>
 
         </LinearLayout>

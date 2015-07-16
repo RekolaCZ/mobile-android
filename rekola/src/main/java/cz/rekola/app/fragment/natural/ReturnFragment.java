@@ -19,6 +19,7 @@ import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.bus.dataAvailable.BorrowedBikeAvailableEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.utils.DateUtils;
 
 /**
  * Screen to return bike
@@ -96,7 +97,8 @@ public class ReturnFragment extends BaseMainFragment {
 
         mTxtBikeName.setText(bike.name);
         mTxtLockCode.setText(lockCode == null ? null : lockCode.replace("", " ").trim());
-        //    mTxtBorrowedFromDate.setText(DateUtils.getDate(myBike.bike.location.returnedAt)); //TODO waiting for api
+        mTxtBorrowedFromDate.setText(DateUtils.getDate(bike.location.returnedAt));
+        mTxtBorrowedFromTime.setText(DateUtils.getTime(bike.location.returnedAt));
 
         String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/img_bike.png";
         Glide.with(getActivity()).load(url).into(mImgBike);

@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -120,8 +119,7 @@ public class BikeDetailFragment extends BaseMainFragment {
     }
 
     BikeDetailItem getRecentlyReturnedItem(Bike bike) {
-        return BikeDetailItem.getRecentlyReturnedInstance(new Date(0), //TODO replace with bike.date
-                bike.location.note);
+        return BikeDetailItem.getRecentlyReturnedInstance(bike.location.returnedAt, bike.location.note);
     }
 
     BikeDetailItem getEquipmentsItem(Bike bike) {
