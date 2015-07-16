@@ -360,8 +360,11 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
 
         @Override
         public boolean onClusterClick(Cluster<BikeClusterItem> cluster) {
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(cluster.getPosition()));
-            mGoogleMap.animateCamera(CameraUpdateFactory.zoomIn());
+            //center to cluster position + zoom in
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(cluster.getPosition(),
+                    (float) Math.floor(mGoogleMap.getCameraPosition().zoom + 1));
+            mGoogleMap.animateCamera(cameraUpdate);
+
             return true;
         }
 
