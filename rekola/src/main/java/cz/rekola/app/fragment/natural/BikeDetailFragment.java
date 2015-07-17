@@ -28,7 +28,7 @@ import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 
 /**
- * Info about bike for user (there is info screen for serviceman) like name, problems, last returned, ...f
+ * Info about bike for user (there is info screen for serviceman) like name, problems, last returned, ...
  */
 public class BikeDetailFragment extends BaseMainFragment {
     public static final String TAG = BikeDetailAdapter.class.getName();
@@ -42,6 +42,13 @@ public class BikeDetailFragment extends BaseMainFragment {
 
 
     public void init(int bikeID) {
+        if (mBikeID != bikeID && mBikeID != Bike.UNDEFINED_BIKE) {
+            mBikeID = bikeID;
+            mBikeDetailItemList.clear();
+            setBikeInfo();
+            setBikeIssues();
+        }
+
         mBikeID = bikeID;
     }
 

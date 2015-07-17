@@ -131,6 +131,14 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         mViewMap.onPause();
     }
 
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (hidden) {
+            timer.cancel();
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
