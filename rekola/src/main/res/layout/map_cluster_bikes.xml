@@ -19,8 +19,6 @@
         android:drawableTop="@drawable/ic_bike_cluster"
         android:gravity="center"
         android:paddingTop="6dp"
-        android:src="@drawable/ic_bike_cluster"
-        android:text="10"
         />
 
 </FrameLayout>

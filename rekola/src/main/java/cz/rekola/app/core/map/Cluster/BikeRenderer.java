@@ -18,6 +18,7 @@ import com.google.maps.android.ui.IconGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import cz.rekola.app.R;
@@ -38,6 +39,8 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
     private final IconGenerator mBikeIconGenerator;
     private final IconGenerator mClusterIconGenerator;
     private HashMap<BikeClusterItem, Marker> markerBikeItemMap = new HashMap<>();
+    //Picasso use weak reference, so without reference it would be garbage collected
+    private HashSet<PicassoMarker> mPicassoMarkersSet = new HashSet<>();
 
     public BikeRenderer(Context context, LayoutInflater layoutInflater, GoogleMap map,
                         ClusterManager<BikeClusterItem>
@@ -124,7 +127,10 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
         String urlBike = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike.png";
         String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/eq" + number + ".png";
-        Picasso.with(mContext).load(url).into(new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon));
+
+        PicassoMarker picassoMarker = new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon);
+        mPicassoMarkersSet.add(picassoMarker);
+        Picasso.with(mContext).load(url).into(picassoMarker);
 
      /*
         Picasso.with(mContext).load(bikeClusterItem.getBike().iconUrl)
