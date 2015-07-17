@@ -121,27 +121,12 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         super.onClusterItemRendered(bikeClusterItem, marker);
         markerBikeItemMap.put(bikeClusterItem, marker);
 
-        String bikeType = bikeClusterItem.getBike().bikeType;
-        String url;
-
-        switch (bikeType) {
-            case "scooter":
-                url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_scooter.png";
-                break;
-            case "lady":
-                url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike1.png";
-                break;
-            default:
-                url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike2.png";
-        }
 
         PicassoMarker picassoMarker = new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon);
         mPicassoMarkersSet.add(picassoMarker);
-        Picasso.with(mContext).load(url).into(picassoMarker);
 
-     /*
         Picasso.with(mContext).load(bikeClusterItem.getBike().iconUrl)
-          .into(new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon)); //TODO waiting for api*/
+                .into(new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon));
     }
 
     private void setOneBikeBackGround(int resId) {

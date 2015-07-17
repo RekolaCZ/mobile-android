@@ -106,9 +106,7 @@ public class BikeOverlayView extends RelativeLayout {
         int operationalWithIssues = bike.operational && bike.issues.size() > 0 ? VISIBLE : GONE;
         mTxtOperationalWithIssues.setVisibility(operationalWithIssues);
 
-        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike.png";
-        Glide.with(getContext()).load(url).into(mImgBike);
-        //   Glide.with(getContext()).load(bike.iconUrl).into(mImgBike); //TODO waiting for api
+        Glide.with(getContext()).load(bike.iconUrl).into(mImgBike);
 
         mOverlayMapArea.setVisibility(VISIBLE);
         mbtnRoute.setVisibility(VISIBLE);

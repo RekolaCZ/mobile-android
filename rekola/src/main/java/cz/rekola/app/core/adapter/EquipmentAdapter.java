@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import cz.rekola.app.R;
@@ -25,7 +27,6 @@ public class EquipmentAdapter extends BaseAdapter {
     private static LayoutInflater mInflater = null;
 
     public EquipmentAdapter(Context context, List<Equipment> equipmentList) {
-        // TODO Auto-generated constructor stub
         this.mContext = context;
         this.mEquipmentList = equipmentList;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,11 +59,9 @@ public class EquipmentAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) equipmentView
                 .findViewById(R.id.img_equipment_icon);
 
-        imgIcon.setImageResource(R.drawable.ic_warning);
-        //TODO waiting for api
-       /* Glide.with(mContext)
+        Glide.with(mContext)
                 .load(mEquipmentList.get(position).iconUrl)
-                .into(imgIcon);*/
+                .into(imgIcon);
 
         txtDescription.setText(mEquipmentList.get(position).description);
 

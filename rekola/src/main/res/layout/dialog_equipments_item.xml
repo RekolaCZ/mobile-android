@@ -3,13 +3,14 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
+              android:gravity="center_vertical"
               android:paddingBottom="@dimen/grid_5">
 
     <!-- icon is loaded from api-->
     <ImageView
         android:id="@+id/img_equipment_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="@dimen/grid_2"
         android:src="@drawable/ic_warning"
         />

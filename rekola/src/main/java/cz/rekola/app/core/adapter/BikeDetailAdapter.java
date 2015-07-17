@@ -161,8 +161,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         ImageView imgEquipment = (ImageView) flEquipmentIcon
                 .findViewById(R.id.img_equipment_icon);
 
-        imgEquipment.setImageResource(R.drawable.ic_warning);
-        //    Glide.with(mContext).load(iconUrl).into(imgEquipment); TODO waiting for api
+        Glide.with(mContext).load(iconUrl).into(imgEquipment);
 
         mLlEquipments.addView(flEquipmentIcon);
 

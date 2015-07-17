@@ -100,9 +100,7 @@ public class ReturnFragment extends BaseMainFragment {
         mTxtBorrowedFromDate.setText(DateUtils.getDate(bike.location.returnedAt));
         mTxtBorrowedFromTime.setText(DateUtils.getTime(bike.location.returnedAt));
 
-        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/img_bike.png";
-        Glide.with(getActivity()).load(url).into(mImgBike);
-        // Glide.with(getActivity()).load(url).into(mImgBike); TODO waiting for api
+        Glide.with(getActivity()).load(bike.imageUrl).into(mImgBike);
     }
 
     @Override
