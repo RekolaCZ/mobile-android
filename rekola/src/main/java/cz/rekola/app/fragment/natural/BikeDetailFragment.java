@@ -45,6 +45,8 @@ public class BikeDetailFragment extends BaseMainFragment {
     @InjectView(R.id.rvBikeDetail)
     RecyclerView rvBikeDetail;
 
+    boolean bikeIssuesIsFilled = false;
+
 
     public void init(int bikeID) {
         if (mBikeID != bikeID && mBikeID != Bike.UNDEFINED_BIKE) {
@@ -157,9 +159,17 @@ public class BikeDetailFragment extends BaseMainFragment {
     }
 
     private void setBikeIssues() {
-        List<Issue> bikeIssues = getApp().getDataManager().getBikeIssues(mBikeID);
+        List<Issue> bikeIssues = getApp().getDataManager().getBikeIssues(mBikeID, false);
         if (bikeIssues == null)
             return;
+
+        //TODO could be better solution, maybe as forced update from init?
+        //bike issues was updated, so this will clear it and load it again
+        if (bikeIssuesIsFilled) {
+            bikeIssuesIsFilled = false;
+            mBikeDetailItemList.clear();
+            setBikeInfo();
+        }
 
         for (Issue issue : bikeIssues) {
             BikeDetailItem issueTitle = BikeDetailItem.getIssueTitleInstance(issue.title);
@@ -167,6 +177,7 @@ public class BikeDetailFragment extends BaseMainFragment {
             setBikeIssueUpdates(issue.updates);
         }
 
+        bikeIssuesIsFilled = true;
         rvBikeDetail.getAdapter().notifyDataSetChanged();
     }
 

@@ -399,12 +399,12 @@ public class DataManager {
         return null;
     }
 
-    public void reportIssue(int bikeID, IssueReport issueReport) {
+    public void reportIssue(final int bikeID, IssueReport issueReport) {
         ApiService apiService = app.getApiService();
         apiService.reportIssue(apiKey, bikeID, issueReport, new Callback<Object>() {
             @Override
             public void success(Object unused, Response response) {
-                // user don't need to know about success
+                getBikeIssues(bikeID, true); //forced update bike issues
             }
 
             @Override
@@ -475,8 +475,9 @@ public class DataManager {
         return null;
     }
 
-    public List<Issue> getBikeIssues(final int bikeId) {
-        if (bikeIssuesMap.containsKey(bikeId) || !loadingManager.addLoading(DataLoad.BIKE_ISSUES)) {
+    public List<Issue> getBikeIssues(final int bikeId, boolean forceUpdate) {
+        if ((!forceUpdate && bikeIssuesMap.containsKey(bikeId))
+                || !loadingManager.addLoading(DataLoad.BIKE_ISSUES)) {
             return bikeIssuesMap.get(bikeId);
         }
 
