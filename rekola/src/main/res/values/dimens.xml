@@ -90,4 +90,6 @@
     <dimen name="action_bar_icon_padding">15dp</dimen>
     <dimen name="bike_overlay_negative_margin">-44dp</dimen>
 
+    <dimen name="zone_stroke_width">5dp</dimen>
+
 </resources>

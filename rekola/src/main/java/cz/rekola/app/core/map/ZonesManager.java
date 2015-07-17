@@ -30,6 +30,7 @@ public class ZonesManager {
         int colorPink = context.getResources().getColor(R.color.base_pink);
 
         PolygonOptions zone = new PolygonOptions();
+        zone.strokeWidth(context.getResources().getDimension(R.dimen.zone_stroke_width));
         zone.fillColor(colorPinkTransparent);
         zone.strokeColor(colorPink);
         zone.addAll(zonesPoints);
