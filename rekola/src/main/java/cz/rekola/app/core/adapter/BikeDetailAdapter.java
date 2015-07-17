@@ -185,14 +185,14 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         userNameAndDateTime.setSpan(new ForegroundColorSpan(colorBasePink), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         //set issue date
-        //  userNameAndDateTime.append(DateUtils.getDate(issueUpdate.issuedAt)); TODO: waiting for API
+        userNameAndDateTime.append(DateUtils.getDate(issueUpdate.issuedAt));
 
         // set " / "
         start = userNameAndDateTime.length();
         userNameAndDateTime.append(slash);
         userNameAndDateTime.setSpan(new ForegroundColorSpan(colorBasePink), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // set issue time
-        // userNameAndDateTime.append(DateUtils.getTime(issueUpdate.issuedAt)); TODO: waiting for API
+        userNameAndDateTime.append(DateUtils.getTime(issueUpdate.issuedAt));
 
         viewHolder.mTxtUserNameAndDateTime.setText(userNameAndDateTime);
         viewHolder.mTxtIssueDescription.setText(issueUpdate.description);
