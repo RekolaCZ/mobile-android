@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import cz.rekola.app.R;
+import cz.rekola.app.api.model.bike.Equipment;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.utils.DateUtils;
@@ -141,16 +142,30 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
         viewHolder.mLlEquipments.removeAllViews();
 
-//TODO add equipment
         BikeDetailItem bikeDetailItem = mData.get(position);
-      /*  for(Equipment equipment : bikeDetailItem.getEquipments())
-        {
-
+        for (Equipment equipment : bikeDetailItem.getEquipments()) {
+            addEquipmentIcon(viewHolder.mLlEquipments, equipment.iconUrl);
         }
-*/
 
         viewHolder.mBtnEquipmentsDetail.setOnClickListener(mData.get(position)
                 .getEquipmentsDetailListener());
+    }
+
+    private void addEquipmentIcon(LinearLayout mLlEquipments, String iconUrl) {
+        //in experimenting with GridView or TwoWay-View was problem with
+        // horizontal centering, so it was used simply Linear Layout + HorizontalScrollView + dynamic ImageView creation
+
+        View flEquipmentIcon = LayoutInflater.from(mContext).
+                inflate(R.layout.bike_detail_equipment_icon, mLlEquipments, false);
+
+        ImageView imgEquipment = (ImageView) flEquipmentIcon
+                .findViewById(R.id.img_equipment_icon);
+
+        imgEquipment.setImageResource(R.drawable.ic_warning);
+        //    Glide.with(mContext).load(iconUrl).into(imgEquipment); TODO waiting for api
+
+        mLlEquipments.addView(flEquipmentIcon);
+
     }
 
 

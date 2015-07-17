@@ -14,23 +14,30 @@
 
 
     <!-- equipments will be dynamically added in code (is loaded via api)-->
-    <LinearLayout
-        android:id="@+id/ll_equipments"
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_equipments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/btn_equipments_detail"
         style="@style/TextView"
         android:layout_gravity="center"
         android:background="@drawable/button_green_border"
-        android:textColor="@drawable/button_green_text"
         android:text="@string/bike_detail_equipment_info"
+        android:textColor="@drawable/button_green_text"
         android:textSize="@dimen/text_medium"/>
 
 
