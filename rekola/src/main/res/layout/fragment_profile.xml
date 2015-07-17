@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             style="@style/Layout"
-             android:layout_marginLeft="@dimen/grid_5"
-             android:layout_marginRight="@dimen/grid_5"
-             android:layout_marginTop="@dimen/grid_5"
-             tools:context="cz.rekola.app.fragment.natural.ProfileFragment">
+<FrameLayout
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="@dimen/grid_5"
+    android:layout_marginRight="@dimen/grid_5"
+    android:layout_marginTop="@dimen/grid_5"
+    tools:context="cz.rekola.app.fragment.natural.ProfileFragment">
 
     <LinearLayout
         style="@style/Layout"
@@ -53,32 +54,47 @@
             android:text="@string/profile_logout"/>
 
 
-        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="2"
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:stretchColumns="1">
 
-                    tools:context=".GridLayoutActivity">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/TextViewGridDescription"
-                android:text="@string/profile_email"/>
+                <TextView
+                    style="@style/TextViewGridDescription"
+                    android:text="@string/profile_email"/>
 
-            <TextView
-                android:id="@+id/txt_email"
-                style="@style/TextViewGridValue"
-                android:text="@string/profile_email"/>
+                <TextView
+                    android:id="@+id/txt_email"
+                    style="@style/TextViewGridValue"
+                    android:text="@string/profile_email"/>
 
+            </TableRow>
 
-            <TextView
-                style="@style/TextViewGridDescription"
-                android:text="@string/profile_address"/>
+            <include layout="@layout/row_line"/>
 
-            <TextView
-                android:id="@+id/txt_address"
-                style="@style/TextViewGridValue"
-                android:text="@string/profile_address"/>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextViewGridDescription"
+                    android:text="@string/profile_address"/>
+
+                <TextView
+                    android:id="@+id/txt_address"
+                    style="@style/TextViewGridValue"
+                    android:text="@string/profile_address"/>
+            </TableRow>
+
+            <include layout="@layout/row_line"/>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <TextView
                 style="@style/TextViewGridDescription"
@@ -89,7 +105,9 @@
                 style="@style/TextViewGridValue"
                 android:text="@string/profile_phone"/>
 
-        </GridLayout>
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 
