@@ -19,7 +19,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 import cz.rekola.app.R;
 
@@ -43,10 +42,10 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
     private HashSet<PicassoMarker> mPicassoMarkersSet = new HashSet<>();
 
     public BikeRenderer(Context context, LayoutInflater layoutInflater, GoogleMap map,
-                        ClusterManager<BikeClusterItem>
-                                clusterManager) {
+                        ClusterManager<BikeClusterItem> clusterManager) {
         super(context, map, clusterManager);
         mContext = context;
+
         mDefaultIconGenerator = new IconGenerator(mContext);
         mBikeIconGenerator = new IconGenerator(mContext);
         mClusterIconGenerator = new IconGenerator(mContext);
@@ -122,11 +121,19 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         super.onClusterItemRendered(bikeClusterItem, marker);
         markerBikeItemMap.put(bikeClusterItem, marker);
 
-        Random random = new Random();
-        int number = random.nextInt(4) + 1;
+        String bikeType = bikeClusterItem.getBike().bikeType;
+        String url;
 
-        String urlBike = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike.png";
-        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/eq" + number + ".png";
+        switch (bikeType) {
+            case "scooter":
+                url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_scooter.png";
+                break;
+            case "lady":
+                url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike1.png";
+                break;
+            default:
+                url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/ic_bike2.png";
+        }
 
         PicassoMarker picassoMarker = new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon);
         mPicassoMarkersSet.add(picassoMarker);
