@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.bike.Bike;
-import cz.rekola.app.core.anim.MyAnimator;
 
 public class BikeOverlayView extends RelativeLayout {
 
@@ -111,14 +110,16 @@ public class BikeOverlayView extends RelativeLayout {
         mOverlayMapArea.setVisibility(VISIBLE);
         mbtnRoute.setVisibility(VISIBLE);
 
-        MyAnimator.showSlideUp(this);
-
+        this.animate().translationY(0);
         callbacks.onHeightChanged(mOverlayMapArea.getMeasuredHeight());
     }
 
     public void hide() {
-        mbtnRoute.setVisibility(GONE);
-        MyAnimator.hideSlideDown(mOverlayMapArea);
+        if (mOverlayMapArea.getVisibility() == GONE)
+            return;
+
+        this.animate().translationY(getHeightAnimation());
+
         callbacks.onHeightChanged(0);
     }
 
@@ -132,5 +133,16 @@ public class BikeOverlayView extends RelativeLayout {
         public void onCenterMapPressed();
 
         public void onHeightChanged(int height);
+    }
+
+    /**
+     * calculate correct height to show/hide this overlay
+     *
+     * @return height
+     */
+    private float getHeightAnimation() {
+        return mOverlayMapArea.getMeasuredHeight()
+                + mbtnRoute.getMeasuredHeight()
+                + getResources().getDimension(R.dimen.bike_overlay_negative_margin);
     }
 }

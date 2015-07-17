@@ -7,7 +7,6 @@
     android:layout_gravity="bottom"
     android:visibility="visible">
 
-
     <LinearLayout
         android:id="@+id/overlay_map_area"
         style="@style/Layout"
@@ -95,7 +94,7 @@
         android:id="@+id/btn_route"
         style="@style/IconImageView"
         android:layout_above="@id/overlay_map_area"
-        android:layout_marginBottom="-44dp"
+        android:layout_marginBottom="@dimen/bike_overlay_negative_margin"
         android:src="@drawable/ic_navigation"
         android:visibility="gone"/>
 
