@@ -1,6 +1,7 @@
 package cz.rekola.app.fragment.natural;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.squareup.otto.Subscribe;
 
@@ -19,9 +22,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.bike.Bike;
+import cz.rekola.app.api.model.bike.Equipment;
 import cz.rekola.app.api.model.bike.Issue;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.adapter.BikeDetailAdapter;
+import cz.rekola.app.core.adapter.EquipmentAdapter;
 import cz.rekola.app.core.bus.dataAvailable.BikeIssuesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
 import cz.rekola.app.core.model.BikeDetailItem;
@@ -129,11 +134,11 @@ public class BikeDetailFragment extends BaseMainFragment {
         return BikeDetailItem.getRecentlyReturnedInstance(bike.location.returnedAt, bike.location.note);
     }
 
-    BikeDetailItem getEquipmentsItem(Bike bike) {
+    BikeDetailItem getEquipmentsItem(final Bike bike) {
         Button.OnClickListener equipmentsDetailListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add dialog fragment
+                showEquipmentsDetail(bike.equipment);
             }
         };
 
@@ -172,4 +177,30 @@ public class BikeDetailFragment extends BaseMainFragment {
         }
     }
 
+    private void showEquipmentsDetail(List<Equipment> equipmentList) {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_equipments, null);
+
+        ListView lvEquipments = (ListView) dialogLayout.findViewById(R.id.lv_equipments);
+        lvEquipments.setAdapter(new EquipmentAdapter(getActivity(), equipmentList));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(dialogLayout);
+
+        final AlertDialog alertDialog = builder.show();
+
+        lvEquipments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                alertDialog.dismiss();
+            }
+        });
+
+        dialogLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
 }
