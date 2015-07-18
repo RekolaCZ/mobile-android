@@ -23,7 +23,7 @@ import java.util.HashSet;
 import cz.rekola.app.R;
 
 /**
- * TODO add class description
+ * Render for bike icons on Google map
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {26. 6. 2015}
  */
 public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
@@ -71,6 +71,7 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
         Marker marker = markerBikeItemMap.get(bikeClusterItem);
         marker.setIcon(getIconBikeIsSelected());
+        loadIconFromApi(bikeClusterItem, marker);
     }
 
     public void setIconUnselected(BikeClusterItem bikeClusterItem) {
@@ -83,6 +84,8 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
             marker.setIcon(getIconBikeIsBroken());
         else
             marker.setIcon(getIconBikeDefault());
+
+        loadIconFromApi(bikeClusterItem, marker);
     }
 
     // Draw a single bike.
@@ -100,6 +103,7 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         String title = bikeClusterItem.getBike().name;
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(title);
     }
+
 
     private BitmapDescriptor getIconBikeIsSelected() {
         setOneBikeBackGround(R.drawable.map_bike_selected);
@@ -120,17 +124,20 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
     protected void onClusterItemRendered(BikeClusterItem bikeClusterItem, Marker marker) {
         super.onClusterItemRendered(bikeClusterItem, marker);
         markerBikeItemMap.put(bikeClusterItem, marker);
-
-
-        PicassoMarker picassoMarker = new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon);
-        mPicassoMarkersSet.add(picassoMarker);
-
-        Picasso.with(mContext).load(bikeClusterItem.getBike().iconUrl)
-                .into(new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon));
+        loadIconFromApi(bikeClusterItem, marker);
     }
 
     private void setOneBikeBackGround(int resId) {
         mImgBikeIconBackground.setImageResource(resId);
+    }
+
+    private void loadIconFromApi(BikeClusterItem bikeClusterItem, Marker marker) {
+        PicassoMarker picassoMarker = new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon);
+        bikeClusterItem.setPicassoMarker(picassoMarker);
+
+        Picasso.with(mContext)
+                .load(bikeClusterItem.getBike().iconUrl)
+                .into(picassoMarker);
     }
 
     // Draw multiple bikes

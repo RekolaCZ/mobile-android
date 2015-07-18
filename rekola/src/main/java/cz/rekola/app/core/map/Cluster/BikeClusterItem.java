@@ -16,6 +16,12 @@ public class BikeClusterItem implements ClusterItem {
     private final Bike mBike;
     private boolean isSelected;  //because of different color for last selected bike
 
+    /**
+     * Piccaso use weak reference for every target, so it need to get reference, otherwise it
+     * // would be garbage collected
+     */
+    private PicassoMarker mPicassoMarker;
+
     public BikeClusterItem(Bike bike) {
         mBike = bike;
         mPosition = new LatLng(bike.location.lat, bike.location.lng);
@@ -46,6 +52,10 @@ public class BikeClusterItem implements ClusterItem {
 
     public void setIsSelectedBike(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    public void setPicassoMarker(PicassoMarker picassoMarker) {
+        mPicassoMarker = picassoMarker;
     }
 
     @Override
