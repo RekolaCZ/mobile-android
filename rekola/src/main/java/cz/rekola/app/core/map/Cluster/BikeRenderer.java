@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -18,7 +17,6 @@ import com.google.maps.android.ui.IconGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import cz.rekola.app.R;
 
@@ -30,39 +28,64 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
     public static final String TAG = BikeRenderer.class.getName();
 
     private Context mContext;
-    private final View mBikeView;
-    private final ImageView mImgBikeIcon;
-    private final ImageView mImgBikeIconBackground;
-    private final View mBikeClusterView;
-    private final IconGenerator mDefaultIconGenerator; //is used before bike image is loaded
-    private final IconGenerator mBikeIconGenerator;
+    private final ImageView mImgBikeIconDefault;
+    private final ImageView mImgBikeIconSelected;
+    private final ImageView mImgBikeIconBroken;
+
+    //for optimalization have 3 different icon generator for one bike + 1 cluster icon generator
+    private final IconGenerator mBikeDefaultIconGenerator; //is used before bike image is loaded
+    private final IconGenerator mBikeSelectedIconGenerator;
+    private final IconGenerator mBikeBrokenIconGenerator;
     private final IconGenerator mClusterIconGenerator;
+
     private HashMap<BikeClusterItem, Marker> markerBikeItemMap = new HashMap<>();
     //Picasso use weak reference, so without reference it would be garbage collected
-    private HashSet<PicassoMarker> mPicassoMarkersSet = new HashSet<>();
 
     public BikeRenderer(Context context, LayoutInflater layoutInflater, GoogleMap map,
                         ClusterManager<BikeClusterItem> clusterManager) {
         super(context, map, clusterManager);
         mContext = context;
 
-        mDefaultIconGenerator = new IconGenerator(mContext);
-        mBikeIconGenerator = new IconGenerator(mContext);
+        //set one bike
+        mBikeDefaultIconGenerator = new IconGenerator(mContext);
+        mBikeSelectedIconGenerator = new IconGenerator(mContext);
+        mBikeBrokenIconGenerator = new IconGenerator(mContext);
+
+        mImgBikeIconDefault = setIconGenerator(mBikeDefaultIconGenerator,
+                layoutInflater, R.drawable.map_bike_default);
+
+        mImgBikeIconSelected = setIconGenerator(mBikeSelectedIconGenerator,
+                layoutInflater, R.drawable.map_bike_selected);
+
+        mImgBikeIconBroken = setIconGenerator(mBikeBrokenIconGenerator,
+                layoutInflater, R.drawable.map_bike_broken);
+
+        //set cluster
         mClusterIconGenerator = new IconGenerator(mContext);
+        View bikeClusterView = layoutInflater.inflate(R.layout.map_cluster_bikes, null);
 
-        mBikeView = layoutInflater.inflate(R.layout.map_cluster_bike, null);
-        mBikeClusterView = layoutInflater.inflate(R.layout.map_cluster_bikes, null);
-        mImgBikeIcon = (ImageView) mBikeView.findViewById(R.id.img_bike_icon);
-        mImgBikeIconBackground = (ImageView) mBikeView.findViewById(R.id.img_bike_icon_background);
-
-        mDefaultIconGenerator.setContentView(layoutInflater.inflate(R.layout.map_cluster_bike, null));
-        mDefaultIconGenerator.setBackground(null);
-
-        mBikeIconGenerator.setContentView(mBikeView);
-        mBikeIconGenerator.setBackground(null);
-
-        mClusterIconGenerator.setContentView(mBikeClusterView);
+        mClusterIconGenerator.setContentView(bikeClusterView);
         mClusterIconGenerator.setBackground(null);
+    }
+
+    /**
+     * Initialize IconGenerator (correct view, background)
+     *
+     * @param iconGenerator      generator, which will be set up
+     * @param layoutInflater     for inflate correct view
+     * @param backgroundResource view background
+     * @return pointer to bike icon, which will be change (is loaded via api)
+     */
+    private ImageView setIconGenerator(IconGenerator iconGenerator, LayoutInflater layoutInflater,
+                                       int backgroundResource) {
+        View bikeView = layoutInflater.inflate(R.layout.map_cluster_bike, null);
+        ImageView imgBikeIconBackground = (ImageView) bikeView.findViewById(R.id.img_bike_icon_background);
+        imgBikeIconBackground.setImageResource(backgroundResource);
+
+        iconGenerator.setContentView(bikeView);
+        iconGenerator.setBackground(null);
+
+        return (ImageView) bikeView.findViewById(R.id.img_bike_icon);
     }
 
     public void setIconSelected(BikeClusterItem bikeClusterItem) {
@@ -70,7 +93,7 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
             return;
 
         Marker marker = markerBikeItemMap.get(bikeClusterItem);
-        marker.setIcon(getIconBikeIsSelected());
+        bikeClusterItem.setIsSelectedBike(true);
         loadIconFromApi(bikeClusterItem, marker);
     }
 
@@ -79,46 +102,38 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
             return;
 
         Marker marker = markerBikeItemMap.get(bikeClusterItem);
-
-        if (!bikeClusterItem.getBike().operational) //bike is broken
-            marker.setIcon(getIconBikeIsBroken());
-        else
-            marker.setIcon(getIconBikeDefault());
-
+        bikeClusterItem.setIsSelectedBike(false);
         loadIconFromApi(bikeClusterItem, marker);
     }
 
     // Draw a single bike.
     @Override
     protected void onBeforeClusterItemRendered(BikeClusterItem bikeClusterItem, MarkerOptions markerOptions) {
+        IconGenerator iconGenerator = getCorrectedIconGenerator(bikeClusterItem);
 
-        if (bikeClusterItem.isSelectedBike())
-            setOneBikeBackGround(R.drawable.map_bike_selected);
-        else if (!bikeClusterItem.getBike().operational) //bike is broken
-            setOneBikeBackGround(R.drawable.map_bike_broken);
-        else
-            setOneBikeBackGround(R.drawable.map_bike_default);
-
-        Bitmap icon = mDefaultIconGenerator.makeIcon();
+        Bitmap icon = iconGenerator.makeIcon();
         String title = bikeClusterItem.getBike().name;
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(title);
     }
 
-
-    private BitmapDescriptor getIconBikeIsSelected() {
-        setOneBikeBackGround(R.drawable.map_bike_selected);
-        return BitmapDescriptorFactory.fromBitmap(mBikeIconGenerator.makeIcon());
+    private IconGenerator getCorrectedIconGenerator(BikeClusterItem bikeClusterItem) {
+        if (bikeClusterItem.isSelectedBike())
+            return mBikeSelectedIconGenerator;
+        else if (!bikeClusterItem.getBike().operational) //bike is broken
+            return mBikeBrokenIconGenerator;
+        else
+            return mBikeDefaultIconGenerator;
     }
 
-    private BitmapDescriptor getIconBikeIsBroken() {
-        setOneBikeBackGround(R.drawable.map_bike_broken);
-        return BitmapDescriptorFactory.fromBitmap(mBikeIconGenerator.makeIcon());
+    private ImageView getCorrectedIconImage(BikeClusterItem bikeClusterItem) {
+        if (bikeClusterItem.isSelectedBike())
+            return mImgBikeIconSelected;
+        else if (!bikeClusterItem.getBike().operational) //bike is broken
+            return mImgBikeIconBroken;
+        else
+            return mImgBikeIconDefault;
     }
 
-    private BitmapDescriptor getIconBikeDefault() {
-        setOneBikeBackGround(R.drawable.map_bike_default);
-        return BitmapDescriptorFactory.fromBitmap(mBikeIconGenerator.makeIcon());
-    }
 
     @Override
     protected void onClusterItemRendered(BikeClusterItem bikeClusterItem, Marker marker) {
@@ -127,12 +142,10 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         loadIconFromApi(bikeClusterItem, marker);
     }
 
-    private void setOneBikeBackGround(int resId) {
-        mImgBikeIconBackground.setImageResource(resId);
-    }
-
     private void loadIconFromApi(BikeClusterItem bikeClusterItem, Marker marker) {
-        PicassoMarker picassoMarker = new PicassoMarker(marker, mBikeIconGenerator, mImgBikeIcon);
+        PicassoMarker picassoMarker = new PicassoMarker(marker,
+                getCorrectedIconGenerator(bikeClusterItem),
+                getCorrectedIconImage(bikeClusterItem));
         bikeClusterItem.setPicassoMarker(picassoMarker);
 
         Picasso.with(mContext)
