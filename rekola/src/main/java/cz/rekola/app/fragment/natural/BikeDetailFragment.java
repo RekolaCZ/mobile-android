@@ -40,20 +40,15 @@ public class BikeDetailFragment extends BaseMainFragment {
 
 
     private int mBikeID = Bike.UNDEFINED_BIKE;
-    List<BikeDetailItem> mBikeDetailItemList;
+    private List<BikeDetailItem> mBikeDetailItemList;
 
     @InjectView(R.id.rvBikeDetail)
     RecyclerView rvBikeDetail;
 
-    boolean bikeIssuesIsFilled = false;
-
-
     public void init(int bikeID) {
         if (mBikeID != bikeID && mBikeID != Bike.UNDEFINED_BIKE) {
             mBikeID = bikeID;
-            mBikeDetailItemList.clear();
-            setBikeInfo();
-            setBikeIssues();
+            fillData();
         }
 
         mBikeID = bikeID;
@@ -79,33 +74,42 @@ public class BikeDetailFragment extends BaseMainFragment {
 
         BikeDetailAdapter adapter = new BikeDetailAdapter(mBikeDetailItemList, getActivity());
         rvBikeDetail.setAdapter(adapter);
-
-        setBikeInfo();
-        setBikeIssues();
+        fillData();
 
         return view;
     }
 
     @Subscribe
     public void isBikeDetailAvailable(BikesAvailableEvent event) {
-        setBikeInfo();
+        fillData();
     }
 
     @Subscribe
     public void isBikeIssuesAvailable(BikeIssuesAvailableEvent event) {
-        setBikeIssues();
+        fillData();
     }
 
-    private void setBikeInfo() {
+    private void fillData() {
         if (mBikeID == Bike.UNDEFINED_BIKE) {
             Log.e(TAG, "bike was not defined");
             return;
         }
 
+        mBikeDetailItemList.clear();
+
         Bike bike = getApp().getDataManager().getBike(mBikeID);
         if (bike == null)
-            return; // will be set later by event isBikeDetailAvailable
+            return;  // will be set later by event isBikeDetailAvailable
 
+        List<Issue> bikeIssues = getApp().getDataManager().getBikeIssues(mBikeID, false);
+        if (bikeIssues == null)
+            return; // will be set later by event isBikeIssuesAvailable
+
+        setBikeInfo(bike);
+        setBikeIssues(bikeIssues);
+    }
+
+    private void setBikeInfo(Bike bike) {
 
         boolean operationalWithIssues = bike.operational && bike.issues.size() > 0;
         BikeDetailItem basicInfo = getBasicInfoItem(bike, operationalWithIssues);
@@ -158,26 +162,13 @@ public class BikeDetailFragment extends BaseMainFragment {
         return BikeDetailItem.getIssueHeaderInstance(addIssueListener);
     }
 
-    private void setBikeIssues() {
-        List<Issue> bikeIssues = getApp().getDataManager().getBikeIssues(mBikeID, false);
-        if (bikeIssues == null)
-            return;
-
-        //TODO could be better solution, maybe as forced update from init?
-        //bike issues was updated, so this will clear it and load it again
-        if (bikeIssuesIsFilled) {
-            bikeIssuesIsFilled = false;
-            mBikeDetailItemList.clear();
-            setBikeInfo();
-        }
-
+    private void setBikeIssues(List<Issue> bikeIssues) {
         for (Issue issue : bikeIssues) {
             BikeDetailItem issueTitle = BikeDetailItem.getIssueTitleInstance(issue.title);
             mBikeDetailItemList.add(issueTitle);
             setBikeIssueUpdates(issue.updates);
         }
 
-        bikeIssuesIsFilled = true;
         rvBikeDetail.getAdapter().notifyDataSetChanged();
     }
 
