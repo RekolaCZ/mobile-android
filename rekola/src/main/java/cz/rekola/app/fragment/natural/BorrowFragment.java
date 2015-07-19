@@ -29,8 +29,6 @@ public class BorrowFragment extends BaseMainFragment {
 
     @InjectView(R.id.txt_bike_code)
     CodeView mTxtBikeCode;
-    @InjectView(R.id.btn_borrow)
-    Button mBtnBorrow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

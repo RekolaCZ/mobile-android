@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+<LinearLayout
+    style="@style/LayoutMargin"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/img_bike"
-        style="@style/ImageView"
+        style="@style/ImageViewBikeImage"
         android:layout_gravity="center"
-        android:layout_height="100dp"
-        android:paddingTop="10dp"
-        android:paddingLeft="80dp"
-        android:paddingRight="80dp"
-        />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"/>
 
 
     <TextView
-        style="@style/TextView"
         android:id="@+id/txt_bike_type"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Lady favorit"
+        style="@style/TextView"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:textColor="@color/dark_pink2"
-        android:textSize="@dimen/text_xlarge"/>
+        android:layout_marginBottom="30dp"
+        android:textSize="12sp"
+        android:textAllCaps="true"/>
 
     <TextView
         android:id="@+id/txt_bike_name"
-        style="@style/TitleTextView"
-        android:text="Kníže Pupík Ignor"/>
+        style="@style/BikeDetailTextViewTitle"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:id="@+id/txt_operational_with_problems"
         style="@style/TextViewWarning"
         android:drawableLeft="@drawable/ic_warning_yellow"
         android:drawableStart="@drawable/ic_warning_yellow"
+        android:layout_marginBottom="15dp"
         android:text="@string/bike_operational_with_issues"
         android:textColor="@color/warning_yellow"/>
 
@@ -43,6 +46,7 @@
         style="@style/TextViewWarning"
         android:drawableLeft="@drawable/ic_warning_red"
         android:drawableStart="@drawable/ic_warning_red"
+        android:layout_marginBottom="15dp"
         android:text="@string/bike_inoperational"
         android:textColor="@color/warning_pink"/>
 
@@ -50,14 +54,11 @@
     <TextView
         android:id="@+id/txt_bike_description"
         style="@style/TextView"
-        android:layout_gravity="center"
         android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="Městské kolo s nosičem, košíkem, protišlapnou brzdou a nábojovou převodovkou"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textColor="@color/grey5"
-        android:textSize="@dimen/text_small"/>
+        android:textSize="14sp"/>
 
 </LinearLayout>

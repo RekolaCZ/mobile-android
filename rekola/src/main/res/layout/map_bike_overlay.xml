@@ -4,8 +4,7 @@
     style="@style/Layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:visibility="visible">
+    android:layout_gravity="bottom">
 
     <LinearLayout
         android:id="@+id/overlay_map_area"
@@ -18,73 +17,77 @@
 
         <ImageView
             android:id="@+id/img_bike"
-            android:layout_width="80dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/overlay"
-            android:gravity="top"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"/>
+            android:layout_marginTop="23sp"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginStart="@dimen/default_screen_margin"
+            android:src="@drawable/ic_bike_cluster"
+            android:adjustViewBounds="true"
+            />
 
         <LinearLayout
             android:id="@+id/layout_bike_detail"
-            style="@style/Layout"
+            style="@style/LayoutMargin"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/overlay"
-            android:padding="@dimen/grid_2">
+            >
 
             <TextView
                 android:id="@+id/txt_bike_name"
-                style="@style/TextViewOverlay"
+                style="@style/TextViewWhite"
                 android:layout_marginEnd="80dp"
                 android:layout_marginRight="80dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Maxipes Fík"
-                android:textSize="@dimen/text_xlarge"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txt_distance"
-                style="@style/TextViewOverlay"
+                style="@style/TextViewWhite"
+                android:layout_marginBottom="10dp"
                 android:singleLine="true"
                 android:text="3 km"
-                android:textSize="@dimen/text_large"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                />
 
             <TextView
                 android:id="@+id/txt_inoperational"
-                style="@style/TextViewWarning"
+                style="@style/MapOverlayTextViewWarning"
                 android:layout_gravity="left|start"
+                android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_warning"
                 android:drawableStart="@drawable/ic_warning"
                 android:text="@string/bike_inoperational"
-                android:textColor="@color/warning_gray"
-                android:textSize="@dimen/text_medium"/>
+                />
 
             <TextView
                 android:id="@+id/txt_operational_with_issues"
-                style="@style/TextViewWarning"
-                android:layout_gravity="left|start"
+                style="@style/MapOverlayTextViewWarning"
+                android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_warning"
                 android:drawableStart="@drawable/ic_warning"
                 android:text="@string/bike_operational_with_issues"
-                android:textColor="@color/warning_gray"
-                android:textSize="@dimen/text_medium"/>
+                />
 
 
             <TextView
                 android:id="@+id/txt_note"
-                style="@style/TextViewOverlay"
+                style="@style/TextViewWhite"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Note"
-                android:textSize="@dimen/text_large"/>
+                android:textSize="@dimen/text_large"
+                />
 
             <TextView
                 android:id="@+id/txt_description"
-                style="@style/TextViewOverlay"
+                style="@style/TextViewWhite"
                 android:text="Description"
                 android:textColor="@color/warning_gray"
-                android:textSize="@dimen/text_medium"/>
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </LinearLayout>

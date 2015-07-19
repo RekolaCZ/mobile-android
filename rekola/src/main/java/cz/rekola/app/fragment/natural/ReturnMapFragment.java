@@ -2,12 +2,15 @@ package cz.rekola.app.fragment.natural;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,6 +53,8 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
     EditText mTxtNote;
     @InjectView(R.id.view_map)
     MapView mViewMap;
+    @InjectView(R.id.img_bike_icon)
+    ImageView mImgBikeIcon;
 
     private GoogleMap mGoogleMap;
 
@@ -76,6 +81,12 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
         // Updates the location and zoom of the MapView
         centerMapOnMyLocation(false);
+
+        MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
+        if (myBike != null && myBike.bike != null) { //should be in cache, but for sure
+            Glide.with(getActivity()).load(myBike.bike.iconUrl).into(mImgBikeIcon);
+        }
+
         return rootView;
     }
 
@@ -144,6 +155,14 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         super.onPause();
         getApp().getMyLocationManager().unregister(this);
         mViewMap.onPause();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            centerMapOnMyLocation(true);
+        }
+
     }
 
     @Override

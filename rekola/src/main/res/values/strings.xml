@@ -21,7 +21,7 @@
 
     <string name="borrow_info_1">Enter the bike 6-digit code to receive the lock passcode and start using your bike</string>
     <string name="borrow_info_2">Code can be found on the rear fender or on a rear stick</string>
-    <string name="borrow_borrow">Borrow a bike</string>
+    <string name="borrow_borrow">Borrow</string>
     <string name="borrow_code_hint">Enter 6-digit code</string>
 
     <string name="return_info_lock_code">Lock code</string>

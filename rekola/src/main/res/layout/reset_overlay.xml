@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/overlay_reset"
-             style="@style/Layout"
+             style="@style/LayoutMargin"
              android:background="@color/background_window"
              android:visibility="gone">
 
@@ -10,7 +10,6 @@
         <LinearLayout
             style="@style/Layout"
             android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/text_header"
             android:gravity="center">
 
             <TextView

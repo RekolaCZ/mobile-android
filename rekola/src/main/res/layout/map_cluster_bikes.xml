@@ -12,8 +12,7 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewWhite"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="4dp"
         android:drawableTop="@drawable/ic_bike_cluster"

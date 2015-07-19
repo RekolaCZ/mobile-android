@@ -3,18 +3,14 @@
             style="@style/Layout">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/LayoutMargin"
         android:layout_gravity="center_vertical"
-        android:layout_margin="@dimen/text_header"
-        android:gravity="center"
-        android:orientation="vertical"
         tools:context="cz.rekola.app.fragment.natural.AddIssueFragment">
 
         <TextView
             style="@style/TitleTextView"
-            android:layout_marginTop="10dp"
-            android:gravity="start"
+            android:layout_gravity="start"
+            android:layout_marginBottom="10dp"
             android:text="@string/add_issue_type"
             />
 
@@ -22,38 +18,39 @@
             android:id="@+id/spn_issue_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/spinner_pink"
             />
 
         <TextView
             style="@style/TitleTextView"
-            android:layout_marginTop="10dp"
-            android:gravity="start"
+            android:layout_gravity="start"
+            android:layout_marginBottom="5dp"
             android:text="@string/add_issue_detail_description"
             />
 
 
         <EditText
-            style="@style/EditTextPinkBorder"
             android:id="@+id/txt_issue_description"
+            style="@style/EditTextPinkBorder"
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:gravity="start"
             android:imeOptions="actionDone"
             android:inputType="text|textCapSentences|textMultiLine"
-            android:lines="3"
-            android:maxLines="3"
-            android:minLines="3"
+            android:lines="2"
+            android:maxLines="2"
+            android:minLines="2"
             android:scrollbars="vertical"
             android:textColor="@color/black"
+            android:textSize="14sp"
             />
 
         <CheckBox
             android:id="@+id/chk_inoperational"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
             android:button="@drawable/checkbox_button"
             android:paddingLeft="10dp"
             android:text="@string/add_issue_inoperational"
@@ -63,7 +60,6 @@
             android:id="@+id/btn_report_issue"
             style="@style/ButtonPink"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
             android:text="@string/add_issue_report_issue"
             android:textSize="@dimen/text_medium"/>
 

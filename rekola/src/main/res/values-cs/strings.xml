@@ -21,10 +21,10 @@
 
     <string name="borrow_info_1">Vložte 6-ti místný digitální kód pro získání kódu zámku a můžete začít kolo používat.</string>
     <string name="borrow_info_2">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
-    <string name="borrow_borrow">Půjčit kolo</string>
+    <string name="borrow_borrow">Půjčit</string>
     <string name="borrow_code_hint">Vložte šestimístný kód</string>
 
-    <string name="return_info_lock_code">Kód zámku:</string>
+    <string name="return_info_lock_code">Kód zámku</string>
     <string name="return_return">Vrátit</string>
     <string name="return_bike_detail">Detail kola</string>
     <string name="return_bike_issue">Problém?</string>

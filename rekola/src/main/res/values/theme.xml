@@ -6,12 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionDropDownStyle">@style/ActionBar.DropDown</item>
-        <item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
         <item name="android:actionBarItemBackground">@drawable/selector</item>
-        <item name="android:dropDownListViewStyle">@style/ActionBar.DropDownListView</item>
 
         <!-- remove shadow below action bar -->
         <item name="android:windowContentOverlay">@null</item>

@@ -6,20 +6,19 @@
     <ScrollView style="@style/Layout">
 
         <LinearLayout
-            style="@style/Layout"
+            style="@style/LayoutMargin"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/text_header"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/btn_registration"
-                style="@style/TextView"
+                style="@style/TextViewWhite"
                 android:layout_gravity="top|right"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/login_registration"
                 android:textAllCaps="true"
-                android:textSize="@dimen/text_medium"/>
+                />
 
             <ImageView
                 style="@style/LogoImageView"
@@ -46,11 +45,10 @@
 
             <TextView
                 android:id="@+id/btn_recover_password"
-                style="@style/TextView"
+                style="@style/TextViewWhite"
                 android:layout_margin="@dimen/grid_4"
                 android:text="@string/login_forgot_password"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium"/>
+                android:textSize="14sp"/>
 
             <LinearLayout
                 style="@style/Layout"
@@ -63,7 +61,7 @@
                     style="@style/TextView"
                     android:text="@string/login_ackee"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/text_small"
+                    android:textSize="14sp"
                     android:padding="5dp"/>
 
                 <ImageView

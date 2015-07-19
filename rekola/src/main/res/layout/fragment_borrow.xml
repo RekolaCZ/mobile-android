@@ -5,47 +5,33 @@
     >
 
     <LinearLayout
-        style="@style/Layout"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/grid_8"
-        android:layout_marginRight="@dimen/grid_8"
-        android:gravity="center">
-
+        style="@style/LayoutMargin"
+        android:layout_gravity="center_vertical">
 
         <ImageView
             style="@style/ImageView"
             android:padding="10dp"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/logo_recola_web"/>
 
-
         <TextView
             style="@style/TextView"
-            android:layout_marginBottom="@dimen/margin_large"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="@string/borrow_info_1"
-            android:textColor="@color/black"/>
+            android:textSize="18sp"/>
 
 
         <TextView
             style="@style/TextView"
-            android:layout_marginBottom="@dimen/margin_xlarge"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="@string/borrow_info_2"
             android:textColor="@color/grey10"
-            android:textSize="@dimen/text_small"/>
-
-        <!--
-        <EditText
-            android:id="@+id/txt_bike_code"
-            style="@style/EditTextBorrow"
-            android:layout_gravity="center"
-            android:hint="@string/borrow_code_hint"
-            android:imeOptions="actionDone"
-            android:inputType="number"
-            android:maxLength="@integer/bike_code_length"/>
-            -->
+            android:textSize="14sp"/>
 
         <include
             android:id="@+id/txt_bike_code"
@@ -55,8 +41,10 @@
         <Button
             android:id="@+id/btn_borrow"
             style="@style/ButtonPink"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/borrow_borrow"/>
+            android:textAllCaps="true"
+            android:text="@string/borrow_borrow"
+            android:textSize="21sp"
+            />
 
     </LinearLayout>
 </ScrollView>

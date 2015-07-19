@@ -1,40 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 tools:context="cz.rekola.app.fragment.natural.AboutFragment">
 
     <ImageView
         android:id="@+id/img_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AboutImageViewBackground"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:adjustViewBounds="true"
-        android:paddingLeft="40dp"
-        android:paddingStart="40dp"
         android:src="@drawable/about_background"/>
-
 
     <ImageView
         android:id="@+id/img_ackee_logo"
-        style="@style/ImageView"
+        style="@style/AboutImageViewLogo"
         android:layout_above="@id/img_background"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
+        android:layout_marginBottom="133dp"
+        android:layout_marginTop="25dp"
         android:src="@drawable/logo_ackee"/>
 
     <TextView
-        style="@style/TextView"
+        style="@style/AboutTextViewCreated"
         android:layout_above="@id/img_ackee_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="114dp"
         android:text="@string/about_text"
-        android:textColor="@color/grey7"
-        android:textSize="@dimen/text_xlarge"/>
-
+        />
 
 </RelativeLayout>

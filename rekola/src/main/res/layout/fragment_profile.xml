@@ -1,121 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    style="@style/Layout"
+<LinearLayout
+    style="@style/LayoutMargin"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginLeft="@dimen/grid_5"
-    android:layout_marginRight="@dimen/grid_5"
-    android:layout_marginTop="@dimen/grid_5"
+    android:orientation="vertical"
     tools:context="cz.rekola.app.fragment.natural.ProfileFragment">
 
-    <LinearLayout
-        style="@style/Layout"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
 
-        <TextView
-            android:id="@+id/txt_user_name"
-            style="@style/TitleTextView"
-            android:layout_marginBottom="@dimen/grid_2"
-            android:text="Korben Dallas"
-            android:textSize="@dimen/text_xxxlarge"/>
 
         <LinearLayout
             style="@style/Layout"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/grid_3"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:gravity="center">
 
             <TextView
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:text="@string/profile_membership_end"
-                android:textColor="@color/pink_1"/>
+                android:id="@+id/txt_user_name"
+                style="@style/ProfileTextViewUserName"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="26dp"
+                />
+
+            <LinearLayout
+                style="@style/Layout"
+                android:layout_marginBottom="22dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileTextViewMemberShipLabel"
+                    android:text="@string/profile_membership_end"/>
+
+                <TextView
+                    android:id="@+id/txt_membership_end_date"
+                    style="@style/ProfileTextViewMemberShipEndDate"/>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/txt_membership_end_date"
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="29.9. 2015"
-                android:textColor="@color/pink_1"
-                android:textStyle="bold"/>
+                android:id="@+id/btn_logout"
+                style="@style/TextViewGreenBorder"
+                android:layout_marginBottom="40dp"
+                android:drawableLeft="@drawable/ic_logout"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_logout"
+                android:text="@string/profile_logout"/>
 
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:stretchColumns="1">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/ProfileTextViewGridDescription"
+                        android:text="@string/profile_email"/>
+
+                    <TextView
+                        android:id="@+id/txt_email"
+                        style="@style/ProfileTextViewGridValue"/>
+
+                </TableRow>
+
+                <include layout="@layout/row_line"/>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/ProfileTextViewGridDescription"
+                        android:text="@string/profile_address"/>
+
+                    <TextView
+                        android:id="@+id/txt_address"
+                        style="@style/ProfileTextViewGridValue"/>
+                </TableRow>
+
+                <include layout="@layout/row_line"/>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/ProfileTextViewGridDescription"
+                        android:text="@string/profile_phone"/>
+
+                    <TextView
+                        android:id="@+id/txt_phone"
+                        style="@style/ProfileTextViewGridValue"/>
+                </TableRow>
+
+            </TableLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/btn_logout"
-            style="@style/TextViewGreenBorder"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="@dimen/grid_5"
-            android:drawableLeft="@drawable/ic_logout"
-            android:drawablePadding="7dp"
-            android:text="@string/profile_logout"/>
-
-
-        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:stretchColumns="1">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextViewGridDescription"
-                    android:text="@string/profile_email"/>
-
-                <TextView
-                    android:id="@+id/txt_email"
-                    style="@style/TextViewGridValue"
-                    android:text="@string/profile_email"/>
-
-            </TableRow>
-
-            <include layout="@layout/row_line"/>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextViewGridDescription"
-                    android:text="@string/profile_address"/>
-
-                <TextView
-                    android:id="@+id/txt_address"
-                    style="@style/TextViewGridValue"
-                    android:text="@string/profile_address"/>
-            </TableRow>
-
-            <include layout="@layout/row_line"/>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/TextViewGridDescription"
-                android:text="@string/profile_phone"/>
-
-            <TextView
-                android:id="@+id/txt_phone"
-                style="@style/TextViewGridValue"
-                android:text="@string/profile_phone"/>
-
-            </TableRow>
-
-        </TableLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_about"
         style="@style/ButtonGrey"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/grid_6"
         android:text="@string/about_title"/>
 
-</FrameLayout>
+
+</LinearLayout>

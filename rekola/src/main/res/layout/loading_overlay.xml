@@ -4,6 +4,7 @@
                                    android:id="@+id/overlay_loading"
                                    style="@style/Layout"
                                    android:clickable="true"
+                                   android:visibility="gone"
                                    android:background="@color/base_pink">
 
     <ImageView

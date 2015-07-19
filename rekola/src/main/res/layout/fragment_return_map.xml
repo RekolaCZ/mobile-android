@@ -11,31 +11,32 @@
         android:layout_alignParentBottom="true">
 
         <LinearLayout
-            style="@style/Layout"
+            style="@style/LayoutMargin"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="@dimen/grid_2">
+            android:gravity="center">
 
             <TextView
                 style="@style/TextView"
                 android:layout_gravity="left"
                 android:text="@string/returnmap_bike_position"
-                android:textColor="@color/black"/>
+                android:layout_marginBottom="10dp"
+                />
 
             <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
             <EditText
                 android:id="@+id/txt_note"
                 style="@style/EditTextPinkBorder"
                 android:hint="@string/returnmap_note_hint"
-                android:imeOptions="actionDone"
                 android:inputType="text|textCapSentences"
-                android:lines="2"/>
+                android:lines="2"
+                android:layout_marginBottom="10dp"
+                android:textSize="14sp"
+                />
 
             <Button
                 android:id="@+id/btn_return_bike"
                 style="@style/ButtonPink"
-                android:layout_marginBottom="0dp"
                 android:text="@string/returnmap_bike_returned"/>
 
         </LinearLayout>
@@ -52,11 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <ImageView
-            style="@style/ImageView"
-            android:layout_gravity="center"
-            android:clickable="false"
-            android:src="@drawable/ic_pin_return"/>
+
+        <include layout="@layout/map_cluster_bike"/>
 
     </FrameLayout>
 
@@ -64,7 +62,7 @@
         android:id="@+id/btn_center_map"
         style="@style/IconImageView"
         android:layout_above="@id/layout_bottom"
-        android:layout_marginBottom="-40dp"
+        android:layout_marginBottom="-46dp"
         android:src="@drawable/ic_location_inverse"/>
 
 </RelativeLayout>

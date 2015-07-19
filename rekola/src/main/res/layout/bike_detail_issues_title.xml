@@ -10,10 +10,9 @@
     <TextView
         android:id="@+id/txt_issue_title"
         style="@style/TextView"
-        android:layout_marginBottom="10dp"
-        android:text="issue title"
+        android:layout_marginBottom="18dp"
         android:textColor="@color/base_green"
-        android:textSize="@dimen/text_xlarge"
+        android:textSize="18sp"
         android:textStyle="bold"
         />
 

@@ -6,37 +6,17 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <!-- ActionBar styles -->
-    <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@drawable/actionbar_bg_solid</item>
-        <item name="android:actionMenuTextColor">@color/UNRESOLVED</item>
-        <item name="android:titleTextStyle">@style/ActionBar.Title</item>
+    <style name="LayoutMargin" parent="Layout">
+        <item name="android:layout_margin">@dimen/default_screen_margin</item>
     </style>
 
-
-    <style name="ActionBar.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/brown</item>
-        <item name="android:textSize">@dimen/text_large</item>
-    </style>
-
-    <style name="ActionBar.DropDown" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:dropDownSelector">@drawable/selector</item>
-        <item name="android:background">@drawable/actionbar_spinner</item>
-    </style>
-
-    <style name="ActionBar.DropDownListView" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selector</item>
-        <item name="android:divider">@color/gray_1</item>
-        <item name="android:dividerHeight">2px</item>
-        <item name="android:background">@color/white</item>
-    </style>
 
     <!-- global styles for views: -->
     <style name="TextView" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_medium</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Button" parent="@android:style/Widget.Holo.Light.Button">
@@ -68,7 +48,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <!-- NEW STYLES -->
     <style name="EditTextPinkFilled" parent="EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -90,8 +69,6 @@
     </style>
 
     <style name="TextViewGreenBorder" parent="TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/border_green</item>
         <item name="android:textColor">@color/base_green</item>
         <item name="android:gravity">center</item>
@@ -108,15 +85,106 @@
         <item name="android:textColor">@color/grey4</item>
     </style>
 
-
     <style name="TitleTextView" parent="TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_xxlarge</item>
     </style>
+
+    <style name="ImageViewBikeImage" parent="ImageView">
+        <item name="android:layout_height">80dp</item>
+    </style>
+
+
+    <!-- About app -->
+    <style name="AboutTextViewCreated" parent="TextView">
+        <item name="android:textColor">@color/grey7</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="AboutImageViewLogo" parent="ImageView">
+        <item name="android:paddingLeft">60dp</item>
+        <item name="android:paddingStart">60dp</item>
+        <item name="android:paddingEnd">60dp</item>
+        <item name="android:paddingRight">60dp</item>
+    </style>
+
+    <style name="AboutImageViewBackground" parent="ImageView">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:paddingLeft">28dp</item>
+        <item name="android:paddingStart">28dp</item>
+    </style>
+
+    <!-- Profile styles -->
+    <style name="ProfileTextViewUserName" parent="TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="ProfileTextViewMemberShipLabel" parent="TextView">
+        <item name="android:textColor">@color/pink_1</item>
+    </style>
+
+    <style name="ProfileTextViewMemberShipEndDate" parent="TextView">
+        <item name="android:textColor">@color/pink_1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingStart">5dp</item>
+    </style>
+
+    <style name="ProfileTextViewGridDescription" parent="TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">@color/grey5</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_gravity">left</item>
+    </style>
+
+    <style name="ProfileTextViewGridValue" parent="TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Borrowed bike styles -->
+
+    <style name="BorrowedBikeTextViewBikeName" parent="TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BorrowedBikeTextViewBorrowed" parent="TextView">
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <style name="BorrowedBikeTextViewLockCode" parent="TextView">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BorrowedBikeTextViewLockLabel" parent="TextView">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray_2</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 
     <style name="IconImageView" parent="ImageView">
         <item name="android:layout_width">wrap_content</item>
@@ -130,11 +198,6 @@
         <item name="android:layout_alignParentRight">true</item>
     </style>
 
-    <!-- custom styles for views -->
-    <style name="TextViewOverlay" parent="TextView">
-        <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:textColor">@color/text_inverse</item>
-    </style>
 
     <!-- Login styles -->
     <style name="LogoImageView" parent="ImageView">
@@ -155,6 +218,10 @@
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
+    <style name="TextViewWhite" parent="TextView">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!-- Borrow styles -->
     <style name="EditTextBorrow" parent="@android:style/Widget.Holo.Light.EditText">
         <item name="android:layout_width">match_parent</item>
@@ -169,28 +236,6 @@
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
-    <!-- Profile styles -->
-    <style name="TextViewGridDescription" parent="TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/grey5</item>
-        <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:layout_gravity">left</item>
-
-    </style>
-
-    <style name="TextViewGridValue" parent="TextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">end</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:textStyle">bold</item>
-
-    </style>
 
     <!-- Bike styles -->
     <style name="TextViewWarning" parent="TextView">
@@ -222,6 +267,30 @@
     </style>
 
     <!--    textCursorDrawable null, because of some bug, that caused invisible cursor-->
+
+    <!-- Map overlay -->
+    <style name="MapOverlayTextViewWarning" parent="TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/warning_gray</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <!-- Bike detail -->
+    <style name="BikeDetailTextViewTitle" parent="TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BikeDetailTextViewBorrowedDate" parent="TextView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/dark_pink2</item>
+        <item name="android:drawablePadding">5dp</item>
+
+
+    </style>
 
 
 </resources>

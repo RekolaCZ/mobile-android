@@ -34,6 +34,7 @@ import cz.rekola.app.core.bus.IncompatibleApiEvent;
 import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.PasswordRecoveryEvent;
+import cz.rekola.app.core.bus.dataAvailable.AccountAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BikeIssuesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.BorrowedBikeAvailableEvent;
@@ -438,13 +439,13 @@ public class DataManager {
             public void success(Account account, Response response) {
                 loadingManager.removeLoading(DataLoad.ACCOUNT);
                 DataManager.this.account = account;
-                app.getBus().post(new BikesAvailableEvent());
+                app.getBus().post(new AccountAvailableEvent());
             }
 
             @Override
             public void failure(RetrofitError error) {
                 loadingManager.removeLoading(DataLoad.ACCOUNT);
-                handleGlobalError(error, app.getResources().getString(R.string.error_get_bikes_failed));
+                handleGlobalError(error, app.getResources().getString(R.string.error_get_account_failed));
             }
         });
 
