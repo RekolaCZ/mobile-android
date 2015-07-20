@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/overlay_reset"
-             style="@style/LayoutMargin"
+             style="@style/Layout"
              android:background="@color/background_window"
              android:visibility="gone">
 
     <ScrollView style="@style/Layout">
 
         <LinearLayout
-            style="@style/Layout"
+            style="@style/LayoutMargin"
             android:layout_gravity="center_vertical"
             android:gravity="center">
 
