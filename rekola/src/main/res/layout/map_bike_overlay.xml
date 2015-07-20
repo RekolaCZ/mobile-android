@@ -40,7 +40,6 @@
                 android:layout_marginEnd="80dp"
                 android:layout_marginRight="80dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Maxipes Fík"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -49,7 +48,6 @@
                 style="@style/TextViewWhite"
                 android:layout_marginBottom="10dp"
                 android:singleLine="true"
-                android:text="3 km"
                 android:textStyle="italic"
                 />
 
@@ -78,14 +76,12 @@
                 style="@style/TextViewWhite"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Note"
                 android:textSize="@dimen/text_large"
                 />
 
             <TextView
                 android:id="@+id/txt_description"
                 style="@style/TextViewWhite"
-                android:text="Description"
                 android:textColor="@color/warning_gray"
                 android:textSize="14sp"/>
         </LinearLayout>

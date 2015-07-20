@@ -30,6 +30,7 @@ import cz.rekola.app.core.page.PageManager;
 import cz.rekola.app.fragment.natural.AddIssueFragment;
 import cz.rekola.app.fragment.natural.BikeDetailFragment;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
+import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
 import cz.rekola.app.view.MessageBarView;
 
@@ -196,11 +197,11 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void requestBikeDetail(int bikeID, boolean issues) {
-      /*  if (getApp().getDataManager().showWebviewForBikedetail()) {
+        if (getApp().getDataManager().showWebviewForBikedetail()) {
             Fragment fragment = setState(PageManager.EPageState.WEB_BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailWebFragment)
                 ((BikeDetailWebFragment) fragment).init(bikeID, issues);
-        } else TODO uncomment after testing */
+        } else
         {
             Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailFragment)

@@ -112,11 +112,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
     private void onBindBasicInfo(BikeDetailAdapter.ViewHolder viewHolder, final int position) {
         BikeDetailItem bikeDetailItem = mData.get(position);
-
-        String url = "https://dl.dropboxusercontent.com/u/34660596/Ackee/Rekola/img_bike.png";
-        Glide.with(mContext).load(url).into(viewHolder.mImgBike);
-        //  Glide.with(mContext).load(bikeDetailItem.getBikeIconUrl()).into(viewHolder.mImgBike); TODO waiting for api
-
+        Glide.with(mContext).load(bikeDetailItem.getBikeIconUrl()).into(viewHolder.mImgBike);
 
         int operationalWithProblemsVisibility = bikeDetailItem.isOperationalWithIssues() ? View.VISIBLE : View.GONE;
         int inoperationalVisibility = bikeDetailItem.isInOperational() ? View.VISIBLE : View.GONE;

@@ -132,7 +132,7 @@ public class BikeDetailFragment extends BaseMainFragment {
 
 
     BikeDetailItem getBasicInfoItem(Bike bike, boolean operationalWithIssues) {
-        return BikeDetailItem.getBasicInfoInstance(bike.iconUrl, bike.bikeType, bike.name, operationalWithIssues,
+        return BikeDetailItem.getBasicInfoInstance(bike.imageUrl, bike.bikeType, bike.name, operationalWithIssues,
                 bike.operational, bike.description);
     }
 
