@@ -1,8 +1,8 @@
 package cz.rekola.app.fragment.natural;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +114,11 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
     @OnClick(R.id.btn_return_bike)
     public void returnBikeOnClick() {
+        if (mTxtNote.getText().toString().equals("")) {
+            showDialog();
+            return;
+        }
+
         LatLng center = mGoogleMap.getCameraPosition().target;
         MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
         if (myBike == null || myBike.bike == null || myBike.bike.bikeCode == null || myBike.bike.bikeCode.length() == 0) {
@@ -217,6 +222,26 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
     @Override
     public void onMyLocationError() {
+    }
+
+    private void showDialog() {
+        String text = getString(R.string.returnmap_dialog_position);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+        // set title
+        //  alertDialogBuilder.setTitle("Your Title");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(text)
+                .setPositiveButton(R.string.ok, null)
+                .setCancelable(false);
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 
     private void centerMapOnMyLocation(boolean animate) {

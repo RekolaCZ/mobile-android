@@ -33,6 +33,7 @@
     <string name="returnmap_note_hint">Describe the exact bike location. (e.g. 3rd lamp from the bus stop)</string>
     <string name="returnmap_bike_returned">Return</string>
     <string name="returnmap_bike_position">The exact position of bike</string>
+    <string name="returnmap_dialog_position">Please write exact position of bike</string>
 
     <string name="profile_membership_end">Membership will end</string>
     <string name="profile_email">Email</string>

@@ -33,6 +33,7 @@
     <string name="returnmap_note_hint">Např. před vstupem do kavárny</string>
     <string name="returnmap_bike_returned">Vrátit</string>
     <string name="returnmap_bike_position">Přesná poloha kola</string>
+    <string name="returnmap_dialog_position">Prosím upřesněte polohu</string>
 
     <string name="profile_membership_end">Členství do</string>
     <string name="profile_email">Email</string>
