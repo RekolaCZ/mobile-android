@@ -66,7 +66,7 @@ public class PageManager {
         ABOUT(true, false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(false, true, false, false, null, ReturnWebFragment.class),
         BIKE_DETAIL(true, true, true, true, null, BikeDetailFragment.class),
-        WEB_BIKE_DETAIL(false, true, false, false, null, BikeDetailWebFragment.class),
+        WEB_BIKE_DETAIL(true, true, false, true, null, BikeDetailWebFragment.class),
         ADD_ISSUE(true, false, true, true, R.string.add_issue_title, AddIssueFragment.class),
         SPINNER_LIST(false, false, false, true, null, SpinnerListFragment.class);
 
@@ -143,7 +143,7 @@ public class PageManager {
             }
         }
 
-        if (newState == EPageState.BIKE_DETAIL) {
+        if (pageStateIsBikeDetail(newState)) {
             ColorDrawable transparentColor = getColor(activity, R.color.transparent);
             actionBar.setBackgroundDrawable(transparentColor);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_pink);
@@ -249,11 +249,12 @@ public class PageManager {
         View newCustomActionBarView = null;
         View oldCustomActionBarView = actionBar.getCustomView();
 
-        if (oldCustomActionBarView == null && pageState == EPageState.BIKE_DETAIL)
+        if (oldCustomActionBarView == null && pageStateIsBikeDetail(pageState))
             newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar_bike_detail, null);
         else if (actionBar.getCustomView() == null)
             newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar, null);
-        else if (pageState == EPageState.BIKE_DETAIL && oldCustomActionBarView.findViewById(R.id.custom_action_bike_detail) == null)
+        else if (pageStateIsBikeDetail(pageState)
+                && oldCustomActionBarView.findViewById(R.id.custom_action_bike_detail) == null)
             newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar_bike_detail, null);
         else if (oldCustomActionBarView.findViewById(R.id.custom_action_bar_default) == null)
             newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar, null);
@@ -262,6 +263,10 @@ public class PageManager {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setCustomView(newCustomActionBarView);
         }
+    }
+
+    private boolean pageStateIsBikeDetail(EPageState pageState) {
+        return (pageState == EPageState.BIKE_DETAIL || pageState == EPageState.WEB_BIKE_DETAIL);
     }
 
     public boolean hasPrevState() {
