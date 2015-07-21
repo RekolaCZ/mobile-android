@@ -185,6 +185,7 @@ public class PageManager {
             actionBar.hide();
         } else {
             actionBar.show();
+            actionBar.setElevation(0); //remove shadow in Lollipop
         }
 
         actionBar.setHomeButtonEnabled(newState.upState);

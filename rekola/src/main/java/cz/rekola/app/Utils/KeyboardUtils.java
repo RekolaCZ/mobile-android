@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 /**
- * show/keyboard
+ * show/hide keyboard
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {21. 7. 2015}
  **/
 public class KeyboardUtils {
