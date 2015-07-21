@@ -6,7 +6,8 @@
 
     <LinearLayout
         style="@style/LayoutMargin"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:gravity="center">
 
         <ImageView
             style="@style/ImageView"
