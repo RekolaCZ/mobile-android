@@ -75,6 +75,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         mGoogleMap = mViewMap.getMap();
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
         mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.setMyLocationEnabled(true);
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls

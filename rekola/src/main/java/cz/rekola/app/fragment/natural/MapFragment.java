@@ -72,7 +72,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
         mGoogleMap.setMyLocationEnabled(true);
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mGoogleMap.setInfoWindowAdapter(new MapWindowAdapter(getActivity())); // Adapter creating invisible info windows to force the marker to move to front.
+
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
