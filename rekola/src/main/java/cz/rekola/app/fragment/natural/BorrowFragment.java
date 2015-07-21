@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.squareup.otto.Subscribe;
 
@@ -18,6 +17,7 @@ import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.utils.KeyboardUtils;
 import cz.rekola.app.view.CodeView;
 
 /**
@@ -43,13 +43,26 @@ public class BorrowFragment extends BaseMainFragment {
         ButterKnife.inject(this, view);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden && !mTxtBikeCode.isCodeHintVisible()) {
+            KeyboardUtils.showKeyboard(getActivity());
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
     @OnClick(R.id.btn_borrow)
     public void borrowOnClick() {
         if (mTxtBikeCode.getText().length() != getResources().getInteger(R.integer.bike_code_length)) {
             getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_incorrect_bike_code)));
             return;
         }
-        getAct().hideKeyboard();
+        KeyboardUtils.hideKeyboard(getActivity());
         getApp().getDataManager().borrowBike(Integer.parseInt(mTxtBikeCode.getText()));
     }
 
@@ -67,9 +80,4 @@ public class BorrowFragment extends BaseMainFragment {
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
 }

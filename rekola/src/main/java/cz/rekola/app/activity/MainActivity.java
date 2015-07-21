@@ -249,11 +249,6 @@ public class MainActivity extends BaseActivity implements PageController {
         return getApp().getDataManager().getBorrowedBike(false);
     }
 
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-    }
-
     public void startLoginActivity(String message) {
         getApp().resetDataManager();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);

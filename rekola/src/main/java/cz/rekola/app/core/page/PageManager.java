@@ -28,6 +28,7 @@ import cz.rekola.app.fragment.natural.ReturnMapFragment;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
+import cz.rekola.app.utils.KeyboardUtils;
 
 /**
  * Works like own fragment manager
@@ -163,7 +164,7 @@ public class PageManager {
 
         this.state = newState;
         setIconsHighlights(newState, actionBar);
-        hideKeyboard(activity);
+        KeyboardUtils.hideKeyboard(activity);
 
         return fragment;
     }
@@ -276,13 +277,4 @@ public class PageManager {
     private ColorDrawable getColor(Context context, int colorID) {
         return new ColorDrawable(context.getResources().getColor(colorID));
     }
-
-    private void hideKeyboard(Activity activity) {
-        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view != null) {
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
 }

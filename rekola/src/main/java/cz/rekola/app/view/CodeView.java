@@ -19,6 +19,7 @@ import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
 import cz.rekola.app.R;
+import cz.rekola.app.utils.KeyboardUtils;
 
 /**
  * View to set pin code (6 editbox)
@@ -61,9 +62,11 @@ public class CodeView extends FrameLayout {
         setHintVisibility(false);
         EditText firstEditText = mTxtCodeList.get(0);
         firstEditText.requestFocus();
+        KeyboardUtils.showKeyboard(getContext(), firstEditText);
+    }
 
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(firstEditText, InputMethodManager.SHOW_IMPLICIT);
+    public boolean isCodeHintVisible() {
+        return mTxtCodeHint.getVisibility() == VISIBLE;
     }
 
     public String getText() {

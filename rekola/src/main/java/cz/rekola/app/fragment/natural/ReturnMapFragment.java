@@ -46,6 +46,7 @@ import cz.rekola.app.core.loc.MyLocation;
 import cz.rekola.app.core.loc.MyLocationListener;
 import cz.rekola.app.core.map.ZonesManager;
 import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.utils.KeyboardUtils;
 
 public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.OnMyLocationButtonClickListener,*/ MyLocationListener {
 
@@ -126,7 +127,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
             return;
         }
 
-        getAct().hideKeyboard();
+        KeyboardUtils.hideKeyboard(getActivity());
 
         MyLocation location = getApp().getMyLocationManager().getLastKnownMyLocation();
 

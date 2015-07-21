@@ -1,11 +1,9 @@
 package cz.rekola.app.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
@@ -29,6 +27,7 @@ import cz.rekola.app.core.bus.dataAvailable.LoginAvailableEvent;
 import cz.rekola.app.core.bus.dataFailed.BorrowedBikeFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.LoginFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.PasswordRecoveryFailed;
+import cz.rekola.app.utils.KeyboardUtils;
 import cz.rekola.app.view.LoadingOverlay;
 import cz.rekola.app.view.MessageBarView;
 
@@ -112,7 +111,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_reset_recall)
     public void resetRecallOnClick() {
-        hideKeyboard();
+        KeyboardUtils.hideKeyboard(this);
         MyAnimator.hideSlideDown(mOverlayReset);
     }
 
@@ -183,20 +182,15 @@ public class LoginActivity extends BaseActivity {
         getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_old_app_version)));
     }
 
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-    }
-
     private void login() {
-        hideKeyboard();
+        KeyboardUtils.hideKeyboard(this);
         mLayoutErrorBar.hide();
         mOverlayLoading.show();
         getApp().getDataManager().login(viewHelper.getCredentials());
     }
 
     private void recoverPassword() {
-        hideKeyboard();
+        KeyboardUtils.hideKeyboard(this);
         getApp().getDataManager().recoverPassword(new RecoverPassword(mTxtResetUserName.getText().toString()));
     }
 
