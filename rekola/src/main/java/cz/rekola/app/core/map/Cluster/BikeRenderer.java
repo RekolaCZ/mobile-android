@@ -112,8 +112,7 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         IconGenerator iconGenerator = getCorrectedIconGenerator(bikeClusterItem);
 
         Bitmap icon = iconGenerator.makeIcon();
-        String title = bikeClusterItem.getBike().name;
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(title);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
     }
 
     private IconGenerator getCorrectedIconGenerator(BikeClusterItem bikeClusterItem) {
@@ -160,7 +159,7 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
         String bikeCount = Integer.toString(cluster.getSize());
         Bitmap icon = mClusterIconGenerator.makeIcon(bikeCount);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(bikeCount);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
 
         for (BikeClusterItem bikeClusterItem : cluster.getItems()) {
             markerBikeItemMap.remove(bikeClusterItem);
