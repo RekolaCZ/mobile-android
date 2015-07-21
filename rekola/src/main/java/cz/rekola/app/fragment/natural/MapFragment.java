@@ -109,18 +109,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         super.onResume();
         getApp().getMyLocationManager().register(this);
 
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getApp().getDataManager().getBikes(true); // Force update bikes.
-                    }
-                });
-            }
-        }, 0, Constants.MAP_PERIODIC_UPDATE_MS); // First update right now
+        startTimer();
     }
 
     @Override
@@ -136,6 +125,8 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     public void onHiddenChanged(boolean hidden) {
         if (hidden) {
             timer.cancel();
+        } else {
+            startTimer();
         }
     }
 
@@ -217,6 +208,21 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
                 mGoogleMap.setPadding(0, 0, 0, height);
             }
         }, 100);
+    }
+
+    private void startTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getApp().getDataManager().getBikes(true); // Force update bikes.
+                    }
+                });
+            }
+        }, 0, Constants.MAP_PERIODIC_UPDATE_MS); // First update right now
     }
 
     private void centerMapOnMyLocation(boolean animate) {
