@@ -5,10 +5,10 @@ import android.location.Location;
 import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.Collections;
 import java.util.Set;
@@ -16,28 +16,36 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Caches current location. Uses only location updates from maps and/or other apps.
+ * change deprecated api according to
+ * http://stackoverflow.com/questions/24611977/android-locationclient-class-is-deprecated-but-used-in-documentation
  */
-public class MyLocationManager implements com.google.android.gms.location.LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, MyLocationListener {
+public class MyLocationManager implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener, MyLocationListener {
 
     private static final MyLocation DEFAULT_MY_LOCATION = new MyLocation(Float.MAX_VALUE, 50.079167, 14.428414); // Location used when there is no location update available.
 
-    private LocationClient locationClient;
-    private LocationRequest locationRequest;
-
-    private MyLocation myLocation = DEFAULT_MY_LOCATION;
-
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private MyLocation mMyLocation = DEFAULT_MY_LOCATION;
     private Set<MyLocationListener> listeners;
 
     public MyLocationManager(Context context) {
         //try to solve java.util.HashMap$HashIterator.nextEntry with thread safe hash map
         //https://rink.hockeyapp.net/manage/apps/177043/app_versions/5/crash_reasons/35300397
         listeners = Collections.newSetFromMap(new ConcurrentHashMap<MyLocationListener, Boolean>());
-        locationClient = new LocationClient(context, this, this);
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
         register(this); // Self registration for the first location update.
     }
 
     public void terminate() {
-        locationClient.disconnect();
+        mGoogleApiClient.disconnect();
     }
 
     public synchronized void register(MyLocationListener listener) {
@@ -45,7 +53,7 @@ public class MyLocationManager implements com.google.android.gms.location.Locati
             return;
 
         if (listeners.isEmpty()) {
-            locationClient.connect();
+            mGoogleApiClient.connect();
         }
 
         listeners.add(listener);
@@ -58,7 +66,7 @@ public class MyLocationManager implements com.google.android.gms.location.Locati
         listeners.remove(listener);
 
         if (listeners.isEmpty()) {
-            locationClient.disconnect();
+            mGoogleApiClient.disconnect();
         }
     }
 
@@ -71,30 +79,35 @@ public class MyLocationManager implements com.google.android.gms.location.Locati
         double lat = location.getLatitude();
         double lng = location.getLongitude();
 
-        myLocation = new MyLocation(acc, lat, lng);
+        mMyLocation = new MyLocation(acc, lat, lng);
 
         synchronized (this) {
             for (MyLocationListener listener : listeners) {
-                listener.onMyLocationChanged(myLocation);
+                listener.onMyLocationChanged(mMyLocation);
             }
         }
     }
 
     public MyLocation getLastKnownMyLocation() {
-        return myLocation;
+        return mMyLocation;
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(100);
-        locationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
-        locationClient.requestLocationUpdates(locationRequest, this);
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
+        mLocationRequest.setInterval(1000); // Update location every second
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
     }
 
     @Override
-    public void onDisconnected() {
+    public void onConnectionSuspended(int i) {
+
     }
+
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
