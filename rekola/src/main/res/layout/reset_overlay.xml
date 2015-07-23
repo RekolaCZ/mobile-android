@@ -17,7 +17,7 @@
                 android:layout_marginBottom="@dimen/margin_large"
                 android:text="@string/reset_title"
                 android:textColor="@color/gray_2"
-                android:textSize="32dp"/>
+                android:textSize="32sp"/>
 
             <TextView
                 style="@style/TextView"
