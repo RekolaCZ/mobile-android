@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
@@ -111,8 +112,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_reset_recall)
     public void resetRecallOnClick() {
-        KeyboardUtils.hideKeyboard(this);
-        MyAnimator.hideSlideDown(mOverlayReset);
+        hideResetView();
     }
 
     @OnClick(R.id.btn_reset_password)
@@ -141,6 +141,16 @@ public class LoginActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        if (mOverlayReset.getVisibility() == View.VISIBLE) {
+            hideResetView();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
     @Subscribe
     public void loginAvailable(LoginAvailableEvent event) {
@@ -192,6 +202,11 @@ public class LoginActivity extends BaseActivity {
     private void recoverPassword() {
         KeyboardUtils.hideKeyboard(this);
         getApp().getDataManager().recoverPassword(new RecoverPassword(mTxtResetUserName.getText().toString()));
+    }
+
+    private void hideResetView() {
+        KeyboardUtils.hideKeyboard(this);
+        MyAnimator.hideSlideDown(mOverlayReset);
     }
 
     private void startMainActivity() {
