@@ -3,9 +3,7 @@ package cz.rekola.app.fragment.natural;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,8 +12,6 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -25,16 +21,13 @@ import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.error.MessageError;
-import cz.rekola.app.api.model.map.Boundaries;
 import cz.rekola.app.api.model.map.Poi;
 import cz.rekola.app.api.requestmodel.ReturningBike;
 import cz.rekola.app.api.requestmodel.ReturningLocation;
-import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.dataAvailable.BoundariesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.PoisAvailableEvent;
@@ -43,68 +36,22 @@ import cz.rekola.app.core.bus.dataFailed.PoisFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.ReturnBikeFailedEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.core.loc.MyLocation;
-import cz.rekola.app.core.loc.MyLocationListener;
-import cz.rekola.app.core.map.ZonesManager;
-import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.fragment.base.BaseMapFragment;
 import cz.rekola.app.utils.KeyboardUtils;
 
-public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.OnMyLocationButtonClickListener,*/ MyLocationListener {
+public class ReturnMapFragment extends BaseMapFragment {
 
     @InjectView(R.id.txt_note)
     EditText mTxtNote;
-    @InjectView(R.id.view_map)
-    MapView mViewMap;
     @InjectView(R.id.img_bike_icon)
     ImageView mImgBikeIcon;
 
-    private GoogleMap mGoogleMap;
-
     private MapLocationUpdater mapLocUpdater = new MapLocationUpdater();
-
-
     private PoiManager pois = new PoiManager();
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_return_map, container, false);
-        ButterKnife.inject(this, rootView);
-
-        mViewMap.onCreate(savedInstanceState);
-
-        // Gets to GoogleMap from the MapView and does initialization stuff
-        mGoogleMap = mViewMap.getMap();
-        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-        mGoogleMap.setMyLocationEnabled(true);
-        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
-
-        // Updates the location and zoom of the MapView
-        centerMapOnMyLocation(false);
-
-        MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
-        if (myBike != null && myBike.bike != null) { //should be in cache, but for sure
-            Glide.with(getActivity()).load(myBike.bike.iconUrl).into(mImgBikeIcon);
-        }
-
-        return rootView;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (!getApp().getDataManager().isOperational())
-            return;
-
-        pois.init();
-
-        if (getApp().getDataManager().getPois(true) != null) {
-            setupMap();
-        }
-        setZones();
 
         mTxtNote.setInputType(
                 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
@@ -114,8 +61,29 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         mTxtNote.setImeOptions(EditorInfo.IME_ACTION_DONE);
     }
 
+    @Override
+    protected int getMapViewResource() {
+        return R.layout.fragment_return_map;
+    }
+
+    @Override
+    protected void setUpData() {
+        MyBikeWrapper myBike = getApp().getDataManager().getBorrowedBike(false);
+        if (myBike != null && myBike.bike != null) { //should be in cache, but for sure
+            Glide.with(getActivity()).load(myBike.bike.iconUrl).into(mImgBikeIcon);
+        }
+
+        pois.init();
+        setUpPois(true);
+        setZones();
+    }
+
     @OnClick(R.id.btn_return_bike)
     public void returnBikeOnClick() {
+        if (!mMapIsReady) {
+            return;
+        }
+
         if (mTxtNote.getText().toString().equals("")) {
             showDialog();
             return;
@@ -150,39 +118,12 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         centerMapOnMyLocation(true);
     }
 
-    @Override
-    public void onResume() {
-        mViewMap.onResume();
-        super.onResume();
-        getApp().getMyLocationManager().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getApp().getMyLocationManager().unregister(this);
-        mViewMap.onPause();
-    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
             centerMapOnMyLocation(true);
         }
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mViewMap != null)
-            mViewMap.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mViewMap.onLowMemory();
     }
 
 
@@ -202,7 +143,7 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
 
     @Subscribe
     public void poisAvailableEvent(PoisAvailableEvent event) {
-        setupMap();
+        setUpPois(false);
 
     }
 
@@ -246,36 +187,14 @@ public class ReturnMapFragment extends BaseMainFragment implements /*GoogleMap.O
         alertDialog.show();
     }
 
-    private void centerMapOnMyLocation(boolean animate) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(), Constants.DEFAULT_RETURN_MAP_ZOOM_LEVEL);
-        if (animate)
-            mGoogleMap.animateCamera(cameraUpdate);
-        else
-            mGoogleMap.moveCamera(cameraUpdate);
-    }
-
-    private void setupMap() {
-        List<Poi> poisList = getApp().getDataManager().getPois(false);
-        if (pois == null)
+    private void setUpPois(boolean forceUpdate) {
+        List<Poi> poisList = getApp().getDataManager().getPois(forceUpdate);
+        if (pois == null || poisList == null)
             return;
 
         pois.updateMap(poisList);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
-    private void setZones() {
-        Boundaries boundaries = getApp().getDataManager().getBoundaries();
-        if (boundaries == null) {
-            return;
-        }
-
-        ZonesManager.drawZones(getActivity(), mGoogleMap, boundaries.zones);
-    }
 
     private class PoiManager implements GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 

@@ -81,14 +81,6 @@ public class BikeOverlayView extends RelativeLayout {
         });
     }
 
-
-    @Override
-    protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
-        super.onSizeChanged(xNew, yNew, xOld, yOld);
-        if (callbacks != null)
-            callbacks.onHeightChanged(mOverlayMapArea.getMeasuredHeight());
-    }
-
     public void init(BikeOverlayListener callbacks) {
         this.callbacks = callbacks;
     }
@@ -111,7 +103,6 @@ public class BikeOverlayView extends RelativeLayout {
         mbtnRoute.setVisibility(VISIBLE);
 
         this.animate().translationY(0);
-        callbacks.onHeightChanged(mOverlayMapArea.getMeasuredHeight());
     }
 
     public void hide() {
@@ -119,8 +110,6 @@ public class BikeOverlayView extends RelativeLayout {
             return;
 
         this.animate().translationY(getHeightAnimation());
-
-        callbacks.onHeightChanged(0);
     }
 
     public interface BikeOverlayListener {
@@ -131,8 +120,6 @@ public class BikeOverlayView extends RelativeLayout {
         public void onBikeDetailPressed();
 
         public void onCenterMapPressed();
-
-        public void onHeightChanged(int height);
     }
 
     /**

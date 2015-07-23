@@ -3,16 +3,11 @@ package cz.rekola.app.fragment.natural;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.Cluster;
@@ -23,7 +18,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.bike.Bike;
@@ -34,147 +28,50 @@ import cz.rekola.app.core.bus.dataAvailable.BoundariesAvailableEvent;
 import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
 import cz.rekola.app.core.bus.dataFailed.BikesFailedEvent;
 import cz.rekola.app.core.loc.MyLocation;
-import cz.rekola.app.core.loc.MyLocationListener;
 import cz.rekola.app.core.map.Cluster.BikeClusterItem;
 import cz.rekola.app.core.map.Cluster.BikeRenderer;
 import cz.rekola.app.core.map.DirectionManager;
 import cz.rekola.app.core.map.DirectionParams;
 import cz.rekola.app.core.map.ZonesManager;
-import cz.rekola.app.fragment.base.BaseMainFragment;
+import cz.rekola.app.fragment.base.BaseMapFragment;
 import cz.rekola.app.view.BikeOverlayView;
 
-public class MapFragment extends BaseMainFragment implements MyLocationListener, BikeOverlayView.BikeOverlayListener {
+public class MapFragment extends BaseMapFragment implements BikeOverlayView.BikeOverlayListener {
     public static final String TAG = MapFragment.class.getName();
 
     @InjectView(R.id.overlay_map)
     BikeOverlayView mOverlayMap;
-    @InjectView(R.id.view_map)
-    MapView mViewMap;
 
-    private GoogleMap mGoogleMap;
     private MapManager mapManager = new MapManager();
     private Timer timer;
-    private View mMapFragmentView;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mMapFragmentView != null) { //some hack because of problem with google map
-            return mMapFragmentView;
-        }
-
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        ButterKnife.inject(this, rootView);
-
-        mViewMap.onCreate(savedInstanceState);
-
-        mGoogleMap = mViewMap.getMap();
-        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-        mGoogleMap.setMyLocationEnabled(true);
-        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
-
-        // Updates the location and zoom of the MapView
-        centerMapOnMyLocation(false);
-
-        mMapFragmentView = rootView;
-        ButterKnife.inject(this, rootView);
-        return rootView;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (!getApp().getDataManager().isOperational())
-            return;
-
         mOverlayMap.init(this);
-        mapManager.init();
-
-        if (getApp().getDataManager().getBikes(false) != null) {
-            setupMap();
-        }
-
-        setZones();
     }
-
 
     @Override
     public void onResume() {
-        mViewMap.onResume();
         super.onResume();
         getApp().getMyLocationManager().register(this);
-
         startTimer();
     }
 
     @Override
     public void onPause() {
-        timer.cancel();
+        cancelTimer();
         getApp().getMyLocationManager().unregister(this);
         super.onPause();
-        mViewMap.onPause();
     }
-
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if (hidden) {
-            timer.cancel();
+        if (hidden && timer != null) {
+            cancelTimer();
         } else {
             startTimer();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mViewMap != null)
-            mViewMap.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mViewMap.onLowMemory();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
-    @Subscribe
-    public void bikesAvailable(BikesAvailableEvent event) {
-        setupMap();
-    }
-
-    @Subscribe
-    public void bikesFailed(BikesFailedEvent event) {
-
-    }
-
-    @Subscribe
-    public void bikeReturned(ReturnBikeEvent event) {
-        getApp().getDataManager().getBikes(true); // Force update bikes.
-    }
-
-    @Subscribe
-    public void boundariesAvaible(BoundariesAvailableEvent event) {
-        setZones();
-    }
-
-    @Override
-    public void onMyLocationChanged(MyLocation myLocation) {
-    }
-
-    @Override
-    public void onMyLocationError() {
     }
 
     // Overlay callbacks
@@ -199,18 +96,56 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
     }
 
     @Override
-    public void onHeightChanged(final int height) {
-        // Map padding is not correctly updated when attached to overlay size changed event.. This is a hack-fix.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mGoogleMap.setPadding(0, 0, 0, height);
-            }
-        }, 100);
+    public void onMyLocationChanged(MyLocation myLocation) {
     }
 
+    @Override
+    public void onMyLocationError() {
+    }
+
+    // Override BaseMapFragment
+
+    @Override
+    protected int getMapViewResource() {
+        return R.layout.fragment_map;
+    }
+
+
+    @Override
+    protected void setUpData() {
+        setUpBikes();
+        setUpZones();
+    }
+
+    @Override
+    protected void onMapReady() {
+        mapManager.init();
+    }
+
+    @Subscribe
+    public void bikesAvailable(BikesAvailableEvent event) {
+        setUpBikes();
+    }
+
+    @Subscribe
+    public void bikesFailed(BikesFailedEvent event) {
+
+    }
+
+    @Subscribe
+    public void bikeReturned(ReturnBikeEvent event) {
+        getApp().getDataManager().getBikes(true); // Force update bikes.
+    }
+
+    @Subscribe
+    public void boundariesAvaible(BoundariesAvailableEvent event) {
+        setUpZones();
+    }
+
+
     private void startTimer() {
+        if (!mMapIsReady)
+            return;
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -225,17 +160,15 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         }, 0, Constants.MAP_PERIODIC_UPDATE_MS); // First update right now
     }
 
-    private void centerMapOnMyLocation(boolean animate) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp()
-                        .getMyLocationManager().getLastKnownMyLocation().getLatLng(),
-                Constants.DEFAULT_BIKES_MAP_ZOOM_LEVEL);
-        if (animate)
-            mGoogleMap.animateCamera(cameraUpdate);
-        else
-            mGoogleMap.moveCamera(cameraUpdate);
+    private void cancelTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = null;
     }
 
-    private void setupMap() {
+
+    private void setUpBikes() {
         List<Bike> bikes = getApp().getDataManager().getBikes(false);
         if (bikes == null)
             return;
@@ -243,7 +176,7 @@ public class MapFragment extends BaseMainFragment implements MyLocationListener,
         mapManager.updateMap(bikes);
     }
 
-    private void setZones() {
+    private void setUpZones() {
         Boundaries boundaries = getApp().getDataManager().getBoundaries();
         if (boundaries == null) {
             return;
