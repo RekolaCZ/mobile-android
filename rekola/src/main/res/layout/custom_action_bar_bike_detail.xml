@@ -13,7 +13,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:onClick="onCustomOptionsItemSelected"
-        android:padding="@dimen/action_bar_icon_padding"
+        android:paddingTop="6dp"
+        android:paddingRight="4dp"
         android:src="@drawable/actionbar_ic_lock_bike_detail"/>
 
 
