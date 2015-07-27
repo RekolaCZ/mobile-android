@@ -1,12 +1,19 @@
 package cz.rekola.app.activity;
 
+import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.squareup.otto.Subscribe;
 
@@ -29,6 +36,7 @@ import cz.rekola.app.core.bus.dataFailed.BorrowedBikeFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.LoginFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.PasswordRecoveryFailed;
 import cz.rekola.app.utils.KeyboardUtils;
+import cz.rekola.app.utils.SoftKeyboard;
 import cz.rekola.app.view.LoadingOverlay;
 import cz.rekola.app.view.MessageBarView;
 
@@ -54,6 +62,10 @@ public class LoginActivity extends BaseActivity {
     LoadingOverlay mOverlayLoading;
     @InjectView(R.id.layout_error_bar)
     MessageBarView mLayoutErrorBar;
+    @InjectView(R.id.img_rekola_logo)
+    ImageView mImgRekolaLogo;
+    @InjectView(R.id.root_layout)
+    FrameLayout mRootLayout;
 
     private ViewHelper viewHelper = new ViewHelper();
 
@@ -62,7 +74,37 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+
+        attachKeyboardListeners();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
+        initKeyboardsCallBacks();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.login_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.txt_register:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
+                startActivity(browserIntent);
+                return true;
+            default:
+                Log.e(TAG, "unknown options menu item " + item.getItemId() + " " + item.toString());
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     public void onResume() {
@@ -76,6 +118,7 @@ public class LoginActivity extends BaseActivity {
             login();
         } else {
             mOverlayLoading.hide();
+            showActionBar();
         }
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE)) {
@@ -93,12 +136,6 @@ public class LoginActivity extends BaseActivity {
         }
 
         login();
-    }
-
-    @OnClick(R.id.btn_registration)
-    public void registrationOnClick() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
-        startActivity(browserIntent);
     }
 
     @OnClick(R.id.btn_recover_password)
@@ -137,16 +174,15 @@ public class LoginActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
-    }
 
     @Override
     public void onBackPressed() {
+
         if (mOverlayReset.getVisibility() == View.VISIBLE) {
             hideResetView();
         } else {
+            Log.d("tom", "clear focus");
+            mTxtUserName.clearFocus();
             super.onBackPressed();
         }
     }
@@ -192,9 +228,52 @@ public class LoginActivity extends BaseActivity {
         getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_old_app_version)));
     }
 
+    private void initKeyboardsCallBacks() {
+        InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
+
+        SoftKeyboard softKeyboard = new SoftKeyboard(mRootLayout, im);
+        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
+
+            @Override
+            public void onSoftKeyboardHide() {
+                showElements();
+            }
+
+            @Override
+            public void onSoftKeyboardShow() {
+                hideElements();
+            }
+        });
+    }
+
+    private void showElements() {
+        mImgRekolaLogo.setVisibility(View.VISIBLE);
+        showActionBar();
+    }
+
+    private void hideElements() {
+        mImgRekolaLogo.setVisibility(View.GONE);
+        hideActionBar();
+    }
+
+    private void hideActionBar() {
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+    }
+
+    private void showActionBar() {
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.show();
+        }
+    }
+
     private void login() {
         KeyboardUtils.hideKeyboard(this);
         mLayoutErrorBar.hide();
+        hideActionBar();
         mOverlayLoading.show();
         getApp().getDataManager().login(viewHelper.getCredentials());
     }

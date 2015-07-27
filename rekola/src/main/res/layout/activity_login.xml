@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              style="@style/Layout"
+              android:id="@+id/root_layout"
              android:background="@color/base_pink">
 
     <ScrollView style="@style/Layout">
 
         <LinearLayout
+
             style="@style/LayoutMargin26"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/btn_registration"
-                style="@style/TextViewWhite"
-                android:layout_gravity="top|right"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/login_registration"
-                android:textAllCaps="true"
-                />
-
             <ImageView
+                android:id="@+id/img_rekola_logo"
                 style="@style/LogoImageView"
                 android:src="@drawable/logo_recola_white"/>
 
             <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
             <LinearLayout
-                android:focusable="true" android:focusableInTouchMode="true"
-                android:layout_width="0px" android:layout_height="0px"/>
+                android:layout_width="0px"
+                android:layout_height="0px"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
 
             <EditText
                 android:id="@+id/txt_user_name"
@@ -57,22 +53,22 @@
 
             <LinearLayout
                 style="@style/Layout"
-                android:orientation="horizontal"
-                android:alpha="0.4"
                 android:layout_gravity="center_vertical"
-                android:gravity="center">
+                android:alpha="0.4"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/TextView"
+                    android:padding="5dp"
                     android:text="@string/login_ackee"
                     android:textColor="@color/light_grey"
-                    android:textSize="14sp"
-                    android:padding="5dp"/>
+                    android:textSize="14sp"/>
 
                 <ImageView
                     style="@style/ImageView"
-                    android:src="@drawable/logo_ackee_bw"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:src="@drawable/logo_ackee_bw"/>
             </LinearLayout>
 
         </LinearLayout>

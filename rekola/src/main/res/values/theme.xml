@@ -23,12 +23,13 @@
         <item name="actionBarSize">@dimen/action_bar_size</item>
     </style>
 
-    <style name="PinkTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="PinkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/base_pink</item>
         <item name="colorPrimaryDark">@color/dark_pink</item>
         <item name="colorAccent">@color/dark_pink</item>
 
-        <item name="android:windowActionBar">false</item>
+        <!-- remove shadow below action bar -->
+        <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
