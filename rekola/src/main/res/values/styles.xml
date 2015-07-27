@@ -10,6 +10,10 @@
         <item name="android:layout_margin">@dimen/default_screen_margin</item>
     </style>
 
+    <style name="LayoutMargin26" parent="Layout">
+        <item name="android:layout_margin">26dp</item>
+    </style>
+
 
     <!-- global styles for views: -->
     <style name="TextView" parent="@android:style/Widget.Holo.Light.TextView">

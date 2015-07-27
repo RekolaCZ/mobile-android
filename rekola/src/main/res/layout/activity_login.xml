@@ -6,7 +6,7 @@
     <ScrollView style="@style/Layout">
 
         <LinearLayout
-            style="@style/LayoutMargin"
+            style="@style/LayoutMargin26"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center">
@@ -23,6 +23,11 @@
             <ImageView
                 style="@style/LogoImageView"
                 android:src="@drawable/logo_recola_white"/>
+
+            <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+            <LinearLayout
+                android:focusable="true" android:focusableInTouchMode="true"
+                android:layout_width="0px" android:layout_height="0px"/>
 
             <EditText
                 android:id="@+id/txt_user_name"
