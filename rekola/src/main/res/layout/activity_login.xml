@@ -10,13 +10,13 @@
 
 
         <TextView
-
             android:id="@+id/txt_register"
             style="@style/TextViewWhite"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="16dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/default_screen_margin"
-            android:fontFamily="sans-serif-medium"
+            fontPath="@string/font_roboto_medium"
             android:text="@string/login_registration"
             android:textAllCaps="true"
             android:textSize="16sp"/>
@@ -27,21 +27,22 @@
             style="@style/Layout"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.4"
+            android:layout_marginBottom="21dp"
             android:gravity="bottom|center_horizontal"
             android:orientation="horizontal">
 
             <TextView
                 style="@style/TextView"
-                android:padding="5dp"
+                android:layout_marginRight="10dp"
                 android:text="@string/login_ackee"
-                android:textColor="@color/light_grey"
-                android:textSize="14sp"/>
+                android:textColor="@color/light_pink4"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="5dp"
+                android:textSize="10sp"/>
 
             <ImageView
                 style="@style/ImageView"
-                android:padding="5dp"
+                android:alpha="0.4"
                 android:src="@drawable/logo_ackee_bw"/>
         </LinearLayout>
 
@@ -62,8 +63,7 @@
                     android:id="@+id/img_rekola_logo"
                     style="@style/ImageView"
                     android:layout_marginBottom="52dp"
-                    android:layout_marginTop="76dp"
-                    android:paddingTop="76dp"
+                    android:layout_marginTop="54dp"
                     android:src="@drawable/logo_recola_white"/>
 
                 <!-- Dummy item to prevent EditText from receiving focus -->
@@ -94,7 +94,7 @@
                 <EditText
                     android:id="@+id/txt_password"
                     style="@style/EditTextPinkFilled"
-                    android:layout_marginBottom="19dp"
+                    android:layout_marginBottom="20dp"
                     android:hint="@string/login_password_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
@@ -103,7 +103,10 @@
                 <Button
                     android:id="@+id/btn_login"
                     style="@style/SignInButton"
-                    android:layout_marginBottom="33dp"
+                    android:layout_height="44dp"
+                    android:textSize="16sp"
+                    fontPath="@string/font_roboto_medium"
+                    android:layout_marginBottom="28dp"
                     android:text="@string/login_log_in"/>
 
                 <TextView

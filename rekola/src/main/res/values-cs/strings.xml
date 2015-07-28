@@ -5,8 +5,8 @@
 
     <string name="ok">OK</string>
 
-    <string name="login_username_hint">e-mail</string>
-    <string name="login_password_hint">heslo</string>
+    <string name="login_username_hint">E-mail</string>
+    <string name="login_password_hint">Heslo</string>
     <string name="login_log_in">Přihlásit se</string>
     <string name="login_registration">Registrace</string>
     <string name="login_connecting">Přihlašuji…</string>

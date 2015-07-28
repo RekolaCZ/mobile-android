@@ -28,9 +28,7 @@
         <item name="android:background">@drawable/button</item>-->
         <item name="android:textSize">@dimen/text_medium</item>
         <item name="android:textColor">@color/text_inverse</item>
-        <item name="android:padding">@dimen/grid_3</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
-        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+
     </style>
 
     <style name="EditText" parent="@android:style/Widget.Holo.Light.EditText">
@@ -41,9 +39,8 @@
         <item name="android:textColor">@color/text_edit</item>
         <item name="android:textSize">@dimen/text_medium</item>
         <item name="android:singleLine">true</item>
-        <item name="android:padding">@dimen/grid_3</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
-        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="android:paddingLeft">@dimen/grid_3</item>
+        <item name="android:paddingRight">@dimen/grid_3</item>
     </style>
 
     <style name="ImageView">
@@ -208,9 +205,6 @@
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/light_green</item>
-        <item name="android:padding">@dimen/grid_3</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
-        <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
     <style name="TextViewWhite" parent="TextView">

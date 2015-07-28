@@ -83,7 +83,7 @@
     <!--  left + right  -->
     <dimen name="login_logo_padding_vertical">10dp</dimen>
     <!--  top + bottom  -->
-    <dimen name="login_button_radius">5dp</dimen>
+    <dimen name="login_button_radius">3dp</dimen>
 
 
     <!--  Action bar -->

@@ -1,5 +1,6 @@
 package cz.rekola.app.activity.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,6 +16,7 @@ import net.hockeyapp.android.CrashManagerListener;
 import cz.config.HockeyConfig;
 import cz.rekola.app.R;
 import cz.rekola.app.core.RekolaApp;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /** Base Activity, all new Activity should extend this Activity
  * Created on 7.5.2015 by tomas.krabac@ackee.cz
@@ -83,6 +85,12 @@ public class BaseActivity extends AppCompatActivity {
         if (keyboardListenersAttached) {
             rootLayout.getViewTreeObserver().removeGlobalOnLayoutListener(keyboardLayoutListener);
         }
+    }
+
+    //use custom fonts https://github.com/chrisjenx/Calligraphy/
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void checkForCrashes() {

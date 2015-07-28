@@ -3,6 +3,8 @@
 
     <string name="app_name">Rekola</string>
 
+    <string name="font_roboto_medium">fonts/Roboto-Medium.otf</string>
+
     <string name="ok">OK</string>
 
     <string name="login_username_hint">Email</string>

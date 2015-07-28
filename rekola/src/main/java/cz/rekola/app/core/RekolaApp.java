@@ -14,6 +14,7 @@ import cz.rekola.app.core.version.VersionManager;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class RekolaApp extends Application {
 
@@ -27,6 +28,11 @@ public class RekolaApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/Roboto-Regular.otf")
+                        .build()
+        );
 
         //How to configure a custom gson object to Retrofit's RestAdapter
         // http://naoyamakino.blogspot.cz/2013/11/how-to-configure-custom-gson-object-to.html
