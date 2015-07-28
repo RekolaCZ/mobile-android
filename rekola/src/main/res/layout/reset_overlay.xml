@@ -8,7 +8,7 @@
     <ScrollView style="@style/Layout">
 
         <LinearLayout
-            style="@style/LayoutMargin"
+            style="@style/LayoutMargin26"
             android:layout_gravity="center_vertical"
             android:gravity="center">
 
@@ -31,6 +31,7 @@
                 android:id="@+id/txt_reset_user_name"
                 style="@style/EditTextPinkBorder"
                 android:hint="@string/login_username_hint"
+                android:layout_marginBottom="20dp"
                 android:imeOptions="actionDone"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/text_primary"
