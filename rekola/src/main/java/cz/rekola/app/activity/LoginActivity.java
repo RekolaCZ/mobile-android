@@ -68,6 +68,9 @@ public class LoginActivity extends BaseActivity {
     FrameLayout mRootLayout;
     @InjectView(R.id.ll_bottom)
     LinearLayout mLlBottom;
+    @InjectView(R.id.view_dummy)
+    View mViewDummy;
+
 
     private ViewHelper viewHelper = new ViewHelper();
 
@@ -235,6 +238,8 @@ public class LoginActivity extends BaseActivity {
         mTxtRegister.setVisibility(View.VISIBLE);
         mImgRekolaLogo.setVisibility(View.VISIBLE);
         mLlBottom.setVisibility(View.VISIBLE);
+
+        mViewDummy.setVisibility(View.GONE);
     }
 
     private void hideElements() {
@@ -242,6 +247,9 @@ public class LoginActivity extends BaseActivity {
         mImgRekolaLogo.setVisibility(View.GONE);
         mLlBottom.setVisibility(View.GONE);
 
+        //hack, this view must be visible, if keyboard is visible,
+        // it caused bad scrolling
+        mViewDummy.setVisibility(View.VISIBLE);
     }
 
     private boolean isLoginScreenVisible() {

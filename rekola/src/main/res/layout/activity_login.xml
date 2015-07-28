@@ -5,91 +5,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/base_pink">
 
-    <LinearLayout
+    <RelativeLayout
         style="@style/Layout">
 
 
         <TextView
+
             android:id="@+id/txt_register"
-            android:layout_gravity="top|right"
             style="@style/TextViewWhite"
-            android:fontFamily="sans-serif-medium"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_margin="@dimen/default_screen_margin"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/login_registration"
             android:textAllCaps="true"
             android:textSize="16sp"/>
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            >
-
-            <LinearLayout
-
-                style="@style/LayoutMargin26"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/img_rekola_logo"
-                    style="@style/ImageView"
-                    android:paddingTop="76dp"
-                    android:layout_marginTop="76dp"
-                    android:layout_marginBottom="52dp"
-                    android:src="@drawable/logo_recola_white"/>
-
-                <!-- Dummy item to prevent EditText from receiving focus -->
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"/>
-
-                <EditText
-                    android:id="@+id/txt_user_name"
-                    style="@style/EditTextPinkFilled"
-                    android:hint="@string/login_username_hint"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:layout_marginBottom="8dp"
-                    />
-
-                <EditText
-                    android:id="@+id/txt_password"
-                    style="@style/EditTextPinkFilled"
-                    android:hint="@string/login_password_hint"
-                    android:imeOptions="actionDone"
-                    android:inputType="textPassword"
-                    android:layout_marginBottom="19dp"
-                    />
-
-                <Button
-                    android:id="@+id/btn_login"
-                    style="@style/SignInButton"
-                    android:layout_marginBottom="33dp"
-                    android:text="@string/login_log_in"/>
-
-                <TextView
-                    android:id="@+id/btn_recover_password"
-                    style="@style/TextViewWhite"
-                    android:layout_marginBottom="64dp"
-                    android:text="@string/login_forgot_password"
-                    android:textSize="14sp"/>
-
-
-
-            </LinearLayout>
-
-
-        </ScrollView>
-
         <LinearLayout
             android:id="@+id/ll_bottom"
             style="@style/Layout"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
             android:alpha="0.4"
             android:gravity="bottom|center_horizontal"
@@ -108,10 +45,79 @@
                 android:src="@drawable/logo_ackee_bw"/>
         </LinearLayout>
 
-    </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ll_bottom"
+            android:layout_below="@id/txt_register">
+
+            <LinearLayout
+
+                style="@style/LayoutMargin26"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_rekola_logo"
+                    style="@style/ImageView"
+                    android:layout_marginBottom="52dp"
+                    android:layout_marginTop="76dp"
+                    android:paddingTop="76dp"
+                    android:src="@drawable/logo_recola_white"/>
+
+                <!-- Dummy item to prevent EditText from receiving focus -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+
+                <!-- Hack - on some devices after keyboard is visible, it cropped  txt_user_name -->
+                <View
+                    android:id="@+id/view_dummy"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="100dp"
+                    android:visibility="gone"/>
 
 
+                <EditText
+                    android:id="@+id/txt_user_name"
+                    style="@style/EditTextPinkFilled"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/login_username_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    />
 
+                <EditText
+                    android:id="@+id/txt_password"
+                    style="@style/EditTextPinkFilled"
+                    android:layout_marginBottom="19dp"
+                    android:hint="@string/login_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    style="@style/SignInButton"
+                    android:layout_marginBottom="33dp"
+                    android:text="@string/login_log_in"/>
+
+                <TextView
+                    android:id="@+id/btn_recover_password"
+                    style="@style/TextViewWhite"
+                    android:layout_marginBottom="64dp"
+                    android:text="@string/login_forgot_password"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
+        </ScrollView>
+
+    </RelativeLayout>
 
 
     <include layout="@layout/reset_overlay"/>
