@@ -80,7 +80,6 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
-        attachKeyboardListeners();
         initKeyboardsCallBacks();
     }
 
