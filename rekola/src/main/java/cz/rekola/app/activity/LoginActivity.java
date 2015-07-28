@@ -4,16 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -50,6 +47,9 @@ import cz.rekola.app.view.MessageBarView;
 public class LoginActivity extends BaseActivity {
 
     public static final String EXTRA_MESSAGE = "extra_message";
+
+    @InjectView(R.id.txt_register)
+    TextView mTxtRegister;
     @InjectView(R.id.txt_user_name)
     EditText mTxtUserName;
     @InjectView(R.id.txt_password)
@@ -66,6 +66,8 @@ public class LoginActivity extends BaseActivity {
     ImageView mImgRekolaLogo;
     @InjectView(R.id.root_layout)
     FrameLayout mRootLayout;
+    @InjectView(R.id.ll_bottom)
+    LinearLayout mLlBottom;
 
     private ViewHelper viewHelper = new ViewHelper();
 
@@ -76,35 +78,8 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         attachKeyboardListeners();
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-
         initKeyboardsCallBacks();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.login_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.txt_register:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
-                startActivity(browserIntent);
-                return true;
-            default:
-                Log.e(TAG, "unknown options menu item " + item.getItemId() + " " + item.toString());
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
     @Override
     public void onResume() {
@@ -118,13 +93,19 @@ public class LoginActivity extends BaseActivity {
             login();
         } else {
             mOverlayLoading.hide();
-            showActionBar();
+            showElements();
         }
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE)) {
             mLayoutErrorBar.onMessage(new MessageEvent(getIntent().getExtras().getString(EXTRA_MESSAGE)));
             getIntent().removeExtra(EXTRA_MESSAGE);
         }
+    }
+
+    @OnClick(R.id.txt_register)
+    public void registerOnClick() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.BROWSER_REGISTRATION_URL));
+        startActivity(browserIntent);
     }
 
     @OnClick(R.id.btn_login)
@@ -141,9 +122,10 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.btn_recover_password)
     public void recoverPasswordOnClick() {
         if (mTxtResetUserName.getText().length() == 0) {
-            mTxtResetUserName.setText(mTxtResetUserName.getText());
+            mTxtResetUserName.setText(mTxtUserName.getText());
         }
 
+        hideElements();
         MyAnimator.showSlideUp(mOverlayReset);
     }
 
@@ -179,10 +161,9 @@ public class LoginActivity extends BaseActivity {
     public void onBackPressed() {
 
         if (mOverlayReset.getVisibility() == View.VISIBLE) {
+            showElements();
             hideResetView();
         } else {
-            Log.d("tom", "clear focus");
-            mTxtUserName.clearFocus();
             super.onBackPressed();
         }
     }
@@ -202,7 +183,7 @@ public class LoginActivity extends BaseActivity {
     @Subscribe
     public void passwordRecoveryEvent(PasswordRecoveryEvent event) {
         getApp().getBus().post(new MessageEvent(MessageEvent.MessageType.SUCCESS, getResources().getString(R.string.success_password_recovery)));
-        MyAnimator.hideSlideDown(mOverlayReset);
+        hideResetView();
     }
 
     @Subscribe
@@ -236,44 +217,42 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSoftKeyboardHide() {
-                showElements();
+
+                if (isLoginScreenVisible()) {
+                    showElements();
+                }
             }
 
             @Override
             public void onSoftKeyboardShow() {
+
                 hideElements();
             }
         });
     }
 
     private void showElements() {
+        mTxtRegister.setVisibility(View.VISIBLE);
         mImgRekolaLogo.setVisibility(View.VISIBLE);
-        showActionBar();
+        mLlBottom.setVisibility(View.VISIBLE);
     }
 
     private void hideElements() {
+        mTxtRegister.setVisibility(View.GONE);
         mImgRekolaLogo.setVisibility(View.GONE);
-        hideActionBar();
+        mLlBottom.setVisibility(View.GONE);
+
     }
 
-    private void hideActionBar() {
-        ActionBar actionbar = getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.hide();
-        }
-    }
-
-    private void showActionBar() {
-        ActionBar actionbar = getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.show();
-        }
+    private boolean isLoginScreenVisible() {
+        return mOverlayLoading.getVisibility() != View.VISIBLE
+                && mOverlayReset.getVisibility() != View.VISIBLE;
     }
 
     private void login() {
         KeyboardUtils.hideKeyboard(this);
         mLayoutErrorBar.hide();
-        hideActionBar();
+        hideElements();
         mOverlayLoading.show();
         getApp().getDataManager().login(viewHelper.getCredentials());
     }
@@ -284,6 +263,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void hideResetView() {
+        showElements();
         KeyboardUtils.hideKeyboard(this);
         MyAnimator.hideSlideDown(mOverlayReset);
     }

@@ -14,7 +14,6 @@
         <item name="android:layout_margin">26dp</item>
     </style>
 
-
     <!-- global styles for views: -->
     <style name="TextView" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:layout_width">wrap_content</item>
@@ -54,8 +53,8 @@
 
     <style name="EditTextPinkFilled" parent="EditText">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">left</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">left|center_vertical</item>
         <item name="android:background">@drawable/edit_text_fill</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textColor">@color/black</item>
@@ -201,15 +200,6 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_alignParentRight">true</item>
-    </style>
-
-
-    <!-- Login styles -->
-    <style name="LogoImageView" parent="ImageView">
-        <item name="android:paddingLeft">@dimen/login_logo_padding_horizontal</item>
-        <item name="android:paddingRight">@dimen/login_logo_padding_horizontal</item>
-        <item name="android:paddingTop">@dimen/login_logo_padding_vertical</item>
-        <item name="android:paddingBottom">@dimen/login_logo_padding_vertical</item>
     </style>
 
 

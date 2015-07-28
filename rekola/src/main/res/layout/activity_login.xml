@@ -1,79 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             style="@style/Layout"
-              android:id="@+id/root_layout"
-             android:background="@color/base_pink">
+<FrameLayout
+    android:id="@+id/root_layout"
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/base_pink">
 
-    <ScrollView style="@style/Layout">
+    <LinearLayout
+        style="@style/Layout">
 
-        <LinearLayout
 
-            style="@style/LayoutMargin26"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center">
+        <TextView
+            android:id="@+id/txt_register"
+            android:layout_gravity="top|right"
+            style="@style/TextViewWhite"
+            android:fontFamily="sans-serif-medium"
+            android:layout_margin="@dimen/default_screen_margin"
+            android:text="@string/login_registration"
+            android:textAllCaps="true"
+            android:textSize="16sp"/>
 
-            <ImageView
-                android:id="@+id/img_rekola_logo"
-                style="@style/LogoImageView"
-                android:src="@drawable/logo_recola_white"/>
 
-            <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="0px"
-                android:focusable="true"
-                android:focusableInTouchMode="true"/>
-
-            <EditText
-                android:id="@+id/txt_user_name"
-                style="@style/EditTextPinkFilled"
-                android:hint="@string/login_username_hint"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"/>
-
-            <EditText
-                android:id="@+id/txt_password"
-                style="@style/EditTextPinkFilled"
-                android:hint="@string/login_password_hint"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"/>
-
-            <Button
-                android:id="@+id/btn_login"
-                style="@style/SignInButton"
-                android:text="@string/login_log_in"/>
-
-            <TextView
-                android:id="@+id/btn_recover_password"
-                style="@style/TextViewWhite"
-                android:layout_margin="@dimen/grid_4"
-                android:text="@string/login_forgot_password"
-                android:textSize="14sp"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
 
             <LinearLayout
-                style="@style/Layout"
+
+                style="@style/LayoutMargin26"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:alpha="0.4"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextView"
-                    android:padding="5dp"
-                    android:text="@string/login_ackee"
-                    android:textColor="@color/light_grey"
-                    android:textSize="14sp"/>
+                android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/img_rekola_logo"
                     style="@style/ImageView"
-                    android:padding="5dp"
-                    android:src="@drawable/logo_ackee_bw"/>
+                    android:paddingTop="76dp"
+                    android:layout_marginTop="76dp"
+                    android:layout_marginBottom="52dp"
+                    android:src="@drawable/logo_recola_white"/>
+
+                <!-- Dummy item to prevent EditText from receiving focus -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+
+                <EditText
+                    android:id="@+id/txt_user_name"
+                    style="@style/EditTextPinkFilled"
+                    android:hint="@string/login_username_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <EditText
+                    android:id="@+id/txt_password"
+                    style="@style/EditTextPinkFilled"
+                    android:hint="@string/login_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:layout_marginBottom="19dp"
+                    />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    style="@style/SignInButton"
+                    android:layout_marginBottom="33dp"
+                    android:text="@string/login_log_in"/>
+
+                <TextView
+                    android:id="@+id/btn_recover_password"
+                    style="@style/TextViewWhite"
+                    android:layout_marginBottom="64dp"
+                    android:text="@string/login_forgot_password"
+                    android:textSize="14sp"/>
+
+
+
             </LinearLayout>
 
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            style="@style/Layout"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.4"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextView"
+                android:padding="5dp"
+                android:text="@string/login_ackee"
+                android:textColor="@color/light_grey"
+                android:textSize="14sp"/>
+
+            <ImageView
+                style="@style/ImageView"
+                android:padding="5dp"
+                android:src="@drawable/logo_ackee_bw"/>
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
+
+
+
+
 
     <include layout="@layout/reset_overlay"/>
 

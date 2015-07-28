@@ -1,13 +1,11 @@
 package cz.rekola.app.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.squareup.otto.Subscribe;
@@ -201,8 +199,7 @@ public class MainActivity extends BaseActivity implements PageController {
             Fragment fragment = setState(PageManager.EPageState.WEB_BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailWebFragment)
                 ((BikeDetailWebFragment) fragment).init(bikeID, issues);
-        } else
-        {
+        } else {
             Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailFragment)
                 ((BikeDetailFragment) fragment).init(bikeID);
