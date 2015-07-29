@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="wrap_content"
-             android:layout_gravity="center"
+             android:layout_gravity="center_horizontal"
              android:layout_height="wrap_content">
 
     <ImageView
@@ -16,8 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_bike_cluster"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
         />
 
 </FrameLayout>
