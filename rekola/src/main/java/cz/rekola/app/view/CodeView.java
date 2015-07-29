@@ -6,7 +6,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -30,7 +29,7 @@ public class CodeView extends FrameLayout {
 
     @InjectViews({R.id.txt_code_0, R.id.txt_code_1, R.id.txt_code_2, R.id.txt_code_3,
             R.id.txt_code_4, R.id.txt_code_5})
-    List<EditText> mTxtCodeList;
+    List<PinEditText> mTxtCodeList;
 
     @InjectView(R.id.txt_code_hint)
     TextView mTxtCodeHint;
@@ -55,6 +54,9 @@ public class CodeView extends FrameLayout {
         ButterKnife.inject(this, this);
 
         setEditTextListeners();
+
+        //according to design last EditText is without point
+        mTxtCodeList.get(mTxtCodeList.size() - 1).setPointVisibility(false);
     }
 
     @OnClick(R.id.txt_code_hint)
@@ -124,8 +126,9 @@ public class CodeView extends FrameLayout {
         txtCode.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+
                 //if user press delete and there is no number, jump to previous EditText
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_DEL) {
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
                     if (position != 0 && txtCode.getText().toString().equals("")) {
                         mTxtCodeList.get(position - 1).requestFocus();
                     }
@@ -133,5 +136,7 @@ public class CodeView extends FrameLayout {
                 return false;
             }
         });
+
+
     }
 }

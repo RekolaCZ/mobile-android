@@ -6,10 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,7 +24,6 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.utils.KeyboardUtils;
 import cz.rekola.app.utils.SoftKeyboard;
 import cz.rekola.app.view.CodeView;
-import cz.rekola.app.view.EditTextPoint;
 
 /**
  * Screen to borrow bike
