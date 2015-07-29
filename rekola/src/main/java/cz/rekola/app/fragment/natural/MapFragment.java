@@ -251,7 +251,7 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
                     getApp().getMyLocationManager().getLastKnownMyLocation().getLatLng(),
                     new LatLng(lastBike.location.lat, lastBike.location.lng),
                     DirectionParams.MODE_WALKING,
-                    getResources().getColor(R.color.pink_1),
+                    getResources().getColor(R.color.navigation_color),
                     getResources().getDimension(R.dimen.map_direction_path_size));
 
             if (getApp().getDataManager().customLoadDirections()) { // If we are not loading directions

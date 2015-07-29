@@ -17,6 +17,8 @@
 
     <color name="very_light_pink">#ffd2d9</color>
     <color name="very_light_pink2">#ffebf5</color>
+    <color name="very_light_pink3">#fad1e3</color>
+
     <color name="dark_pink">#ef268e</color>
     <color name="dark_pink2">#fd349c</color>
     <color name="dark_pink3">#ef258d</color>
@@ -48,6 +50,9 @@
     <color name="warning_yellow">#ffb43d</color>
     <color name="warning_pink">#ff4862</color>
     <color name="warning_gray">#ffd2d9</color>
+
+    <color name="navigation_color">#3fb9ff</color>
+
 
 
     <color name="transparent">#00000000</color>

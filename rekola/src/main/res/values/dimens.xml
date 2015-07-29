@@ -93,7 +93,9 @@
     <dimen name="action_bar_icon_padding_left">15dp</dimen>
     <dimen name="action_bar_icon_padding_right">15dp</dimen>
 
-    <dimen name="bike_overlay_negative_margin">-44dp</dimen>
+    <dimen name="bike_overlay_negative_margin">-32dp</dimen>
+    <dimen name="bike_overlay_navigation_margin_animation">10dp</dimen>
+
 
     <dimen name="zone_stroke_width">5dp</dimen>
 

@@ -99,6 +99,8 @@ public abstract class BaseMapFragment extends BaseMainFragment implements MyLoca
     protected void setUpMap() {
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
         mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.getUiSettings().setMapToolbarEnabled(false);
+
         mGoogleMap.setMyLocationEnabled(true);
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 

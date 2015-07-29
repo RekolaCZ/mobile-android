@@ -1,5 +1,7 @@
 package cz.rekola.app.view;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -102,14 +106,39 @@ public class BikeOverlayView extends RelativeLayout {
         mOverlayMapArea.setVisibility(VISIBLE);
         mbtnRoute.setVisibility(VISIBLE);
 
-        this.animate().translationY(0);
+
+        float margin = getResources().getDimension(R.dimen.bike_overlay_navigation_margin_animation);
+        final AnimatorSet mAnimatorSet = new AnimatorSet();
+
+        mAnimatorSet.playTogether(
+                ObjectAnimator.ofFloat(mOverlayMapArea, "translationY", 0),
+                ObjectAnimator.ofFloat(mbtnRoute, "translationY", 0),
+                ObjectAnimator.ofFloat(mbtnCenterMap, "translationY", margin)
+        );
+
+        mAnimatorSet.setDuration(200); //set duration for animations
+        mAnimatorSet.start();
+
+
     }
 
     public void hide() {
         if (mOverlayMapArea.getVisibility() == GONE)
             return;
 
-        this.animate().translationY(getHeightAnimation());
+        final AnimatorSet mAnimatorSet = new AnimatorSet();
+
+        ObjectAnimator mapOverlayAnim = ObjectAnimator.ofFloat(mOverlayMapArea, "translationY",
+                getHeightAnimation());
+        ObjectAnimator btnRouteAnim = ObjectAnimator.ofFloat(mbtnRoute, "translationY",
+                getHeightAnimation());
+        ObjectAnimator btnCenterMapAnim = ObjectAnimator.ofFloat(mbtnCenterMap, "translationY",
+                getHeightAnimation());
+
+        mAnimatorSet.playTogether(mapOverlayAnim, btnRouteAnim, btnCenterMapAnim);
+
+        mAnimatorSet.setDuration(200); //set duration for animations
+        mAnimatorSet.start();
     }
 
     public interface BikeOverlayListener {

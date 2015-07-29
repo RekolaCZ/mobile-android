@@ -17,18 +17,21 @@
 
         <ImageView
             android:id="@+id/img_bike"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23sp"
             android:layout_marginLeft="@dimen/default_screen_margin"
-            android:layout_marginStart="@dimen/default_screen_margin"
-            android:src="@drawable/ic_bike_cluster"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:layout_marginTop="19dp"
             android:adjustViewBounds="true"
+            android:src="@drawable/ic_bike_cluster"
             />
 
         <LinearLayout
             android:id="@+id/layout_bike_detail"
-            style="@style/LayoutMargin"
+            style="@style/Layout"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/overlay"
@@ -37,25 +40,28 @@
             <TextView
                 android:id="@+id/txt_bike_name"
                 style="@style/TextViewWhite"
+                android:text="sads"
+                fontPath="@string/font_roboto_medium"
                 android:layout_marginEnd="80dp"
                 android:layout_marginRight="80dp"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:layout_marginBottom="-6dp"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/txt_distance"
                 style="@style/TextViewWhite"
-                android:layout_marginBottom="10dp"
+                android:text="dsfds"
+                android:layout_marginBottom="6dp"
                 android:singleLine="true"
-                android:textStyle="italic"
+                fontPath="@string/font_roboto_italic"
                 />
 
             <TextView
                 android:id="@+id/txt_inoperational"
                 style="@style/MapOverlayTextViewWarning"
                 android:layout_gravity="left|start"
-                android:layout_marginBottom="10dp"
+                fontPath="@string/font_roboto_medium"
+                android:layout_marginBottom="8dp"
                 android:drawableLeft="@drawable/ic_warning"
                 android:drawableStart="@drawable/ic_warning"
                 android:text="@string/bike_inoperational"
@@ -64,25 +70,23 @@
             <TextView
                 android:id="@+id/txt_operational_with_issues"
                 style="@style/MapOverlayTextViewWarning"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 android:drawableLeft="@drawable/ic_warning"
                 android:drawableStart="@drawable/ic_warning"
                 android:text="@string/bike_operational_with_issues"
                 />
 
-
             <TextView
                 android:id="@+id/txt_note"
                 style="@style/TextViewWhite"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="@dimen/text_large"
+                fontPath="@string/font_roboto_medium"
+                android:textSize="16sp"
                 />
 
             <TextView
                 android:id="@+id/txt_description"
                 style="@style/TextViewWhite"
-                android:textColor="@color/warning_gray"
+                android:textColor="@color/very_light_pink3"
                 android:textSize="14sp"/>
         </LinearLayout>
 
@@ -101,6 +105,7 @@
         android:id="@+id/btn_center_map"
         style="@style/IconImageView"
         android:layout_above="@id/btn_route"
+        android:layout_marginBottom="12dp"
         android:src="@drawable/ic_location"/>
 
 </cz.rekola.app.view.BikeOverlayView>
