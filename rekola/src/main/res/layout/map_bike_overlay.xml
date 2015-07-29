@@ -11,7 +11,7 @@
         style="@style/Layout"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/map_overlay_background"
+        android:background="@drawable/overlay"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -34,7 +34,6 @@
             android:layout_marginRight="@dimen/default_screen_margin"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/overlay"
             >
 
             <TextView

@@ -70,7 +70,7 @@ public class BikeOverlayView extends RelativeLayout {
             }
         });
 
-        mLayoutBikeDetail.setOnClickListener(new View.OnClickListener() {
+        mOverlayMapArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callbacks.onBikeDetailPressed();
