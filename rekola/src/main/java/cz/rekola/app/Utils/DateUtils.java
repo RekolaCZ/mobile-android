@@ -17,7 +17,7 @@ public class DateUtils {
      * @return string in short format eg. HH:MM
      */
     public static String getDate(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MM.");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.");
         return dateFormat.format(date);
     }
 

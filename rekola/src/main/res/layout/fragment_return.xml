@@ -22,19 +22,19 @@
             <ImageView
                 android:id="@+id/img_bike"
                 style="@style/ImageViewBikeImage"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="16dp"
                 />
 
             <TextView
                 android:id="@+id/txt_bike_name"
-                style="@style/BorrowedBikeTextViewBikeName"
-                android:layout_marginBottom="12dp"/>
+                style="@style/BorrowedBikeTextViewBikeName"/>
 
             <LinearLayout
                 android:id="@+id/ll_borrowed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="13dp"
                 android:orientation="horizontal"
                 >
 
@@ -46,6 +46,7 @@
                 <TextView
                     android:id="@+id/txt_borrowed_from_date"
                     style="@style/BorrowedBikeTextViewBorrowed"
+                    fontPath="@string/font_roboto_medium"
                     android:textColor="@color/light_pink2"/>
 
                 <TextView
@@ -55,6 +56,7 @@
                 <TextView
                     android:id="@+id/txt_borrowed_from_time"
                     style="@style/BorrowedBikeTextViewBorrowed"
+                    fontPath="@string/font_roboto_medium"
                     android:textColor="@color/light_pink2"/>
 
             </LinearLayout>
@@ -62,8 +64,9 @@
             <Button
                 android:id="@+id/btn_bike_detail"
                 style="@style/TextView"
-                android:layout_margin="7dp"
-                android:background="@drawable/border_green"
+                android:layout_height="41dp"
+                android:layout_marginBottom="41dp"
+                android:background="@drawable/border_green2"
                 android:text="@string/return_bike_detail"
                 android:textColor="@color/base_green"
                 android:textSize="16sp"/>
@@ -75,10 +78,12 @@
                 <TextView
                     android:id="@+id/txt_lock_code"
                     style="@style/BorrowedBikeTextViewLockCode"
+                    android:layout_height="94dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/border_grey"
-                    />
+                    android:paddingLeft="35dp"
+                    android:paddingRight="35dp"
+                    android:background="@drawable/border_grey"/>
 
                 <TextView
                     style="@style/BorrowedBikeTextViewLockLabel"
@@ -94,6 +99,8 @@
     <Button
         android:id="@+id/btn_return_bike"
         style="@style/ButtonPink"
+        android:layout_height="41dp"
+        android:layout_marginBottom="2dp"
         android:text="@string/return_return"/>
 
 </LinearLayout>
