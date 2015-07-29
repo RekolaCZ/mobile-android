@@ -1,6 +1,7 @@
 package cz.rekola.app.utils;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class DateUtils {
      * @return string in short format eg. HH:MM
      */
     public static String getDate(Date date) {
-        DateFormat dateFormat = DateFormat.getDateInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MM.");
         return dateFormat.format(date);
     }
 
@@ -29,4 +30,17 @@ public class DateUtils {
         DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         return timeFormat.format(date);
     }
+
+
+    /**
+     * get string representation of date + year from Date
+     *
+     * @param date input date
+     * @return string in short format eg. DD.MM.YYYY
+     */
+    public static String getDateYear(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormat.format(date);
+    }
+
 }

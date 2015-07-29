@@ -30,7 +30,7 @@ public class RekolaApp extends Application {
         super.onCreate();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Roboto-Regular.otf")
+                        .setDefaultFontPath("fonts/Roboto-Regular.ttf")
                         .build()
         );
 

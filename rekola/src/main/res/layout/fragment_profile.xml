@@ -9,8 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
 
 
         <LinearLayout
@@ -21,13 +20,12 @@
             <TextView
                 android:id="@+id/txt_user_name"
                 style="@style/ProfileTextViewUserName"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="15dp"
                 />
 
             <LinearLayout
                 style="@style/Layout"
-                android:layout_marginBottom="22dp"
+                android:layout_marginBottom="18dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -44,7 +42,7 @@
             <TextView
                 android:id="@+id/btn_logout"
                 style="@style/TextViewGreenBorder"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="36dp"
                 android:drawableLeft="@drawable/ic_logout"
                 android:drawablePadding="10dp"
                 android:drawableStart="@drawable/ic_logout"
@@ -107,7 +105,9 @@
     <Button
         android:id="@+id/btn_about"
         style="@style/ButtonGrey"
+        android:layout_height="41dp"
         android:layout_gravity="bottom"
+        android:gravity="center"
         android:text="@string/about_title"/>
 
 

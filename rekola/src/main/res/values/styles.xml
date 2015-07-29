@@ -118,19 +118,20 @@
 
     <!-- Profile styles -->
     <style name="ProfileTextViewUserName" parent="TextView">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grey_dark</item>
+        <item name="fontPath">@string/font_roboto_medium</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">32sp</item>
     </style>
 
     <style name="ProfileTextViewMemberShipLabel" parent="TextView">
-        <item name="android:textColor">@color/pink_1</item>
+        <item name="fontPath">@string/font_roboto_light</item>
+        <item name="android:textColor">@color/dark_pink2</item>
     </style>
 
     <style name="ProfileTextViewMemberShipEndDate" parent="TextView">
         <item name="android:textColor">@color/pink_1</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontPath">@string/font_roboto_medium</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingStart">5dp</item>
     </style>
@@ -138,8 +139,8 @@
     <style name="ProfileTextViewGridDescription" parent="TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/grey5</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:textColor">@color/grey11</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_gravity">left</item>
     </style>
@@ -149,10 +150,10 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">end</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:textColor">@color/grey_dark</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontPath">@string/font_roboto_medium</item>
     </style>
 
     <!-- Borrowed bike styles -->

@@ -85,7 +85,7 @@ public class ProfileFragment extends BaseMainFragment {
             return;
 
         mTxtUserName.setText(account.name);
-        mTxtMembershipEndDate.setText(DateUtils.getDate(account.membershipEnd));
+        mTxtMembershipEndDate.setText(DateUtils.getDateYear(account.membershipEnd));
         mTxtEmail.setText(account.email);
         mTxtAddress.setText(account.address);
         mTxtPhone.setText(account.phone);
