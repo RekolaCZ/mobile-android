@@ -66,9 +66,9 @@
                 style="@style/TextView"
                 android:layout_height="41dp"
                 android:layout_marginBottom="41dp"
-                android:background="@drawable/border_green2"
+                android:background="@drawable/button_green_border"
                 android:text="@string/return_bike_detail"
-                android:textColor="@color/base_green"
+                android:textColor="@drawable/button_green_text"
                 android:textSize="16sp"/>
 
             <RelativeLayout
