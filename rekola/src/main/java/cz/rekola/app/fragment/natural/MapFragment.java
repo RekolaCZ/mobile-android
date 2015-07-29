@@ -120,6 +120,14 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
     @Override
     protected void onMapReady() {
         mapManager.init();
+
+        mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (mOverlayMap.isVisible())
+                    mOverlayMap.hide();
+            }
+        });
     }
 
     @Subscribe

@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.rekola.app.R;
@@ -45,6 +43,7 @@ public class BikeOverlayView extends RelativeLayout {
     ImageView mbtnCenterMap;
 
     private BikeOverlayListener callbacks;
+    private boolean mIsVisible = false;
 
     public BikeOverlayView(Context context) {
         super(context);
@@ -118,8 +117,7 @@ public class BikeOverlayView extends RelativeLayout {
 
         mAnimatorSet.setDuration(200); //set duration for animations
         mAnimatorSet.start();
-
-
+        mIsVisible = true;
     }
 
     public void hide() {
@@ -139,6 +137,11 @@ public class BikeOverlayView extends RelativeLayout {
 
         mAnimatorSet.setDuration(200); //set duration for animations
         mAnimatorSet.start();
+        mIsVisible = false;
+    }
+
+    public boolean isVisible() {
+        return mIsVisible;
     }
 
     public interface BikeOverlayListener {
