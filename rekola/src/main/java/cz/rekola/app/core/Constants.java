@@ -16,8 +16,7 @@ public class Constants {
     // public static final String REKOLA_API_URL = "https://moje.rekola.cz/api";
     public static final String REKOLA_API_URL = "http://beta.rekola.cz/api";
 
-    public static final int DEFAULT_BIKES_MAP_ZOOM_LEVEL = 13;
-    public static final int DEFAULT_RETURN_MAP_ZOOM_LEVEL = 15;
+    public static final int DEFAULT_MAP_ZOOM_LEVEL = 15;
 
     public static final String WEBAPI_BIKE_DETAIL_URL = REKOLA_API_URL + "/bikes/%s/info-webview";
     public static final String WEBAPI_BIKE_ISSUES_URL = REKOLA_API_URL + "/bikes/%s/issues-webview";

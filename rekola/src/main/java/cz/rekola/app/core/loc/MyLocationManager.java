@@ -99,6 +99,15 @@ public class MyLocationManager implements
         mLocationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
         mLocationRequest.setInterval(1000); // Update location every second
 
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if(lastLocation!=null)
+        {
+            mMyLocation = new MyLocation(lastLocation.getAccuracy(),
+                    lastLocation.getLatitude(),
+                    lastLocation.getLongitude());
+        }
+
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
     }

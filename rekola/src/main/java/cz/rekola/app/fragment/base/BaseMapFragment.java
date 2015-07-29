@@ -137,7 +137,7 @@ public abstract class BaseMapFragment extends BaseMainFragment implements MyLoca
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(getApp()
                         .getMyLocationManager().getLastKnownMyLocation().getLatLng(),
-                Constants.DEFAULT_BIKES_MAP_ZOOM_LEVEL);
+                Constants.DEFAULT_MAP_ZOOM_LEVEL);
         if (animate)
             mGoogleMap.animateCamera(cameraUpdate);
         else
