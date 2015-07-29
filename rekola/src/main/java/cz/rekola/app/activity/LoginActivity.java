@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -81,6 +83,7 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         initKeyboardsCallBacks();
+        initEditTextAction();
     }
 
     @Override
@@ -229,6 +232,19 @@ public class LoginActivity extends BaseActivity {
             public void onSoftKeyboardShow() {
 
                 hideElements();
+            }
+        });
+    }
+
+    private void initEditTextAction() {
+        mTxtPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    loginOnClick();
+                    return true;
+                }
+                return false;
             }
         });
     }
