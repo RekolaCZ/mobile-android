@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.otto.Subscribe;
@@ -119,7 +121,8 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         }
 
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(getActivity(), R.layout.spinner_item_text, spinnerArray);
+                new ArrayAdapter<>(getActivity(), R.layout.spinner_item_text,
+                        R.id.txt_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnIssueType.setAdapter(adapter);
         mSpnIssueType.setOnTouchListener(new View.OnTouchListener() {
@@ -132,7 +135,7 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
             }
         });
 
-    }
+     }
 
     /**
      * check if issue description is filled
@@ -169,6 +172,23 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
 
     @Override
     public void setIssueItem(int item) {
+
+        //change spinner design if user select item
+        mSpnIssueType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mSpnIssueType.setBackgroundResource(R.drawable.spinner_pink);
+                TextView spinnerItemText = (TextView) mSpnIssueType.findViewById(R.id.txt_spinner_item);
+                int pink = getActivity().getResources().getColor(R.color.base_pink);
+                spinnerItemText.setTextColor(pink);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         mSpnIssueType.setSelection(item);
     }
 }

@@ -6,10 +6,10 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
                android:shape="rectangle">
             <solid android:color="@color/dark_pink2"/>
-            <corners android:radius="2dp"/>
+            <corners android:radius="3dp"/>
             <size
-                android:width="38dp"
-                android:height="38dp"/>
+                android:width="25dp"
+                android:height="25dp"/>
         </shape>
     </item>
     <item android:drawable="@drawable/checkbox_button_check_symbol"/>

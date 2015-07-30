@@ -99,7 +99,6 @@
     <Button
         android:id="@+id/btn_return_bike"
         style="@style/ButtonPink"
-        android:layout_height="41dp"
         android:layout_marginBottom="2dp"
         android:text="@string/return_return"/>
 

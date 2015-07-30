@@ -6,10 +6,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -103,6 +105,7 @@ public class PageManager {
             return null;
 
         setActionBar(activity, actionBar, newState, backPressed);
+        setStatusBar(activity, newState);
 
         Fragment fragment = cache.get(newState);
         if (fragment == null) {
@@ -214,6 +217,26 @@ public class PageManager {
             actionBar.setTitle(newState.titleId);
         }
 
+    }
+
+    private void setStatusBar(Activity activity, EPageState newState) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            int color;
+            if (newState == EPageState.SPINNER_LIST) {
+                color = R.color.dark_pink4;
+            } else if (newState == EPageState.BIKE_DETAIL) {
+                color = R.color.grey15;
+            } else {
+                color = R.color.dark_green;
+            }
+
+            window.setStatusBarColor(activity.getResources().getColor(color));
+        }
     }
 
     //if action is active, than has another "active" icon

@@ -1,8 +1,9 @@
 <TextView
+    android:id="@+id/txt_spinner_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:drawableRight="@drawable/spinner_arrow"
     android:singleLine="true"
-    android:textColor="@color/base_pink"
-    android:textSize="@dimen/text_xlarge"
-    />
+    android:textColor="@color/grey14"
+    android:textSize="16sp"/>

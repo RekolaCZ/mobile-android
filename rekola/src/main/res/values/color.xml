@@ -22,6 +22,8 @@
     <color name="dark_pink">#ef268e</color>
     <color name="dark_pink2">#fd349c</color>
     <color name="dark_pink3">#ef258d</color>
+    <color name="dark_pink4">#ca2a7d</color>
+
     <color name="pink_transparent">#30ff339c</color>
 
 
@@ -42,6 +44,10 @@
     <color name="grey11">#757575</color>
     <color name="grey12">#5c5c5c</color>
     <color name="grey13">#b0b0b0</color>
+    <color name="grey14">#a5a5a5</color>
+    <color name="grey15">#cccccc</color>
+
+
 
     <color name="grey_dark">#404040</color>
 

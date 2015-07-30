@@ -44,7 +44,6 @@
             <Button
                 android:id="@+id/btn_return_bike"
                 style="@style/ButtonPink"
-                android:layout_height="41dp"
                 android:text="@string/returnmap_bike_returned"/>
 
         </LinearLayout>

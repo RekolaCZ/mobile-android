@@ -76,6 +76,7 @@
     </style>
 
     <style name="ButtonPink" parent="Button">
+        <item name="android:layout_height">41dp</item>
         <item name="android:background">@drawable/button_pink</item>
         <item name="android:textColor">@color/white</item>
     </style>
@@ -85,11 +86,6 @@
         <item name="android:textColor">@color/grey4</item>
     </style>
 
-    <style name="TitleTextView" parent="TextView">
-        <item name="android:textColor">@color/grey_dark</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_xxlarge</item>
-    </style>
 
     <style name="ImageViewBikeImage" parent="ImageView">
         <item name="android:layout_height">70dp</item>
@@ -261,6 +257,14 @@
         <item name="android:maxLength">1</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <!-- Add issue -->
+    <style name="AddIssueTitleTextView" parent="TextView">
+        <item name="fontPath">@string/font_roboto_medium</item>
+        <item name="android:textColor">@color/grey_dark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <!--    textCursorDrawable null, because of some bug, that caused invisible cursor-->
