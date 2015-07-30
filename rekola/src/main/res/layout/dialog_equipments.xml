@@ -6,7 +6,12 @@
 
     <TextView
         style="@style/AddIssueTitleTextView"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/default_screen_margin"
+        android:layout_marginTop="@dimen/default_screen_margin"
+        android:layout_marginBottom="@dimen/default_screen_margin"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="@dimen/default_screen_margin"
+        android:textSize="20sp"
         android:text="@string/bike_detail_equipments"
         />
 
@@ -14,11 +19,9 @@
         android:id="@+id/lv_equipments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:cacheColorHint="@android:color/transparent"
         android:clickable="false"
         android:divider="@null"

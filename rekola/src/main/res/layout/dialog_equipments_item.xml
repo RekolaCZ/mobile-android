@@ -11,15 +11,15 @@
         android:id="@+id/img_equipment_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginRight="18dp"
         />
 
     <TextView
         android:id="@+id/txt_equipment_description"
         style="@style/TextView"
+        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"/>
+        android:textColor="@color/grey16"/>
 
 </LinearLayout>
