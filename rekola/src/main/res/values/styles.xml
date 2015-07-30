@@ -19,7 +19,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_medium</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/grey_dark</item>
     </style>
 
     <style name="Button" parent="@android:style/Widget.Holo.Light.Button">
@@ -54,7 +54,7 @@
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:background">@drawable/edit_text_fill</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/grey_dark</item>
         <item name="android:textColorHint">@drawable/edit_text_fill_hint_color</item>
     </style>
 
@@ -63,7 +63,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/edit_text_border</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textColorHint">@color/gray_2</item>
+        <item name="android:textColorHint">@color/grey2</item>
         <item name="android:gravity">top|left</item>
         <item name="android:layout_gravity">center</item>
     </style>
@@ -192,7 +192,6 @@
     <style name="IconImageView" parent="ImageView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>

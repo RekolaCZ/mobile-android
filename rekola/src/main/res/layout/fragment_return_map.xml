@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                style="@style/Layout">
+<RelativeLayout style="@style/Layout"
+                xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <FrameLayout
         android:id="@+id/layout_bottom"
         style="@style/Layout"
-        android:layout_height="wrap_content"
+        android:layout_height="184dp"
         android:layout_alignParentBottom="true">
 
         <LinearLayout
-            style="@style/LayoutMargin"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center">
+            style="@style/Layout"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="@dimen/default_screen_margin"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/TextView"
                 android:layout_gravity="left"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="-1dp"
+                android:textSize="16sp"
+                fontPath="@string/font_roboto_medium"
                 android:text="@string/returnmap_bike_position"
-                android:layout_marginBottom="10dp"
                 />
 
             <!-- inputType ... imeOptions is set from code, from xml it is not working. -->
             <EditText
                 android:id="@+id/txt_note"
                 style="@style/EditTextPinkBorder"
+                android:paddingTop="8dp"
+                android:layout_height="68dp"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/returnmap_note_hint"
                 android:inputType="text|textCapSentences"
                 android:lines="2"
-                android:layout_marginBottom="10dp"
                 android:textSize="14sp"
                 />
 
             <Button
                 android:id="@+id/btn_return_bike"
                 style="@style/ButtonPink"
+                android:layout_height="41dp"
                 android:text="@string/returnmap_bike_returned"/>
 
         </LinearLayout>
@@ -54,7 +62,11 @@
             android:layout_height="match_parent"/>
 
 
-        <include layout="@layout/map_cluster_bike"/>
+        <include
+            layout="@layout/map_cluster_bike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
     </FrameLayout>
 
@@ -62,7 +74,8 @@
         android:id="@+id/btn_center_map"
         style="@style/IconImageView"
         android:layout_above="@id/layout_bottom"
-        android:layout_marginBottom="-46dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="-33dp"
         android:src="@drawable/ic_location_inverse"/>
 
 </RelativeLayout>
