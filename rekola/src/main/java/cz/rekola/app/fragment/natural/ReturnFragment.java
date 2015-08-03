@@ -1,6 +1,7 @@
 package cz.rekola.app.fragment.natural;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.squareup.otto.Subscribe;
+
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -84,21 +87,24 @@ public class ReturnFragment extends BaseMainFragment {
         if (myBike == null || !myBike.isBorrowed()) {
             mTxtBikeName.setText(getResources().getString(R.string.error_no_bike_borrowed));
         } else if (myBike.bike != null) {
-            setData(myBike.bike, myBike.bike.lockCode);
+            setData(myBike.bike, myBike.bike.lockCode, myBike.bike.borrowedAt);
             return;
         } else if (myBike.lockCode != null) {
-            setData(myBike.lockCode.bike, myBike.lockCode.lockCode);
+            Date borrowedAt = new Date(); //bike was borrowed now, so it will be set current time
+            Log.d("tom", "" + "this time");
+            setData(myBike.lockCode.bike, myBike.lockCode.lockCode, borrowedAt);
         }
     }
 
-    private void setData(Bike bike, String lockCode) {
+    private void setData(Bike bike, String lockCode, Date borrowedAt) {
         bikeId = bike.id;
         hasIssues = bike.issues.size() > 0;
 
         mTxtBikeName.setText(bike.name);
         mTxtLockCode.setText(lockCode == null ? null : lockCode.replace("", " ").trim());
-        mTxtBorrowedFromDate.setText(DateUtils.getDate(bike.location.returnedAt));
-        mTxtBorrowedFromTime.setText(DateUtils.getTime(bike.location.returnedAt));
+        //TODO waiting for api
+    //    mTxtBorrowedFromDate.setText(DateUtils.getDate(borrowedAt));
+    //   mTxtBorrowedFromTime.setText(DateUtils.getTime(borrowedAt));
 
         Glide.with(getActivity()).load(bike.imageUrl).into(mImgBike);
     }
