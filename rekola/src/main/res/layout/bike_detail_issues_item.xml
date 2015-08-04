@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="20dp"
-              android:layout_marginRight="20dp"
+              android:layout_marginLeft="@dimen/default_screen_margin"
+              android:layout_marginRight="@dimen/default_screen_margin"
+              android:layout_marginTop="7dp"
+              android:layout_marginBottom="3dp"
               android:orientation="vertical">
 
 
@@ -11,16 +13,14 @@
     <TextView
         android:id="@+id/txt_user_name_and_datetime"
         style="@style/TextView"
-        android:layout_marginBottom="7dp"
-        android:textColor="@color/black"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        />
 
 
     <TextView
         android:id="@+id/txt_issue_description"
         style="@style/TextView"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/grey5"
+        android:textColor="@color/grey11"
         android:textSize="14sp"
         />
 

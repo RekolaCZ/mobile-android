@@ -7,6 +7,8 @@
     <string name="font_roboto_light" translatable="false">fonts/Roboto-Light.ttf</string>
     <string name="font_roboto_bold" translatable="false">fonts/Roboto-Bold.ttf</string>
     <string name="font_roboto_italic" translatable="false">fonts/Roboto-Italic.ttf</string>
+    <string name="font_roboto_regular" translatable="false">fonts/Roboto-Regular.ttf</string>
+
 
     <string name="ok">OK</string>
 
@@ -67,6 +69,7 @@
     <string name="bike_detail_equipment_info">More info</string>
     <string name="bike_detail_issues">Issues</string>
     <string name="bike_detail_add_issue">Add issue</string>
+    <string name="bike_detail_no_issue">I am happy bike, I have no issues :)</string>
 
     <!-- Add issue -->
     <string name="add_issue_title">Report an issue</string>

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    style="@style/LayoutMargin"
+    style="@style/Layout"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="@dimen/default_screen_margin"
+    android:layout_marginRight="@dimen/default_screen_margin"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/img_bike"
         style="@style/ImageViewBikeImage"
+        android:layout_height="104dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"/>
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
 
     <TextView
@@ -20,7 +22,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:textColor="@color/dark_pink2"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="18dp"
         android:textSize="12sp"
         android:textAllCaps="true"/>
 
@@ -30,14 +32,14 @@
         android:textSize="32sp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/txt_operational_with_problems"
         style="@style/TextViewWarning"
         android:drawableLeft="@drawable/ic_warning_yellow"
         android:drawableStart="@drawable/ic_warning_yellow"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="9dp"
         android:text="@string/bike_operational_with_issues"
         android:textColor="@color/warning_yellow"/>
 
@@ -46,7 +48,7 @@
         style="@style/TextViewWarning"
         android:drawableLeft="@drawable/ic_warning_red"
         android:drawableStart="@drawable/ic_warning_red"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="9dp"
         android:text="@string/bike_inoperational"
         android:textColor="@color/warning_pink"/>
 
@@ -58,7 +60,8 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="@color/grey5"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/grey11"
         android:textSize="14sp"/>
 
 </LinearLayout>

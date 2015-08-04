@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,8 @@ import cz.rekola.app.api.model.bike.Equipment;
 import cz.rekola.app.api.model.bike.IssueUpdate;
 import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.utils.DateUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 /**
  * Adapter for recycleview in BikeDetailFragment
@@ -157,7 +158,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         ImageView imgEquipment = (ImageView) flEquipmentIcon
                 .findViewById(R.id.img_equipment_icon);
 
-        Glide.with(mContext).load(iconUrl).into(imgEquipment);
+        Glide.with(mContext).load(iconUrl).fitCenter().into(imgEquipment);
 
         mLlEquipments.addView(flEquipmentIcon);
 
@@ -166,7 +167,14 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
     private void onBindIssueHeader(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
-        viewHolder.mBtnAddIssue.setOnClickListener(mData.get(position).getAddIssueListener());
+        BikeDetailItem bikeDetailItem = mData.get(position);
+        viewHolder.mBtnAddIssue.setOnClickListener(bikeDetailItem.getAddIssueListener());
+
+        if (bikeDetailItem.hasIssues()) {
+            viewHolder.mTxtNoIssues.setVisibility(View.GONE);
+        } else {
+            viewHolder.mTxtNoIssues.setVisibility(View.VISIBLE);
+        }
     }
 
     private void onBindIssueTitle(BikeDetailAdapter.ViewHolder viewHolder, final int
@@ -187,12 +195,29 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
         //set author name
         userNameAndDateTime.append(issueUpdate.author);
-        userNameAndDateTime.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        String fontRobotoMedium = mContext.getResources().getString(R.string.font_roboto_medium);
+        String fontRobotoRegular = mContext.getResources().getString(R.string.font_roboto_regular);
+
+        CalligraphyTypefaceSpan typefaceSpanMedium = new CalligraphyTypefaceSpan(TypefaceUtils
+                .load(mContext.getAssets(), fontRobotoMedium));
+
+        CalligraphyTypefaceSpan typefaceSpanRegular = new CalligraphyTypefaceSpan(TypefaceUtils
+                .load(mContext.getAssets(), fontRobotoRegular));
+
+
+        userNameAndDateTime.setSpan(typefaceSpanMedium, start,
+                userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // set " / "
         start = userNameAndDateTime.length();
         userNameAndDateTime.append(slash);
-        userNameAndDateTime.setSpan(new ForegroundColorSpan(colorBasePink), start, userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        userNameAndDateTime.setSpan(new ForegroundColorSpan(colorBasePink), start,
+                userNameAndDateTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        userNameAndDateTime.setSpan(typefaceSpanRegular, start, userNameAndDateTime.length(),
+                Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 
         //set issue date
         userNameAndDateTime.append(DateUtils.getDate(issueUpdate.issuedAt));
@@ -238,6 +263,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
         //TYPE_ISSUE_HEADER
         Button mBtnAddIssue;
+        TextView mTxtNoIssues;
 
         //TYPE_ISSUE_TITLE
         TextView mTxtIssueTitle;
@@ -276,6 +302,7 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
                     break;
                 case BikeDetailItem.TYPE_ISSUE_HEADER:
                     mBtnAddIssue = (Button) itemView.findViewById(R.id.btn_add_issue);
+                    mTxtNoIssues = (TextView) itemView.findViewById(R.id.txt_no_issue);
                     break;
                 case BikeDetailItem.TYPE_ISSUE_TITLE:
                     mTxtIssueTitle = (TextView) itemView.findViewById(R.id.txt_issue_title);

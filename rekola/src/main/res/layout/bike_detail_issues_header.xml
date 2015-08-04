@@ -2,21 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/grid_5"
-              android:layout_marginRight="@dimen/grid_5"
+              android:layout_marginLeft="@dimen/default_screen_margin"
+              android:layout_marginRight="@dimen/default_screen_margin"
+              android:layout_marginTop="9dp"
               android:orientation="vertical">
 
 
     <TextView
         style="@style/BikeDetailTextViewTitle"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="19dp"
         android:text="@string/bike_detail_issues"/>
+
+    <TextView
+        android:id="@+id/txt_no_issue"
+        style="@style/TextView"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="27dp"
+        android:text="@string/bike_detail_no_issue"
+        android:textColor="@color/grey13"
+        android:textSize="13sp"
+        />
 
     <Button
         android:id="@+id/btn_add_issue"
         style="@style/ButtonPink"
         android:layout_gravity="center"
-        android:layout_marginBottom="23dp"
         android:text="@string/bike_detail_add_issue"/>
 
 

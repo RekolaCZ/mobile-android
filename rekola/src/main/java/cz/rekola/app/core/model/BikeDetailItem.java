@@ -43,6 +43,7 @@ public class BikeDetailItem {
 
     //@layout/bike_detail_issues_header
     private Button.OnClickListener addIssueListener;
+    private boolean mHasIssues;
 
     //@layout/bike_detail_issues_title
     private String issueTitle;
@@ -71,8 +72,9 @@ public class BikeDetailItem {
         return new BikeDetailItem(TYPE_EQUIPMENT, equipments, equipmentsDetailListener);
     }
 
-    public static BikeDetailItem getIssueHeaderInstance(Button.OnClickListener addIssueListener) {
-        return new BikeDetailItem(TYPE_ISSUE_HEADER, addIssueListener);
+    public static BikeDetailItem getIssueHeaderInstance(Button.OnClickListener addIssueListener,
+                                                        boolean hasIssues) {
+        return new BikeDetailItem(TYPE_ISSUE_HEADER, addIssueListener, hasIssues);
     }
 
     public static BikeDetailItem getIssueTitleInstance(String issueTitle) {
@@ -124,9 +126,10 @@ public class BikeDetailItem {
     }
 
     //TYPE_ISSUE_HEADER
-    public BikeDetailItem(int type, Button.OnClickListener addIssueListener) {
+    public BikeDetailItem(int type, Button.OnClickListener addIssueListener, boolean hasIssues) {
         mType = type;
         this.addIssueListener = addIssueListener;
+        this.mHasIssues = hasIssues;
     }
 
     //TYPE_ISSUE_TITLE
@@ -191,6 +194,10 @@ public class BikeDetailItem {
 
     public Button.OnClickListener getAddIssueListener() {
         return addIssueListener;
+    }
+
+    public boolean hasIssues() {
+        return mHasIssues;
     }
 
     public String getIssueTitle() {

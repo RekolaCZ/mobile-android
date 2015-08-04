@@ -87,7 +87,6 @@
 
 
     <!--  Action bar -->
-    <dimen name="action_bar_size">51dp</dimen>
     <dimen name="action_bar_icon_padding_top">12dp</dimen>
     <dimen name="action_bar_icon_padding_bottom">12dp</dimen>
     <dimen name="action_bar_icon_padding_left">15dp</dimen>
@@ -96,6 +95,7 @@
     <dimen name="bike_overlay_negative_margin">-32dp</dimen>
     <dimen name="bike_overlay_navigation_margin_animation">10dp</dimen>
 
+    <dimen name="bike_detail_equipment_icon_height">28dp</dimen>
 
     <dimen name="zone_stroke_width">5dp</dimen>
 

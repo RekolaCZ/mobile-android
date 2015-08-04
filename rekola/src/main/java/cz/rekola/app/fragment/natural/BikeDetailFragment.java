@@ -159,7 +159,8 @@ public class BikeDetailFragment extends BaseMainFragment {
             }
         };
 
-        return BikeDetailItem.getIssueHeaderInstance(addIssueListener);
+        boolean hasIssues = bike.issues.size() > 0;
+        return BikeDetailItem.getIssueHeaderInstance(addIssueListener, hasIssues);
     }
 
     private void setBikeIssues(List<Issue> bikeIssues) {

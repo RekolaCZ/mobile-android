@@ -62,6 +62,7 @@
     <string name="bike_detail_equipment_info">Více info</string>
     <string name="bike_detail_issues">Problémy</string>
     <string name="bike_detail_add_issue">Přidat problém</string>
+    <string name="bike_detail_no_issue">Jsem spokojené kolo, nemám žádný problém :)</string>
 
     <!-- Add issue -->
     <string name="add_issue_title">Hlášení problémů</string>

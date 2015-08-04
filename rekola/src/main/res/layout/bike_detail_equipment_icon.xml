@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+             android:layout_height="@dimen/bike_detail_equipment_icon_height"
     >
 
 
     <ImageView
         android:id="@+id/img_equipment_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         />
 
 

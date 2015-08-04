@@ -15,12 +15,8 @@
         <item name="android:textViewStyle">@style/TextView</item>
         <item name="android:buttonStyle">@style/Button</item>
 
-
         <!-- other global styles: -->
         <item name="android:windowBackground">@color/background_window</item>
-
-        <item name="android:actionBarSize">@dimen/action_bar_size</item>
-        <item name="actionBarSize">@dimen/action_bar_size</item>
     </style>
 
     <style name="PinkTheme" parent="Theme.AppCompat.Light.NoActionBar">

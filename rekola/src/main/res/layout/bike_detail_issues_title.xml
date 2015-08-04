@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/grid_5"
-              android:layout_marginRight="@dimen/grid_5"
+              android:layout_marginLeft="@dimen/default_screen_margin"
+              android:layout_marginRight="@dimen/default_screen_margin"
+              android:layout_marginTop="24dp"
               android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/txt_issue_title"
         style="@style/TextView"
-        android:layout_marginBottom="18dp"
         android:textColor="@color/base_green"
         android:textSize="18sp"
-        android:textStyle="bold"
+        fontPath="@string/font_roboto_bold"
         />
 
 
