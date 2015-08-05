@@ -3,10 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:app="http://schemas.android.com/apk/res-auto"
-          android:id="@+id/fragment_container"
-          style="@style/Layout"/>
+    <LinearLayout
+       style="@style/Layout">
+
+        <include layout="@layout/tab_menu"/>
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                     android:id="@+id/fragment_container"
+                     style="@style/Layout"/>
+
+    </LinearLayout>
+
+
 
     <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
         android:id="@+id/progress_circle_bar"

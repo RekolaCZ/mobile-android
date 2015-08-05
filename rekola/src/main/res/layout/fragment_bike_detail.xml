@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.v7.widget.RecyclerView
+<LinearLayout
+    style="@style/Layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rvBikeDetail"
-    android:scrollbars="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/default_screen_margin"
-    tools:context="cz.rekola.app.fragment.natural.BikeDetailFragment"/>
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        style="@style/Layout">
+
+        <include layout="@layout/bike_detail_toolbar_white"/>
+
+        <include layout="@layout/bike_detail_toolbar_green"/>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvBikeDetail"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/default_screen_margin"
+        android:scrollbars="vertical"
+        tools:context="cz.rekola.app.fragment.natural.BikeDetailFragment"/>
+
+</LinearLayout>

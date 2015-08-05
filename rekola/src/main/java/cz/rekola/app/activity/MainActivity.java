@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.squareup.otto.Subscribe;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.activity.base.BaseActivity;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
@@ -42,6 +44,9 @@ public class MainActivity extends BaseActivity implements PageController {
     MessageBarView mLayoutErrorBar;
     @InjectView(R.id.progress_circle_bar)
     CircleProgressBar mProgressCircleBar;
+    @InjectView(R.id.tab_menu)
+    RelativeLayout mTabMenu;
+
 
     private PageManager pageManager;
 
@@ -101,18 +106,9 @@ public class MainActivity extends BaseActivity implements PageController {
     public void onCustomOptionsItemSelected(View v) {
         switch (v.getId()) {
             case R.id.img_action_lock:
-                MyBikeWrapper myBike = getMyBike();
-                PageManager.EPageState pageState = myBike != null && myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW;
-                setState(pageState);
-
+                onClickActionLock();
                 break;
-            case R.id.img_action_map:
-                setState(PageManager.EPageState.MAP);
-                break;
-            case R.id.img_action_profile:
-                setState(PageManager.EPageState.PROFILE);
-                break;
-            case android.R.id.home:
+            case R.id.img_action_back:
                 requestPrevState();
                 break;
             default:
@@ -128,6 +124,24 @@ public class MainActivity extends BaseActivity implements PageController {
             super.onBackPressed();
         }
         invalidateOptionsMenu();
+    }
+
+    @OnClick(R.id.img_action_lock)
+    public void onClickActionLock() {
+        MyBikeWrapper myBike = getMyBike();
+        PageManager.EPageState pageState = myBike != null && myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW;
+        setState(pageState);
+    }
+
+
+    @OnClick(R.id.img_action_map)
+    public void onClickActionMap() {
+        setState(PageManager.EPageState.MAP);
+    }
+
+    @OnClick(R.id.img_action_profile)
+    public void onClickActionProfile() {
+        setState(PageManager.EPageState.PROFILE);
     }
 
     @Subscribe
@@ -238,14 +252,6 @@ public class MainActivity extends BaseActivity implements PageController {
         pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
     }
 
-    private Fragment setState(PageManager.EPageState pageState) {
-        return pageManager.setNextState(pageState, this, getFragmentManager(), getSupportActionBar());
-    }
-
-    private MyBikeWrapper getMyBike() {
-        return getApp().getDataManager().getBorrowedBike(false);
-    }
-
     public void startLoginActivity(String message) {
         getApp().resetDataManager();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -255,4 +261,22 @@ public class MainActivity extends BaseActivity implements PageController {
         startActivity(intent);
         finish();
     }
+
+    public void setTabMenuVisibility(boolean visible) {
+        if (visible) {
+            mTabMenu.setVisibility(View.VISIBLE);
+        } else {
+            mTabMenu.setVisibility(View.GONE);
+        }
+    }
+
+    private Fragment setState(PageManager.EPageState pageState) {
+        return pageManager.setNextState(pageState, this, getFragmentManager(), getSupportActionBar());
+    }
+
+    private MyBikeWrapper getMyBike() {
+        return getApp().getDataManager().getBorrowedBike(false);
+    }
+
+
 }

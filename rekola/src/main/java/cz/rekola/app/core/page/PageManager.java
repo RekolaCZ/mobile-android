@@ -8,7 +8,6 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +17,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import cz.rekola.app.R;
+import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.fragment.natural.AboutFragment;
 import cz.rekola.app.fragment.natural.AddIssueFragment;
@@ -40,6 +40,8 @@ public class PageManager {
 
     private static String TAG = "PageManager";
     private EPageState state = EPageState.MAP;
+    private static final int mAnimationIn = android.R.animator.fade_in;
+    private static final int mAnimationOut = android.R.animator.fade_out;
 
     /**
      * Last used root state for back (up) calls.
@@ -56,27 +58,27 @@ public class PageManager {
 
     public enum EPageState {
         //      Visible action bar
-        //      Custom action bar view enabled,
+        //      Visible Tab menu,
         //      Use cache,
         //      Up state,
         //      Title ID,
         //      BaseMainFragment
-        BORROW(true, true, true, false, null, BorrowFragment.class),
-        RETURN(true, true, true, false, null, ReturnFragment.class),
-        MAP(true, true, true, false, null, MapFragment.class),
-        PROFILE(true, true, false, false, null, ProfileFragment.class),
-        RETURN_MAP(true, false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
+        BORROW(false, true, true, false, null, BorrowFragment.class),
+        RETURN(false, true, true, false, null, ReturnFragment.class),
+        MAP(false, true, true, false, null, MapFragment.class),
+        PROFILE(false, true, false, false, null, ProfileFragment.class),
+        RETURN_MAP(false, false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
         ABOUT(true, false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(false, true, false, false, null, ReturnWebFragment.class),
-        BIKE_DETAIL(true, true, true, true, null, BikeDetailFragment.class),
+        BIKE_DETAIL(false, false, true, true, null, BikeDetailFragment.class),
         WEB_BIKE_DETAIL(true, true, false, true, null, BikeDetailWebFragment.class),
         ADD_ISSUE(true, false, true, true, R.string.add_issue_title, AddIssueFragment.class),
         SPINNER_LIST(false, false, false, true, null, SpinnerListFragment.class);
 
-        EPageState(boolean actionBarVisible, boolean customActionBarViewEnabled, boolean useCache,
+        EPageState(boolean actionBarVisible, boolean tabMenuVisible, boolean useCache,
                    boolean upState, Integer titleId, Class fragment) {
             this.actionBarVisible = actionBarVisible;
-            this.customActionBarViewEnabled = customActionBarViewEnabled;
+            this.tabMenuVisible = tabMenuVisible;
             this.useCache = useCache;
             this.upState = upState;
             this.titleId = titleId;
@@ -84,7 +86,7 @@ public class PageManager {
         }
 
         final boolean actionBarVisible;
-        final boolean customActionBarViewEnabled;
+        final boolean tabMenuVisible;
         final boolean useCache;
         final boolean upState;
         final Integer titleId;
@@ -95,11 +97,11 @@ public class PageManager {
      * Returns newly created or cached fragment for further configuration.
      *
      * @param newState
+     * @param activity
      * @param fragmentManager
-     * @param actionBar
-     * @return Newly created fragment
+     * @param actionBar       @return Newly created fragment
      */
-    private Fragment setState(EPageState newState, Activity activity, FragmentManager
+    private Fragment setState(EPageState newState, MainActivity activity, FragmentManager
             fragmentManager, ActionBar actionBar, boolean backPressed) {
         if (this.state == newState)
             return null;
@@ -123,31 +125,31 @@ public class PageManager {
         Fragment oldFrag = cache.get(this.state);
         if (fragment.isAdded()) {
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .setCustomAnimations(mAnimationIn, mAnimationOut)
                     .show(fragment)
                     .commit();
         } else {
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .setCustomAnimations(mAnimationIn, mAnimationOut)
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
         if (oldFrag != null) {
             if (this.state.useCache) {
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .setCustomAnimations(mAnimationIn, mAnimationOut)
                         .hide(oldFrag)
                         .commit();
             } else {
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .setCustomAnimations(mAnimationIn, mAnimationOut)
                         .remove(oldFrag)
                         .commit();
                 cache.remove(this.state);
             }
         }
 
-        if (pageStateIsBikeDetail(newState)) {
+        if (newState == EPageState.WEB_BIKE_DETAIL) {
             ColorDrawable transparentColor = getColor(activity, R.color.transparent);
             actionBar.setBackgroundDrawable(transparentColor);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_pink);
@@ -166,24 +168,27 @@ public class PageManager {
         }
 
         this.state = newState;
-        setIconsHighlights(newState, actionBar);
+        setIconsHighlights(newState, activity.findViewById(R.id.tab_menu));
         KeyboardUtils.hideKeyboard(activity);
 
         return fragment;
     }
 
-    public Fragment setNextState(EPageState newState, Activity activity, FragmentManager fragmentManager,
+    public Fragment setNextState(EPageState newState, MainActivity activity, FragmentManager fragmentManager,
                                  ActionBar actionBar) {
         return setState(newState, activity, fragmentManager, actionBar, false);
     }
 
-    public void setPrevState(Activity activity, FragmentManager fragmentManager,
+    public void setPrevState(MainActivity activity, FragmentManager fragmentManager,
                              ActionBar actionBar) {
         setState(prevStates.pop(), activity, fragmentManager, actionBar, true);
     }
 
-    private void setActionBar(Activity activity, ActionBar actionBar, EPageState newState,
+    private void setActionBar(MainActivity activity, ActionBar actionBar, EPageState newState,
                               boolean backPressed) {
+
+        activity.setTabMenuVisibility(newState.tabMenuVisible);
+
         if (!newState.actionBarVisible) {
             actionBar.hide();
         } else {
@@ -200,14 +205,6 @@ public class PageManager {
         } else if (!newState.upState) {
             prevStates.clear();
         }
-
-        actionBar.setDisplayShowCustomEnabled(newState.customActionBarViewEnabled);
-        setCustomActionBar(activity, actionBar, newState);
-
-        if (newState.customActionBarViewEnabled)
-            actionBar.getCustomView().setVisibility(View.VISIBLE);
-        else
-            actionBar.getCustomView().setVisibility(View.GONE);
 
         if (newState.titleId == null) {
             actionBar.setDisplayShowTitleEnabled(false);
@@ -240,16 +237,11 @@ public class PageManager {
     }
 
     //if action is active, than has another "active" icon
-    private void setIconsHighlights(EPageState activeState, ActionBar actionBar) {
-        View customView = actionBar.getCustomView();
+    private void setIconsHighlights(EPageState activeState, View tabMenu) {
 
-        //if custom view is not default (can be bike detail))
-        if (customView.findViewById(R.id.custom_action_bar_default) == null)
-            return;
-
-        ImageView imgLockIcon = (ImageView) customView.findViewById(R.id.img_action_lock);
-        ImageView imgMapIcon = (ImageView) customView.findViewById(R.id.img_action_map);
-        ImageView imgProfileIcon = (ImageView) customView.findViewById(R.id.img_action_profile);
+        ImageView imgLockIcon = (ImageView) tabMenu.findViewById(R.id.img_action_lock);
+        ImageView imgMapIcon = (ImageView) tabMenu.findViewById(R.id.img_action_map);
+        ImageView imgProfileIcon = (ImageView) tabMenu.findViewById(R.id.img_action_profile);
 
         if (activeState == EPageState.BORROW || activeState == EPageState.RETURN)
             imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock_active);
@@ -266,32 +258,6 @@ public class PageManager {
         else
             imgProfileIcon.setImageResource(R.drawable.actionbar_ic_profile);
 
-    }
-
-    //set up correct custom action view, because there are two different
-    private void setCustomActionBar(Context context, ActionBar actionBar, EPageState pageState) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View newCustomActionBarView = null;
-        View oldCustomActionBarView = actionBar.getCustomView();
-
-        if (oldCustomActionBarView == null && pageStateIsBikeDetail(pageState))
-            newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar_bike_detail, null);
-        else if (actionBar.getCustomView() == null)
-            newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar, null);
-        else if (pageStateIsBikeDetail(pageState)
-                && oldCustomActionBarView.findViewById(R.id.custom_action_bike_detail) == null)
-            newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar_bike_detail, null);
-        else if (oldCustomActionBarView.findViewById(R.id.custom_action_bar_default) == null)
-            newCustomActionBarView = inflater.inflate(R.layout.custom_action_bar, null);
-
-        if (newCustomActionBarView != null) {
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setCustomView(newCustomActionBarView);
-        }
-    }
-
-    private boolean pageStateIsBikeDetail(EPageState pageState) {
-        return (pageState == EPageState.BIKE_DETAIL || pageState == EPageState.WEB_BIKE_DETAIL);
     }
 
     public boolean hasPrevState() {

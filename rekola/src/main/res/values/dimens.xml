@@ -96,6 +96,7 @@
     <dimen name="bike_overlay_navigation_margin_animation">10dp</dimen>
 
     <dimen name="bike_detail_equipment_icon_height">28dp</dimen>
+    <dimen name="bike_detail_toolbar_height">56dp</dimen>
 
     <dimen name="zone_stroke_width">5dp</dimen>
 

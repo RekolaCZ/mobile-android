@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -38,12 +40,15 @@ import cz.rekola.app.fragment.base.BaseMainFragment;
 public class BikeDetailFragment extends BaseMainFragment {
     public static final String TAG = BikeDetailAdapter.class.getName();
 
-
     private int mBikeID = Bike.UNDEFINED_BIKE;
     private List<BikeDetailItem> mBikeDetailItemList;
 
     @InjectView(R.id.rvBikeDetail)
-    RecyclerView rvBikeDetail;
+    RecyclerView mRvBikeDetail;
+    @InjectView(R.id.bike_detail_toolbar_green)
+    FrameLayout mBikeDetailToolbarGreen;
+    @InjectView(R.id.txt_bike_name_toolbar)
+    TextView mTxtBikeNameToolbar;
 
     public void init(int bikeID) {
         if (mBikeID != bikeID && mBikeID != Bike.UNDEFINED_BIKE) {
@@ -98,12 +103,17 @@ public class BikeDetailFragment extends BaseMainFragment {
         mBikeDetailItemList.clear();
 
         Bike bike = getApp().getDataManager().getBike(mBikeID);
-        if (bike == null)
+        if (bike == null) {
             return;  // will be set later by event isBikeDetailAvailable
+        }
 
         List<Issue> bikeIssues = getApp().getDataManager().getBikeIssues(mBikeID, false);
-        if (bikeIssues == null)
+        if (bikeIssues == null) {
             return; // will be set later by event isBikeIssuesAvailable
+        }
+
+
+        mTxtBikeNameToolbar.setText(bike.name);
 
         setBikeInfo(bike);
         setBikeIssues(Issue.getGroupedIssues(bikeIssues));
@@ -127,7 +137,7 @@ public class BikeDetailFragment extends BaseMainFragment {
         mBikeDetailItemList.add(separator);
         mBikeDetailItemList.add(issueHeader);
 
-        rvBikeDetail.getAdapter().notifyDataSetChanged();
+        mRvBikeDetail.getAdapter().notifyDataSetChanged();
     }
 
 
@@ -170,7 +180,7 @@ public class BikeDetailFragment extends BaseMainFragment {
             setBikeIssueUpdates(issue.updates);
         }
 
-        rvBikeDetail.getAdapter().notifyDataSetChanged();
+        mRvBikeDetail.getAdapter().notifyDataSetChanged();
     }
 
     private void setBikeIssueUpdates(List<IssueUpdate> bikeIssueUpdates) {
