@@ -106,7 +106,7 @@ public class BikeDetailFragment extends BaseMainFragment {
             return; // will be set later by event isBikeIssuesAvailable
 
         setBikeInfo(bike);
-        setBikeIssues(bikeIssues);
+        setBikeIssues(Issue.getGroupedIssues(bikeIssues));
     }
 
     private void setBikeInfo(Bike bike) {
