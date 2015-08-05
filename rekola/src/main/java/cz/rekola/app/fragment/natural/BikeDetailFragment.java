@@ -42,6 +42,7 @@ public class BikeDetailFragment extends BaseMainFragment {
 
     private int mBikeID = Bike.UNDEFINED_BIKE;
     private List<BikeDetailItem> mBikeDetailItemList;
+    private int mOverallYScroll = 0; //to change toolbar visibility according to scrolling position
 
     @InjectView(R.id.rvBikeDetail)
     RecyclerView mRvBikeDetail;
@@ -63,22 +64,35 @@ public class BikeDetailFragment extends BaseMainFragment {
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bike_detail, container, false);
         ButterKnife.inject(this, view);
 
-        RecyclerView rvBikeDetail = (RecyclerView) view.findViewById(R.id.rvBikeDetail);
+
+        mRvBikeDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mOverallYScroll = mOverallYScroll + dy;
+
+                float transparentRatio = (float) mOverallYScroll / mBikeDetailToolbarGreen
+                        .getHeight();
+                mBikeDetailToolbarGreen.setAlpha(transparentRatio);
+
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvBikeDetail.setLayoutManager(layoutManager);
+        mRvBikeDetail.setLayoutManager(layoutManager);
 
         mBikeDetailItemList = new ArrayList<>();
 
         BikeDetailAdapter adapter = new BikeDetailAdapter(mBikeDetailItemList, getActivity());
-        rvBikeDetail.setAdapter(adapter);
+        mRvBikeDetail.setAdapter(adapter);
         fillData();
 
         return view;
