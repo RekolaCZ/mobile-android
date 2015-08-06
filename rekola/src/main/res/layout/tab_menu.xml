@@ -42,7 +42,7 @@
         android:onClick="onCustomOptionsItemSelected"
         android:paddingBottom="@dimen/action_bar_icon_padding_bottom"
         android:paddingRight="@dimen/action_bar_icon_padding_right"
-        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:paddingTop="@dimen/action_bar_icon_padding_top"
         android:src="@drawable/actionbar_ic_profile"/>
 

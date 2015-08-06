@@ -45,12 +45,6 @@ public class PageManager {
     private static final int mAnimationOut = android.R.animator.fade_out;
 
     /**
-     * Last used root state for back (up) calls.
-     * This is the only contextual info here.
-     */
-    // private EPageState rootState = EPageState.MAP;
-
-    /**
      * Fragment cache.
      */
     private HashMap<EPageState, Fragment> cache = new HashMap<>();
@@ -73,7 +67,7 @@ public class PageManager {
         ABOUT(true, false, true, true, R.string.about_title, AboutFragment.class),
         WEB_RETURN(false, true, false, false, null, ReturnWebFragment.class),
         BIKE_DETAIL(false, false, true, true, null, BikeDetailFragment.class),
-        WEB_BIKE_DETAIL(true, true, false, true, null, BikeDetailWebFragment.class),
+        WEB_BIKE_DETAIL(true, false, false, true, null, BikeDetailWebFragment.class),
         ADD_ISSUE(true, false, true, true, R.string.add_issue_title, AddIssueFragment.class),
         SPINNER_LIST(false, false, false, true, null, SpinnerListFragment.class);
 
