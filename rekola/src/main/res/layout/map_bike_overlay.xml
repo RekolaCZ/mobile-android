@@ -11,7 +11,7 @@
         style="@style/Layout"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/overlay"
+        android:background="@drawable/button_pink"
         android:orientation="horizontal"
         android:visibility="gone">
 
