@@ -4,17 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-       style="@style/Layout">
+        style="@style/Layout">
 
-        <include layout="@layout/tab_menu"/>
+        <FrameLayout
+            style="@style/Layout"
+            android:layout_height="wrap_content">
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                     android:id="@+id/fragment_container"
-                     style="@style/Layout"/>
+            <include layout="@layout/toolbar"/>
+
+
+            <include layout="@layout/tab_menu"/>
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            style="@style/Layout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
 
     </LinearLayout>
-
 
 
     <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar

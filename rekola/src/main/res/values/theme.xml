@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="GreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="GreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -24,5 +24,12 @@
         <item name="colorPrimaryDark">@color/dark_pink</item>
         <item name="colorAccent">@color/dark_pink</item>
     </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:colorForeground">@color/colorPrimary</item>
+    </style>
+
+
 
 </resources>

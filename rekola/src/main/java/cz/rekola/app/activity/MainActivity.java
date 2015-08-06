@@ -3,6 +3,7 @@ package cz.rekola.app.activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -29,7 +30,6 @@ import cz.rekola.app.core.page.PageController;
 import cz.rekola.app.core.page.PageManager;
 import cz.rekola.app.fragment.natural.AddIssueFragment;
 import cz.rekola.app.fragment.natural.BikeDetailFragment;
-import cz.rekola.app.fragment.natural.BorrowFragmentKeyboard;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
@@ -62,6 +62,8 @@ public class MainActivity extends BaseActivity implements PageController {
         }
 
         setContentView(R.layout.activity_main);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
         ButterKnife.inject(this);
         pageManager = new PageManager();
 
