@@ -2,6 +2,8 @@ package cz.rekola.app.fragment.natural;
 
 
 import android.app.AlertDialog;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -43,6 +47,7 @@ public class BikeDetailFragment extends BaseMainFragment {
     private int mBikeID = Bike.UNDEFINED_BIKE;
     private List<BikeDetailItem> mBikeDetailItemList;
     private int mOverallYScroll = 0; //to change toolbar visibility according to scrolling position
+    int mColorPrimaryDark;
 
     @InjectView(R.id.rvBikeDetail)
     RecyclerView mRvBikeDetail;
@@ -70,8 +75,10 @@ public class BikeDetailFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bike_detail, container, false);
-        ButterKnife.inject(this, view);
 
+        mColorPrimaryDark = getAct().getResources().getColor(R.color.colorPrimaryDark);
+
+        ButterKnife.inject(this, view);
 
         mRvBikeDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -81,8 +88,13 @@ public class BikeDetailFragment extends BaseMainFragment {
 
                 float transparentRatio = (float) mOverallYScroll / mBikeDetailToolbarGreen
                         .getHeight();
-                mBikeDetailToolbarGreen.setAlpha(transparentRatio);
 
+                if (transparentRatio > 1) {
+                    transparentRatio = 1;
+                }
+
+                mBikeDetailToolbarGreen.setAlpha(transparentRatio);
+                setStatusBar(transparentRatio);
             }
         });
 
@@ -230,5 +242,26 @@ public class BikeDetailFragment extends BaseMainFragment {
                 alertDialog.dismiss();
             }
         });
+    }
+
+    private void setStatusBar(float transparentRatio) {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        Window window = getAct().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        Log.d("tom", "tr " + transparentRatio);
+
+        int r = (mColorPrimaryDark >> 16) & 0xFF;
+        int g = (mColorPrimaryDark >> 8) & 0xFF;
+        int b = (mColorPrimaryDark >> 0) & 0xFF;
+
+        int color = Color.argb((int) (255 * transparentRatio), r, g, b);
+
+        window.setStatusBarColor(color);
     }
 }
