@@ -23,6 +23,7 @@ import cz.rekola.app.fragment.natural.AboutFragment;
 import cz.rekola.app.fragment.natural.AddIssueFragment;
 import cz.rekola.app.fragment.natural.BikeDetailFragment;
 import cz.rekola.app.fragment.natural.BorrowFragment;
+import cz.rekola.app.fragment.natural.BorrowFragmentKeyboard;
 import cz.rekola.app.fragment.natural.MapFragment;
 import cz.rekola.app.fragment.natural.ProfileFragment;
 import cz.rekola.app.fragment.natural.ReturnFragment;
@@ -64,6 +65,7 @@ public class PageManager {
         //      Title ID,
         //      BaseMainFragment
         BORROW(false, true, true, false, null, BorrowFragment.class),
+        BORROW_KEYBOARD(false, true, true, true, null, BorrowFragmentKeyboard.class),
         RETURN(false, true, true, false, null, ReturnFragment.class),
         MAP(false, true, true, false, null, MapFragment.class),
         PROFILE(false, true, false, false, null, ProfileFragment.class),
@@ -243,7 +245,9 @@ public class PageManager {
         ImageView imgMapIcon = (ImageView) tabMenu.findViewById(R.id.img_action_map);
         ImageView imgProfileIcon = (ImageView) tabMenu.findViewById(R.id.img_action_profile);
 
-        if (activeState == EPageState.BORROW || activeState == EPageState.RETURN)
+        if (activeState == EPageState.BORROW
+                || activeState == EPageState.BORROW_KEYBOARD
+                || activeState == EPageState.RETURN)
             imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock_active);
         else
             imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock);

@@ -26,13 +26,22 @@ import cz.rekola.app.utils.SoftKeyboard;
 import cz.rekola.app.view.CodeView;
 
 /**
- * Screen to borrow bike
+ * Screen to borrow bike, when keyboard is active
  */
 
-public class BorrowFragment extends BaseMainFragment {
+public class BorrowFragmentKeyboard extends BaseMainFragment {
 
     @InjectView(R.id.txt_bike_code)
     CodeView mTxtBikeCode;
+    @InjectView(R.id.txt_code_hint_keyboard_hidden)
+    TextView mTxtCodeHintKeyboardHidden;
+    @InjectView(R.id.txt_code_hint_keyboard_visible)
+    TextView mTxtCodeHintKeyboardVisible;
+    @InjectView(R.id.img_rekola_logo)
+    ImageView mImgRekolaLogo;
+    @InjectView(R.id.txt_borrow_info)
+    TextView mTxtBorrowInfo;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +54,14 @@ public class BorrowFragment extends BaseMainFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
+
+        mImgRekolaLogo.setVisibility(View.GONE);
+        mTxtBorrowInfo.setVisibility(View.GONE);
+        mTxtCodeHintKeyboardHidden.setVisibility(View.GONE);
+        mTxtBikeCode.setHintVisibility(false);
+        mTxtBikeCode.codeHintOnClick();
+
+        mTxtCodeHintKeyboardVisible.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -58,11 +75,6 @@ public class BorrowFragment extends BaseMainFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-    }
-
-    @OnClick(R.id.txt_bike_code)
-    public void codeHintOnClick() {
-        getPageController().requestBorrowKeyboard();
     }
 
     @OnClick(R.id.btn_borrow)
@@ -88,5 +100,4 @@ public class BorrowFragment extends BaseMainFragment {
             getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_borrow_bike_failed)));
         }
     }
-
 }

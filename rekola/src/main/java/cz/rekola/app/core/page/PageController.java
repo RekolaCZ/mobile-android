@@ -24,4 +24,5 @@ public interface PageController {
 
     public void requestPrevState();
 
+    public void requestBorrowKeyboard();
 }

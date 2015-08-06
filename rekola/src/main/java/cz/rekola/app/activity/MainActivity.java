@@ -29,6 +29,7 @@ import cz.rekola.app.core.page.PageController;
 import cz.rekola.app.core.page.PageManager;
 import cz.rekola.app.fragment.natural.AddIssueFragment;
 import cz.rekola.app.fragment.natural.BikeDetailFragment;
+import cz.rekola.app.fragment.natural.BorrowFragmentKeyboard;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
@@ -250,6 +251,12 @@ public class MainActivity extends BaseActivity implements PageController {
     @Override
     public void requestPrevState() {
         pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
+    }
+
+    @Override
+    public void requestBorrowKeyboard() {
+        setState(PageManager.EPageState.BORROW_KEYBOARD);
+        invalidateOptionsMenu();
     }
 
     public void startLoginActivity(String message) {

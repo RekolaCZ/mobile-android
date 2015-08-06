@@ -59,7 +59,7 @@ public class CodeView extends FrameLayout {
         mTxtCodeList.get(mTxtCodeList.size() - 1).setPointVisibility(false);
     }
 
-    @OnClick(R.id.txt_code_hint)
+
     public void codeHintOnClick() {
         setHintVisibility(false);
         EditText firstEditText = mTxtCodeList.get(0);

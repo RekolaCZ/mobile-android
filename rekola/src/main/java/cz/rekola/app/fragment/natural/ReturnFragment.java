@@ -91,7 +91,6 @@ public class ReturnFragment extends BaseMainFragment {
             return;
         } else if (myBike.lockCode != null) {
             Date borrowedAt = new Date(); //bike was borrowed now, so it will be set current time
-            Log.d("tom", "" + "this time");
             setData(myBike.lockCode.bike, myBike.lockCode.lockCode, borrowedAt);
         }
     }
