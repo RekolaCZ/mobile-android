@@ -54,6 +54,7 @@ public class BikeDetailFragment extends BaseMainFragment {
     public void init(int bikeID) {
         if (mBikeID != bikeID && mBikeID != Bike.UNDEFINED_BIKE) {
             mBikeID = bikeID;
+            mOverallYScroll = 0;
             fillData();
         }
 

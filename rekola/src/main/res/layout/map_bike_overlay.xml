@@ -11,7 +11,7 @@
         style="@style/Layout"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_pink"
+        android:background="@drawable/overlay"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -98,12 +98,14 @@
         android:layout_above="@id/overlay_map_area"
         android:layout_marginBottom="@dimen/bike_overlay_negative_margin"
         android:src="@drawable/ic_navigation"
+        android:layout_marginRight="@dimen/default_screen_margin"
         android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/btn_center_map"
         style="@style/IconImageView"
         android:layout_above="@id/btn_route"
+        android:layout_marginRight="@dimen/default_screen_margin"
         android:layout_marginBottom="12dp"
         android:src="@drawable/ic_location"/>
 
