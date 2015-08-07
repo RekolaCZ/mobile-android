@@ -65,7 +65,7 @@ public class PageManager {
         PROFILE(false, true, false, false, null, ProfileFragment.class),
         RETURN_MAP(true, false, true, true, R.string.returnmap_title, ReturnMapFragment.class),
         ABOUT(true, false, true, true, R.string.about_title, AboutFragment.class),
-        WEB_RETURN(false, true, false, false, null, ReturnWebFragment.class),
+        WEB_RETURN(false, false, false, false, null, ReturnWebFragment.class),
         BIKE_DETAIL(false, false, true, true, null, BikeDetailFragment.class),
         WEB_BIKE_DETAIL(true, false, false, true, null, BikeDetailWebFragment.class),
         ADD_ISSUE(true, false, true, true, R.string.add_issue_title, AddIssueFragment.class),
