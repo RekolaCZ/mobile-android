@@ -158,6 +158,12 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+               if(getActivity() ==null)
+               {
+                   this.cancel();
+                   return;
+
+               }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
