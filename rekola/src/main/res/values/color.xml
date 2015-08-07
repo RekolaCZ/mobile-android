@@ -51,11 +51,7 @@
     <color name="grey16">#585858</color>
 
 
-
-
-
     <color name="grey_dark">#404040</color>
-
 
 
     <color name="warning_yellow">#ffb43d</color>
@@ -63,7 +59,6 @@
     <color name="warning_gray">#ffd2d9</color>
 
     <color name="navigation_color">#3fb9ff</color>
-
 
 
     <color name="transparent">#00000000</color>

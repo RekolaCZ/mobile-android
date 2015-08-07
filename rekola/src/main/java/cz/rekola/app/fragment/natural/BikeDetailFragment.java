@@ -254,8 +254,6 @@ public class BikeDetailFragment extends BaseMainFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        Log.d("tom", "tr " + transparentRatio);
-
         int r = (mColorPrimaryDark >> 16) & 0xFF;
         int g = (mColorPrimaryDark >> 8) & 0xFF;
         int b = (mColorPrimaryDark >> 0) & 0xFF;

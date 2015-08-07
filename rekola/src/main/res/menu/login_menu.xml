@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:rekola="http://schemas.android.com/apk/res-auto"    >
+      xmlns:rekola="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/txt_register"
         android:title="@string/login_registration"

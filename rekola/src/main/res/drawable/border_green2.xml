@@ -9,5 +9,5 @@
     <padding
         android:left="19dp"
         android:right="19dp"
-     />
+        />
 </shape>
