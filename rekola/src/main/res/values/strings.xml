@@ -31,6 +31,7 @@
     <string name="borrow_borrow">Borrow</string>
     <string name="borrow_code_hint">Enter 6-digit code</string>
 
+    <string name="return_borrowed">Borrowed</string>
     <string name="return_info_lock_code">Lock code</string>
     <string name="return_return">Return</string>
     <string name="return_bike_detail">Bike Detail</string>

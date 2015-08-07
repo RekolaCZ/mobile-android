@@ -24,6 +24,7 @@
     <string name="borrow_borrow">Půjčit</string>
     <string name="borrow_code_hint">Vložte šestimístný kód</string>
 
+    <string name="return_borrowed">Půjčeno</string>
     <string name="return_info_lock_code">Kód zámku</string>
     <string name="return_return">Vrátit</string>
     <string name="return_bike_detail">Detail kola</string>
