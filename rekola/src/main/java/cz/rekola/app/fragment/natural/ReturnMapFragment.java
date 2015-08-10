@@ -233,9 +233,9 @@ public class ReturnMapFragment extends BaseMapFragment {
     }
 
     private enum POIS {
-        BAY("bay", R.drawable.ic_pin_parking_normal),
-        GRAVE("grave", R.drawable.ic_pin_grave_normal),
-        NO_PARKING("noparking", R.drawable.ic_pin_noparking_normal);
+        BAY("bay", R.drawable.ic_pin_parking),
+        GRAVE("grave", R.drawable.ic_pin_grave),
+        NO_PARKING("noparking", R.drawable.ic_pin_noparking);
 
         static BitmapDescriptor getBmpFromType(String type) {
             for (POIS p : POIS.values()) {
