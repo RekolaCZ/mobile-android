@@ -105,7 +105,6 @@
     <Button
         android:id="@+id/btn_about"
         style="@style/ButtonGrey"
-        android:layout_height="41dp"
         android:layout_gravity="bottom"
         android:gravity="center"
         android:text="@string/about_title"/>
