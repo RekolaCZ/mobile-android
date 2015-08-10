@@ -2,9 +2,5 @@
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
         android:color="@color/dark_pink5">
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/base_pink"/>
-        </shape>
-    </item>
+    <item android:drawable="@drawable/button_pink_normal" />
 </ripple>
