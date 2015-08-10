@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
@@ -16,7 +19,6 @@ import cz.rekola.app.R;
 import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.api.model.user.Account;
 import cz.rekola.app.core.bus.dataAvailable.AccountAvailableEvent;
-import cz.rekola.app.core.bus.dataAvailable.BikesAvailableEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.utils.DateUtils;
 
@@ -88,7 +90,17 @@ public class ProfileFragment extends BaseMainFragment {
         mTxtMembershipEndDate.setText(DateUtils.getDateYear(account.membershipEnd));
         mTxtEmail.setText(account.email);
         mTxtAddress.setText(account.address);
-        mTxtPhone.setText(account.phone);
+
+        String phoneNumber = account.phone;
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber formattedNumber = phoneUtil.parse(phoneNumber, "CS");
+            phoneNumber = phoneUtil.format(formattedNumber,
+                    PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+        }
+        mTxtPhone.setText(phoneNumber);
     }
 
 
