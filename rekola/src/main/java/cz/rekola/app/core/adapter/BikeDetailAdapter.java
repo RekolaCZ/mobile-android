@@ -131,7 +131,15 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
         viewHolder.mTxtRecReturnedDate.setText(DateUtils.getDate(recentlyReturnedDate));
         viewHolder.mTxtRecReturnedTime.setText(DateUtils.getTime(recentlyReturnedDate));
-        viewHolder.mTxtRecReturnedDescription.setText(mData.get(position).getRecentPlaceDescription());
+
+        String recentPlaceDescription = mData.get(position).getRecentPlaceDescription();
+
+        if (recentPlaceDescription.trim().equals("")) {
+            viewHolder.mTxtRecReturnedDescription.setVisibility(View.GONE);
+        } else {
+            viewHolder.mTxtRecReturnedDescription.setVisibility(View.VISIBLE);
+            viewHolder.mTxtRecReturnedDescription.setText(recentPlaceDescription);
+        }
     }
 
     private void onBindEquipment(BikeDetailAdapter.ViewHolder viewHolder, final int
