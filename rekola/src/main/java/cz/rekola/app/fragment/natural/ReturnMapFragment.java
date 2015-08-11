@@ -123,6 +123,7 @@ public class ReturnMapFragment extends BaseMapFragment {
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
             centerMapOnMyLocation(true);
+            mTxtNote.setText("");
         }
     }
 
