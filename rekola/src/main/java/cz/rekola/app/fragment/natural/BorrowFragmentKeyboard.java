@@ -1,14 +1,9 @@
 package cz.rekola.app.fragment.natural;
 
-import android.app.Service;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -22,7 +17,6 @@ import cz.rekola.app.core.bus.MessageEvent;
 import cz.rekola.app.core.bus.dataFailed.LockCodeFailedEvent;
 import cz.rekola.app.fragment.base.BaseMainFragment;
 import cz.rekola.app.utils.KeyboardUtils;
-import cz.rekola.app.utils.SoftKeyboard;
 import cz.rekola.app.view.CodeView;
 
 /**
@@ -33,19 +27,11 @@ public class BorrowFragmentKeyboard extends BaseMainFragment {
 
     @InjectView(R.id.txt_bike_code)
     CodeView mTxtBikeCode;
-    @InjectView(R.id.txt_code_hint_keyboard_hidden)
-    TextView mTxtCodeHintKeyboardHidden;
-    @InjectView(R.id.txt_code_hint_keyboard_visible)
-    TextView mTxtCodeHintKeyboardVisible;
-    @InjectView(R.id.img_rekola_logo)
-    ImageView mImgRekolaLogo;
-    @InjectView(R.id.txt_borrow_info)
-    TextView mTxtBorrowInfo;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_borrow, container, false);
+        View view = inflater.inflate(R.layout.fragment_borrow_keyboard, container, false);
         ButterKnife.inject(this, view);
         return view;
     }
@@ -53,20 +39,13 @@ public class BorrowFragmentKeyboard extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
 
-        mImgRekolaLogo.setVisibility(View.GONE);
-        mTxtBorrowInfo.setVisibility(View.GONE);
-        mTxtCodeHintKeyboardHidden.setVisibility(View.GONE);
-        mTxtBikeCode.setHintVisibility(false);
         mTxtBikeCode.codeHintOnClick();
-
-        mTxtCodeHintKeyboardVisible.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if (!hidden && !mTxtBikeCode.isCodeHintVisible()) {
+        if (!hidden) {
             KeyboardUtils.showKeyboard(getActivity());
         }
     }

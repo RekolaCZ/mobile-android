@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        style="@style/Layout"
+
+        android:layout_marginBottom="@dimen/default_screen_margin"
+        android:layout_marginTop="@dimen/default_screen_margin">
+
+
+        <include
+            android:id="@+id/txt_bike_code"
+            layout="@layout/view_code"
+            android:imeOptions="actionDone"/>
+
+        <TextView
+            android:id="@+id/txt_code_hint_keyboard_visible"
+            style="@style/CodeHintTextView"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="24dp"/>
+
+        <Button
+            android:id="@+id/btn_borrow"
+            style="@style/ButtonPink"
+            fontPath="@string/font_roboto_medium"
+            android:layout_height="55dp"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:layout_marginTop="17dp"
+            android:text="@string/borrow_borrow"
+            android:textAllCaps="true"
+            android:textSize="21sp"
+            />
+
+    </LinearLayout>
+</ScrollView>
+
+

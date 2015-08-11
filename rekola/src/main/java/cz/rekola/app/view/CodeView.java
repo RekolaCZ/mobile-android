@@ -9,14 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
-import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.utils.KeyboardUtils;
 
@@ -31,8 +29,6 @@ public class CodeView extends FrameLayout {
             R.id.txt_code_4, R.id.txt_code_5})
     List<PinEditText> mTxtCodeList;
 
-    @InjectView(R.id.txt_code_hint)
-    TextView mTxtCodeHint;
     @InjectView(R.id.ll_code)
     LinearLayout mLlCode;
 
@@ -61,14 +57,9 @@ public class CodeView extends FrameLayout {
 
 
     public void codeHintOnClick() {
-        setHintVisibility(false);
         EditText firstEditText = mTxtCodeList.get(0);
         firstEditText.requestFocus();
         KeyboardUtils.showKeyboard(getContext(), firstEditText);
-    }
-
-    public boolean isCodeHintVisible() {
-        return mTxtCodeHint.getVisibility() == VISIBLE;
     }
 
     public String getText() {
@@ -80,16 +71,6 @@ public class CodeView extends FrameLayout {
         return pinCode.toString();
     }
 
-    public void setHintVisibility(boolean visible) {
-        if (visible) {
-            mTxtCodeHint.setVisibility(VISIBLE);
-            mLlCode.setVisibility(GONE);
-        } else {
-            mTxtCodeHint.setVisibility(GONE);
-            mLlCode.setVisibility(VISIBLE);
-        }
-
-    }
 
     private void setEditTextListeners() {
         for (int i = 0; i < mTxtCodeList.size(); i++) {

@@ -36,10 +36,19 @@
             style="@style/CodeHintTextView"
             android:layout_marginBottom="59dp"/>
 
-        <include
-            android:id="@+id/txt_bike_code"
-            layout="@layout/view_code"
-            android:imeOptions="actionDone"/>
+        <TextView
+            android:id="@+id/txt_code_hint"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:background="@color/light_grey"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/borrow_code_hint"
+            android:textColor="@color/grey9"
+            android:textSize="18sp"
+            />
 
         <TextView
             android:id="@+id/txt_code_hint_keyboard_visible"
