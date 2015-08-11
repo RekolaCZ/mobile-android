@@ -1,13 +1,11 @@
 package cz.rekola.app.activity;
 
-import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -35,7 +33,6 @@ import cz.rekola.app.core.bus.dataFailed.BorrowedBikeFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.LoginFailedEvent;
 import cz.rekola.app.core.bus.dataFailed.PasswordRecoveryFailed;
 import cz.rekola.app.utils.KeyboardUtils;
-import cz.rekola.app.utils.SoftKeyboard;
 import cz.rekola.app.view.LoadingOverlay;
 import cz.rekola.app.view.MessageBarView;
 
@@ -82,7 +79,6 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
-        initKeyboardsCallBacks();
         initEditTextAction();
     }
 
@@ -98,7 +94,6 @@ public class LoginActivity extends BaseActivity {
             login();
         } else {
             mOverlayLoading.hide();
-            showElements();
         }
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE)) {
@@ -130,7 +125,6 @@ public class LoginActivity extends BaseActivity {
             mTxtResetUserName.setText(mTxtUserName.getText());
         }
 
-        hideElements();
         MyAnimator.showSlideUp(mOverlayReset);
     }
 
@@ -166,7 +160,6 @@ public class LoginActivity extends BaseActivity {
     public void onBackPressed() {
 
         if (mOverlayReset.getVisibility() == View.VISIBLE) {
-            showElements();
             hideResetView();
         } else {
             super.onBackPressed();
@@ -214,28 +207,6 @@ public class LoginActivity extends BaseActivity {
         getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_old_app_version)));
     }
 
-    private void initKeyboardsCallBacks() {
-        InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
-
-        SoftKeyboard softKeyboard = new SoftKeyboard(mRootLayout, im);
-        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
-
-            @Override
-            public void onSoftKeyboardHide() {
-
-                if (isLoginScreenVisible()) {
-                    showElements();
-                }
-            }
-
-            @Override
-            public void onSoftKeyboardShow() {
-
-                hideElements();
-            }
-        });
-    }
-
     private void initEditTextAction() {
         mTxtPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -249,23 +220,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void showElements() {
-        mTxtRegister.setVisibility(View.VISIBLE);
-        mImgRekolaLogo.setVisibility(View.VISIBLE);
-        mLlBottom.setVisibility(View.VISIBLE);
 
-        mViewDummy.setVisibility(View.GONE);
-    }
-
-    private void hideElements() {
-        mTxtRegister.setVisibility(View.GONE);
-        mImgRekolaLogo.setVisibility(View.GONE);
-        mLlBottom.setVisibility(View.GONE);
-
-        //hack, this view must be visible, if keyboard is visible,
-        // it caused bad scrolling
-        mViewDummy.setVisibility(View.VISIBLE);
-    }
 
     private boolean isLoginScreenVisible() {
         return mOverlayLoading.getVisibility() != View.VISIBLE
@@ -275,7 +230,6 @@ public class LoginActivity extends BaseActivity {
     private void login() {
         KeyboardUtils.hideKeyboard(this);
         mLayoutErrorBar.hide();
-        hideElements();
         mOverlayLoading.show();
         getApp().getDataManager().login(viewHelper.getCredentials());
     }
@@ -286,7 +240,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void hideResetView() {
-        showElements();
         KeyboardUtils.hideKeyboard(this);
         MyAnimator.hideSlideDown(mOverlayReset);
     }
