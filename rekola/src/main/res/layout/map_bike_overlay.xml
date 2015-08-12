@@ -39,17 +39,15 @@
             <TextView
                 android:id="@+id/txt_bike_name"
                 style="@style/TextViewWhite"
-                android:text="sads"
                 fontPath="@string/font_roboto_medium"
                 android:layout_marginEnd="80dp"
                 android:layout_marginRight="80dp"
-                android:layout_marginBottom="-6dp"
+                android:layout_marginBottom="-5dp"
                 android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/txt_distance"
                 style="@style/TextViewWhite"
-                android:text="dsfds"
                 android:layout_marginBottom="6dp"
                 android:singleLine="true"
                 fontPath="@string/font_roboto_italic"
@@ -79,6 +77,7 @@
                 android:id="@+id/txt_note"
                 style="@style/TextViewWhite"
                 fontPath="@string/font_roboto_medium"
+                android:layout_marginBottom="4dp"
                 android:textSize="16sp"
                 />
 
