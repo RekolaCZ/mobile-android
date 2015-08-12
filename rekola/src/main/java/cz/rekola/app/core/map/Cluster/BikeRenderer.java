@@ -2,6 +2,7 @@ package cz.rekola.app.core.map.Cluster;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import cz.rekola.app.R;
+import cz.rekola.app.core.Constants;
 
 /**
  * Render for bike icons on Google map
@@ -40,6 +42,8 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
     private HashMap<BikeClusterItem, Marker> markerBikeItemMap = new HashMap<>();
     //Picasso use weak reference, so without reference it would be garbage collected
+
+    private float mZoomLevel;
 
     public BikeRenderer(Context context, LayoutInflater layoutInflater, GoogleMap map,
                         ClusterManager<BikeClusterItem> clusterManager) {
@@ -106,6 +110,10 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
         loadIconFromApi(bikeClusterItem, marker);
     }
 
+    public void setZoomLevel(float zoomLevel) {
+        this.mZoomLevel = zoomLevel;
+    }
+
     // Draw a single bike.
     @Override
     protected void onBeforeClusterItemRendered(BikeClusterItem bikeClusterItem, MarkerOptions markerOptions) {
@@ -168,6 +176,10 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
     @Override
     protected boolean shouldRenderAsCluster(Cluster cluster) {
+        Log.d("tom", "mZoomLevel " + mZoomLevel);
+        if (mZoomLevel > Constants.MAX_CLUSTERING_ZOOM_LEVEL)
+            return false;
+
         // Always render clusters.
         return cluster.getSize() > 1;
     }

@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.Cluster;
@@ -158,12 +159,11 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-               if(getActivity() ==null)
-               {
-                   this.cancel();
-                   return;
+                if (getActivity() == null) {
+                    this.cancel();
+                    return;
 
-               }
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -218,7 +218,14 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
 
             // Point the map's listeners at the listeners implemented by the cluster
             // manager.
-            mGoogleMap.setOnCameraChangeListener(mClusterManager);
+            mGoogleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+                    mClusterManager.onCameraChange(cameraPosition);
+                    mBikeRenderer.setZoomLevel(cameraPosition.zoom);
+                }
+            });
+
             mGoogleMap.setOnMarkerClickListener(mClusterManager);
         }
 
