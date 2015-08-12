@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -49,6 +50,18 @@ public class CodeView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.inject(this, this);
+
+
+        for (PinTextView txtCode : mTxtCodeList) {
+            txtCode.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    codeHintOnClick();
+                }
+            });
+        }
+
+
 
         setEditTextListeners();
 
