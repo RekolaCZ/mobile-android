@@ -31,7 +31,6 @@ public class Issue {
         Iterator it = hashMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
             Issue issue = new Issue();
             issue.title = (String) pair.getKey();
             issue.updates = (List<IssueUpdate>) pair.getValue();

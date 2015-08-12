@@ -11,6 +11,9 @@
 
         <TextView
             android:id="@+id/txt_register"
+       android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="@dimen/bike_detail_toolbar_height"
             style="@style/TextViewWhite"
             android:layout_marginTop="13dp"
             android:layout_marginRight="16dp"
@@ -72,15 +75,6 @@
                     android:layout_height="0px"
                     android:focusable="true"
                     android:focusableInTouchMode="true"/>
-
-                <!-- Hack - on some devices after keyboard is visible, it cropped  txt_user_name -->
-                <View
-                    android:id="@+id/view_dummy"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginBottom="100dp"
-                    android:visibility="gone"/>
-
 
                 <EditText
                     android:id="@+id/txt_user_name"
