@@ -4,8 +4,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -19,7 +17,9 @@ import cz.rekola.app.R;
 import cz.rekola.app.utils.KeyboardUtils;
 
 /**
- * View to set pin code (6 editbox)
+ * View to set pin code (6 Textview + 1 EditText)
+ * User write in invisible edittext, so it is faster than jumping in edittext (mTxtCodeHidden)
+ * Content is shown in Textviews
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {14. 7. 2015}
  **/
 public class CodeView extends FrameLayout {
@@ -27,10 +27,11 @@ public class CodeView extends FrameLayout {
 
     @InjectViews({R.id.txt_code_0, R.id.txt_code_1, R.id.txt_code_2, R.id.txt_code_3,
             R.id.txt_code_4, R.id.txt_code_5})
-    List<PinEditText> mTxtCodeList;
+    List<PinTextView> mTxtCodeList;
 
-    @InjectView(R.id.ll_code)
-    LinearLayout mLlCode;
+    @InjectView(R.id.txt_code_hidden)
+    EditText mTxtCodeHidden;
+
 
     public CodeView(Context context) {
         super(context);
@@ -57,14 +58,13 @@ public class CodeView extends FrameLayout {
 
 
     public void codeHintOnClick() {
-        EditText firstEditText = mTxtCodeList.get(0);
-        firstEditText.requestFocus();
-        KeyboardUtils.showKeyboard(getContext(), firstEditText);
+        mTxtCodeHidden.requestFocus();
+        KeyboardUtils.showKeyboard(getContext(), mTxtCodeHidden);
     }
 
     public String getText() {
         StringBuilder pinCode = new StringBuilder(mTxtCodeList.size());
-        for (EditText txtCode : mTxtCodeList) {
+        for (PinTextView txtCode : mTxtCodeList) {
             pinCode.append(txtCode.getText());
         }
 
@@ -73,16 +73,7 @@ public class CodeView extends FrameLayout {
 
 
     private void setEditTextListeners() {
-        for (int i = 0; i < mTxtCodeList.size(); i++) {
-            EditText txtCode = mTxtCodeList.get(i);
-            setTextChangedListener(txtCode, i);
-            setOnKeyListener(txtCode, i);
-        }
-    }
-
-    private void setTextChangedListener(final EditText txtCode, final int position) {
-
-        txtCode.addTextChangedListener(new TextWatcher() {
+        mTxtCodeHidden.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -95,29 +86,15 @@ public class CodeView extends FrameLayout {
 
             @Override
             public void afterTextChanged(Editable text) {
-                //if user wrote one number, jump to another EditText
-                if (position + 1 < mTxtCodeList.size() && !text.toString().equals("")) {
-                    mTxtCodeList.get(position + 1).requestFocus();
+                for (int i = 0; i < text.length(); i++) {
+                    mTxtCodeList.get(i).setText(text.subSequence(i, i + 1));
+                }
+
+                //set rest of textviews
+                for (int i = text.length(); i < mTxtCodeList.size(); i++) {
+                    mTxtCodeList.get(i).setText("");
                 }
             }
         });
-    }
-
-    private void setOnKeyListener(final EditText txtCode, final int position) {
-        txtCode.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                //if user press delete and there is no number, jump to previous EditText
-                if (keyCode == KeyEvent.KEYCODE_DEL) {
-                    if (position != 0 && txtCode.getText().toString().equals("")) {
-                        mTxtCodeList.get(position - 1).requestFocus();
-                    }
-                }
-                return false;
-            }
-        });
-
-
     }
 }

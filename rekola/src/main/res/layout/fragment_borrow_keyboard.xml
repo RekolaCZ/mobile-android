@@ -7,7 +7,7 @@
         style="@style/Layout"
 
         android:layout_marginBottom="@dimen/default_screen_margin"
-        android:layout_marginTop="@dimen/default_screen_margin">
+        >
 
 
         <include
