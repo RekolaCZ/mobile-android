@@ -94,6 +94,9 @@ public class BikeOverlayView extends RelativeLayout {
         mTxtNote.setText(bike.location.note);
         mTxtDescription.setText(bike.description);
 
+        int txtNoteVisibility = mTxtNote.getText().toString().trim().equals("") ? GONE : VISIBLE;
+        mTxtNote.setVisibility(txtNoteVisibility);
+
         int inoperationalVisibility = bike.operational ? GONE : VISIBLE;
         mTxtInoperational.setVisibility(inoperationalVisibility);
 
