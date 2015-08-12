@@ -63,9 +63,9 @@
 
     <color name="transparent">#00000000</color>
 
-    <!-- Map overlay-->
 
     <color name="map_overlay_background">#ee3897</color>
+    <color name="spinner_text">@color/grey14</color>
 
 
     <color name="white">#FFFFFF</color>

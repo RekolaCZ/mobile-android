@@ -105,6 +105,7 @@
     <string name="error_old_app_version">Sorry, but your application is outdated.\n\nPlease upgrade to latest version.</string>
     <string name="error_session_expired">You have been logged out.</string>
     <string name="error_fill_issue_description">Please, fill issue description.</string>
+    <string name="error_select_issue_type">Please, select issue type.</string>
 
     <!-- Success messages -->
     <string name="success_password_recovery">Please, check your email for further password recovery instructions.</string>

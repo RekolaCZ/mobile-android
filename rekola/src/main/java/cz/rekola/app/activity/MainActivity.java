@@ -243,10 +243,10 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
-    public void requestAddIssue(int bikeID) {
+    public void requestAddIssue(int bikeID, boolean isDefaultState ) {
         Fragment fragment = setState(PageManager.EPageState.ADD_ISSUE);
         if (fragment != null && fragment instanceof AddIssueFragment)
-            ((AddIssueFragment) fragment).init(bikeID);
+            ((AddIssueFragment) fragment).init(bikeID, isDefaultState);
         invalidateOptionsMenu();
     }
 

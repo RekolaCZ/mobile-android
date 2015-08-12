@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:drawableRight="@drawable/spinner_arrow"
     android:singleLine="true"
-    android:textColor="@color/grey14"
+    android:textColor="@color/spinner_text"
     android:textSize="16sp"/>

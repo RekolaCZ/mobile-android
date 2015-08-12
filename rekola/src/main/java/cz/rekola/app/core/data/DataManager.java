@@ -406,6 +406,7 @@ public class DataManager {
             @Override
             public void success(Object unused, Response response) {
                 getBikeIssues(bikeID, true); //forced update bike issues
+                getBorrowedBike(true); //forced update bike issues
             }
 
             @Override

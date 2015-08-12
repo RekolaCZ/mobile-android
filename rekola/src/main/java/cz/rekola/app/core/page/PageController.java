@@ -20,7 +20,7 @@ public interface PageController {
 
     public void requestWebBikeReturned(String successUrl);
 
-    public void requestAddIssue(int bikeID);
+    public void requestAddIssue(int bikeID, boolean isDefaultState);
 
     public void requestPrevState();
 

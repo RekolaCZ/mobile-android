@@ -48,15 +48,30 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
     CheckBox mChkInoperational;
 
     DefaultValues mDefaultValues;
+    boolean mIsDefaultState = true;
+    boolean mIssueTypeIsSelected = false;
     int mBikeID;
 
     public AddIssueFragment() {
         // Required empty public constructor
     }
 
-    public void init(int bikeID) {
+    public void init(int bikeID, boolean isDefaultState) {
+        Log.d("tom", "init");
         mBikeID = bikeID;
+        mIsDefaultState = isDefaultState;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden && mIsDefaultState ) {
+            setDefaultState();
+            Log.d("tom", "setDefaultState");
+            mIsDefaultState = false;
+        }
+    }
+
+
 
 
     @Override
@@ -74,11 +89,17 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
     public void reportIssue() {
         if (mBikeID == Bike.UNDEFINED_BIKE) {
             Log.e(TAG, "bike was not initialized");
+            return;
+        }
+
+        if (!isIssueTypeSelected()) {
+            return;
         }
 
         if (!isIssueDescriptionFilled()) {
             return;
         }
+
 
         Issue issue = mDefaultValues.issues.get(mSpnIssueType.getSelectedItemPosition());
         int type = issue.id;
@@ -96,7 +117,7 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         showDialog(R.string.add_issue_success, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getPageController().requestMap();
+                getAct().onClickActionLock();
             }
         });
     }
@@ -134,8 +155,18 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
                 return true;
             }
         });
+    }
 
-     }
+    private void setDefaultState() {
+        mTxtIssueType.setText("");
+        mChkInoperational.setChecked(false);
+        mIssueTypeIsSelected = false;
+
+        mSpnIssueType.setBackgroundResource(R.drawable.spinner_grey);
+        TextView spinnerItemText = (TextView) mSpnIssueType.findViewById(R.id.txt_spinner_item);
+        int grey = getActivity().getResources().getColor(R.color.spinner_text);
+        spinnerItemText.setTextColor(grey);
+    }
 
     /**
      * check if issue description is filled
@@ -150,12 +181,17 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
             return true;
     }
 
+    private boolean isIssueTypeSelected() {
+        if (!mIssueTypeIsSelected) {
+            showDialog(R.string.error_select_issue_type, null);
+            return false;
+        } else
+            return true;
+    }
+
     private void showDialog(int textID, DialogInterface.OnClickListener onClickListener) {
         String text = getString(textID);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-
-        // set title
-        //  alertDialogBuilder.setTitle("Your Title");
 
         // set dialog message
         alertDialogBuilder
@@ -190,5 +226,7 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         });
 
         mSpnIssueType.setSelection(item);
+        mIssueTypeIsSelected = true;
+        mIsDefaultState = false;
     }
 }

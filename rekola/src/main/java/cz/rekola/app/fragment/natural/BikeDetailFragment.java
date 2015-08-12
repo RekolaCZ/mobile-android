@@ -192,7 +192,7 @@ public class BikeDetailFragment extends BaseMainFragment {
         Button.OnClickListener addIssueListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPageController().requestAddIssue(bike.id);
+                getPageController().requestAddIssue(bike.id, true);
             }
         };
 
