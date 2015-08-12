@@ -48,6 +48,7 @@ public class BikeDetailFragment extends BaseMainFragment {
     private List<BikeDetailItem> mBikeDetailItemList;
     private int mOverallYScroll = 0; //to change toolbar visibility according to scrolling position
     int mColorPrimaryDark;
+    int mColorGrey;
 
     @InjectView(R.id.rvBikeDetail)
     RecyclerView mRvBikeDetail;
@@ -77,6 +78,7 @@ public class BikeDetailFragment extends BaseMainFragment {
         View view = inflater.inflate(R.layout.fragment_bike_detail, container, false);
 
         mColorPrimaryDark = getAct().getResources().getColor(R.color.colorPrimaryDark);
+        mColorGrey = getAct().getResources().getColor(R.color.grey_transparent);
 
         ButterKnife.inject(this, view);
 
@@ -254,12 +256,19 @@ public class BikeDetailFragment extends BaseMainFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        int r = (mColorPrimaryDark >> 16) & 0xFF;
-        int g = (mColorPrimaryDark >> 8) & 0xFF;
-        int b = (mColorPrimaryDark >> 0) & 0xFF;
+        int from = mColorGrey;
+        int to = mColorPrimaryDark;
 
-        int color = Color.argb((int) (255 * transparentRatio), r, g, b);
+        window.setStatusBarColor(blendColors(from, to, transparentRatio));
+    }
 
-        window.setStatusBarColor(color);
+    private int blendColors(int from, int to, float transparentRatio) {
+        final float inverseRatio = 1f - transparentRatio;
+        final float a = Color.alpha(to) * transparentRatio + Color.alpha(from) * inverseRatio;
+        final float r = Color.red(to) * transparentRatio + Color.red(from) * inverseRatio;
+        final float g = Color.green(to) * transparentRatio + Color.green(from) * inverseRatio;
+        final float b = Color.blue(to) * transparentRatio + Color.blue(from) * inverseRatio;
+
+        return Color.argb((int) a, (int) r, (int) g, (int) b);
     }
 }

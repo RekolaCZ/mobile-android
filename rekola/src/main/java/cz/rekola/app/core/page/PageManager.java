@@ -223,7 +223,7 @@ public class PageManager {
             if (newState == EPageState.SPINNER_LIST) {
                 color = R.color.dark_pink4;
             } else if (newState == EPageState.BIKE_DETAIL) {
-                color = R.color.transparent;
+                color = R.color.grey_transparent;
             } else {
                 color = R.color.dark_green;
             }

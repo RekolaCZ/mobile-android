@@ -52,6 +52,7 @@
 
 
     <color name="grey_dark">#404040</color>
+    <color name="grey_transparent">#33000000</color>
 
 
     <color name="warning_yellow">#ffb43d</color>
@@ -83,6 +84,7 @@
     <color name="text_inverse">@color/white</color>
 
     <color name="background_window">@color/white</color>
+
 
     <color name="UNRESOLVED">#00FFFF</color>
 
