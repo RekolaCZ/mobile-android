@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity implements PageController {
         if (getApp().getDataManager().showWebviewForBikedetail()) {
             Fragment fragment = setState(PageManager.EPageState.WEB_BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailWebFragment)
-                ((BikeDetailWebFragment) fragment).init(bikeID, issues);
+                ((BikeDetailWebFragment) fragment).init(bikeID, false); //false always return bike detail
         } else {
             Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailFragment)
