@@ -16,7 +16,8 @@
     <TextView
         android:id="@+id/txt_bike_name_toolbar"
         style="@style/TextViewWhite"
-        android:layout_gravity="center"
+        android:layout_marginLeft="72dp"
+        android:layout_gravity="left|center_vertical"
         android:textSize="20sp"/>
 
     <ImageView
