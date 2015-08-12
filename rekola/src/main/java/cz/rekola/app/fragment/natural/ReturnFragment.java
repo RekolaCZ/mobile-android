@@ -1,7 +1,6 @@
 package cz.rekola.app.fragment.natural;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,9 +100,8 @@ public class ReturnFragment extends BaseMainFragment {
 
         mTxtBikeName.setText(bike.name);
         mTxtLockCode.setText(lockCode == null ? null : lockCode.replace("", " ").trim());
-        //TODO waiting for api
-    //    mTxtBorrowedFromDate.setText(DateUtils.getDate(borrowedAt));
-    //   mTxtBorrowedFromTime.setText(DateUtils.getTime(borrowedAt));
+        mTxtBorrowedFromDate.setText(DateUtils.getDate(borrowedAt));
+        mTxtBorrowedFromTime.setText(DateUtils.getTime(borrowedAt));
 
         Glide.with(getActivity()).load(bike.imageUrl).into(mImgBike);
     }
