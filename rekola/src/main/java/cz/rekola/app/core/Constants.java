@@ -25,4 +25,6 @@ public class Constants {
 
     public static final String BROWSER_REGISTRATION_URL = "http://www.rekola.cz/register/credentials";
 
+    //if there is more equipments, it will add three points (symbol for more = ...)
+    public static final int MAX_COUNT_OF_VISIBLE_EQUIPMENTS = 4;
 }

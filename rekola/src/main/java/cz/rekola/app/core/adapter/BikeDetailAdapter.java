@@ -22,6 +22,7 @@ import java.util.List;
 import cz.rekola.app.R;
 import cz.rekola.app.api.model.bike.Equipment;
 import cz.rekola.app.api.model.bike.IssueUpdate;
+import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.model.BikeDetailItem;
 import cz.rekola.app.utils.DateUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
@@ -148,8 +149,16 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         viewHolder.mLlEquipments.removeAllViews();
 
         BikeDetailItem bikeDetailItem = mData.get(position);
+
+        int count = 0;
         for (Equipment equipment : bikeDetailItem.getEquipments()) {
+            if (count == Constants.MAX_COUNT_OF_VISIBLE_EQUIPMENTS) {
+                addLastEquipmentIcon(viewHolder.mLlEquipments);
+                break;
+            }
+
             addEquipmentIcon(viewHolder.mLlEquipments, equipment.iconUrl);
+            count++;
         }
 
         viewHolder.mBtnEquipmentsDetail.setOnClickListener(mData.get(position)
@@ -157,17 +166,22 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
     }
 
     private void addEquipmentIcon(LinearLayout mLlEquipments, String iconUrl) {
-        //in experimenting with GridView or TwoWay-View was problem with
-        // horizontal centering, so it was used simply Linear Layout + HorizontalScrollView + dynamic ImageView creation
-
-        View flEquipmentIcon = LayoutInflater.from(mContext).
-                inflate(R.layout.bike_detail_equipment_icon, mLlEquipments, false);
+        View flEquipmentIcon = LayoutInflater.from(mContext)
+                .inflate(R.layout.bike_detail_equipment_icon, mLlEquipments, false);
 
         ImageView imgEquipment = (ImageView) flEquipmentIcon
                 .findViewById(R.id.img_equipment_icon);
 
         Glide.with(mContext).load(iconUrl).fitCenter().into(imgEquipment);
 
+        mLlEquipments.addView(flEquipmentIcon);
+
+    }
+
+    private void addLastEquipmentIcon(LinearLayout mLlEquipments) {
+
+        View flEquipmentIcon = LayoutInflater.from(mContext).
+                inflate(R.layout.bike_detail_equipment_icon_more, mLlEquipments, false);
         mLlEquipments.addView(flEquipmentIcon);
 
     }
