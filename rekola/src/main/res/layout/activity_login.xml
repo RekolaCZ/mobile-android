@@ -11,15 +11,16 @@
 
         <TextView
             android:id="@+id/txt_register"
-       android:layout_width="match_parent"
-            android:gravity="right"
-            android:layout_height="@dimen/bike_detail_toolbar_height"
             style="@style/TextViewWhite"
-            android:paddingTop="13dp"
-            android:layout_marginRight="16dp"
+            android:textColor="@color/text_white"
+            fontPath="@string/font_roboto_medium"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bike_detail_toolbar_height"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            fontPath="@string/font_roboto_medium"
+            android:layout_marginRight="16dp"
+            android:gravity="right"
+            android:paddingTop="13dp"
             android:text="@string/login_registration"
             android:textAllCaps="true"
             android:textSize="16sp"/>
@@ -36,11 +37,11 @@
 
             <TextView
                 style="@style/TextView"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
+                android:paddingTop="5dp"
                 android:text="@string/login_ackee"
                 android:textColor="@color/light_pink4"
-                android:layout_gravity="center_vertical"
-                android:paddingTop="5dp"
                 android:textSize="10sp"/>
 
             <ImageView
@@ -97,15 +98,16 @@
                 <Button
                     android:id="@+id/btn_login"
                     style="@style/SignInButton"
-                    android:layout_height="44dp"
-                    android:textSize="16sp"
                     fontPath="@string/font_roboto_medium"
+                    android:layout_height="44dp"
                     android:layout_marginBottom="28dp"
-                    android:text="@string/login_log_in"/>
+                    android:text="@string/login_log_in"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/btn_recover_password"
                     style="@style/TextViewWhite"
+                    android:textColor="@color/text_white"
                     android:layout_marginBottom="64dp"
                     android:text="@string/login_forgot_password"
                     android:textSize="14sp"/>
