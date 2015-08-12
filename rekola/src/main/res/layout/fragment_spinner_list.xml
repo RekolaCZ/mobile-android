@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:listSelector="@drawable/button_pink"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:layout_marginBottom="@dimen/default_screen_margin"
         android:layout_marginLeft="@dimen/default_screen_margin"
         android:layout_marginRight="@dimen/default_screen_margin"
