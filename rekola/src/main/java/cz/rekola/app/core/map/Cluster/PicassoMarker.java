@@ -44,7 +44,11 @@ public class PicassoMarker implements Target {
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
         mImgBike.setImageBitmap(bitmap);
         Bitmap icon = mIconGenerator.makeIcon();
-        mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(icon));
+        try {
+            mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(icon));
+        } catch (IllegalArgumentException exception) {
+            //just in case that marker is dead, it caused crash
+        }
     }
 
     @Override
