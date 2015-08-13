@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class CodeView extends FrameLayout {
 
     @InjectViews({R.id.txt_code_0, R.id.txt_code_1, R.id.txt_code_2, R.id.txt_code_3,
             R.id.txt_code_4, R.id.txt_code_5})
-    List<PinTextView> mTxtCodeList;
+    List<NumberView> mTxtCodeList;
 
     @InjectView(R.id.txt_code_hidden)
     EditText mTxtCodeHidden;
@@ -52,8 +51,8 @@ public class CodeView extends FrameLayout {
         ButterKnife.inject(this, this);
 
 
-        for (PinTextView txtCode : mTxtCodeList) {
-            txtCode.setOnClickListener(new OnClickListener() {
+        for (NumberView txtCode : mTxtCodeList) {
+            txtCode.getPointTextView().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     codeHintOnClick();
@@ -61,24 +60,23 @@ public class CodeView extends FrameLayout {
             });
         }
 
-
-
         setEditTextListeners();
 
         //according to design last EditText is without point
-        mTxtCodeList.get(mTxtCodeList.size() - 1).setPointVisibility(false);
+        mTxtCodeList.get(mTxtCodeList.size() - 1).getPointTextView().setPointVisibility(false);
     }
 
 
     public void codeHintOnClick() {
         mTxtCodeHidden.requestFocus();
         KeyboardUtils.showKeyboard(getContext(), mTxtCodeHidden);
+        setCursor();
     }
 
     public String getText() {
         StringBuilder pinCode = new StringBuilder(mTxtCodeList.size());
-        for (PinTextView txtCode : mTxtCodeList) {
-            pinCode.append(txtCode.getText());
+        for (NumberView txtCode : mTxtCodeList) {
+            pinCode.append(txtCode.getPointTextView().getText());
         }
 
         return pinCode.toString();
@@ -99,15 +97,31 @@ public class CodeView extends FrameLayout {
 
             @Override
             public void afterTextChanged(Editable text) {
+
+                //set corresponded code number
                 for (int i = 0; i < text.length(); i++) {
-                    mTxtCodeList.get(i).setText(text.subSequence(i, i + 1));
+                    mTxtCodeList.get(i).getPointTextView().setText(text.subSequence(i, i + 1));
                 }
 
-                //set rest of textviews
+                //set rest of code numbers to empty string
                 for (int i = text.length(); i < mTxtCodeList.size(); i++) {
-                    mTxtCodeList.get(i).setText("");
+                    mTxtCodeList.get(i).getPointTextView().setText("");
                 }
+
+                //set cursor visibility
+                setCursor();
             }
         });
+    }
+
+
+    private void setCursor() {
+        for (int i = 0; i < mTxtCodeList.size(); i++) {
+            if (i == mTxtCodeHidden.getText().length()) {
+                mTxtCodeList.get(i).showCursor();
+            } else {
+                mTxtCodeList.get(i).hideCursor();
+            }
+        }
     }
 }

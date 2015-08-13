@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.widget.TextView;
 
 import cz.rekola.app.R;
@@ -14,13 +12,13 @@ import cz.rekola.app.R;
  * Textview with point in left right corner (used in CodeView)
  * Created by Tomas Krabac[tomas.krabac@ackee.cz] on {14. 7. 2015}
  **/
-public class PinTextView extends TextView {
-    public static final String TAG = PinTextView.class.getName();
+public class PointTextView extends TextView {
+    public static final String TAG = PointTextView.class.getName();
 
     private Paint mPaint;
     private boolean mPointVisibility = true;
 
-    public PinTextView(Context context, AttributeSet attrs) {
+    public PointTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         mPaint = new Paint();
