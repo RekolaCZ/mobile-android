@@ -125,6 +125,8 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
         mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                mapManager.unselectedLastBike();
+
                 if (mOverlayMap.isVisible())
                     mOverlayMap.hide();
             }
@@ -342,8 +344,20 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
         }
 
         private void setBikeUnselected(BikeClusterItem bikeClusterItem) {
+            if (bikeClusterItem == null) {
+                return;
+            }
+
             bikeClusterItem.setIsSelectedBike(false);
             mBikeRenderer.setIconUnselected(bikeClusterItem);
+        }
+
+        public void unselectedLastBike() {
+            if (lastBikeClusterItem == null) {
+                return;
+            }
+            setBikeUnselected(lastBikeClusterItem);
+            lastBikeClusterItem = null;
         }
 
     }
