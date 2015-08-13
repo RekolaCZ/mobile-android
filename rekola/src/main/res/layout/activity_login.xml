@@ -82,14 +82,17 @@
                     style="@style/EditTextPinkFilled"
                     android:layout_marginBottom="8dp"
                     android:hint="@string/login_username_hint"
+                    android:singleLine="true"
                     android:imeOptions="actionNext"
+                    android:nextFocusForward="@+id/txt_password"
                     android:inputType="textEmailAddress"
                     />
 
                 <EditText
-                    android:id="@+id/txt_password"
+                    android:id="@id/txt_password"
                     style="@style/EditTextPinkFilled"
                     android:layout_marginBottom="20dp"
+                    android:singleLine="true"
                     android:hint="@string/login_password_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
