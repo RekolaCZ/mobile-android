@@ -14,7 +14,7 @@ public interface PageController {
 
     public void requestAbout();
 
-    public void requestBikeDetail(int bikeID, boolean issues);
+    public void requestBikeDetail(int bikeID);
 
     public void requestSpinnerList(ArrayList<String> listItems, SetIssueItemInterface setIssueItemInterface);
 

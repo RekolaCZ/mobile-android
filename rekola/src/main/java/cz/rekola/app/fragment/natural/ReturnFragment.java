@@ -41,7 +41,6 @@ public class ReturnFragment extends BaseMainFragment {
     TextView mTxtLockCode;
 
     private int bikeId = -1; // Invalid bike id
-    private boolean hasIssues = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class ReturnFragment extends BaseMainFragment {
 
     @OnClick(R.id.btn_bike_detail)
     public void bikeDetailOnClick() {
-        getPageController().requestBikeDetail(bikeId, hasIssues);
+        getPageController().requestBikeDetail(bikeId);
     }
 
     @Subscribe
@@ -96,7 +95,6 @@ public class ReturnFragment extends BaseMainFragment {
 
     private void setData(Bike bike, String lockCode, Date borrowedAt) {
         bikeId = bike.id;
-        hasIssues = bike.issues.size() > 0;
 
         mTxtBikeName.setText(bike.name);
         mTxtLockCode.setText(lockCode == null ? null : lockCode.replace("", " ").trim());

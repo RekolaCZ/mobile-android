@@ -283,7 +283,7 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
         void notifyBikeDetailPressed() {
             if (lastBikeClusterItem != null) {
                 Bike bike = lastBikeClusterItem.getBike();
-                getPageController().requestBikeDetail(bike.id, bike.issues.size() > 0);
+                getPageController().requestBikeDetail(bike.id);
             }
         }
 

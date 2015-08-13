@@ -211,11 +211,11 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
-    public void requestBikeDetail(int bikeID, boolean issues) {
+    public void requestBikeDetail(int bikeID) {
         if (getApp().getDataManager().showWebviewForBikedetail()) {
             Fragment fragment = setState(PageManager.EPageState.WEB_BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailWebFragment)
-                ((BikeDetailWebFragment) fragment).init(bikeID, false); //false always return bike detail
+                ((BikeDetailWebFragment) fragment).init(bikeID); //false always return bike detail
         } else {
             Fragment fragment = setState(PageManager.EPageState.BIKE_DETAIL);
             if (fragment != null && fragment instanceof BikeDetailFragment)

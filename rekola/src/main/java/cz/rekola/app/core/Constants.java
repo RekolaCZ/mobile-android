@@ -13,16 +13,9 @@ public class Constants {
     public static final String HEADER_KEY_OS = "client-os";
 
     public static final String HEADER_VALUE_USER_AGENT = "rekola/%s (Model %s; Android %s; Locale %s; Resolution %sx%s; Dpi %s)";
-    // public static final String REKOLA_API_URL = "https://moje.rekola.cz/api";
-    public static final String REKOLA_API_URL = "http://beta.rekola.cz/api";
 
     public static final int DEFAULT_MAP_ZOOM_LEVEL = 15;
     public static final int MAX_CLUSTERING_ZOOM_LEVEL = 19;
-
-    public static final String WEBAPI_BIKE_DETAIL_URL = REKOLA_API_URL + "/bikes/%s/info-webview";
-    public static final String WEBAPI_BIKE_ISSUES_URL = REKOLA_API_URL + "/bikes/%s/issues-webview";
-    public static final String WEBAPI_BIKE_RETURNED_URL = REKOLA_API_URL + "/bikes/%s/status-webview";
-    public static final String WEBAPI_PROFILE_URL = REKOLA_API_URL + "/accounts/mine/profile-webview";
 
     public static final String BROWSER_REGISTRATION_URL = "http://www.rekola.cz/register/credentials";
 

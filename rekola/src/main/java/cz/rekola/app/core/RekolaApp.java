@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
 
+import cz.rekola.app.R;
 import cz.rekola.app.api.ApiService;
 import cz.rekola.app.core.data.DataManager;
 import cz.rekola.app.core.data.PreferencesManager;
@@ -30,7 +31,7 @@ public class RekolaApp extends Application {
         super.onCreate();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Roboto-Regular.ttf")
+                        .setDefaultFontPath(getResources().getString(R.string.font_roboto_regular))
                         .build()
         );
 
@@ -41,7 +42,7 @@ public class RekolaApp extends Application {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.REKOLA_API_URL)
+                .setEndpoint(getResources().getString(R.string.rekola_base_api_url))
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override

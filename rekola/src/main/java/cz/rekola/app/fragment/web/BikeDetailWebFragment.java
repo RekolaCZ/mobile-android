@@ -1,6 +1,6 @@
 package cz.rekola.app.fragment.web;
 
-import cz.rekola.app.core.Constants;
+import cz.rekola.app.R;
 import cz.rekola.app.fragment.base.BaseWebFragment;
 
 /**
@@ -10,16 +10,16 @@ import cz.rekola.app.fragment.base.BaseWebFragment;
 public class BikeDetailWebFragment extends BaseWebFragment {
 
     private int id;
-    private boolean issues;
 
-    public void init(int id, boolean issues) {
+    public void init(int id) {
         this.id = id;
-        this.issues = issues;
     }
 
     @Override
     public String getStartUrl() {
-        return issues ? String.format(Constants.WEBAPI_BIKE_ISSUES_URL, id) : String.format(Constants.WEBAPI_BIKE_DETAIL_URL, id);
+        return String.format(getAct()
+                .getResources()
+                .getString(R.string.rekola_bike_detail_url), id);
     }
 
 }
