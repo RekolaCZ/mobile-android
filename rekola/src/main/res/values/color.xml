@@ -74,6 +74,7 @@
 
 
     <color name="white">#FFFFFF</color>
+    <color name="white_transparent">#80FFFFFF</color>
     <color name="pink_1">#FF3399</color>
     <color name="pink_2">#FFC2E1</color>
     <color name="pink_3">#B2246B</color>
