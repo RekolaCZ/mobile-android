@@ -163,7 +163,6 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
     // Draw multiple bikes
     @Override
     protected void onBeforeClusterRendered(Cluster<BikeClusterItem> cluster, MarkerOptions markerOptions) {
-        //mImageView.setImageResource(person.profilePhoto);
 
         String bikeCount = Integer.toString(cluster.getSize());
         Bitmap icon = mClusterIconGenerator.makeIcon(bikeCount);
@@ -176,11 +175,13 @@ public class BikeRenderer extends DefaultClusterRenderer<BikeClusterItem> {
 
     @Override
     protected boolean shouldRenderAsCluster(Cluster cluster) {
-        Log.d("tom", "mZoomLevel " + mZoomLevel);
-        if (mZoomLevel > Constants.MAX_CLUSTERING_ZOOM_LEVEL)
+        //disable clustering for now
+        return false;
+
+       /* if (mZoomLevel > Constants.MAX_CLUSTERING_ZOOM_LEVEL)
             return false;
 
         // Always render clusters.
-        return cluster.getSize() > 1;
+        return cluster.getSize() > 1; */
     }
 }
