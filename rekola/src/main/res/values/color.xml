@@ -53,8 +53,6 @@
     <color name="cursor_black">#263238</color>
 
 
-
-
     <color name="grey_dark">#404040</color>
     <color name="grey_transparent">#33000000</color>
 
@@ -72,7 +70,7 @@
     <color name="map_overlay_background">#ee3897</color>
     <color name="spinner_text">@color/grey14</color>
 
-
+    <color name="white_button_pressed">#ededed</color>
     <color name="white">#FFFFFF</color>
     <color name="white_transparent">#80FFFFFF</color>
     <color name="pink_1">#FF3399</color>

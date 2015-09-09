@@ -8,66 +8,45 @@
     <RelativeLayout
         style="@style/Layout">
 
-
         <TextView
             android:id="@+id/txt_register"
             style="@style/TextViewWhite"
-            android:textColor="@color/text_white"
             fontPath="@string/font_roboto_medium"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bike_detail_toolbar_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp"
-            android:gravity="right"
-            android:paddingTop="13dp"
+            android:paddingBottom="18dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+
+            android:paddingTop="18dp"
             android:text="@string/login_registration"
             android:textAllCaps="true"
+            android:textColor="@color/text_white"
             android:textSize="16sp"/>
 
-
-        <LinearLayout
-            android:id="@+id/ll_bottom"
-            style="@style/Layout"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="21dp"
-            android:gravity="bottom|center_horizontal"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/TextView"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:paddingTop="5dp"
-                android:text="@string/login_ackee"
-                android:textColor="@color/light_pink4"
-                android:textSize="10sp"/>
-
-            <ImageView
-                style="@style/ImageView"
-                android:alpha="0.4"
-                android:src="@drawable/logo_ackee_bw"/>
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/ll_bottom"
-            android:layout_below="@id/txt_register">
+            android:layout_below="@id/txt_register"
+           >
 
             <LinearLayout
 
                 style="@style/LayoutMargin26"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/img_rekola_logo"
                     style="@style/ImageView"
                     android:layout_marginBottom="52dp"
-                    android:layout_marginTop="54dp"
+
+                    android:adjustViewBounds="true"
                     android:src="@drawable/logo_recola_white"/>
 
                 <!-- Dummy item to prevent EditText from receiving focus -->
@@ -82,20 +61,20 @@
                     style="@style/EditTextPinkFilled"
                     android:layout_marginBottom="8dp"
                     android:hint="@string/login_username_hint"
-                    android:singleLine="true"
                     android:imeOptions="actionNext"
-                    android:nextFocusForward="@+id/txt_password"
                     android:inputType="textEmailAddress"
+                    android:nextFocusForward="@+id/txt_password"
+                    android:singleLine="true"
                     />
 
                 <EditText
                     android:id="@id/txt_password"
                     style="@style/EditTextPinkFilled"
                     android:layout_marginBottom="20dp"
-                    android:singleLine="true"
                     android:hint="@string/login_password_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
+                    android:singleLine="true"
                     />
 
                 <Button
@@ -110,14 +89,40 @@
                 <TextView
                     android:id="@+id/btn_recover_password"
                     style="@style/TextViewWhite"
-                    android:textColor="@color/text_white"
                     android:layout_marginBottom="64dp"
                     android:text="@string/login_forgot_password"
+                    android:textColor="@color/text_white"
                     android:textSize="14sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_bottom"
+                    style="@style/Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="21dp"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/login_ackee"
+                        android:textColor="@color/light_pink4"
+                        android:textSize="10sp"/>
+
+                    <ImageView
+                        style="@style/ImageView"
+                        android:alpha="0.4"
+                        android:src="@drawable/logo_ackee_bw"/>
+                </LinearLayout>
             </LinearLayout>
 
 
         </ScrollView>
+
+
 
     </RelativeLayout>
 

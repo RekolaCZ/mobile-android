@@ -16,10 +16,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvBikeDetail"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/default_screen_margin"
+        android:paddingBottom="@dimen/default_screen_margin"
+        android:clipToPadding="false"
         android:scrollbars="vertical"
         tools:context="cz.rekola.app.fragment.natural.BikeDetailFragment"/>
 

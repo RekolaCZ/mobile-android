@@ -21,4 +21,5 @@ public class Constants {
 
     //if there is more equipments, it will add three points (symbol for more = ...)
     public static final int MAX_COUNT_OF_VISIBLE_EQUIPMENTS = 4;
+    public static final String ACKEE_WEB = "http://ackee.cz";
 }

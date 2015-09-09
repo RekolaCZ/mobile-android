@@ -3,7 +3,7 @@
     android:id="@+id/bike_detail_toolbar_green"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/bike_detail_toolbar_height"
+    android:layout_height="?attr/actionBarSize"
     android:alpha="0"
     android:background="@color/base_green">
 
@@ -11,6 +11,9 @@
     <ImageView
         android:id="@+id/img_action_back"
         style="@style/BikeDetailActionBack"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_back_arrow_white"/>
 
     <TextView
@@ -21,7 +24,11 @@
         android:textSize="20sp"/>
 
     <ImageView
+        android:background="?attr/selectableItemBackground"
+        android:layout_gravity="center_vertical|right"
         android:id="@+id/img_action_lock"
+        android:padding="8dp"
+
         style="@style/BikeDetailActionLock"
         android:src="@drawable/actionbar_ic_lock_active"/>
 

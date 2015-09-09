@@ -244,17 +244,17 @@ public class PageManager {
                 || activeState == EPageState.RETURN)
             imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock_active);
         else
-            imgLockIcon.setImageResource(R.drawable.actionbar_ic_lock);
+            imgLockIcon.setImageResource(R.drawable.selector_ic_lock);
 
         if (activeState == EPageState.MAP)
             imgMapIcon.setImageResource(R.drawable.actionbar_ic_map_active);
         else
-            imgMapIcon.setImageResource(R.drawable.actionbar_ic_map);
+            imgMapIcon.setImageResource(R.drawable.selector_ic_map);
 
         if (activeState == EPageState.PROFILE)
             imgProfileIcon.setImageResource(R.drawable.actionbar_ic_profile_active);
         else
-            imgProfileIcon.setImageResource(R.drawable.actionbar_ic_profile);
+            imgProfileIcon.setImageResource(R.drawable.selector_ic_profile);
 
     }
 

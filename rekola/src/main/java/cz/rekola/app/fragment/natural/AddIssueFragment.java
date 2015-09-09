@@ -162,7 +162,7 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         mChkInoperational.setChecked(false);
         mIssueTypeIsSelected = false;
 
-        mSpnIssueType.setBackgroundResource(R.drawable.spinner_grey);
+//        mSpnIssueType.setBackgroundResource(R.drawable.spinner_grey);
         TextView spinnerItemText = (TextView) mSpnIssueType.findViewById(R.id.txt_spinner_item);
         int grey = getActivity().getResources().getColor(R.color.spinner_text);
         spinnerItemText.setTextColor(grey);
@@ -213,7 +213,7 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         mSpnIssueType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mSpnIssueType.setBackgroundResource(R.drawable.spinner_pink);
+//                mSpnIssueType.setBackgroundResource(R.drawable.spinner_pink);
                 TextView spinnerItemText = (TextView) mSpnIssueType.findViewById(R.id.txt_spinner_item);
                 int pink = getActivity().getResources().getColor(R.color.base_pink);
                 spinnerItemText.setTextColor(pink);

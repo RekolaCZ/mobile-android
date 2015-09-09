@@ -118,7 +118,7 @@ public class BikeOverlayView extends RelativeLayout {
                 ObjectAnimator.ofFloat(mbtnCenterMap, "translationY", margin)
         );
 
-        mAnimatorSet.setDuration(200); //set duration for animations
+        mAnimatorSet.setDuration(1000); //set duration for animations
         mAnimatorSet.start();
         mIsVisible = true;
     }

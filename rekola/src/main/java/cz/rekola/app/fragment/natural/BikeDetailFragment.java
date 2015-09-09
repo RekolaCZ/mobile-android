@@ -228,8 +228,10 @@ public class BikeDetailFragment extends BaseMainFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogLayout);
+        builder.setCancelable(true);
 
         final AlertDialog alertDialog = builder.show();
+        alertDialog.setCanceledOnTouchOutside(true);
 
         lvEquipments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

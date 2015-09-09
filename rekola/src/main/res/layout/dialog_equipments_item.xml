@@ -2,9 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
+              android:background="?attr/selectableItemBackground"
               android:gravity="center_vertical"
-              android:paddingBottom="@dimen/grid_5">
+              android:orientation="horizontal"
+              android:paddingBottom="8dp"
+              android:paddingTop="8dp"
+    >
 
     <!-- icon is loaded from api-->
     <ImageView
@@ -17,9 +20,9 @@
     <TextView
         android:id="@+id/txt_equipment_description"
         style="@style/TextView"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/grey16"/>
+        android:textColor="@color/grey16"
+        android:textSize="16sp"/>
 
 </LinearLayout>

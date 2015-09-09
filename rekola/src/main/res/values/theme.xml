@@ -23,6 +23,7 @@
         <item name="colorPrimary">@color/base_pink</item>
         <item name="colorPrimaryDark">@color/dark_pink</item>
         <item name="colorAccent">@color/dark_pink</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

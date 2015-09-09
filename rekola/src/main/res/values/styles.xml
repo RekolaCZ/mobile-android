@@ -11,7 +11,7 @@
     </style>
 
     <style name="LayoutMargin26" parent="Layout">
-        <item name="android:layout_margin">26dp</item>
+        <item name="android:padding">26dp</item>
     </style>
 
     <!-- global styles for views: -->
@@ -195,7 +195,7 @@
 
 
     <style name="SignInButton" parent="Button">
-        <item name="android:background">@drawable/button_sign_in</item>
+        <item name="android:background">@drawable/selector_button_signin</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/light_green</item>
@@ -299,7 +299,7 @@
     <style name="BikeDetailActionBack" parent="ImageView">
         <item name="android:padding">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginTop">12dp</item>
+
         <item name="android:onClick">onCustomOptionsItemSelected</item>
     </style>
 
@@ -307,7 +307,7 @@
     <style name="BikeDetailActionLock" parent="ImageView">
         <item name="android:layout_gravity">right</item>
         <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginTop">15dp</item>
+
         <item name="android:onClick">onCustomOptionsItemSelected</item>
     </style>
 

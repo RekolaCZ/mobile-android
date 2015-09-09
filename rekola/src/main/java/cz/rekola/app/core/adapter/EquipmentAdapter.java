@@ -49,7 +49,6 @@ public class EquipmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View equipmentView = convertView;
         if (equipmentView == null)
             equipmentView = mInflater.inflate(R.layout.dialog_equipments_item, null);
