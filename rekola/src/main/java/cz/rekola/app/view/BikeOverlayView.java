@@ -4,7 +4,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +46,7 @@ public class BikeOverlayView extends RelativeLayout {
 
     private BikeOverlayListener callbacks;
     private boolean mIsVisible = false;
+    private boolean mAlreadyShown;
 
     public BikeOverlayView(Context context) {
         super(context);
@@ -82,13 +85,17 @@ public class BikeOverlayView extends RelativeLayout {
                 callbacks.onCenterMapPressed();
             }
         });
+
+
     }
+
 
     public void init(BikeOverlayListener callbacks) {
         this.callbacks = callbacks;
     }
 
     public void show(Bike bike) {
+
         mTxtBikeName.setText(bike.name);
         mTxtDistance.setText(bike.location.distance);
         mTxtNote.setText(bike.location.note);
@@ -107,8 +114,38 @@ public class BikeOverlayView extends RelativeLayout {
 
         mOverlayMapArea.setVisibility(VISIBLE);
         mbtnRoute.setVisibility(VISIBLE);
+        if (!mAlreadyShown) {
+//first wait to draw view to know its dimensions
 
+            mOverlayMapArea.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    mOverlayMapArea.getViewTreeObserver().removeOnPreDrawListener(this);
+                //then set translation Y so its not 0 and can be animated to 0
+                    mOverlayMapArea.setTranslationY(getHeightAnimation());
+                    mbtnRoute.setTranslationY(getHeightAnimation());
+                    mbtnCenterMap.setTranslationY(getHeightAnimation());
+                    mOverlayMapArea.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            Log.d("Bike overlay", "in show anim height = " + getHeightAnimation());
+                            mOverlayMapArea.getViewTreeObserver().removeOnPreDrawListener(this);
+                            doShowAnimation();
+                            return false;
+                        }
+                    });
 
+                    return false;
+                }
+            });
+        } else {
+            doShowAnimation();
+        }
+        mIsVisible = true;
+        mAlreadyShown = true;
+    }
+
+    private void doShowAnimation() {
         float margin = getResources().getDimension(R.dimen.bike_overlay_navigation_margin_animation);
         final AnimatorSet mAnimatorSet = new AnimatorSet();
 
@@ -118,9 +155,8 @@ public class BikeOverlayView extends RelativeLayout {
                 ObjectAnimator.ofFloat(mbtnCenterMap, "translationY", margin)
         );
 
-        mAnimatorSet.setDuration(1000); //set duration for animations
+        mAnimatorSet.setDuration(200); //set duration for animations
         mAnimatorSet.start();
-        mIsVisible = true;
     }
 
     public void hide() {
@@ -163,8 +199,9 @@ public class BikeOverlayView extends RelativeLayout {
      * @return height
      */
     private float getHeightAnimation() {
-        return mOverlayMapArea.getMeasuredHeight()
-                + mbtnRoute.getMeasuredHeight()
+
+        return mOverlayMapArea.getHeight()
+                + mbtnRoute.getHeight()
                 + getResources().getDimension(R.dimen.bike_overlay_negative_margin);
     }
 }

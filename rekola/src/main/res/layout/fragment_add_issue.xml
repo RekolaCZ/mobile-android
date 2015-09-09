@@ -51,6 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
             android:button="@drawable/checkbox_button"
             android:paddingLeft="14dp"
             android:text="@string/add_issue_inoperational"
