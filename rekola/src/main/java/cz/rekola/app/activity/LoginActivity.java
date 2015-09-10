@@ -94,7 +94,6 @@ public class LoginActivity extends BaseActivity {
         getApp().getBus().register(this);
         getApp().getBus().register(mLayoutErrorBar);
         mTxtUserName.setText(getApp().getPreferencesManager().getUsername());
-        mTxtPassword.setText(getApp().getPreferencesManager().getPassword());
 
         String token = getApp().getPreferencesManager().getToken();
         if (viewHelper.canLogin() && token.equals("")) {
@@ -117,7 +116,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_login)
     public void loginOnClick() {
-        viewHelper.saveCredentials();
+        viewHelper.saveUserName();
         if (!viewHelper.canLogin()) {
             getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_missing_credentials)));
             return;
@@ -278,9 +277,8 @@ public class LoginActivity extends BaseActivity {
             return new Credentials(mTxtUserName.getText().toString(), mTxtPassword.getText().toString());
         }
 
-        private void saveCredentials() {
+        private void saveUserName() {
             getApp().getPreferencesManager().setUsername(mTxtUserName.getText().toString());
-            getApp().getPreferencesManager().setPassword(mTxtPassword.getText().toString());
         }
     }
 }

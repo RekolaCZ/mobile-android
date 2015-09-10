@@ -14,7 +14,6 @@ public class PreferencesManager {
 
     public static final String PREFS_NAME = "MyPreferences";
     public static final String PREF_USERNAME = "Username";
-    public static final String PREF_PASSWORD = "Password";
     public static final String PREF_TOKEN = "Token";
 
     private SharedPreferences settings;
@@ -29,28 +28,6 @@ public class PreferencesManager {
 
     public void setUsername(String username) {
         setStringPref(PREF_USERNAME, username);
-    }
-
-    public String getPassword() {
-        String base64 = settings.getString(PREF_PASSWORD, null);
-        if (base64 == null)
-            return null;
-        try {
-            return new String(Base64.decode(base64, Base64.DEFAULT));
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    public void setPassword(String password) {
-        if (password == null) {
-            setStringPref(PREF_PASSWORD, password);
-            return;
-        }
-        try {
-            setStringPref(PREF_PASSWORD, Base64.encodeToString(password.getBytes("UTF-8"), Base64.DEFAULT));
-        } catch (UnsupportedEncodingException e) {
-        }
     }
 
     public String getToken() {
