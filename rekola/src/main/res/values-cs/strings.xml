@@ -19,15 +19,15 @@
     <string name="reset_info">Po zadání e-mailu Vám budou zaslány informace pro obnovu hesla.</string>
     <string name="reset_recall">Už vím, zpátky.</string>
 
-    <string name="borrow_info_1">Vložte 6-ti místný digitální kód pro získání kódu zámku a můžete jezdit.</string>
-    <string name="borrow_info_2">Kód můžete nalézt na zadním blatníku nebo na zadní tyči.</string>
+    <string name="borrow_info_1">Vložte šestimístné číslo a získáte kód zámku.</string>
+    <string name="borrow_info_2">Číslo najdete na kole či koloběžce.</string>
     <string name="borrow_borrow">Půjčit</string>
     <string name="borrow_code_hint">Vložte šestimístný kód</string>
 
     <string name="return_borrowed">Půjčeno</string>
     <string name="return_info_lock_code">Kód zámku</string>
     <string name="return_return">Vrátit</string>
-    <string name="return_bike_detail">Detail kola</string>
+    <string name="return_bike_detail">Detail</string>
     <string name="return_bike_issue">Problém?</string>
 
     <string name="returnmap_title">Vrácení kola</string>

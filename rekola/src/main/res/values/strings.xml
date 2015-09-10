@@ -26,15 +26,15 @@
     <string name="reset_info">Enter your email to get instructions on how to reset your password.</string>
     <string name="reset_recall">I remembered, go back</string>
 
-    <string name="borrow_info_1">Enter the bike 6-digit code to receive the lock passcode and start using your bike</string>
-    <string name="borrow_info_2">Code can be found on the rear fender or on a rear stick</string>
+    <string name="borrow_info_1">Enter the 6-digit code to receive the lock passcode and start using your bike</string>
+    <string name="borrow_info_2">Code can be found on a bike or scooter.</string>
     <string name="borrow_borrow">Borrow</string>
     <string name="borrow_code_hint">Enter 6-digit code</string>
 
     <string name="return_borrowed">Borrowed</string>
     <string name="return_info_lock_code">Lock code</string>
     <string name="return_return">Return</string>
-    <string name="return_bike_detail">Bike Detail</string>
+    <string name="return_bike_detail">Detail</string>
     <string name="return_bike_issue">Report Issue</string>
 
     <string name="returnmap_title">Edit Location</string>
