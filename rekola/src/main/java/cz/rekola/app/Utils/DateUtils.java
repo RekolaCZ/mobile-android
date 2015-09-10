@@ -17,16 +17,25 @@ public class DateUtils {
      * @return string in short format eg. HH:MM
      */
     public static String getDate(Date date) {
+        if (date == null) {
+            return "";
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.");
         return dateFormat.format(date);
     }
 
     /**
      * get string representation of time from Date
+     *
      * @param date input date
      * @return string in short format eg. HH:MM
      */
     public static String getTime(Date date) {
+        if (date == null) {
+            return "";
+        }
+
         DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         return timeFormat.format(date);
     }
@@ -39,6 +48,10 @@ public class DateUtils {
      * @return string in short format eg. DD.MM.YYYY
      */
     public static String getDateYear(Date date) {
+        if (date == null) {
+            return "";
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return dateFormat.format(date);
     }
