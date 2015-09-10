@@ -15,6 +15,7 @@ public class PreferencesManager {
     public static final String PREFS_NAME = "MyPreferences";
     public static final String PREF_USERNAME = "Username";
     public static final String PREF_PASSWORD = "Password";
+    public static final String PREF_TOKEN = "Token";
 
     private SharedPreferences settings;
 
@@ -50,6 +51,14 @@ public class PreferencesManager {
             setStringPref(PREF_PASSWORD, Base64.encodeToString(password.getBytes("UTF-8"), Base64.DEFAULT));
         } catch (UnsupportedEncodingException e) {
         }
+    }
+
+    public String getToken() {
+        return settings.getString(PREF_TOKEN, "");
+    }
+
+    public void setToken(String token) {
+        setStringPref(PREF_TOKEN, token);
     }
 
     private void setStringPref(String pref, String data) {

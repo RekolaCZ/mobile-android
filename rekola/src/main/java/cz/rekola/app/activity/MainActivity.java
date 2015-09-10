@@ -174,6 +174,7 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Subscribe
     public void onAuthorizationRequired(AuthorizationRequiredEvent event) {
+        getApp().getPreferencesManager().setToken("");
         startLoginActivity(getResources().getString(R.string.error_session_expired));
     }
 

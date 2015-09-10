@@ -70,6 +70,7 @@ public class ProfileFragment extends BaseMainFragment {
     @OnClick(R.id.btn_logout)
     public void logout() {
         getApp().getPreferencesManager().setPassword(null);
+        getApp().getPreferencesManager().setToken("");
         getApp().getDataManager().logout();
         ((MainActivity) getActivity()).startLoginActivity(null);
         getActivity().finish();

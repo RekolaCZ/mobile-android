@@ -3,6 +3,7 @@ package cz.rekola.app.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -76,6 +77,15 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         initEditTextAction();
+
+        String token = getApp().getPreferencesManager().getToken();
+        if (!token.equals("")) {
+            Log.d("tom", "token " + token);
+            mOverlayLoading.show();
+            getApp().getDataManager().setApiKey(token);
+            loginAvailable(new LoginAvailableEvent());
+        }
+
     }
 
     @Override
@@ -86,9 +96,10 @@ public class LoginActivity extends BaseActivity {
         mTxtUserName.setText(getApp().getPreferencesManager().getUsername());
         mTxtPassword.setText(getApp().getPreferencesManager().getPassword());
 
-        if (viewHelper.canLogin()) {
+        String token = getApp().getPreferencesManager().getToken();
+        if (viewHelper.canLogin() && token.equals("")) {
             login();
-        } else {
+        } else if (token.equals("")) {
             mOverlayLoading.hide();
         }
 

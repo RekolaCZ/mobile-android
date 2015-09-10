@@ -116,6 +116,7 @@ public class DataManager {
             public void success(Login resp, Response response) {
                 loadingManager.removeLoading(DataLoad.LOGIN);
                 apiKey = resp.apiKey;
+                app.getPreferencesManager().setToken(apiKey);
                 showWebviewForBikedetail = resp.showWebviewForBikedetail;
                 app.getBus().post(new LoginAvailableEvent());
             }
@@ -149,6 +150,10 @@ public class DataManager {
                 Log.e(TAG, "logout error " + error.getMessage());
             }
         });
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public String getApiKey() {
