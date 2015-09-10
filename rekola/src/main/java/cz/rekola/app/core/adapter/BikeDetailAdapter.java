@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.Date;
 import java.util.List;
 
 import cz.rekola.app.R;
@@ -128,10 +127,6 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
     private void onBindRecentlyReturned(BikeDetailAdapter.ViewHolder viewHolder, final int
             position) {
-        Date recentlyReturnedDate = mData.get(position).getRecentlyReturned();
-
-        viewHolder.mTxtRecReturnedDate.setText(DateUtils.getDate(recentlyReturnedDate));
-        viewHolder.mTxtRecReturnedTime.setText(DateUtils.getTime(recentlyReturnedDate));
 
         String recentPlaceDescription = mData.get(position).getRecentPlaceDescription();
 
@@ -275,8 +270,6 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
         TextView mTxtInoperational;
 
         //TYPE_RECENTLY_RETURNED
-        TextView mTxtRecReturnedDate;
-        TextView mTxtRecReturnedTime;
         TextView mTxtRecReturnedDescription;
 
         //TYPE_EQUIPMENT
@@ -314,8 +307,6 @@ public class BikeDetailAdapter extends RecyclerView.Adapter<BikeDetailAdapter.Vi
 
                     break;
                 case BikeDetailItem.TYPE_RECENTLY_RETURNED:
-                    mTxtRecReturnedDate = (TextView) itemView.findViewById(R.id.txt_rec_returned_date);
-                    mTxtRecReturnedTime = (TextView) itemView.findViewById(R.id.txt_rec_returned_time);
                     mTxtRecReturnedDescription = (TextView) itemView.findViewById(R.id.txt_rec_returned_description);
                     break;
                 case BikeDetailItem.TYPE_EQUIPMENT:
