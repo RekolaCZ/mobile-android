@@ -80,7 +80,6 @@ public class LoginActivity extends BaseActivity {
 
         String token = getApp().getPreferencesManager().getToken();
         if (!token.equals("")) {
-            Log.d("tom", "token " + token);
             mOverlayLoading.show();
             getApp().getDataManager().setApiKey(token);
             loginAvailable(new LoginAvailableEvent());

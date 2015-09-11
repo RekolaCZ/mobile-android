@@ -15,6 +15,7 @@ public class PreferencesManager {
     public static final String PREFS_NAME = "MyPreferences";
     public static final String PREF_USERNAME = "Username";
     public static final String PREF_TOKEN = "Token";
+    public static final String PREF_WEBVIEW_BIKE_DETAIL = "WebViewBikeDetail";
 
     private SharedPreferences settings;
 
@@ -38,9 +39,23 @@ public class PreferencesManager {
         setStringPref(PREF_TOKEN, token);
     }
 
+    public boolean getWebViewBikeDetail() {
+        return settings.getBoolean(PREF_WEBVIEW_BIKE_DETAIL, false);
+    }
+
+    public void setWebViewBikeDetail(boolean webViewBikeDetail) {
+        setBooleanPref(PREF_WEBVIEW_BIKE_DETAIL, webViewBikeDetail);
+    }
+
     private void setStringPref(String pref, String data) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(pref, data);
+        editor.apply();
+    }
+
+    private void setBooleanPref(String pref, boolean data) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(pref, data);
         editor.apply();
     }
 }

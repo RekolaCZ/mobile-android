@@ -81,7 +81,6 @@ public class DataManager {
     private RekolaApp app;
 
     private String apiKey;
-    private boolean showWebviewForBikedetail;
     private List<Bike> bikes;
     HashMap<Integer, List<Issue>> bikeIssuesMap = new HashMap<>(); //HashMap<bikeId, issues>
     private MyBikeWrapper myBike;
@@ -115,9 +114,11 @@ public class DataManager {
             @Override
             public void success(Login resp, Response response) {
                 loadingManager.removeLoading(DataLoad.LOGIN);
+
                 apiKey = resp.apiKey;
                 app.getPreferencesManager().setToken(apiKey);
-                showWebviewForBikedetail = resp.showWebviewForBikedetail;
+                app.getPreferencesManager().setWebViewBikeDetail(resp.showWebviewForBikedetail);
+
                 app.getBus().post(new LoginAvailableEvent());
             }
 
@@ -164,8 +165,8 @@ public class DataManager {
         return !apiKey.equals("");
     }
 
-    public boolean showWebviewForBikedetail() {
-        return showWebviewForBikedetail;
+    public boolean showWebViewForBikeDetail() {
+        return app.getPreferencesManager().getWebViewBikeDetail();
     }
 
     public void recoverPassword(RecoverPassword email) {
