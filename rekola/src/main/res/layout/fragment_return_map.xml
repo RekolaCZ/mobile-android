@@ -63,7 +63,7 @@
 
 
         <include
-            layout="@layout/map_cluster_bike"
+            layout="@layout/map_return_bike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
