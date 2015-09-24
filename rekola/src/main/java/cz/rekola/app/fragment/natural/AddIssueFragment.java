@@ -4,6 +4,7 @@ package cz.rekola.app.fragment.natural;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -162,9 +163,8 @@ public class AddIssueFragment extends BaseMainFragment implements SetIssueItemIn
         mChkInoperational.setChecked(false);
         mIssueTypeIsSelected = false;
 
-//        mSpnIssueType.setBackgroundResource(R.drawable.spinner_grey);
         TextView spinnerItemText = (TextView) mSpnIssueType.findViewById(R.id.txt_spinner_item);
-        int grey = getActivity().getResources().getColor(R.color.spinner_text);
+        int grey = ContextCompat.getColor(getActivity(), R.color.spinner_text);
         spinnerItemText.setTextColor(grey);
     }
 

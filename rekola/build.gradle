@@ -137,6 +137,17 @@ android {
             minifyEnabled true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant -> //Copy result apk to "outputs" folder in project root and rename it to App.apk
+                def projectRoot = project.rootDir
+                def outputs = new File(projectRoot, "outputs")
+                outputs.mkdirs();
+                variant.outputs.each { output ->
+                    output.outputFile = new File(outputs, "App.apk")
+                }
+            }
+
+
         }
     }
 
