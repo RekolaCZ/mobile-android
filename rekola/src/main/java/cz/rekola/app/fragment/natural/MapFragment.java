@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -292,6 +291,10 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
 
         @Override
         public void onDirectionsLoaded() {
+            if (getApp() == null) {
+                return;
+            }
+
             getApp().getDataManager().customLoadDirectionsFinished(true);
             directionManager.addDirections(mGoogleMap);
         }
