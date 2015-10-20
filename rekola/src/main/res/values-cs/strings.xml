@@ -22,7 +22,7 @@
     <string name="borrow_info_1">Vložte šestimístné číslo a získáte kód zámku.</string>
     <string name="borrow_info_2">Číslo najdete na kole či koloběžce.</string>
     <string name="borrow_borrow">Půjčit</string>
-    <string name="borrow_code_hint">Vložte šestimístný kód</string>
+    <string name="borrow_code_hint">Vložte šestimístné číslo</string>
 
     <string name="return_borrowed">Půjčeno</string>
     <string name="return_info_lock_code">Kód zámku</string>
