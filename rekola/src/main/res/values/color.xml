@@ -67,7 +67,7 @@
     <color name="transparent">#00000000</color>
 
 
-    <color name="map_overlay_background">#ee3897</color>
+    <color name="map_overlay_background">@color/pink_4</color>
     <color name="spinner_text">@color/grey14</color>
 
     <color name="white_button_pressed">#ededed</color>
@@ -76,8 +76,10 @@
     <color name="pink_1">#FF3399</color>
     <color name="pink_2">#FFC2E1</color>
     <color name="pink_3">#B2246B</color>
+    <color name="pink_4">#EE3897</color>
     <color name="gray_1">#AAAAAA</color>
     <color name="gray_2">#999999</color>
+    <color name="gray_3">#727272</color>
     <color name="brown">#828E27</color>
     <color name="red">#FF0000</color>
     <color name="green">#00AA00</color>

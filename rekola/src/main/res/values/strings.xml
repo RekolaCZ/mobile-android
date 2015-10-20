@@ -30,6 +30,9 @@
     <string name="borrow_info_2">Code can be found on a bike or scooter.</string>
     <string name="borrow_borrow">Borrow</string>
     <string name="borrow_code_hint">Enter 6-digit code</string>
+    <string name="borrow_if_problem">If there is any problem, please call us at&#160;</string>
+    <string name="borrow_phone">+420 778 099 878</string>
+    <string name="borrow_we_will_help">We will help you.</string>
 
     <string name="return_borrowed">Borrowed</string>
     <string name="return_info_lock_code">Lock code</string>

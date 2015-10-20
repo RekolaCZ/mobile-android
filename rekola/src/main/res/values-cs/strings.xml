@@ -23,6 +23,9 @@
     <string name="borrow_info_2">Číslo najdete na kole či koloběžce.</string>
     <string name="borrow_borrow">Půjčit</string>
     <string name="borrow_code_hint">Vložte šestimístné číslo</string>
+    <string name="borrow_if_problem">V případě problémů kontaktuje infolinku&#160;</string>
+    <string name="borrow_phone">+420 778 099 878</string>
+    <string name="borrow_we_will_help">Rádi vám pomůžeme.</string>
 
     <string name="return_borrowed">Půjčeno</string>
     <string name="return_info_lock_code">Kód zámku</string>

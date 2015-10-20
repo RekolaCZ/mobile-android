@@ -1,5 +1,7 @@
 package cz.rekola.app.fragment.natural;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,16 @@ public class BorrowFragment extends BaseMainFragment {
     public void borrowOnClick() {
         getApp().getBus().post(new MessageEvent(getResources().getString(R.string.error_incorrect_bike_code)));
     }
+
+    @OnClick(R.id.txt_info_link_number)
+    public void txtPhoneOnClick() {
+        String phone = getResources().getString(R.string.borrow_phone);
+        Intent callintent = new Intent(Intent.ACTION_DIAL);
+        callintent.setData(Uri.parse("tel:" + phone.trim()));
+        startActivity(callintent);
+    }
+
+
 
     @Subscribe
     public void bikeBorrowed(LockCodeEvent event) {

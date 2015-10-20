@@ -7,34 +7,35 @@
     <LinearLayout
         style="@style/Layout"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="@dimen/default_screen_margin"
         android:layout_marginBottom="@dimen/default_screen_margin"
+        android:layout_marginTop="@dimen/default_screen_margin"
         android:gravity="center">
 
         <ImageView
             android:id="@+id/img_rekola_logo"
             style="@style/ImageView"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginBottom="35dp"
             android:adjustViewBounds="true"
-            android:layout_marginBottom="50dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/logo_recola_web"/>
 
         <TextView
             android:id="@+id/txt_borrow_info"
             style="@style/TextView"
-            android:layout_marginRight="@dimen/default_screen_margin"
-            android:layout_marginLeft="@dimen/default_screen_margin"
-            android:layout_marginBottom="17dp"
-            android:gravity="center"
             fontPath="@string/font_roboto_medium"
+            android:layout_marginBottom="17dp"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:gravity="center"
             android:text="@string/borrow_info_1"
             android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/txt_code_hint_keyboard_hidden"
             style="@style/CodeHintTextView"
-            android:layout_marginBottom="59dp"/>
+            android:layout_marginBottom="40dp"/>
 
         <TextView
             android:id="@+id/txt_code_hint"
@@ -52,23 +53,50 @@
 
         <TextView
             android:id="@+id/txt_code_hint_keyboard_visible"
-            android:visibility="gone"
             style="@style/CodeHintTextView"
+            android:layout_marginBottom="6dp"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="6dp"/>
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_borrow"
             style="@style/ButtonPink"
-            android:layout_height="55dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginRight="@dimen/default_screen_margin"
-            android:layout_marginLeft="@dimen/default_screen_margin"
             fontPath="@string/font_roboto_medium"
-            android:textAllCaps="true"
+            android:layout_height="55dp"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:layout_marginTop="17dp"
             android:text="@string/borrow_borrow"
+            android:textAllCaps="true"
             android:textSize="21sp"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="@dimen/default_screen_margin"
+            android:layout_marginRight="@dimen/default_screen_margin"
+            android:gravity="center_horizontal"
+            >
+
+            <TextView
+                style="@style/BorrowHelpInfoTextView"
+                android:text="@string/borrow_if_problem"/>
+
+            <TextView
+                android:id="@+id/txt_info_link_number"
+                style="@style/BorrowHelpInfoTextView"
+                android:textColor="@color/pink_4"
+                fontPath="@string/font_roboto_medium"
+                android:text="@string/borrow_phone"/>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/BorrowHelpInfoTextView"
+            android:text="@string/borrow_we_will_help"/>
+
 
     </LinearLayout>
 </ScrollView>
