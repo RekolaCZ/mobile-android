@@ -76,6 +76,9 @@
     <string name="add_issue_report_issue">Nahlásit problém</string>
     <string name="add_issue_success">Problém nahlášen, děkujeme!</string>
 
+    <!-- Notification -->
+    <string name="notification_message">Nezapomněl/a jste vrátit kolo?</string>
+
     <!-- Error messages -->
     <string name="error_network">Chyba připojení.</string>
     <string name="error_missing_credentials">Zadejte svůj e-mail a heslo.</string>

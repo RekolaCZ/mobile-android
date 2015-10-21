@@ -1,6 +1,9 @@
 package cz.rekola.app.activity;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +22,14 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cz.rekola.app.R;
 import cz.rekola.app.activity.base.BaseActivity;
+import cz.rekola.app.core.Constants;
 import cz.rekola.app.core.bus.AuthorizationRequiredEvent;
 import cz.rekola.app.core.bus.DataLoadingFinished;
 import cz.rekola.app.core.bus.DataLoadingStarted;
 import cz.rekola.app.core.bus.IncompatibleApiEvent;
+import cz.rekola.app.core.bus.LockCodeEvent;
 import cz.rekola.app.core.bus.ProgressDataLoading;
+import cz.rekola.app.core.bus.dataAvailable.ReturnBikeEvent;
 import cz.rekola.app.core.data.MyBikeWrapper;
 import cz.rekola.app.core.interfaces.SetIssueItemInterface;
 import cz.rekola.app.core.page.PageController;
@@ -33,6 +39,7 @@ import cz.rekola.app.fragment.natural.BikeDetailFragment;
 import cz.rekola.app.fragment.natural.SpinnerListFragment;
 import cz.rekola.app.fragment.web.BikeDetailWebFragment;
 import cz.rekola.app.fragment.web.ReturnWebFragment;
+import cz.rekola.app.services.BikeNotReturnedService;
 import cz.rekola.app.view.MessageBarView;
 
 public class MainActivity extends BaseActivity implements PageController {
@@ -49,7 +56,10 @@ public class MainActivity extends BaseActivity implements PageController {
     RelativeLayout mTabMenu;
 
 
-    private PageManager pageManager;
+    private PageManager mPageManager;
+
+    private AlarmManager mAlarmManager;
+    private PendingIntent mPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +75,14 @@ public class MainActivity extends BaseActivity implements PageController {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ButterKnife.inject(this);
-        pageManager = new PageManager();
+        mPageManager = new PageManager();
 
         MyBikeWrapper myBike = getMyBike();
         if (myBike != null) {
+            if (myBike.isBorrowed()) {
+                setAlarmReturnBikeNotification();
+            }
+
             PageManager.EPageState pageState = myBike.isBorrowed() ? PageManager.EPageState.RETURN : PageManager.EPageState.BORROW;
             setState(pageState);
         }
@@ -121,8 +135,8 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void onBackPressed() {
-        if (pageManager.hasPrevState()) {
-            pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
+        if (mPageManager.hasPrevState()) {
+            mPageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
         } else {
             super.onBackPressed();
         }
@@ -181,6 +195,17 @@ public class MainActivity extends BaseActivity implements PageController {
     @Subscribe
     public void onIncompatibleApi(IncompatibleApiEvent event) {
         startLoginActivity(getResources().getString(R.string.error_old_app_version));
+    }
+
+    @Subscribe
+    public void bikeBorrowed(LockCodeEvent event) {
+        //set alarm to notify user after some time, if he returned bike
+        setAlarmReturnBikeNotification();
+    }
+
+    @Subscribe
+    public void bikeReturned(ReturnBikeEvent event) {
+        disableAlarmReturnBikeNotification();
     }
 
     /**
@@ -244,7 +269,7 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     @Override
-    public void requestAddIssue(int bikeID, boolean isDefaultState ) {
+    public void requestAddIssue(int bikeID, boolean isDefaultState) {
         Fragment fragment = setState(PageManager.EPageState.ADD_ISSUE);
         if (fragment != null && fragment instanceof AddIssueFragment)
             ((AddIssueFragment) fragment).init(bikeID, isDefaultState);
@@ -253,7 +278,7 @@ public class MainActivity extends BaseActivity implements PageController {
 
     @Override
     public void requestPrevState() {
-        pageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
+        mPageManager.setPrevState(this, getFragmentManager(), getSupportActionBar());
     }
 
     @Override
@@ -281,12 +306,36 @@ public class MainActivity extends BaseActivity implements PageController {
     }
 
     private Fragment setState(PageManager.EPageState pageState) {
-        return pageManager.setNextState(pageState, this, getFragmentManager(), getSupportActionBar());
+        return mPageManager.setNextState(pageState, this, getFragmentManager(), getSupportActionBar());
     }
 
     private MyBikeWrapper getMyBike() {
         return getApp().getDataManager().getBorrowedBike(false);
     }
 
+    private void setAlarmReturnBikeNotification() {
+        Intent intent = new Intent(this, BikeNotReturnedService.class);
+        intent.putExtra(BikeNotReturnedService.ARG_TOKEN, getApp().getDataManager().getApiKey());
+
+        boolean alarmIsExist = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_NO_CREATE) != null;
+
+        if (alarmIsExist) {
+            return;
+        }
+
+        mPendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        mAlarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
+
+        long startTime = System.currentTimeMillis() + Constants.CHECK_IF_BIKE_IS_RETURNED_TIME;
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, startTime, mPendingIntent);
+    }
+
+    private void disableAlarmReturnBikeNotification() {
+        if (mAlarmManager != null && mPendingIntent != null) {
+            mAlarmManager.cancel(mPendingIntent);
+        }
+    }
 
 }

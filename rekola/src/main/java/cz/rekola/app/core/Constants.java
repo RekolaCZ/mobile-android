@@ -1,5 +1,7 @@
 package cz.rekola.app.core;
 
+import android.app.AlarmManager;
+
 public class Constants {
 
     public static final String API_VERSION = "1.0.0";
@@ -22,4 +24,7 @@ public class Constants {
     //if there is more equipments, it will add three points (symbol for more = ...)
     public static final int MAX_COUNT_OF_VISIBLE_EQUIPMENTS = 4;
     public static final String ACKEE_WEB = "http://ackee.cz";
+
+    //  public static final long CHECK_IF_BIKE_IS_RETURNED_TIME = AlarmManager.INTERVAL_HOUR * 3;
+    public static final long CHECK_IF_BIKE_IS_RETURNED_TIME =1000 * 60;
 }

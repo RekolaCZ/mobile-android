@@ -35,6 +35,25 @@ public class RekolaApp extends Application {
                         .build()
         );
 
+        bus = new Bus();
+        dataManager = new DataManager(this);
+        preferencesManager = new PreferencesManager(this);
+        myLocationManager = new MyLocationManager(this);
+        versionManager = new VersionManager(this);
+
+        String baseUrl = getResources().getString(R.string.rekola_base_api_url);
+        apiService = createApiService(versionManager, baseUrl);
+
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        myLocationManager.terminate(); // TODO: Is this necessary?
+    }
+
+    public static ApiService createApiService(final VersionManager versionManager, String baseUrl)
+    {
         //How to configure a custom gson object to Retrofit's RestAdapter
         // http://naoyamakino.blogspot.cz/2013/11/how-to-configure-custom-gson-object-to.html
         Gson gson = new GsonBuilder()
@@ -42,7 +61,7 @@ public class RekolaApp extends Application {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.rekola_base_api_url))
+                .setEndpoint(baseUrl)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
@@ -54,18 +73,7 @@ public class RekolaApp extends Application {
                 })
                 .build();
 
-        apiService = restAdapter.create(ApiService.class);
-        bus = new Bus();
-        dataManager = new DataManager(this);
-        preferencesManager = new PreferencesManager(this);
-        myLocationManager = new MyLocationManager(this);
-        versionManager = new VersionManager(this);
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        myLocationManager.terminate(); // TODO: Is this necessary?
+        return restAdapter.create(ApiService.class);
     }
 
     public ApiService getApiService() {

@@ -83,6 +83,9 @@
     <string name="add_issue_report_issue">Report issue</string>
     <string name="add_issue_success">Issue was successfully reported, thank you!</string>
 
+    <!-- Notification -->
+    <string name="notification_message">Did you forget to return a bike?</string>
+
     <!-- Error messages -->
     <string name="error_network">Connection problem.</string>
     <string name="error_missing_credentials">Fill in your email and password.</string>
