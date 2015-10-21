@@ -25,6 +25,5 @@ public class Constants {
     public static final int MAX_COUNT_OF_VISIBLE_EQUIPMENTS = 4;
     public static final String ACKEE_WEB = "http://ackee.cz";
 
-    //  public static final long CHECK_IF_BIKE_IS_RETURNED_TIME = AlarmManager.INTERVAL_HOUR * 3;
-    public static final long CHECK_IF_BIKE_IS_RETURNED_TIME =1000 * 60;
+    public static final long CHECK_IF_BIKE_IS_RETURNED_TIME = AlarmManager.INTERVAL_HOUR * 3;
 }
