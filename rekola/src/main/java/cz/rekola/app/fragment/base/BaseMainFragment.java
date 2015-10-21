@@ -1,8 +1,6 @@
 package cz.rekola.app.fragment.base;
 
 import android.app.Fragment;
-import android.os.Bundle;
-import android.view.View;
 
 import cz.rekola.app.activity.MainActivity;
 import cz.rekola.app.core.RekolaApp;
@@ -15,14 +13,14 @@ import cz.rekola.app.core.page.PageController;
 public abstract class BaseMainFragment extends Fragment {
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onResume() {
+        super.onResume();
         getApp().getBus().register(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         getApp().getBus().unregister(this);
     }
 
