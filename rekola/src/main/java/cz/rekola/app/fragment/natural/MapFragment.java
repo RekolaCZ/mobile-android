@@ -3,6 +3,7 @@ package cz.rekola.app.fragment.natural;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -236,27 +237,15 @@ public class MapFragment extends BaseMapFragment implements BikeOverlayView.Bike
             mClusterManager.clearItems();
 
             lastBikeClusterItem = null;
-            BikeClusterItem newBikeClusterItem = null;
 
             for (Bike bike : bikes) {
                 BikeClusterItem bikeClusterItem = new BikeClusterItem(bike);
                 mClusterManager.addItem(bikeClusterItem);
-
-                if (lastBikeClusterItem != null && lastBikeClusterItem.getBike().id == bike.id) {
-                    newBikeClusterItem = bikeClusterItem; // new marker after update
-                    lastBikeClusterItem = bikeClusterItem;
-                }
             }
             mClusterManager.cluster(); //will draw icons
 
-            if (newBikeClusterItem == null) {
-                mOverlayMap.hide();
-                directionManager.hideDirections();
-            } else {
-                lastBikeClusterItem = newBikeClusterItem;
-                mOverlayMap.show(lastBikeClusterItem.getBike());
-                directionManager.addDirections(mGoogleMap);
-            }
+            mOverlayMap.hide();
+            directionManager.hideDirections();
         }
 
         void notifyOverlayClose() {

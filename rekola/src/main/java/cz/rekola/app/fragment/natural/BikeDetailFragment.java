@@ -61,6 +61,7 @@ public class BikeDetailFragment extends BaseMainFragment {
         if (mBikeID != bikeID && mBikeID != Bike.UNDEFINED_BIKE) {
             mBikeID = bikeID;
             mOverallYScroll = 0;
+            getApp().getDataManager().getBikeIssues(mBikeID, true); //forced update
             fillData();
         }
 

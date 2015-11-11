@@ -32,10 +32,6 @@ public class BikeClusterItem implements ClusterItem {
         return mPosition;
     }
 
-    public Bike getBike() {
-        return mBike;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,8 +39,23 @@ public class BikeClusterItem implements ClusterItem {
 
         BikeClusterItem that = (BikeClusterItem) o;
 
-        return !(mPosition != null ? !mPosition.equals(that.mPosition) : that.mPosition != null);
+        if (getPosition() != null ? !getPosition().equals(that.getPosition()) : that.getPosition() != null)
+            return false;
+        return !(getBike() != null ? !getBike().equals(that.getBike()) : that.getBike() != null);
+
     }
+
+    @Override
+    public int hashCode() {
+        int result = getPosition() != null ? getPosition().hashCode() : 0;
+        result = 31 * result + (getBike() != null ? getBike().hashCode() : 0);
+        return result;
+    }
+
+    public Bike getBike() {
+        return mBike;
+    }
+
 
     public boolean isSelectedBike() {
         return isSelected;
@@ -58,8 +69,5 @@ public class BikeClusterItem implements ClusterItem {
         mPicassoMarker = picassoMarker;
     }
 
-    @Override
-    public int hashCode() {
-        return mPosition != null ? mPosition.hashCode() : 0;
-    }
+
 }

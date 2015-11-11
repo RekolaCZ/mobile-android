@@ -489,6 +489,11 @@ public class DataManager {
             return bikeIssuesMap.get(bikeId);
         }
 
+        if(bikeIssuesMap.containsKey(bikeId))
+        {
+            bikeIssuesMap.remove(bikeId);
+        }
+
         ApiService apiService = app.getApiService();
         apiService.getBikeIssues(apiKey, bikeId, new Callback<List<Issue>>() {
             @Override
