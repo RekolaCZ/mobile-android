@@ -5,6 +5,6 @@ package cz.config;
  * Created by david.bilik@ackee.cz on 25. 6. 2014.
  */
 public class HockeyConfig {
-    public static final String HOCKEYAPP_ID = "b95a2a5123a8c6559cdf365634c26719";
+    public static final String HOCKEYAPP_ID = "2c6fd6605d1a41c38bc6c24b4ed9f0f6";
     public static final boolean HOCKEYAPP_AUTOSEND = true;
 }
